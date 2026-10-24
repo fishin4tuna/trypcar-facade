@@ -4,14 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrypCar | Premium Campus Mobility Infrastructure</title>
+    
+    <!-- EMBEDDING PREMIUM LUXURY TECH FONTS NATIVELY -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg-navy: #0A192F;
-            --card-blue: #172A45;
+            --bg-navy: #060E1A;
+            --card-blue: #0E1726;
+            --brand-gradient: linear-gradient(135deg, #00A3FF 0%, #7000FF 100%);
             --cyber-cyan: #00F2FE;
             --text-white: #FFFFFF;
-            --text-muted: #8892B0;
-            --border-glow: #233554;
+            --text-muted: #8E9AA8;
+            --border-glow: #1E293B;
         }
         * {
             box-sizing: border-box;
@@ -19,19 +26,19 @@
             padding: 0;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Montserrat', -apple-system, sans-serif;
             background-color: var(--bg-navy);
             color: var(--text-white);
             line-height: 1.6;
         }
         
-        /* MOBILE-OPTIMIZED COMPACT NAVIGATION */
+        /* HEADER WITH REFIND TECH NAVIGATION */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(10, 25, 47, 0.95);
+            background-color: rgba(6, 14, 26, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-glow);
             display: flex;
@@ -43,29 +50,35 @@
         .brand-wrapper {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
-        .tc-logo {
-            border: 2px solid var(--cyber-cyan);
-            color: var(--cyber-cyan);
-            font-weight: 800;
-            font-size: 1.1rem;
-            padding: 4px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
+        .logo-svg {
+            width: 36px;
+            height: 36px;
+            background: var(--brand-gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 163, 255, 0.2);
         }
         .logo-text {
+            font-family: 'Orbitron', sans-serif;
             font-size: 1.4rem;
-            font-weight: 800;
+            font-weight: 900;
             letter-spacing: -0.5px;
             color: var(--text-white);
+            text-transform: uppercase;
         }
-        .logo-text span { color: var(--cyber-cyan); }
+        .logo-text span { 
+            color: #00A3FF; 
+            font-weight: 700;
+        }
         
-        /* RESPONSIVE SCROLL NAV MENU */
+        /* HORIZONTAL SCROLL NAV MENU */
         nav {
             display: flex;
-            gap: 15px;
+            gap: 18px;
             overflow-x: auto;
             white-space: nowrap;
             padding-left: 10px;
@@ -75,12 +88,15 @@
         nav a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
         }
-        nav a:hover { color: var(--cyber-cyan); }
+        nav a:hover { color: #00A3FF; }
         
-        /* CLEAN RESPONSIVE HERO CONTAINER */
+        /* GEOMETRIC PURE HERO ENTRY */
         .hero-container {
             min-height: 100vh;
             display: flex;
@@ -88,65 +104,83 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 100px 24px 60px 24px;
-            background: radial-gradient(circle at center, #172A45 0%, #0A192F 100%);
+            padding: 130px 24px 60px 24px;
+            background: radial-gradient(circle at center, #0F1C30 0%, #060E1A 100%);
         }
         .hero-title {
-            font-size: 3.2rem;
-            font-weight: 800;
-            margin-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 8px;
             letter-spacing: -1px;
             line-height: 1.1;
+            text-transform: uppercase;
         }
-        .hero-title span { color: var(--cyber-cyan); }
+        .hero-title span { color: #00A3FF; }
+        .hero-slogan {
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, #00A3FF, #7000FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
         .hero-subtitle {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             color: var(--text-muted);
-            max-width: 600px;
-            line-height: 1.5;
-            margin-bottom: 40px;
+            max-width: 580px;
+            line-height: 1.6;
+            margin-bottom: 50px;
+            font-weight: 500;
         }
         .hero-cta {
-            background: transparent;
-            border: 2px solid var(--cyber-cyan);
-            color: var(--cyber-cyan);
-            padding: 14px 35px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            border-radius: 4px;
+            background: var(--brand-gradient);
+            color: var(--text-white);
+            padding: 16px 45px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            border-radius: 6px;
             text-decoration: none;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 15px rgba(112, 0, 255, 0.3);
+            border: none;
         }
         .hero-cta:hover {
-            background: rgba(0, 242, 254, 0.1);
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 163, 255, 0.4);
         }
 
-        /* VERTICAL MOBILE SERVICE CARDS */
+        /* CARD SERVICES TIERS */
         .services-section {
-            padding: 80px 24px;
-            background-color: #0A192F;
+            padding: 90px 24px;
+            background-color: var(--bg-navy);
             border-top: 1px solid var(--border-glow);
         }
         .section-header {
             text-align: center;
-            margin-bottom: 45px;
+            margin-bottom: 50px;
         }
         .section-header h2 {
-            font-size: 2.1rem;
-            font-weight: 800;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
             margin-bottom: 12px;
             line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .section-header h2 span { color: var(--cyber-cyan); }
+        .section-header h2 span { color: #00A3FF; }
         .section-header p {
             color: var(--text-muted);
-            font-size: 1rem;
+            font-size: 0.95rem;
             max-width: 500px;
             margin: 0 auto;
-            line-height: 1.4;
+            line-height: 1.5;
+            font-weight: 500;
         }
         .card-container {
             display: flex;
@@ -158,71 +192,77 @@
         .card {
             background-color: var(--card-blue);
             border: 1px solid var(--border-glow);
-            border-radius: 8px;
-            padding: 35px 25px;
+            border-radius: 12px;
+            padding: 40px 28px;
             width: 100%;
-            transition: transform 0.3s ease;
         }
         .card.premium {
-            border: 2px solid var(--cyber-cyan);
+            border: 2px solid #7000FF;
             position: relative;
+            box-shadow: 0 8px 25px rgba(112, 0, 255, 0.1);
         }
         .badge {
             position: absolute;
             top: -14px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: var(--cyber-cyan);
-            color: var(--bg-navy);
-            padding: 3px 14px;
-            font-size: 0.7rem;
-            font-weight: 700;
+            background: var(--brand-gradient);
+            color: var(--text-white);
+            padding: 4px 18px;
+            font-size: 0.65rem;
+            font-weight: 800;
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         .card h3 {
-            font-size: 1.45rem;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-        .card-meta {
-            color: var(--cyber-cyan);
-            font-weight: 600;
-            font-size: 0.85rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.35rem;
+            margin-bottom: 6px;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+        }
+        .card-meta {
+            color: #00A3FF;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 20px;
         }
         .card p {
             color: var(--text-muted);
             font-size: 0.9rem;
-            line-height: 1.5;
+            line-height: 1.6;
             margin-bottom: 25px;
+            font-weight: 500;
         }
         .card ul {
-            color: #A8B2D1;
+            color: #D1D9E6;
             font-size: 0.85rem;
             padding-left: 18px;
-            line-height: 2;
+            line-height: 2.2;
+            font-weight: 500;
         }
 
-        /* ANCHORED JURISDICTIONAL FOOTER SHIELD */
+        /* ANCHORED INSULATION PROTECTION FOOTER */
         footer {
-            background-color: #060D1A;
-            padding: 50px 24px;
+            background-color: #03070F;
+            padding: 60px 24px;
             text-align: center;
             font-size: 0.75rem;
-            color: #495670;
+            color: #4A5568;
             border-top: 1px solid var(--border-glow);
-            line-height: 1.7;
+            line-height: 1.8;
         }
         .legal-notice {
             max-width: 100%;
             margin: 0 auto;
             text-align: left;
-            border-left: 2px solid #172A45;
+            border-left: 2px solid #1E293B;
             padding-left: 15px;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -230,7 +270,13 @@
 
     <header>
         <div class="brand-wrapper">
-            <div class="tc-logo">TC</div>
+            <div class="logo-svg">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="white"/>
+                    <path d="M4 10V14C4 14 7 17 12 17C17 17 20 14 20 14V10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 11.5V21" stroke="white" stroke-width="2.5" stroke-dasharray="2 2"/>
+                </svg>
+            </div>
             <div class="logo-text">Tryp<span>Car</span></div>
         </div>
         <nav>
@@ -241,9 +287,10 @@
     </header>
 
     <main>
-        <!-- HERO SEGMENT -->
+        <!-- HERO SEGMENT WITH REFINED LUXURY FONTS -->
         <section class="hero-container">
             <h1 class="hero-title">Tryp<span>Car</span></h1>
+            <div class="hero-slogan">Students Ride Together</div>
             <p class="hero-subtitle">The Premium, Vetted Electric Rideshare Network Engineered Exclusively for Elite University Campuses.<sup>1</sup></p>
             <a href="mailto:info@trypcar.com" class="hero-cta">Inquire Within</a>
         </section>
@@ -255,37 +302,3 @@
                 <p>Hyper-localized mobility solutions tailored seamlessly for safety, predictability, and collegiate lifestyle economics.<sup>2</sup></p>
             </div>
             
-            <div class="card-container">
-                <!-- TIER 1 -->
-                <div class="card">
-                    <h3>TrypCar Standard</h3>
-                    <div class="card-meta">Daily Campus Commute</div>
-                    <p>Your pristine daily transit asset. Move securely between classrooms, housing structures, and local centers. Operating a 100% zero-emission electric sedan framework piloted strictly by background-vetted, identity-verified campus peers.</p>
-                    <ul>
-                        <li>Mandatory Student-ID Verification</li>
-                        <li>Predictable Fixed Zone Pricing</li>
-                        <li>All-Electric Active Fleet Infrastructure</li>
-                        <li>24/7 Monitored Campus Dispatch</li>
-                    </ul>
-                </div>
-
-                <!-- TIER 2 -->
-                <div class="card premium">
-                    <div class="badge">TCU Core Preference</div>
-                    <h3>TrypCar Luxe</h3>
-                    <div class="card-meta">Premium Mobility</div>
-                    <p>Elevate regional travel dynamics. Pristine, late-model premium electric vehicles (including customized Tesla and Lucid platforms) coupled with top-rated, executive student operators. Perfect for institutional events, formal logistics, and direct transit corridors to DFW and Love Field airports.</p>
-                    <ul>
-                        <li>Exclusively Luxury EV Vehicles</li>
-                        <li>Elite Tier Customer-Rated Operators</li>
-                        <li>Direct Door-to-Terminal Transfers</li>
-                        <li>Premium Cabin Comfort Frameworks</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- ANTI-COPYCAT SHIELD FOOTER -->
-    <footer>
-        <div class="legal-notice">
