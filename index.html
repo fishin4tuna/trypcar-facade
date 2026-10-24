@@ -4,67 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrypCar | Premium Campus Mobility Infrastructure</title>
+    <!-- IMPORTING TECH-FORWARD MODERN TYPOGRAPHY -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
         :root {
-            --bg-navy: #0A192F;
-            --card-blue: #172A45;
+            --bg-navy: #030A16;
+            --card-blue: #0A192F;
             --cyber-cyan: #00F2FE;
-            --text-white: #FFFFFF;
+            --pure-white: #FFFFFF;
             --text-muted: #8892B0;
-            --border-glow: #233554;
+            --border-glow: #172A45;
         }
         body {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-navy);
-            color: var(--text-white);
+            color: var(--pure-white);
             scroll-behavior: smooth;
         }
+        h1, h2, h3, .logo {
+            font-family: 'Outfit', sans-serif;
+        }
         
-        /* PREMIUM HEADER NAVIGATION */
+        /* PREMIUM NAV HEADER WITH TC LOGO BUILD */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(10, 25, 47, 0.85);
-            backdrop-filter: blur(10px);
+            background-color: rgba(3, 10, 22, 0.8);
+            backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border-glow);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 15px 40px;
             box-sizing: border-box;
             z-index: 1000;
         }
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--text-white);
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             text-decoration: none;
         }
-        .logo span { color: var(--cyber-cyan); }
+        /* CUSTOM EMBEDDED GEOMETRIC TC LOGO */
+        .tc-logo {
+            width: 38px;
+            height: 38px;
+            border: 2px solid var(--cyber-cyan);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.25rem;
+            color: var(--pure-white);
+            position: relative;
+            background: rgba(0, 242, 254, 0.05);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+        }
+        .tc-logo span {
+            color: var(--cyber-cyan);
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -1px;
+        }
+        .logo-text {
+            font-size: 1.75rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--pure-white);
+        }
+        .logo-text span { color: var(--cyber-cyan); }
         nav { display: flex; gap: 30px; align-items: center; }
         nav a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: color 0.3s ease;
+            letter-spacing: 0.5px;
         }
         nav a:hover { color: var(--cyber-cyan); }
         .nav-btn {
             border: 2px solid var(--cyber-cyan);
-            padding: 8px 20px;
+            padding: 8px 22px;
             border-radius: 4px;
             color: var(--cyber-cyan) !important;
             font-weight: 600;
+            transition: all 0.3s ease;
         }
-        .nav-btn:hover { background: rgba(0, 242, 254, 0.1); }
+        .nav-btn:hover { 
+            background: rgba(0, 242, 254, 0.1); 
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
         
-        /* CORE HERO ENTRY GATEWAY */
+        /* SCENIC DIGITAL CITY HIGH-VELOCITY HERO BACKGROUND */
         .hero-container {
             height: 100vh;
             display: flex;
@@ -73,13 +111,34 @@
             align-items: center;
             text-align: center;
             padding: 0 20px;
-            background: radial-gradient(circle at center, #172A45 0%, #0A192F 70%);
+            position: relative;
+            /* SEAMLESS DIGITAL SCENIC BACKGROUND GRID (NO EXTERNAL ASSETS NEEDED) */
+            background: 
+                linear-gradient(rgba(3, 10, 22, 0.85), rgba(3, 10, 22, 0.95)),
+                radial-gradient(ellipse at center, rgba(23, 42, 69, 0.6) 0%, rgba(3, 10, 22, 1) 80%),
+                linear-gradient(90deg, rgba(0,242,254,0.03) 1px, transparent 1px) 0 0 / 50px 50px,
+                linear-gradient(rgba(0,242,254,0.03) 1px, transparent 1px) 0 0 / 50px 50px;
+            overflow: hidden;
+        }
+        /* SIMULATED HIGH-TECH EV LIGHT TRAILS IN THE SCENERY */
+        .hero-container::before {
+            content: '';
+            position: absolute;
+            bottom: 15%;
+            width: 200%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyber-cyan), transparent);
+            opacity: 0.3;
+            transform: skewY(-6deg);
+            filter: blur(1px);
+            box-shadow: 0 0 20px var(--cyber-cyan);
         }
         .hero-title {
-            font-size: 4.5rem;
-            font-weight: 800;
+            font-size: 5rem;
+            font-weight: 900;
             margin: 0 0 20px 0;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
         }
         .hero-title span { color: var(--cyber-cyan); }
         .hero-subtitle {
@@ -87,47 +146,51 @@
             color: var(--text-muted);
             max-width: 750px;
             line-height: 1.6;
-            margin-bottom: 45px;
+            margin-bottom: 50px;
+            font-weight: 400;
         }
         .hero-cta {
             background: transparent;
             border: 2px solid var(--cyber-cyan);
             color: var(--cyber-cyan);
-            padding: 16px 40px;
-            font-size: 1.05rem;
+            padding: 16px 42px;
+            font-size: 1rem;
             font-weight: 600;
             border-radius: 4px;
             text-decoration: none;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
         .hero-cta:hover {
             background: rgba(0, 242, 254, 0.1);
-            box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.5);
+            transform: translateY(-2px);
         }
 
-        /* DYNAMIC SERVICE TIERS SECTION */
+        /* SERVICES SEGMENT */
         .services-section {
-            padding: 100px 20px;
-            background-color: #0A192F;
+            padding: 120px 20px;
+            background-color: var(--bg-navy);
             border-top: 1px solid var(--border-glow);
         }
         .section-header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 70px;
         }
         .section-header h2 {
-            font-size: 2.5rem;
+            font-size: 2.75rem;
             font-weight: 800;
             margin-bottom: 15px;
+            letter-spacing: -0.5px;
         }
         .section-header h2 span { color: var(--cyber-cyan); }
         .section-header p {
             color: var(--text-muted);
             font-size: 1.1rem;
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
+            line-height: 1.6;
         }
         .card-container {
             display: flex;
@@ -141,15 +204,22 @@
             background-color: var(--card-blue);
             border: 1px solid var(--border-glow);
             border-radius: 8px;
-            padding: 45px 35px;
-            width: 380px;
+            padding: 50px 40px;
+            width: 400px;
             box-sizing: border-box;
             transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 242, 254, 0.3);
         }
         .card.premium {
             border: 2px solid var(--cyber-cyan);
             position: relative;
-            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.05);
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.05);
+        }
+        .card.premium:hover {
+            box-shadow: 0 15px 40px rgba(0, 242, 254, 0.15);
         }
         .badge {
             position: absolute;
@@ -158,25 +228,26 @@
             transform: translateX(-50%);
             background-color: var(--cyber-cyan);
             color: var(--bg-navy);
-            padding: 4px 16px;
+            padding: 5px 18px;
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 800;
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         .card h3 {
-            font-size: 1.6rem;
+            font-size: 1.75rem;
             margin-top: 0;
             margin-bottom: 10px;
+            letter-spacing: -0.5px;
         }
         .card-meta {
             color: var(--cyber-cyan);
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 25px;
+            letter-spacing: 1.5px;
+            margin-bottom: 30px;
         }
         .card p {
             color: var(--text-muted);
@@ -188,12 +259,13 @@
             color: #A8B2D1;
             font-size: 0.95rem;
             padding-left: 20px;
-            line-height: 2.2;
+            line-height: 2.4;
+            margin: 0;
         }
 
-        /* ANCHORED PROTECTION SHIELD FOOTER */
+        /* ANCHORED PROTECTION LEGEND FOOTER */
         footer {
-            background-color: #060D1A;
+            background-color: #020610;
             padding: 60px 40px;
             text-align: center;
             font-size: 0.8rem;
@@ -202,18 +274,21 @@
             line-height: 1.8;
         }
         .legal-notice {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
             text-align: justify;
-            border-left: 3px solid #172A45;
-            padding-left: 20px;
+            border-left: 3px solid #0A192F;
+            padding-left: 25px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="#" class="logo">Tryp<span>Car</span></a>
+        <a href="#" class="logo-group">
+            <div class="tc-logo">T<span>C</span></div>
+            <div class="logo-text">Tryp<span>Car</span></div>
+        </a>
         <nav>
             <a href="#about">Company</a>
             <a href="#services">Service Tiers</a>
@@ -224,52 +299,6 @@
     </header>
 
     <main>
-        <!-- HERO SEGMENT -->
+        <!-- SCENIC HIGH-VELOCITY HERO LANDING GRID -->
         <section class="hero-container">
             <h1 class="hero-title">Tryp<span>Car</span></h1>
-            <p class="hero-subtitle">The Premium, Vetted Electric Rideshare Network Engineered Exclusively for Elite University Campuses.<sup>1</sup></p>
-            <a href="mailto:info@trypcar.com" class="hero-cta">Inquire Within</a>
-        </section>
-
-        <!-- SERVICES SEGMENT -->
-        <section id="services" class="services-section">
-            <div class="section-header">
-                <h2>Choose Your <span>Tryp</span></h2>
-                <p>Hyper-localized mobility solutions tailored seamlessly for safety, predictability, and collegiate lifestyle economics.<sup>2</sup></p>
-            </div>
-            
-            <div class="card-container">
-                <!-- TIER 1 -->
-                <div class="card">
-                    <h3>TrypCar Standard</h3>
-                    <div class="card-meta">Daily Campus Commute</div>
-                    <p>Your pristine daily transit asset. Move securely between classrooms, housing structures, and local centers. Operating a 100% zero-emission electric sedan framework piloted strictly by background-vetted, identity-verified campus peers.</p>
-                    <ul>
-                        <li>Mandatory Student-ID Verification</li>
-                        <li>Predictable Fixed Zone Pricing</li>
-                        <li>All-Electric Active Fleet Infrastructure</li>
-                        <li>24/7 Monitored Campus Dispatch</li>
-                    </ul>
-                </div>
-
-                <!-- TIER 2 -->
-                <div class="card premium">
-                    <div class="badge">TCU Core Preference</div>
-                    <h3>TrypCar Luxe</h3>
-                    <div class="card-meta">Premium Mobility</div>
-                    <p>Elevate regional travel dynamics. Pristine, late-model premium electric vehicles (including customized Tesla and Lucid platforms) coupled with top-rated, executive student operators. Perfect for institutional events, formal logistics, and direct transit corridors to DFW and Love Field airports.</p>
-                    <ul>
-                        <li>Exclusively Luxury EV Vehicles</li>
-                        <li>Elite Tier Customer-Rated Operators</li>
-                        <li>Direct Door-to-Terminal Transfers</li>
-                        <li>Premium Cabin Comfort Frameworks</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- ANTI-COPYCAT SHIELD FOOTER -->
-    <footer>
-        <div class="legal-notice">
-            <strong>[1-2] JURISDICTIONAL OWNERSHIP NOTICE & LEGAL PROTECTION LEGEND:</strong> This web infrastructure, including all structural text frameworks, modular pricing layout styles, multi-tiered fleet deployment architectures, and custom campus-geofenced routing logic, represents proprietary operational methodologies and protected original intellectual expressions belonging exclusively to TrypCar Technologies, LLC (and its designated corporate successor TrypCar, Inc.). <br><br>
