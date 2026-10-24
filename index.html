@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrypCar | Premium Campus Mobility Infrastructure</title>
+    <style>
+        :root {
+            --bg-navy: #0A192F;
+            --card-blue: #172A45;
+            --cyber-cyan: #00F2FE;
+            --text-white: #FFFFFF;
+            --text-muted: #8892B0;
+            --border-glow: #233554;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-navy);
+            color: var(--text-white);
+            scroll-behavior: smooth;
+        }
+        
+        /* PREMIUM HEADER NAVIGATION */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-glow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-white);
+            text-decoration: none;
+        }
+        .logo span { color: var(--cyber-cyan); }
+        nav { display: flex; gap: 30px; align-items: center; }
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover { color: var(--cyber-cyan); }
+        .nav-btn {
+            border: 2px solid var(--cyber-cyan);
+            padding: 8px 20px;
+            border-radius: 4px;
+            color: var(--cyber-cyan) !important;
+            font-weight: 600;
+        }
+        .nav-btn:hover { background: rgba(0, 242, 254, 0.1); }
+        
+        /* CORE HERO ENTRY GATEWAY */
+        .hero-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: radial-gradient(circle at center, #172A45 0%, #0A192F 70%);
+        }
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin: 0 0 20px 0;
+            letter-spacing: -1px;
+        }
+        .hero-title span { color: var(--cyber-cyan); }
+        .hero-subtitle {
+            font-size: 1.35rem;
+            color: var(--text-muted);
+            max-width: 750px;
+            line-height: 1.6;
+            margin-bottom: 45px;
+        }
+        .hero-cta {
+            background: transparent;
+            border: 2px solid var(--cyber-cyan);
+            color: var(--cyber-cyan);
+            padding: 16px 40px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .hero-cta:hover {
+            background: rgba(0, 242, 254, 0.1);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+        }
+
+        /* DYNAMIC SERVICE TIERS SECTION */
+        .services-section {
+            padding: 100px 20px;
+            background-color: #0A192F;
+            border-top: 1px solid var(--border-glow);
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+        .section-header h2 span { color: var(--cyber-cyan); }
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background-color: var(--card-blue);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            padding: 45px 35px;
+            width: 380px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        .card.premium {
+            border: 2px solid var(--cyber-cyan);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.05);
+        }
+        .badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--cyber-cyan);
+            color: var(--bg-navy);
+            padding: 4px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .card h3 {
+            font-size: 1.6rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .card-meta {
+            color: var(--cyber-cyan);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+        .card ul {
+            color: #A8B2D1;
+            font-size: 0.95rem;
+            padding-left: 20px;
+            line-height: 2.2;
+        }
+
+        /* ANCHORED PROTECTION SHIELD FOOTER */
+        footer {
+            background-color: #060D1A;
+            padding: 60px 40px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #495670;
+            border-top: 1px solid var(--border-glow);
+            line-height: 1.8;
+        }
+        .legal-notice {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: justify;
+            border-left: 3px solid #172A45;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">Tryp<span>Car</span></a>
+        <nav>
+            <a href="#about">Company</a>
+            <a href="#services">Service Tiers</a>
+            <a href="#safety">Safety Matrix</a>
+            <a href="#investors">Investors</a>
+            <a href="#simulator" class="nav-btn">Sign In</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HERO SEGMENT -->
+        <section class="hero-container">
+            <h1 class="hero-title">Tryp<span>Car</span></h1>
+            <p class="hero-subtitle">The Premium, Vetted Electric Rideshare Network Engineered Exclusively for Elite University Campuses.<sup>1</sup></p>
+            <a href="mailto:info@trypcar.com" class="hero-cta">Inquire Within</a>
+        </section>
+
+        <!-- SERVICES SEGMENT -->
+        <section id="services" class="services-section">
+            <div class="section-header">
+                <h2>Choose Your <span>Tryp</span></h2>
+                <p>Hyper-localized mobility solutions tailored seamlessly for safety, predictability, and collegiate lifestyle economics.<sup>2</sup></p>
+            </div>
+            
+            <div class="card-container">
+                <!-- TIER 1 -->
+                <div class="card">
+                    <h3>TrypCar Standard</h3>
+                    <div class="card-meta">Daily Campus Commute</div>
+                    <p>Your pristine daily transit asset. Move securely between classrooms, housing structures, and local centers. Operating a 100% zero-emission electric sedan framework piloted strictly by background-vetted, identity-verified campus peers.</p>
+                    <ul>
+                        <li>Mandatory Student-ID Verification</li>
+                        <li>Predictable Fixed Zone Pricing</li>
+                        <li>All-Electric Active Fleet Infrastructure</li>
+                        <li>24/7 Monitored Campus Dispatch</li>
+                    </ul>
+                </div>
+
+                <!-- TIER 2 -->
+                <div class="card premium">
+                    <div class="badge">TCU Core Preference</div>
+                    <h3>TrypCar Luxe</h3>
+                    <div class="card-meta">Premium Mobility</div>
+                    <p>Elevate regional travel dynamics. Pristine, late-model premium electric vehicles (including customized Tesla and Lucid platforms) coupled with top-rated, executive student operators. Perfect for institutional events, formal logistics, and direct transit corridors to DFW and Love Field airports.</p>
+                    <ul>
+                        <li>Exclusively Luxury EV Vehicles</li>
+                        <li>Elite Tier Customer-Rated Operators</li>
+                        <li>Direct Door-to-Terminal Transfers</li>
+                        <li>Premium Cabin Comfort Frameworks</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ANTI-COPYCAT SHIELD FOOTER -->
+    <footer>
+        <div class="legal-notice">
+            <strong>[1-2] JURISDICTIONAL OWNERSHIP NOTICE & LEGAL PROTECTION LEGEND:</strong> This web infrastructure, including all structural text frameworks, modular pricing layout styles, multi-tiered fleet deployment architectures, and custom campus-geofenced routing logic, represents proprietary operational methodologies and protected original intellectual expressions belonging exclusively to TrypCar Technologies, LLC (and its designated corporate successor TrypCar, Inc.). <br><br>
