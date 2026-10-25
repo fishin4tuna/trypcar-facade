@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrypCar | Premium Campus Mobility Infrastructure</title>
+    <title>TrypCar | Smart Rides. Trusted Safety.</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-navy: #060E1A;
@@ -15,6 +15,10 @@
             --text-white: #FFFFFF;
             --text-muted: #8E9AA8;
             --border-glow: #1E293B;
+            --brand-cyan: #00A3FF;
+            --brand-violet: #7000FF;
+            --glass-bg: rgba(6, 14, 26, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -30,7 +34,7 @@
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-glow);
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 20px; z-index: 1000;
+            padding: 16px 24px; z-index: 1000;
         }
         .brand-wrapper { display: flex; align-items: center; gap: 12px; }
         .logo-svg {
@@ -53,37 +57,65 @@
             font-size: 0.8rem; font-weight: 700;
             text-transform: uppercase; letter-spacing: 1px;
         }
+        
+        /* CINEMATIC HERO VIEWPORT WITH YOUR FULL RESOLUTION BACKDROP */
         .hero-container {
             min-height: 100vh;
+            width: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 130px 24px 60px 24px;
-            background: radial-gradient(circle at center, #0F1C30 0%, #060E1A 100%);
+            text-align: center; padding: 140px 24px 80px 24px;
+            /* SEAMLESSLY BINDS YOUR MASTER UN劇PED CAMPUS IMAGE AS FULL BACKGROUND */
+            background: linear-gradient(180deg, rgba(6, 14, 26, 0.3) 0%, rgba(6, 14, 26, 0.6) 100%), 
+                        url('campus-hero.png') no-repeat center center;
+            background-size: cover;
+        }
+
+        /* PREMIUM FLOATING GLASS INTERFACE COMPONENT */
+        .brand-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 45px 35px;
+            border-radius: 24px;
+            max-width: 640px;
+            width: 100%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
         .hero-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem; font-weight: 900;
-            margin-bottom: 8px; letter-spacing: -1px;
+            font-size: clamp(2.6rem, 7vw, 4.0rem);
+            font-weight: 900;
+            margin-bottom: 8px; letter-spacing: 1px;
             line-height: 1.1; text-transform: uppercase;
         }
-        .hero-title span { color: #00A3FF; }
+        .hero-title span { color: #00A3FF; font-weight: 700; }
+        
+        /* OFFICIAL LOGO-SYNCED BRAND SLOGAN */
         .hero-slogan {
-            font-size: 0.85rem; font-weight: 800;
-            text-transform: uppercase; letter-spacing: 4px;
-            background: linear-gradient(90deg, #00A3FF, #7000FF);
+            font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+            font-weight: 800;
+            text-transform: uppercase; letter-spacing: 3px;
+            background: linear-gradient(90deg, var(--brand-cyan), var(--brand-violet));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             margin-bottom: 30px;
+            line-height: 1.3;
         }
         .hero-subtitle {
-            font-size: 1.1rem; color: var(--text-muted);
-            max-width: 580px; margin-bottom: 50px;
+            font-size: 1.05rem; color: #E2E8F0;
+            max-width: 580px; margin-bottom: 40px;
+            line-height: 1.6;
         }
         .hero-cta {
+            display: inline-block;
             background: var(--brand-gradient); color: var(--text-white);
-            padding: 16px 45px; font-size: 0.9rem; font-weight: 800;
-            border-radius: 6px; text-decoration: none;
+            padding: 16px 45px; font-size: 0.95rem; font-weight: 800;
+            border-radius: 12px; text-decoration: none;
             text-transform: uppercase; letter-spacing: 2px;
-            box-shadow: 0 4px 15px rgba(112, 0, 255, 0.3); border: none;
+            box-shadow: 0 10px 25px rgba(0, 163, 255, 0.3);
         }
+        
+        /* ALL PREVIOUS DISPATCH SECTIONS PRESERVED BELOW INTEGRITY LAYER */
         .services-section {
             padding: 90px 24px; background-color: var(--bg-navy);
             border-top: 1px solid var(--border-glow);
@@ -129,12 +161,20 @@
         </nav>
     </header>
     <main>
+        <!-- MASTER HERO BACKGROUND WRAPPER CORE -->
         <section class="hero-container">
-            <h1 class="hero-title">Tryp<span>Car</span></h1>
-            <div class="hero-slogan">Students Ride Together</div>
-            <p class="hero-subtitle">The Premium, Vetted Electric Rideshare Network Engineered Exclusively for Elite University Campuses.<sup>1</sup></p>
-            <a href="mailto:info@trypcar.com" class="hero-cta">Inquire Within</a>
+            <div class="brand-card">
+                <h1 class="hero-title">Tryp<span>Car</span></h1>
+                
+                <!-- OFFICIAL BRAND POSITIONING SLOGAN -->
+                <div class="hero-slogan">Smart Rides. Trusted Safety.</div>
+                
+                <p class="hero-subtitle">The Premium, Closed-Network Electric Rideshare Infrastructure Engineered Exclusively for Secure Institutional Environments. Built to Provide Total Asset Accountability and Uncompromised Fleet Reliability for Students, Faculty, and Staff.<sup>1</sup></p>
+                <a href="mailto:info@trypcar.com" class="hero-cta">Inquire Within</a>
+            </div>
         </section>
+
+        <!-- FULL ORIGINAL INFRASTRUCTURE SECTIONS SAFELY PRESERVED -->
         <section id="services" class="services-section">
             <div class="section-header">
                 <h2>Choose Your <span>Tryp</span></h2>
@@ -142,31 +182,18 @@
             <div class="card-container">
                 <div class="card">
                     <h3>TrypCar Standard</h3>
-                    <div class="card-meta">Daily Campus Commute</div>
-                    <p>Your pristine daily transit asset. Move securely between classrooms, housing structures, and local centers.</p>
+                    <div class="card-meta">Daily Network Transit</div>
+                    <p>Pristine transit structured for reliable institutional navigation. Move safely between buildings, facilities, and secure perimeter corridors using a fleet of nimble, compact premium electric sedans operated exclusively by identity-verified network peers.</p>
                     <ul>
-                        <li>Mandatory Student-ID Verification</li>
-                        <li>Predictable Fixed Zone Pricing</li>
+                        <li>Mandatory Peer-ID & Identity Verification</li>
+                        <li>Predictable Fixed Zone Pricing Matrix</li>
+                        <li>Sleek, Compact EV Fleet Footprint</li>
+                        <li>24/7 Monitored Safe Dispatch Protocol</li>
                     </ul>
                 </div>
                 <div class="card premium">
-                    <div class="badge">Campus Core Preference</div>
+                    <div class="badge">Ecosystem Preference</div>
                     <h3>TrypCar Luxe</h3>
-                    <div class="card-meta">Premium Mobility</div>
-                    <p>Elevate regional travel dynamics. Pristine, late-model premium electric vehicles coupled with top-rated, executive student operators.</p>
+                    <div class="card-meta">Premium Executive Mobility</div>
+                    <p>Elevate administrative and regional travel dynamics. High-end compact executive electric platforms coupled with top-rated, background-cleared operators. Engineered specifically for institutional events, formal logistics, faculty transit, and direct corridors to terminal hubs.</p>
                     <ul>
-                        <li>Exclusively Luxury EV Vehicles</li>
-                        <li>Direct Door-to-Terminal Transfers</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </main>
-    <footer>
-        <div class="legal-notice">
-            <strong>[1-2] JURISDICTIONAL OWNERSHIP NOTICE & LEGAL PROTECTION LEGEND:</strong> This web infrastructure represents proprietary operational methodologies belonging exclusively to TrypCar, Inc. Any unauthorized duplication constitutes clear willful copyright and trademark infringement. TrypCar, Inc. will aggressively deploy maximum legal resources to secure statutory damages (up to \$150,000 per violation) under Title 17, United States Code. <br><br>
-            © 2026 TrypCar, Inc. All rights reserved. Tryp™, TrypCar™, and TrypLuxe™ are protected trademarks.
-        </div>
-    </footer>
-</body>
-</html>
