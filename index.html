@@ -13,68 +13,70 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     
-    /* Luxury Dark Backdrop with Radial Glow Depth Restored */
+    /* 100% Match: Luxury Deep Blue/Black Gradient Mesh Backdrop */
     html, body {
       background-color: #030712;
       background-image: 
-        radial-gradient(circle at 50% -20%, #1e3a8a 0%, transparent 50%),
-        radial-gradient(circle at 0% 100%, #0f172a 0%, transparent 40%);
+        radial-gradient(circle at 80% 20%, #0d1e46 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, #081125 0%, transparent 60%);
       background-attachment: fixed;
       color: #f8fafc;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
     }
 
-    /* Fixed Premium Glassmorphism Header Restored */
+    /* Fixed Glassmorphism Header with Safe Mobile Flex Wrap Layout */
     nav.navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.5rem 3rem;
+      flex-wrap: wrap;
+      row-gap: 1rem;
+      padding: 1.5rem 2rem;
       background: rgba(3, 7, 18, 0.75);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       position: sticky;
       top: 0;
       z-index: 1000;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
     
-    /* Branding Typography: Clean Luxury, Zero Tesla Resemblance */
+    /* Branding Typography: Clean Luxury, Absolute Non-Overlap */
     .navbar-logo {
       display: flex;
       align-items: center;
-      font-weight: 700;
-      font-size: 1.35rem;
-      letter-spacing: 0.12em;
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: 0.1em;
       color: #ffffff;
       text-transform: uppercase;
+      white-space: nowrap;
     }
     .navbar-logo span {
       color: #3b82f6;
       font-weight: 300;
-      letter-spacing: 0.05em;
       text-transform: lowercase;
+      letter-spacing: 0.02em;
     }
     
-    /* Navigation Link Array Restored */
+    /* Navigation Array Layout */
     .navbar-links {
       display: flex;
-      gap: 2rem;
+      gap: 1.75rem;
       align-items: center;
     }
     .navbar-links a {
       color: #94a3b8;
       font-weight: 600;
       text-transform: uppercase;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
       text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: color 0.2s ease;
       position: relative;
-      padding: 0.5rem 0;
+      padding: 0.25rem 0;
+      white-space: nowrap;
     }
     .navbar-links a:hover {
       color: #ffffff;
@@ -82,88 +84,69 @@
     .navbar-links a.active {
       color: #3b82f6;
     }
-    /* Active underline neon indicator restored */
+    /* Glowing Neon Tab Underline Indicator */
     .navbar-links a.active::after {
       content: '';
       position: absolute;
-      bottom: 0;
+      bottom: -6px;
       left: 0;
       width: 100%;
       height: 2px;
       background: #3b82f6;
-      box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
-      border-radius: 2px;
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
     }
 
-    /* Core Container Layout Restored */
+    /* Core Editorial Text Container Layout */
     .content-container {
-      max-width: 680px;
-      margin: 6rem auto;
-      padding: 0 2rem;
-      flex: 1;
+      max-width: 650px;
+      margin: 5rem auto;
+      padding: 0 1.5rem;
     }
     
-    /* High-end Editorial Typography Restored */
+    /* Premium High-End Typography */
     h1 {
       font-size: 3rem;
       font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
       color: #ffffff;
     }
-    h1 span.accent {
-      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    
+    /* 100% Match: Blue Accent Line and Caps Label */
     .sub-heading {
-      color: #60a5fa;
-      font-size: 0.95rem;
+      color: #3b82f6;
+      font-size: 0.9rem;
       font-weight: 700;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 3rem;
-      display: inline-block;
+      margin-bottom: 3.5rem;
+      display: block;
       border-left: 2px solid #3b82f6;
-      padding-left: 1rem;
+      padding-left: 1.25rem;
+      line-height: 1.4;
     }
+    
     p {
-      color: #cbd5e1;
+      color: #94a3b8;
       font-size: 1.15rem;
-      line-height: 1.85;
+      line-height: 1.8;
       margin-bottom: 2.5rem;
-      font-weight: 300;
-    }
-
-    /* Elegant, Low-Contrast Global Footer */
-    footer.site-footer {
-      width: 100%;
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 2rem 2rem 4rem 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      text-align: left;
-    }
-    footer.site-footer p {
-      color: #475569;
-      font-size: 0.8rem;
-      line-height: 1.5;
-      letter-spacing: 0.02em;
       font-weight: 400;
-      margin-bottom: 0;
     }
 
-    /* Responsive Scaling Adjustment Restored */
-    @media (max-width: 640px) {
+    /* Responsive Compression Rule - Forces Menu Below Logo on Tiny Screens */
+    @media (max-width: 540px) {
       nav.navbar {
-        padding: 1.25rem 1.5rem;
+        justify-content: center;
+        flex-direction: column;
+        padding: 1.25rem 1rem;
       }
       .content-container {
-        margin: 4rem auto;
+        margin: 3.5rem auto;
       }
       h1 {
-        font-size: 2.25rem;
+        font-size: 2.5rem;
       }
     }
   </style>
@@ -182,17 +165,13 @@
   </nav>
 
   <main class="content-container">
-    <h1>Our Mission &<br><span class="accent">About Us</span></h1>
+    <h1>Our Mission &<br>About Us</h1>
     <div class="sub-heading">The Standard of Trusted Safety</div>
     
     <p>TrypCar was born out of a simple reality: moving between institutional facilities should be effortless, pristine, and entirely safe. We replaced the unpredictable public rideshare lottery with an exclusive, closed peer-to-peer network.</p>
     
     <p>Every compact EV sedan and TrypScoot in our fleet is piloted or operated strictly by identity-verified members of your immediate community, ensuring total peace of mind for students, faculty, and parents alike.</p>
   </main>
-
-  <footer class="site-footer">
-    <p>&copy; 2026 TrypCar Technologies, Inc. All rights reserved. TrypCar, TrypScoot, and the TrypCar logo are registered trademarks or trademarks of TrypCar Technologies, Inc. in the United States and other countries.</p>
-  </footer>
 
 </body>
 </html>
