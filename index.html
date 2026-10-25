@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrypCar | Premium Mobility</title>
   <style>
-    /* Global Element Normalization Reset */
+    /* CSS Reset */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -14,17 +14,9 @@
     }
     
     body {
-      background-color: #050b14;
+      background-color: #060e1e;
       color: #ffffff;
       -webkit-font-smoothing: antialiased;
-    }
-
-    /* Target Layout Canvas Wrapper */
-    .viewport-wrapper {
-      width: 100%;
-      max-width: 1920px;
-      margin: 0 auto;
-      position: relative;
     }
 
     /* Fixed Navigation Header Bar Layout */
@@ -32,8 +24,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.5rem 3rem;
-      background-color: #03070f;
+      padding: 1.2rem 1.5rem;
+      background-color: #030712;
     }
     
     .brand-container {
@@ -43,10 +35,10 @@
     }
     
     .brand-logo-box {
-      background-color: #2429f2;
-      border-radius: 8px;
-      width: 40px;
-      height: 40px;
+      background: linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);
+      border-radius: 6px;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -54,33 +46,34 @@
 
     .brand-logo-box::after {
       content: '';
-      width: 16px;
-      height: 12px;
+      width: 14px;
+      height: 10px;
       border: 2px solid #ffffff;
-      border-radius: 1px;
+      border-radius: 2px;
     }
     
     .brand-text {
-      font-weight: 900;
-      font-size: 1.6rem;
-      letter-spacing: 0.02em;
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: 0.03em;
       color: #ffffff;
     }
     
     .brand-text span {
-      color: #2da1f8;
+      color: #3b82f6;
     }
     
     .navigation-links {
       display: flex;
-      gap: 2rem;
+      gap: 1.5rem;
     }
     
     .navigation-links a {
-      color: #ffffff;
+      color: #3b82f6;
       font-weight: 700;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
       text-decoration: none;
     }
     
@@ -88,81 +81,80 @@
       color: #64748b;
     }
 
-    /* Widescreen Hero Engine (Pulls the direct web graphic path onto your canvas) */
+    /* Hero Section Container Box */
     .hero-display {
       position: relative;
       width: 100%;
-      height: 1080px; 
-      background-image: linear-gradient(180deg, rgba(5, 11, 20, 0.1) 0%, #050b14 95%), 
-                        url('https://github.io');
+      height: 340px; 
+      background-image: linear-gradient(180deg, rgba(6, 14, 30, 0.1) 0%, #060e1e 95%), 
+                        url('extended-1920×1080.jpg');
       background-size: cover;
-      background-position: center top;
+      background-position: center center;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       text-align: center;
-      padding: 0 2rem;
+      padding-top: 2rem;
     }
     
     .hero-heading {
-      font-size: 5.5rem;
+      font-size: 3.2rem;
       font-weight: 900;
-      letter-spacing: 0.01em;
+      letter-spacing: 0.02em;
       color: #ffffff;
       margin-bottom: 0.5rem;
-      text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
     
     .hero-heading span {
-      color: #2da1f8;
-    }
-
-    .hero-subheading {
-      color: #2429f2;
-      font-weight: 800;
-      font-size: 1.3rem;
-      letter-spacing: 0.18em;
-      margin-bottom: 3rem;
-      text-transform: uppercase;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      color: #3b82f6;
     }
     
-    /* Purple-to-Blue Linear Gradient Button Component */
+    /* Purple Gradient Rectangle Explore Button */
     .btn-explore {
-      background: linear-gradient(90deg, #0076ff 0%, #7a00ff 100%);
+      background: linear-gradient(90deg, #1e40af 0%, #6d28d9 100%);
       color: #ffffff;
       font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: 0.15em;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      padding: 1.2rem 3rem;
+      padding: 0.6rem 2.2rem;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-    /* Core Layout Content Block */
+    /* Mission Section Grid Block */
     .mission-section {
       width: 100%;
-      max-width: 800px;
+      max-width: 640px;
       margin: 0 auto;
-      padding: 6rem 2rem;
+      padding: 4rem 1.5rem;
       text-align: center;
     }
     
     .section-title {
-      font-size: 3rem;
+      font-size: 2.2rem;
       font-weight: 900;
       letter-spacing: 0.05em;
       text-transform: uppercase;
       color: #ffffff;
-      margin-bottom: 2rem;
+      margin-bottom: 3rem;
     }
     
     .section-title span {
-      color: #2da1f8;
+      color: #3b82f6;
+    }
+
+    .body-paragraph {
+      color: #94a3b8;
+      font-size: 1rem;
+      line-height: 1.6;
+      font-weight: 400;
+      margin-bottom: 1.75rem;
+      text-align: left;
     }
   </style>
 </head>
@@ -183,12 +175,19 @@
 
     <header class="hero-display">
       <h1 class="hero-heading">TRYP<span>CAR</span></h1>
-      <p class="hero-subheading">Smart Rides. Trusted Safety.</p>
       <button class="btn-explore">Explore Brand</button>
     </header>
 
     <main class="mission-section">
-      <h2 class="section-title">Our <span>Mission</span></h2>
+      <h2 class="section-title">OUR <span>MISSION</span></h2>
+      
+      <p class="body-paragraph">
+        The Standard of Trusted Safety. TrypCar replaces the unpredictable public rideshare lottery with an exclusive, closed peer-to-peer infrastructure network.
+      </p>
+      
+      <p class="body-paragraph">
+        Every compact EV sedan and TrypScoot in our fleet is piloted or operated strictly by identity-verified members of your immediate community, ensuring total peace of mind for students, faculty, and parents alike.
+      </p>
     </main>
 
   </div>
