@@ -84,14 +84,28 @@
       color: #3b82f6;
     }
 
-    /* New Clean Branding Header Section Block */
-    .brand-intro-section {
+    /* Seamless Responsive Hero Engine (Text layered back over the sky) */
+    .hero-display {
+      position: relative;
       width: 100%;
+      /* Sets an adaptive aspect ratio container to prevent mobile layout clipping */
+      height: 56vw; 
+      min-height: 380px;
+      max-height: 620px;
+      background-image: 
+        linear-gradient(180deg, rgba(6, 14, 30, 0.2) 0%, rgba(6, 14, 30, 0) 40%, rgba(6, 14, 30, 0.4) 80%, #060e1e 100%), 
+        url('extended-1920x1080.jpg');
+      background-size: cover;
+      background-position: center top;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
       text-align: center;
-      padding: 2.5rem 1.5rem 2rem 1.5rem;
-      background-color: #060e1e;
+      padding: 2.5rem 1.5rem 0 1.5rem;
     }
-
+    
+    /* Heading typography calibrated for natural layout placement over sky background */
     .hero-heading {
       font-size: 3.2rem;
       font-weight: 900;
@@ -99,6 +113,7 @@
       color: #ffffff;
       line-height: 1.1;
       margin-bottom: 0.5rem;
+      text-shadow: 0 2px 12px rgba(3, 7, 18, 0.7);
     }
     
     .hero-heading span {
@@ -112,18 +127,7 @@
       letter-spacing: 0.1em;
       line-height: 1.3;
       text-transform: uppercase;
-    }
-
-    /* Full-Width Showcase Graphics Engine Container */
-    .showcase-display {
-      position: relative;
-      width: 100%;
-      height: 480px; 
-      background-image: 
-        linear-gradient(180deg, #060e1e 0%, rgba(6, 14, 30, 0) 15%, rgba(6, 14, 30, 0) 85%, #060e1e 100%), 
-        url('extended-1920x1080.jpg');
-      background-size: cover;
-      background-position: center center;
+      text-shadow: 0 2px 8px rgba(3, 7, 18, 0.8);
     }
 
     /* Mission Section Grid Block */
@@ -131,7 +135,7 @@
       width: 100%;
       max-width: 640px;
       margin: 0 auto;
-      padding: 4rem 1.5rem;
+      padding: 3rem 1.5rem 5rem 1.5rem;
       text-align: center;
     }
     
@@ -174,14 +178,11 @@
       </div>
     </nav>
 
-    <!-- Clean Typography Section Block Above Image Showcase -->
-    <section class="brand-intro-section">
+    <!-- Text layered perfectly back inside the image display block over the sky -->
+    <header class="hero-display">
       <h1 class="hero-heading">TRYP<span>CAR</span></h1>
       <p class="hero-subheading">SMART RIDES. TRUSTED SAFETY.</p>
-    </section>
-
-    <!-- Full-Width Background Unbranded Image Showcase Canvas -->
-    <div class="showcase-display"></div>
+    </header>
 
     <main class="mission-section">
       <h2 class="section-title">OUR <span>MISSION</span></h2>
