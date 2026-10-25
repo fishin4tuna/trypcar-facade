@@ -3,229 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Premium Mobility</title>
+  <title>TrypCar | Smart Rides. Trusted Safety.</title>
   <style>
-    /* Reset & Deep Dark Base Styling */
+    /* Clean, modern mobile layout reset */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     }
     
     body {
-      background-color: #030712;
-      color: #ffffff;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      background-color: #f8fafc;
+      color: #0f172a;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
 
-    /* Fixed Glassmorphism Production Header */
-    nav.navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 1.5rem;
-      background: rgba(3, 7, 18, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      position: fixed;
-      top: 0;
-      left: 0;
+    /* Image wrapper designed for your campus graphic */
+    .hero-container {
       width: 100%;
-      z-index: 1000;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .navbar-logo-container {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    
-    /* Graduation cap logo asset block */
-    .navbar-icon {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
-    }
-    
-    .navbar-logo {
-      font-weight: 800;
-      font-size: 1.3rem;
-      letter-spacing: 0.05em;
-      color: #ffffff;
-      text-transform: uppercase;
-    }
-    .navbar-logo span {
-      color: #3b82f6;
-    }
-    
-    .navbar-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-    .navbar-links a {
-      color: #94a3b8;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-    }
-
-    /* FIXED: Swapped broken local file url for a live web-hosted premium tech background image */
-    .hero-visual-showcase {
-      width: 100%;
-      height: 60vh;
-      min-height: 420px;
-      margin-top: 60px;
-      background-image: url('https://unsplash.com');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      position: relative;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    /* Core Branding & CTA Section Below the Graphic */
-    .branding-section {
-      background: #030712;
-      padding: 3rem 1.5rem;
-      text-align: center;
-    }
-
-    .hero-title {
-      font-size: 3rem;
-      font-weight: 900;
-      letter-spacing: 0.02em;
-      color: #ffffff;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-    }
-    .hero-title span {
-      color: #3b82f6;
-    }
-
-    .hero-tagline {
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      color: #3b82f6;
-      text-transform: uppercase;
-      margin-bottom: 2.5rem;
-    }
-
-    /* Premium Clean Explore Button */
-    .btn-explore {
-      background: linear-gradient(90deg, #2563eb 0%, #7c3aed 100%);
-      color: #ffffff;
-      border: none;
-      padding: 1rem 3rem;
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      border-radius: 6px;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
-      transition: transform 0.2s ease;
-    }
-    .btn-explore:hover {
-      transform: translateY(-2px);
-    }
-
-    /* Structural Section Block for Content */
-    .main-content {
-      background: #030712;
-      padding: 3rem 1.5rem 4rem 1.5rem;
-      max-width: 680px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .section-title {
-      font-size: 2.25rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
+      max-width: 500px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+      background-color: #e2e8f0;
+      margin-top: 1rem;
       margin-bottom: 2rem;
     }
-    .section-title span {
-      color: #3b82f6;
+
+    .hero-container img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
-    .mission-p {
-      color: #cbd5e1;
-      font-size: 1.1rem;
-      line-height: 1.8;
-      text-align: left;
-      margin-bottom: 1.5rem;
-      font-weight: 300;
-    }
-
-    /* Premium Clean Production Footer */
-    footer.footer-block {
-      background: #020617;
-      padding: 3rem 1.5rem;
+    /* Exact typography layout from the car decal */
+    .brand-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
       text-align: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      text-transform: uppercase;
     }
     
-    .footer-copy {
-      color: #64748b;
-      font-size: 0.85rem;
-      letter-spacing: 0.02em;
+    .brand-title .blue-text {
+      color: #1d4ed8;
+    }
+    
+    .brand-title .black-text {
+      color: #0f172a;
     }
 
-    @media (max-width: 640px) {
-      .hero-title { font-size: 2.5rem; }
-      .hero-tagline { font-size: 0.85rem; }
+    .brand-tagline {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #475569;
+      text-transform: uppercase;
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="navbar-logo-container">
-      <div class="navbar-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>
-      </div>
-      <div class="navbar-logo">TRYP<span>CAR</span></div>
-    </div>
-    <div class="navbar-links">
-      <a href="#about">About</a>
-      <a href="investors.html">Tiers</a>
-    </div>
-  </nav>
+  <!-- Live Image Container -->
+  <div class="hero-container">
+    <img src="https://githubusercontent.com" alt="TrypCar Campus Asset">
+  </div>
 
-  <!-- Restored Hero Background Image Block Window -->
-  <div class="hero-visual-showcase"></div>
-
-  <!-- Safe, Clean Typography & CTA Layout Layer -->
-  <section class="branding-section">
-    <h1 class="hero-title">TRYP<span>CAR</span></h1>
-    <div class="hero-tagline">Smart Rides. Trusted Safety.</div>
-    <button class="btn-explore">Explore Brand</button>
-  </section>
-
-  <!-- Mission Content Section -->
-  <main id="about" class="main-content">
-    <h2 class="section-title">Our <span>Mission</span></h2>
-    <p class="mission-p">TrypCar was born out of a simple reality: moving between institutional facilities should be effortless, pristine, and entirely safe. We replaced the unpredictable public rideshare lottery with an exclusive, closed peer-to-peer network.</p>
-    <p class="mission-p">Every compact EV sedan and TrypScoot in our fleet is piloted or operated strictly by identity-verified members of your immediate community, ensuring total peace of mind for students, faculty, and parents alike.</p>
-  </main>
-
-  <!-- Restored Production Footer with Copyright Elements -->
-  <footer class="footer-block">
-    <p class="footer-copy">&copy; 2026 TrypCar Technologies Inc. All rights reserved. Premium Institutional Mobility.</p>
-  </footer>
+  <!-- Decal-Matched Branding -->
+  <h1 class="brand-title">
+    <span class="blue-text">TRYP</span><span class="black-text">CAR</span>
+  </h1>
+  <div class="brand-tagline">Smart Rides. Trusted Safety.</div>
 
 </body>
 </html>
