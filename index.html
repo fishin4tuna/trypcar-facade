@@ -1,171 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Premium Mobility</title>
-  <style>
-    /* Premium Design System Reset */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-    
-    /* Luxury Dark Backdrop with Radial Glow Depth */
-    html, body {
-      background-color: #030712;
-      background-image: 
-        radial-gradient(circle at 50% -20%, #1e3a8a 0%, transparent 50%),
-        radial-gradient(circle at 0% 100%, #0f172a 0%, transparent 40%);
-      background-attachment: fixed;
-      color: #f8fafc;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrypCar | Premium Closed-Network Mobility</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-navy: #050B14;
+            --card-blue: rgba(9, 17, 32, 0.85);
+            --brand-gradient: linear-gradient(135deg, #00A3FF 0%, #7000FF 100%);
+            --text-white: #FFFFFF;
+            --text-muted: #94A3B8;
+            --border-glow: rgba(0, 163, 255, 0.2);
+        }
+        
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            scroll-behavior: smooth; 
+        }
+        
+        body {
+            font-family: 'Montserrat', -apple-system, sans-serif;
+            background-color: var(--bg-navy);
+            color: var(--text-white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Fixed Header Layout */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background-color: rgba(5, 11, 20, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px; 
+            z-index: 9999;
+        }
+        
+        .brand-wrapper { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+        }
+        
+        .logo-icon {
+            width: 32px; height: 32px;
+            background: var(--brand-gradient);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 15px rgba(0, 163, 25FF, 0.4);
+        }
+        
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem; font-weight: 900;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+        .logo-text span { color: #00A3FF; }
+        
+        nav { 
+            display: flex; 
+            gap: 20px; 
+        }
+        
+        nav a {
+            color: var(--text-muted); 
+            text-decoration: none;
+            font-size: 0.8rem; 
+            font-weight: 800;
+            text-transform: uppercase; 
+            letter-spacing: 1.5px;
+            transition: all 0.2s ease;
+        }
+        nav a:hover { 
+            color: #00A3FF; 
+            text-shadow: 0 0 8px rgba(0, 163, 255, 0.5); 
+        }
+        
+        /* Hero Showcase Section with Clean Visual Framing */
+        .hero-showcase {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 120px 24px 60px 24px;
+            /* Background uses lightweight vignette to preserve full image clarity and color vibrancy */
+            background-image: linear-gradient(to bottom, rgba(5, 11, 20, 0.5) 0%, rgba(5, 11, 20, 0.1) 40%, rgba(5, 11, 20, 0.8) 100%), 
+                              url('extended-1920x1080.jpg'),
+                              url('extended-1920×1080.jpg'),
+                              url('https://unsplash.com');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            text-align: center;
+        }
+        
+        .hero-top-meta {
+            margin-top: 40px;
+        }
+        
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.8rem, 8vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+        }
+        .hero-title span { color: #00A3FF; }
+        
+        .hero-slogan {
+            font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+            font-weight: 800;
+            text-transform: uppercase; 
+            letter-spacing: 4px;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            margin-bottom: 24px;
+        }
+        
+        .hero-cta {
+            display: inline-block;
+            background: var(--brand-gradient); 
+            color: var(--text-white);
+            padding: 16px 40px; 
+            font-size: 0.85rem; 
+            font-weight: 800;
+            border-radius: 6px; 
+            text-decoration: none;
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            box-shadow: 0 8px 25px rgba(112, 0, 255, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(112, 0, 255, 0.6);
+        }
+        
+        /* Content Sections */
+        section.corporate-block {
+            padding: 100px 24px;
+            background-color: #060D1A;
+            scroll-margin-top: 80px;
+        }
+        section.corporate-block:nth-of-type(even) {
+            background-color: #0A1426;
+        }
+        
+        .section-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .section-header { 
+            text-align: center; 
+            margin-bottom: 45px; 
+        }
+        .section-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 2.4rem); 
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .section-header h2 span { color: #00A3FF; }
+        
+        .content-text {
+            color: #E2E8F0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        .content-text p {
+            margin-bottom: 24px;
+        }
+        
+        /* Service Cards Grid Layout */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .card {
+            background: var(--card-blue);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 35px 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+        .card.premium {
+            border-color: #7000FF;
+            box-shadow: 0 15px 35px rgba(112, 0, 255, 0.15);
+        }
+        .card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.35rem;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+        .card-meta {
+            color: #00A3FF;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        .card ul {
+            list-style-type: none;
+            margin-top: 15px;
+        }
+        .card ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #CBD5E1;
+        }
+        .card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00A3FF;
+            font-weight: bold;
+        }
 
-    /* Fixed Premium Glassmorphism Header */
-    nav.navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 3rem;
-      background: rgba(3, 7, 18, 0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    
-    /* Branding typography */
-    .navbar-logo {
-      display: flex;
-      align-items: center;
-      font-weight: 800;
-      font-size: 1.4rem;
-      letter-spacing: 0.08em;
-      color: #ffffff;
-      text-transform: uppercase;
-    }
-    .navbar-logo span {
-      color: #3b82f6;
-      text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
-    }
-    
-    /* Navigation Link Array */
-    .navbar-links {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-    .navbar-links a {
-      color: #94a3b8;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      padding: 0.5rem 0;
-    }
-    .navbar-links a:hover {
-      color: #ffffff;
-    }
-    .navbar-links a.active {
-      color: #3b82f6;
-    }
-    /* Active underline indicator */
-    .navbar-links a.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: #3b82f6;
-      box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
-      border-radius: 2px;
-    }
-
-    /* Core Container Layout */
-    .content-container {
-      max-width: 680px;
-      margin: 6rem auto;
-      padding: 0 2rem;
-    }
-    
-    /* High-end Editorial Typography */
-    h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      margin-bottom: 0.75rem;
-      color: #ffffff;
-    }
-    h1 span.accent {
-      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .sub-heading {
-      color: #60a5fa;
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 3rem;
-      display: inline-block;
-      border-left: 2px solid #3b82f6;
-      padding-left: 1rem;
-    }
-    p {
-      color: #cbd5e1;
-      font-size: 1.15rem;
-      line-height: 1.85;
-      margin-bottom: 2.5rem;
-      font-weight: 300;
-    }
-
-    /* Responsive Scaling Adjustment */
-    @media (max-width: 640px) {
-      nav.navbar {
-        padding: 1.25rem 1.5rem;
-      }
-      .content-container {
-        margin: 4rem auto;
-      }
-      h1 {
-        font-size: 2.25rem;
-      }
-    }
-  </style>
+        footer {
+            background-color: #030712;
+            padding: 40px 24px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #64748B;
+            border-top: 1px solid var(--border-glow);
+        }
+        
+        /* Mobile Layout Optimizations */
+        @media (max-width: 680px) {
+            header {
+                padding: 14px 16px;
+            }
+            nav {
+                gap: 12px;
+            }
+            nav a {
+                font-size: 0.75rem;
+                letter-spacing: 1px;
+            }
+            .hero-showcase {
+                padding-top: 140px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="navbar-logo">
-      TRYP<span>CAR</span>
-    </div>
-    <div class="navbar-links">
-      <a href="index.html" class="active">About</a>
-      <a href="investors.html">Investors</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </nav>
+    <header>
+        <div class="brand-wrapper">
+            <div class="logo-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="white"/>
+                    <path d="M4 10V14C4 14 7 17 12 17C17 17 20 14 20 14V10" stroke="white" stroke-width="2"/>
+                </svg>
+            </div>
+            <div class="logo-text">Tryp<span>Car</span></div>
+        </div>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#tiers">Tiers</a>
+            <a href="#investors">Investors</a>
+        </nav>
+    </header>
 
-  <main class="content-container">
-    <h1>Our Mission &<br><span class="accent">About Us</span></h1>
-    <div class="sub-heading">The Standard of Trusted Safety</div>
-    
-    <p>TrypCar was born out of a simple reality: moving between institutional facilities should be effortless, pristine, and entirely safe. We replaced the unpredictable public rideshare lottery with an exclusive, closed peer-to-peer network.</p>
-    
-    <p>Every compact EV sedan and TrypScoot in our fleet is piloted or operated strictly by identity-verified members of your immediate community, ensuring total peace of mind for students, faculty, and parents alike.</p>
-  </main>
+    <main>
+        <!-- Hero Showcase Frame -->
+        <div class="hero-showcase">
+            <div class="hero-top-meta">
+                <h1 class="hero-title">Tryp<span>Car</span></h1>
+                <div class="hero-slogan">Smart Rides. Trusted Safety.</div>
+            </div>
+            <div>
+                <a href="#about" class="hero-cta">Explore Brand</a>
+            </div>
+        </div>
 
-</body>
-</html>
+        <!-- Mission/About Segment -->
+        <section id="about" class="corporate-block">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2>Our <span>Mission</span></h2>
+                </div>
+                <div class="content-text">
