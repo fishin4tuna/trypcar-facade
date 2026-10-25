@@ -24,21 +24,21 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.2rem 1.5rem;
+      padding: 1.2rem 1rem;
       background-color: #030712;
     }
     
     .brand-container {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.5rem;
     }
     
     .brand-logo-box {
       background: linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);
       border-radius: 6px;
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -46,16 +46,16 @@
 
     .brand-logo-box::after {
       content: '';
-      width: 14px;
-      height: 10px;
+      width: 12px;
+      height: 8px;
       border: 2px solid #ffffff;
-      border-radius: 2px;
+      border-radius: 1px;
     }
     
     /* Clean brand typography to insulate identity safely */
     .brand-text {
       font-weight: 900;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       letter-spacing: -0.01em;
       color: #ffffff;
     }
@@ -64,22 +64,24 @@
       color: #3b82f6;
     }
     
+    /* Optimized uncrowded navigation engine rules */
     .navigation-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 0.85rem;
     }
     
     .navigation-links a {
-      color: #3b82f6;
+      color: #64748b; /* Sleek Grey Baseline */
       font-weight: 700;
-      font-size: 0.8rem;
-      letter-spacing: 0.05em;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       text-decoration: none;
+      transition: color 0.2s ease;
     }
     
-    .navigation-links a.inactive {
-      color: #64748b;
+    .navigation-links a:hover {
+      color: #3b82f6;
     }
 
     /* Hero Section with Dual-Gradient Mask to Hide Front Bumper Emblem */
@@ -173,7 +175,9 @@
       </div>
       <div class="navigation-links">
         <a href="#">ABOUT</a>
-        <a href="#" class="inactive">TIERS</a>
+        <a href="#">TIERS</a>
+        <a href="#">CONTACT</a>
+        <a href="#">INVESTORS</a>
       </div>
     </nav>
 
