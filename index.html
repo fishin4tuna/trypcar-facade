@@ -5,169 +5,224 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrypCar | Premium Mobility</title>
   <style>
-    /* Premium Design System Reset */
+    /* Global Reset & Theme Base */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
-    
-    /* Luxury Dark Backdrop with Radial Glow Depth Restored */
-    html, body {
+    body {
       background-color: #030712;
-      background-image: 
-        radial-gradient(circle at 50% -20%, #1e3a8a 0%, transparent 50%),
-        radial-gradient(circle at 0% 100%, #0f172a 0%, transparent 40%);
-      background-attachment: fixed;
-      color: #f8fafc;
-      min-height: 100vh;
+      color: #ffffff;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Fixed Premium Glassmorphism Header Restored */
+    /* Fixed Glass Header */
     nav.navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.5rem 3rem;
-      background: rgba(3, 7, 18, 0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      position: sticky;
+      padding: 1rem 1.5rem;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(20px);
+      position: fixed;
       top: 0;
-      z-index: 1000;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    
-    /* Branding Typography: Clean Luxury, Zero Tesla Resemblance */
-    .navbar-logo {
-      display: flex;
-      align-items: center;
-      font-weight: 700;
-      font-size: 1.35rem;
-      letter-spacing: 0.12em;
-      color: #ffffff;
-      text-transform: uppercase;
-    }
-    .navbar-logo span {
-      color: #3b82f6;
-      font-weight: 300;
-      letter-spacing: 0.05em;
-      text-transform: lowercase;
-    }
-    
-    /* Navigation Link Array Restored */
-    .navbar-links {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-    .navbar-links a {
-      color: #94a3b8;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      padding: 0.5rem 0;
-    }
-    .navbar-links a:hover {
-      color: #ffffff;
-    }
-    .navbar-links a.active {
-      color: #3b82f6;
-    }
-    /* Active underline neon indicator restored */
-    .navbar-links a.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
       width: 100%;
-      height: 2px;
-      background: #3b82f6;
-      box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
-      border-radius: 2px;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
-
-    /* Core Container Layout Restored */
-    .content-container {
-      max-width: 680px;
-      margin: 6rem auto;
-      padding: 0 2rem;
-    }
-    
-    /* High-end Editorial Typography Restored */
-    h1 {
-      font-size: 3rem;
+    .navbar-logo {
       font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      margin-bottom: 0.75rem;
-      color: #ffffff;
+      font-size: 1.3rem;
+      letter-spacing: 0.05em;
     }
-    h1 span.accent {
-      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .sub-heading {
-      color: #60a5fa;
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 3rem;
-      display: inline-block;
-      border-left: 2px solid #3b82f6;
-      padding-left: 1rem;
-    }
-    p {
-      color: #cbd5e1;
-      font-size: 1.15rem;
-      line-height: 1.85;
-      margin-bottom: 2.5rem;
-      font-weight: 300;
+    .navbar-logo span { color: #3b82f6; }
+
+    /* Immersive Hero Section */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      height: 85vh;
+      min-height: 580px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-top: 60px;
+      background: radial-gradient(circle at center, rgba(15, 23, 42, 0.2) 0%, rgba(3, 7, 18, 1) 100%), url('hero-bg.jpg') center/cover no-repeat;
     }
 
-    /* Responsive Scaling Adjustment Restored */
-    @media (max-width: 640px) {
-      nav.navbar {
-        padding: 1.25rem 1.5rem;
-      }
-      .content-container {
-        margin: 4rem auto;
-      }
-      h1 {
-        font-size: 2.25rem;
-      }
+    /* THE HERO TEXT CONTENT LAYOUT */
+    .hero-text-overlay {
+      z-index: 10;
+      pointer-events: none;
+    }
+    .hero-title {
+      font-size: 4.5rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .hero-title span { color: #3b82f6; }
+    .hero-tagline {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      color: #3b82f6;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    /* THE VEHICLE CONTAINER MOCKUP */
+    .vehicle-mockup-wrapper {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 5;
+    }
+
+    /* THE CAR DOOR TEXT STYLING BLOCK */
+    .car-side-text {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 2.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      
+      /* Default Font Style: Cyber Futuristic */
+      font-weight: 900;
+      font-family: 'Impact', 'Arial Black', sans-serif;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      transform: skewX(-6deg) rotate(-2deg); /* Matches the side angle of a model car door */
+    }
+
+    /* INTERACTIVE CONTROLS PANEL FOR TESTING */
+    .font-control-panel {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      backdrop-filter: blur(12px);
+      padding: 1.25rem;
+      border-radius: 12px;
+      margin: 2rem auto;
+      max-width: 600px;
+      text-align: center;
+      z-index: 100;
+      position: relative;
+    }
+    .panel-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #94a3b8;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .btn-group {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .font-btn {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #cbd5e1;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .font-btn:hover {
+      background: rgba(59, 130, 246, 0.15);
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+    .font-btn.active {
+      background: #3b82f6;
+      color: #ffffff;
+      border-color: #3b82f6;
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
     }
   </style>
 </head>
 <body>
 
   <nav class="navbar">
-    <div class="navbar-logo">
-      TRYP<span>car</span>
-    </div>
-    <div class="navbar-links">
-      <a href="index.html" class="active">About</a>
-      <a href="investors.html">Investors</a>
-      <a href="contact.html">Contact</a>
-    </div>
+    <div class="navbar-logo">TRYP<span>CAR</span></div>
   </nav>
 
-  <main class="content-container">
-    <h1>Our Mission &<br><span class="accent">About Us</span></h1>
-    <div class="sub-heading">The Standard of Trusted Safety</div>
-    
-    <p>TrypCar was born out of a simple reality: moving between institutional facilities should be effortless, pristine, and entirely safe. We replaced the unpredictable public rideshare lottery with an exclusive, closed peer-to-peer network.</p>
-    
-    <p>Every compact EV sedan and TrypScoot in our fleet is piloted or operated strictly by identity-verified members of your immediate community, ensuring total peace of mind for students, faculty, and parents alike.</p>
-  </main>
+  <header class="hero-section">
+    <!-- Overlay Layout Text -->
+    <div class="hero-text-overlay">
+      <h1 class="hero-title">TRYP<span>CAR</span></h1>
+      <div class="hero-tagline">Smart Rides. Trusted Safety.</div>
+    </div>
+
+    <!-- Visual Mockup Container containing the Car Graphic and Door Decal -->
+    <div class="vehicle-mockup-wrapper">
+      <!-- This text container maps exactly to the graphic decal on the car door -->
+      <div id="carDoorDecal" class="car-side-text">TRYPCAR</div>
+    </div>
+  </header>
+
+  <!-- Interactive Testing Controls -->
+  <section class="font-control-panel">
+    <div class="panel-title">🎛️ Adjust & Test Decal Font Ideas On The Car</div>
+    <div class="btn-group">
+      <button class="font-btn active" onclick="applyFont('cyber')">1. Cyber Futuristic</button>
+      <button class="font-btn" onclick="applyFont('racing')">2. Racing Kinetic</button>
+      <button class="font-btn" onclick="applyFont('luxury')">3. Premium Serif</button>
+      <button class="font-btn" onclick="applyFont('cleantech')">4. Clean Grotesk</button>
+    </div>
+  </section>
+
+  <script>
+    // Live execution switching function to instantly see visual treatments
+    function applyFont(styleType) {
+      const decal = document.getElementById('carDoorDecal');
+      
+      // Reset active class states on buttons
+      document.querySelectorAll('.font-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Swap rules strictly for the car graphic text asset
+      if (styleType === 'cyber') {
+        decal.style.fontFamily = "'Impact', 'Arial Black', sans-serif";
+        decal.style.fontWeight = '900';
+        decal.style.letterSpacing = '0.05em';
+        decal.style.transform = 'skewX(-6deg) rotate(-2deg)';
+      } 
+      else if (styleType === 'racing') {
+        decal.style.fontFamily = "'Arial Black', sans-serif";
+        decal.style.fontWeight = '900';
+        decal.style.letterSpacing = '-0.02em';
+        decal.style.transform = 'skewX(-15deg) rotate(-2deg) scaleY(0.95)';
+      } 
+      else if (styleType === 'luxury') {
+        decal.style.fontFamily = "'Times New Roman', 'Georgia', serif";
+        decal.style.fontWeight = '400';
+        decal.style.letterSpacing = '0.25em';
+        decal.style.transform = 'skewX(-4deg) rotate(-2deg)';
+      } 
+      else if (styleType === 'cleantech') {
+        decal.style.fontFamily = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+        decal.style.fontWeight = '700';
+        decal.style.letterSpacing = '0.08em';
+        decal.style.transform = 'skewX(-5deg) rotate(-2deg)';
+      }
+    }
+  </script>
 
 </body>
 </html>
