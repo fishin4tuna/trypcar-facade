@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrypCar | Premium Mobility</title>
   <style>
-    /* Premium Design System Reset */
+    /* Absolute Base System Reset */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,141 +13,213 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     
-    /* RESTORED: Deep Premium Radial Glow Behind Content */
-    html, body {
+    body {
       background-color: #030712;
-      background-image: 
-        radial-gradient(circle at 50% 40%, #0f1e3d 0%, #030712 70%);
-      background-attachment: fixed;
-      color: #f8fafc;
-      min-height: 100vh;
+      color: #ffffff;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    /* Fixed Navigation Bar Matching Your Live Screenshot Layout */
-    nav.navbar {
+    /* Full-Height Screen Hero Area */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
       display: flex;
       flex-direction: column;
+      /* Replace 'campus-car-hero.jpg' with your actual background image file name */
+      background-image: linear-gradient(rgba(10, 15, 30, 0.45), rgba(10, 15, 30, 0.7)), url('campus-car-hero.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+
+    /* Fixed Top Premium Navbar Arrangement */
+    nav.navbar {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 1.25rem;
-      padding: 2rem 1.5rem;
-      background: rgba(3, 7, 18, 0.8);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      padding: 1.25rem 2rem;
+      background: rgba(3, 7, 18, 0.4);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
     
-    /* Branding Typography */
+    /* Branding Element: Integrated Icon & Clean Caps Font */
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .brand-icon-wrapper {
+      background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+      padding: 0.5rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .brand-icon-wrapper svg {
+      width: 20px;
+      height: 20px;
+      fill: #ffffff;
+    }
     .navbar-logo {
-      font-weight: 800;
+      font-weight: 900;
       font-size: 1.5rem;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.05em;
       color: #ffffff;
-      text-transform: uppercase;
     }
     .navbar-logo span {
-      color: #3b82f6;
-      font-weight: 300;
-      text-transform: lowercase;
+      color: #0099ff;
     }
     
-    /* Navigation Array Alignment */
+    /* Navigation Array Alignment Right */
     .navbar-links {
       display: flex;
-      gap: 1.75rem;
+      gap: 1.5rem;
     }
     .navbar-links a {
       color: #94a3b8;
-      font-weight: 700;
+      font-weight: 600;
       text-transform: uppercase;
       font-size: 0.85rem;
       letter-spacing: 0.1em;
       text-decoration: none;
-      position: relative;
-      padding: 0.5rem 0;
+      transition: color 0.2s ease;
     }
-    .navbar-links a.active {
-      color: #3b82f6;
-    }
-    /* Clean Active Tab Underline Indicator */
-    .navbar-links a.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: #3b82f6;
-      box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
-    }
-
-    /* Core Content Container Matching Your Live Spacing */
-    .content-container {
-      max-width: 600px;
-      margin: 3.5rem auto;
-      padding: 2rem;
-      background: rgba(4, 9, 24, 0.4);
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.03);
-    }
-    
-    /* High-End Heading Typography */
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
+    .navbar-links a:hover {
       color: #ffffff;
     }
-    
-    /* Blue Left Accent Border Subheading */
-    .sub-heading {
-      color: #3b82f6;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
+
+    /* Centralized Hero Message Positioning */
+    .hero-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 1.5rem;
+      margin-top: -4rem; /* Visual balance tweak to pull typography center */
+    }
+
+    /* Giant Clean Branding Center Display */
+    .hero-title {
+      font-size: 4.5rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      color: #ffffff;
       text-transform: uppercase;
-      margin-bottom: 3rem;
-      display: block;
-      border-left: 2px solid #3b82f6;
-      padding-left: 1rem;
-      line-height: 1.4;
+      line-height: 1;
+      margin-bottom: 1rem;
     }
-    
-    p {
-      color: #94a3b8;
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin-bottom: 2rem;
-      font-weight: 400;
+    .hero-title span {
+      color: #0099ff;
     }
-    p:last-of-type {
-      margin-bottom: 0;
+
+    /* Slogan String Details */
+    .hero-slogan {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      color: #3b82f6;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Premium Blue-Purple Vibrant Gradient Accent Action Control */
+    .btn-explore {
+      background: linear-gradient(90deg, #0077ff 0%, #7a00ff 100%);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 1.1rem 3.5rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 119, 255, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-explore:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(122, 0, 255, 0.5);
+    }
+
+    /* Scroll Fold Section Structure */
+    .mission-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 8rem 2rem;
+      text-align: center;
+    }
+    .section-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+    .section-title span {
+      color: #0099ff;
+    }
+
+    /* Responsive Media Adaptation */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 3.2rem;
+      }
+      .hero-slogan {
+        font-size: 0.95rem;
+        letter-spacing: 0.15em;
+      }
+      .btn-explore {
+        padding: 1rem 2.5rem;
+        font-size: 0.9rem;
+      }
+      .section-title {
+        font-size: 2.5rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="navbar-logo">
-      TRYP<span>car</span>
-    </div>
-    <div class="navbar-links">
-      <a href="index.html" class="active">About</a>
-      <a href="investors.html">Investors</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </nav>
+  <!-- Top Hero View Block Container -->
+  <section class="hero-section">
+    
+    <!-- Navigation Asset Overlay -->
+    <nav class="navbar">
+      <div class="brand-group">
+        <div class="brand-icon-wrapper">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM4.68 11L12 15l7.32-4L12 7 4.68 11zM12 16c-1.7 0-3.23-.61-4.44-1.63L5.42 16c1.68 1.47 3.88 2.37 6.29 2.37s4.61-.9 6.29-2.37l-2.14-1.63C15.23 15.39 13.7 16 12 16z"/>
+          </svg>
+        </div>
+        <div class="navbar-logo">TRYP<span>CAR</span></div>
+      </div>
+      <div class="navbar-links">
+        <a href="#about">About</a>
+        <a href="#tiers">Tiers</a>
+      </div>
+    </nav>
 
-  <main class="content-container">
-    <h1>Our Mission &<br>About Us</h1>
-    <div class="sub-heading">The Standard of Trusted Safety</div>
-    
-    <p>TrypCar was born out of a simple reality: moving between institutional facilities should be effortless, pristine, and entirely safe. We replaced the unpredictable public rideshare lottery with an exclusive, closed peer-to-peer network.</p>
-    
-    <p>Every compact EV sedan and TrypScoot in our fleet is piloted or operated strictly by identity-verified members of your immediate community, ensuring total peace of mind for students, faculty, and parents alike.</p>
-  </main>
+    <!-- Center Stage Focal Typography Elements -->
+    <div class="hero-content">
+      <h1 class="hero-title">TRYP<span>CAR</span></h1>
+      <div class="hero-slogan">Smart Rides. Trusted Safety.</div>
+      <button class="btn-explore">Explore Brand</button>
+    </div>
+
+  </section>
+
+  <!-- Content Below Fold Layout -->
+  <section id="about" class="mission-section">
+    <h2 class="section-title">Our <span>Mission</span></h2>
+  </section>
 
 </body>
 </html>
