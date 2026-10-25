@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Premium Mobility</title>
+  <title>TrypCar | Smart Rides. Trusted Safety.</title>
   <style>
-    /* Absolute Base System Reset */
+    /* -------------------------------------------------------------------------- */
+    /* 1. CORE DESIGN SYSTEM RESET                                                */
+    /* -------------------------------------------------------------------------- */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -14,211 +16,269 @@
     }
     
     body {
-      background-color: #030712;
-      color: #ffffff;
+      background-color: #faf9f6;
+      color: #1e293b;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    /* Full-Height Screen Hero Area */
-    .hero-section {
+    /* -------------------------------------------------------------------------- */
+    /* 2. THE EDITORIAL HERO SPLIT SECTION                                        */
+    /* -------------------------------------------------------------------------- */
+    .hero-wrapper {
       position: relative;
       width: 100%;
-      height: 100vh;
+      min-height: 85vh;
       display: flex;
       flex-direction: column;
-      /* Replace 'campus-car-hero.jpg' with your actual background image file name */
-      background-image: linear-gradient(rgba(10, 15, 30, 0.45), rgba(10, 15, 30, 0.7)), url('campus-car-hero.jpg');
+      /* Main campus landscape visual background from the mockup image */
+      background-image: 
+        linear-gradient(to right, rgba(250, 249, 246, 0.9) 30%, rgba(250, 249, 246, 0.1) 70%), 
+        url('https://unsplash.com');
       background-size: cover;
-      background-position: center center;
+      background-position: center right;
       background-repeat: no-repeat;
     }
 
-    /* Fixed Top Premium Navbar Arrangement */
+    /* -------------------------------------------------------------------------- */
+    /* 3. STICKY BRAND NAVIGATION COMPONENT                                       */
+    /* -------------------------------------------------------------------------- */
     nav.navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.25rem 2rem;
-      background: rgba(3, 7, 18, 0.4);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 1.5rem 4rem;
+      background: rgba(250, 249, 246, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.05);
     }
     
-    /* Branding Element: Integrated Icon & Clean Caps Font */
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .brand-icon-wrapper {
-      background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
-      padding: 0.5rem;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .brand-icon-wrapper svg {
-      width: 20px;
-      height: 20px;
-      fill: #ffffff;
-    }
     .navbar-logo {
       font-weight: 900;
-      font-size: 1.5rem;
-      letter-spacing: 0.05em;
-      color: #ffffff;
+      font-size: 1.6rem;
+      letter-spacing: 0.06em;
+      color: #0f172a;
+      text-transform: uppercase;
     }
+
     .navbar-logo span {
-      color: #0099ff;
+      color: #2563eb;
     }
     
-    /* Navigation Array Alignment Right */
     .navbar-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 2.5rem;
+      align-items: center;
     }
+
     .navbar-links a {
-      color: #94a3b8;
+      color: #475569;
       font-weight: 600;
       text-transform: uppercase;
       font-size: 0.85rem;
       letter-spacing: 0.1em;
       text-decoration: none;
-      transition: color 0.2s ease;
-    }
-    .navbar-links a:hover {
-      color: #ffffff;
+      transition: color 0.25s ease;
+      position: relative;
+      padding: 0.4rem 0;
     }
 
-    /* Centralized Hero Message Positioning */
-    .hero-content {
+    .navbar-links a:hover,
+    .navbar-links a.active {
+      color: #2563eb;
+    }
+
+    .navbar-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #2563eb;
+      border-radius: 2px;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* 4. BRAND CORE CONTENT & CTA BOX ARRANGEMENT                                */
+    /* -------------------------------------------------------------------------- */
+    .hero-container {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 0 1.5rem;
-      margin-top: -4rem; /* Visual balance tweak to pull typography center */
-    }
-
-    /* Giant Clean Branding Center Display */
-    .hero-title {
-      font-size: 4.5rem;
-      font-weight: 900;
-      letter-spacing: 0.04em;
-      color: #ffffff;
-      text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 1rem;
-    }
-    .hero-title span {
-      color: #0099ff;
-    }
-
-    /* Slogan String Details */
-    .hero-slogan {
-      font-size: 1.15rem;
-      font-weight: 800;
-      letter-spacing: 0.25em;
-      color: #3b82f6;
-      text-transform: uppercase;
-      margin-bottom: 2.5rem;
-    }
-
-    /* Premium Blue-Purple Vibrant Gradient Accent Action Control */
-    .btn-explore {
-      background: linear-gradient(90deg, #0077ff 0%, #7a00ff 100%);
-      color: #ffffff;
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 1.1rem 3.5rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(0, 119, 255, 0.35);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .btn-explore:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 25px rgba(122, 0, 255, 0.5);
-    }
-
-    /* Scroll Fold Section Structure */
-    .mission-section {
-      max-width: 900px;
+      max-width: 1300px;
       margin: 0 auto;
-      padding: 8rem 2rem;
-      text-align: center;
-    }
-    .section-title {
-      font-size: 3.5rem;
-      font-weight: 900;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      color: #ffffff;
-    }
-    .section-title span {
-      color: #0099ff;
+      width: 100%;
+      padding: 4rem 4rem;
+      display: flex;
+      align-items: center;
     }
 
-    /* Responsive Media Adaptation */
-    @media (max-width: 768px) {
-      .hero-title {
-        font-size: 3.2rem;
+    .hero-text-block {
+      max-width: 540px;
+      z-index: 10;
+    }
+    
+    h1 {
+      font-size: 3.75rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      color: #0f172a;
+      text-transform: uppercase;
+    }
+
+    h1 span.accent {
+      color: #2563eb;
+    }
+
+    .hero-slogan {
+      color: #475569;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      border-left: 3px solid #2563eb;
+      padding-left: 1rem;
+    }
+
+    p.hero-desc {
+      color: #334155;
+      font-size: 1.15rem;
+      line-height: 1.75;
+      margin-bottom: 3rem;
+      font-weight: 400;
+    }
+
+    /* High-contrast Corporate Action Trigger */
+    .btn-action {
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 1.25rem 3rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.15);
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: #2563eb;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(37, 99, 233, 0.25);
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* 5. SECONDARY MISSION GRID REGION                                           */
+    /* -------------------------------------------------------------------------- */
+    .mission-section {
+      background-color: #ffffff;
+      border-top: 1px solid rgba(30, 41, 59, 0.05);
+      padding: 6rem 4rem;
+    }
+
+    .mission-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .mission-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+
+    .mission-title span {
+      color: #2563eb;
+    }
+
+    .mission-body p {
+      color: #475569;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* 6. RESPONSIVE DESIGN ADJUSTMENT BREAKPOINTS                                */
+    /* -------------------------------------------------------------------------- */
+    @media (max-width: 968px) {
+      .hero-wrapper {
+        background-image: 
+          linear-gradient(to bottom, rgba(250, 249, 246, 0.95) 40%, rgba(250, 249, 246, 0.4) 100%), 
+          url('https://unsplash.com');
+        background-position: center center;
       }
-      .hero-slogan {
-        font-size: 0.95rem;
-        letter-spacing: 0.15em;
+      nav.navbar {
+        padding: 1.25rem 2rem;
       }
-      .btn-explore {
-        padding: 1rem 2.5rem;
-        font-size: 0.9rem;
+      .hero-container {
+        padding: 4rem 2rem;
       }
-      .section-title {
-        font-size: 2.5rem;
+      h1 {
+        font-size: 2.75rem;
+      }
+      .mission-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .mission-section {
+        padding: 4rem 2rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Hero View Block Container -->
-  <section class="hero-section">
-    
-    <!-- Navigation Asset Overlay -->
-    <nav class="navbar">
-      <div class="brand-group">
-        <div class="brand-icon-wrapper">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM4.68 11L12 15l7.32-4L12 7 4.68 11zM12 16c-1.7 0-3.23-.61-4.44-1.63L5.42 16c1.68 1.47 3.88 2.37 6.29 2.37s4.61-.9 6.29-2.37l-2.14-1.63C15.23 15.39 13.7 16 12 16z"/>
-          </svg>
-        </div>
-        <div class="navbar-logo">TRYP<span>CAR</span></div>
-      </div>
-      <div class="navbar-links">
-        <a href="#about">About</a>
-        <a href="#tiers">Tiers</a>
-      </div>
-    </nav>
-
-    <!-- Center Stage Focal Typography Elements -->
-    <div class="hero-content">
-      <h1 class="hero-title">TRYP<span>CAR</span></h1>
-      <div class="hero-slogan">Smart Rides. Trusted Safety.</div>
-      <button class="btn-explore">Explore Brand</button>
+  <!-- Top Navigation Bar Component -->
+  <nav class="navbar">
+    <div class="navbar-logo">
+      TRYP<span>CAR</span>
     </div>
+    <div class="navbar-links">
+      <a href="#" class="active">About</a>
+      <a href="#">Tiers</a>
+      <a href="#">Contact</a>
+    </div>
+  </nav>
 
-  </section>
+  <!-- Editorial Split Hero Block -->
+  <header class="hero-wrapper">
+    <div class="hero-container">
+      <div class="hero-text-block">
+        <div class="hero-slogan">Smart Rides. Trusted Safety.</div>
+        <h1>TRYP<span class="accent">CAR</span></h1>
+        <p class="hero-desc">
+          We have swapped unpredictable ridesharing out for an exclusive, closed peer-to-peer micro-mobility network. Seamless transit between facilities, completely monitored and verified for immediate peace of mind.
+        </p>
+        <button class="btn-action">Explore Platform</button>
+      </div>
+    </div>
+  </header>
 
-  <!-- Content Below Fold Layout -->
-  <section id="about" class="mission-section">
-    <h2 class="section-title">Our <span>Mission</span></h2>
+  <!-- Content Grid Section Below Fold -->
+  <section class="mission-section">
+    <div class="mission-container">
+      <h2 class="mission-title">Our Institutional<br><span>Transit Blueprint</span></h2>
+      <div class="mission-body">
+        <p>Every vehicle inside the active ecosystem operates strictly within localized physical perimeters, managed by community-verified operators to deliver premium logistics parameters safely.</p>
+        <p>By balancing fixed deployment structures with on-demand user utility patterns, the grid retains full operational visibility while avoiding public transit risk elements entirely.</p>
+      </div>
+    </div>
   </section>
 
 </body>
