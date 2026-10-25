@@ -4,278 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrypCar | Premium Campus Mobility Infrastructure</title>
-    
-    <!-- EMBEDDING PREMIUM LUXURY TECH FONTS NATIVELY -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
-
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-navy: #060E1A;
             --card-blue: #0E1726;
             --brand-gradient: linear-gradient(135deg, #00A3FF 0%, #7000FF 100%);
-            --cyber-cyan: #00F2FE;
             --text-white: #FFFFFF;
             --text-muted: #8E9AA8;
             --border-glow: #1E293B;
         }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Montserrat', -apple-system, sans-serif;
             background-color: var(--bg-navy);
             color: var(--text-white);
             line-height: 1.6;
         }
-        
-        /* HEADER WITH REFINED TECH NAVIGATION */
         header {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+            top: 0; left: 0; width: 100%;
             background-color: rgba(6, 14, 26, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-glow);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px; z-index: 1000;
         }
-        .brand-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .brand-wrapper { display: flex; align-items: center; gap: 12px; }
         .logo-svg {
-            width: 36px;
-            height: 36px;
+            width: 36px; height: 36px;
             background: var(--brand-gradient);
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 10px rgba(0, 163, 255, 0.2);
         }
         .logo-text {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-            color: var(--text-white);
+            font-size: 1.4rem; font-weight: 900;
+            letter-spacing: -0.5px; color: var(--text-white);
             text-transform: uppercase;
         }
-        .logo-text span { 
-            color: #00A3FF; 
-            font-weight: 700;
-        }
-        
-        /* HORIZONTAL SCROLL NAV MENU */
-        nav {
-            display: flex;
-            gap: 18px;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding-left: 10px;
-            -webkit-overflow-scrolling: touch;
-        }
-        nav::-webkit-scrollbar { display: none; }
+        .logo-text span { color: #00A3FF; }
+        nav { display: flex; gap: 18px; }
         nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s ease;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 0.8rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
         }
-        nav a:hover { color: #00A3FF; }
-        
-        /* GEOMETRIC PURE HERO ENTRY */
         .hero-container {
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 130px 24px 60px 24px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 130px 24px 60px 24px;
             background: radial-gradient(circle at center, #0F1C30 0%, #060E1A 100%);
         }
         .hero-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 8px;
-            letter-spacing: -1px;
-            line-height: 1.1;
-            text-transform: uppercase;
+            font-size: 3.5rem; font-weight: 900;
+            margin-bottom: 8px; letter-spacing: -1px;
+            line-height: 1.1; text-transform: uppercase;
         }
         .hero-title span { color: #00A3FF; }
-        
-        /* UPDATED PREMIUM BRAND SLOGAN */
         .hero-slogan {
-            font-size: 0.95rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+            font-size: 0.85rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 4px;
             background: linear-gradient(90deg, #00A3FF, #7000FF);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             margin-bottom: 30px;
         }
         .hero-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            max-width: 580px;
-            line-height: 1.6;
-            margin-bottom: 50px;
-            font-weight: 500;
+            font-size: 1.1rem; color: var(--text-muted);
+            max-width: 580px; margin-bottom: 50px;
         }
         .hero-cta {
-            background: var(--brand-gradient);
-            color: var(--text-white);
-            padding: 16px 45px;
-            font-size: 0.9rem;
-            font-weight: 800;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            box-shadow: 0 4px 15px rgba(112, 0, 255, 0.3);
-            border: none;
+            background: var(--brand-gradient); color: var(--text-white);
+            padding: 16px 45px; font-size: 0.9rem; font-weight: 800;
+            border-radius: 6px; text-decoration: none;
+            text-transform: uppercase; letter-spacing: 2px;
+            box-shadow: 0 4px 15px rgba(112, 0, 255, 0.3); border: none;
         }
-        .hero-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 163, 255, 0.4);
-        }
-
-        /* CARD SERVICES TIERS */
         .services-section {
-            padding: 90px 24px;
-            background-color: var(--bg-navy);
+            padding: 90px 24px; background-color: var(--bg-navy);
             border-top: 1px solid var(--border-glow);
         }
-        .section-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
+        .section-header { text-align: center; margin-bottom: 50px; }
         .section-header h2 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 900;
-            margin-bottom: 12px;
-            line-height: 1.2;
+            font-size: 2.2rem; font-weight: 900; margin-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
         .section-header h2 span { color: #00A3FF; }
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            max-width: 500px;
-            margin: 0 auto;
-            line-height: 1.5;
-            font-weight: 500;
-        }
-        .card-container {
-            display: flex;
-            flex-direction: column;
-            gap: 35px;
-            max-width: 450px;
-            margin: 0 auto;
-        }
-        .card {
-            background-color: var(--card-blue);
-            border: 1px solid var(--border-glow);
-            border-radius: 12px;
-            padding: 40px 28px;
-            width: 100%;
-        }
-        .card.premium {
-            border: 2px solid #7000FF;
-            position: relative;
-            box-shadow: 0 8px 25px rgba(112, 0, 255, 0.1);
-        }
+        .card-container { display: flex; flex-direction: column; gap: 35px; max-width: 450px; margin: 0 auto; }
+        .card { background-color: var(--card-blue); border: 1px solid var(--border-glow); border-radius: 12px; padding: 40px 28px; }
+        .card.premium { border: 2px solid #7000FF; position: relative; }
         .badge {
-            position: absolute;
-            top: -14px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--brand-gradient);
-            color: var(--text-white);
-            padding: 4px 18px;
-            font-size: 0.65rem;
-            font-weight: 800;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+            background: var(--brand-gradient); color: var(--text-white);
+            padding: 4px 18px; font-size: 0.65rem; font-weight: 800;
+            border-radius: 20px; text-transform: uppercase;
         }
-        .card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.35rem;
-            margin-bottom: 6px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .card-meta {
-            color: #00A3FF;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-        }
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            font-weight: 500;
-        }
-        .card ul {
-            color: #D1D9E6;
-            font-size: 0.85rem;
-            padding-left: 18px;
-            line-height: 2.2;
-            font-weight: 500;
-        }
-
-        /* ANCHORED INSULATION PROTECTION FOOTER */
-        footer {
-            background-color: #03070F;
-            padding: 60px 24px;
-            text-align: center;
-            font-size: 0.75rem;
-            color: #4A5568;
-            border-top: 1px solid var(--border-glow);
-            line-height: 1.8;
-        }
-        .legal-notice {
-            max-width: 100%;
-            margin: 0 auto;
-            text-align: left;
-            border-left: 2px solid #1E293B;
-            padding-left: 15px;
-            font-weight: 500;
-        }
+        .card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.35rem; margin-bottom: 6px; text-transform: uppercase; }
+        .card-meta { color: #00A3FF; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 20px; }
+        .card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; }
+        .card ul { color: #D1D9E6; font-size: 0.85rem; padding-left: 18px; line-height: 2.2; }
+        footer { background-color: #03070F; padding: 60px 24px; text-align: center; font-size: 0.75rem; color: #4A5568; border-top: 1px solid var(--border-glow); }
+        .legal-notice { max-width: 100%; margin: 0 auto; text-align: left; border-left: 2px solid #1E293B; padding-left: 15px; }
     </style>
 </head>
 <body>
-
     <header>
         <div class="brand-wrapper">
             <div class="logo-svg">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
                     <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="white"/>
-                    <path d="M4 10V14C4 14 7 17 12 17C17 17 20 14 20 14V10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M4 10V14C4 14 7 17 12 17C17 17 20 14 20 14V10" stroke="white" stroke-width="2"/>
                     <path d="M12 11.5V21" stroke="white" stroke-width="2.5" stroke-dasharray="2 2"/>
                 </svg>
             </div>
@@ -283,22 +126,47 @@
         </div>
         <nav>
             <a href="#services">Tiers</a>
-            <a href="#safety">Safety</a>
-            <a href="#investors">Investors</a>
         </nav>
     </header>
-
     <main>
-        <!-- HERO SEGMENT -->
         <section class="hero-container">
             <h1 class="hero-title">Tryp<span>Car</span></h1>
-            <div class="hero-slogan">Campus Rides. Real Connections.</div>
+            <div class="hero-slogan">Students Ride Together</div>
             <p class="hero-subtitle">The Premium, Vetted Electric Rideshare Network Engineered Exclusively for Elite University Campuses.<sup>1</sup></p>
             <a href="mailto:info@trypcar.com" class="hero-cta">Inquire Within</a>
         </section>
-
-        <!-- SERVICES SEGMENT -->
         <section id="services" class="services-section">
             <div class="section-header">
                 <h2>Choose Your <span>Tryp</span></h2>
-                <p>Hyper-localized mobility solutions tailored seamlessly for safety, predictability, and collegiate lifestyle economics.<sup>2</sup></p>
+            </div>
+            <div class="card-container">
+                <div class="card">
+                    <h3>TrypCar Standard</h3>
+                    <div class="card-meta">Daily Campus Commute</div>
+                    <p>Your pristine daily transit asset. Move securely between classrooms, housing structures, and local centers.</p>
+                    <ul>
+                        <li>Mandatory Student-ID Verification</li>
+                        <li>Predictable Fixed Zone Pricing</li>
+                    </ul>
+                </div>
+                <div class="card premium">
+                    <div class="badge">Campus Core Preference</div>
+                    <h3>TrypCar Luxe</h3>
+                    <div class="card-meta">Premium Mobility</div>
+                    <p>Elevate regional travel dynamics. Pristine, late-model premium electric vehicles coupled with top-rated, executive student operators.</p>
+                    <ul>
+                        <li>Exclusively Luxury EV Vehicles</li>
+                        <li>Direct Door-to-Terminal Transfers</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="legal-notice">
+            <strong>[1-2] JURISDICTIONAL OWNERSHIP NOTICE & LEGAL PROTECTION LEGEND:</strong> This web infrastructure represents proprietary operational methodologies belonging exclusively to TrypCar, Inc. Any unauthorized duplication constitutes clear willful copyright and trademark infringement. TrypCar, Inc. will aggressively deploy maximum legal resources to secure statutory damages (up to \$150,000 per violation) under Title 17, United States Code. <br><br>
+            © 2026 TrypCar, Inc. All rights reserved. Tryp™, TrypCar™, and TrypLuxe™ are protected trademarks.
+        </div>
+    </footer>
+</body>
+</html>
