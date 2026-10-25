@@ -21,8 +21,7 @@
         body {
             font-family: 'Montserrat', -apple-system, sans-serif;
             background-color: var(--bg-navy);
-            /* Boosted visibility by 5% so the underlying image colors shine vividly */
-            background-image: linear-gradient(rgba(5, 11, 20, 0.35), rgba(5, 11, 20, 0.7)), 
+            background-image: linear-gradient(rgba(5, 11, 20, 0.35), rgba(5, 11, 20, 0.6)), 
                               url('extended-1920x1080.jpg'),
                               url('extended-1920\u00D71080.jpg'),
                               url('https://unsplash.com');
@@ -45,73 +44,72 @@
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-glow);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 14px 16px; z-index: 9999;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+            padding: 12px 16px; z-index: 9999;
         }
         @media(min-width: 600px) {
-            header { flex-direction: row; justify-content: space-between; padding: 18px 24px; }
+            header { flex-direction: row; justify-content: space-between; padding: 16px 24px; }
         }
         
         .brand-wrapper { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; }
         @media(min-width: 600px) { .brand-wrapper { margin-bottom: 0; } }
         
         .logo-svg {
-            width: 28px; height: 28px;
+            width: 26px; height: 26px;
             background: var(--brand-gradient);
             border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
         }
         .logo-text {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem; font-weight: 900;
+            font-size: 1.25rem; font-weight: 900;
             letter-spacing: -0.5px; color: var(--text-white);
             text-transform: uppercase;
         }
         .logo-text span { color: #00A3FF; }
         
-        nav { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+        nav { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
         @media(min-width: 600px) { nav { justify-content: flex-end; width: auto; gap: 20px; } }
         
         nav a {
             color: #94A3B8; text-decoration: none;
-            font-size: 0.78rem; font-weight: 800;
-            text-transform: uppercase; letter-spacing: 1.5px;
-            padding: 6px 4px;
+            font-size: 0.75rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 1px;
+            padding: 4px;
             transition: all 0.2s ease;
             cursor: pointer;
         }
         nav a:hover, nav a.active { color: #00A3FF; text-shadow: 0 0 10px rgba(0, 163, 255, 0.6); }
         
-        /* Multi-Page Container Setup */
+        /* Shifted down less to pull title up roughly 2 inches */
         .page-view {
-            display: none; /* Hidden by default */
+            display: none;
             flex-grow: 1;
-            padding: 160px 24px 80px 24px;
+            padding: 95px 24px 60px 24px;
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            animation: fadeIn 0.4s ease forwards;
+            animation: fadeIn 0.3s ease forwards;
         }
         .page-view.active {
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Viewport Layouts */
-        .hero-layout { text-align: center; max-width: 800px; margin: 0 auto; }
+        .hero-layout { text-align: center; max-width: 800px; margin: 0 auto; width: 100%; }
         .hero-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.5rem, 9vw, 4rem);
+            font-size: clamp(2.6rem, 10vw, 4.2rem);
             font-weight: 900;
-            margin-bottom: 12px; letter-spacing: 1px;
+            margin-bottom: 8px; letter-spacing: 1px;
             line-height: 1.1; text-transform: uppercase;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
         }
         .hero-title span { color: #00A3FF; }
         .hero-slogan {
@@ -120,31 +118,29 @@
             text-transform: uppercase; letter-spacing: 3px;
             background: linear-gradient(90deg, #00A3FF, #7000FF);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 35px;
-            padding: 0 15px;
+            margin-bottom: 25px;
             line-height: 1.3;
         }
         .hero-subtitle {
-            font-size: 0.98rem; color: #F1F5F9;
-            margin-bottom: 50px; line-height: 1.6;
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.95);
+            font-size: 0.95rem; color: #F1F5F9;
+            margin-bottom: 35px; line-height: 1.6;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.95);
         }
         .hero-cta {
             display: inline-block;
             background: var(--brand-gradient); color: var(--text-white);
-            padding: 16px 45px; font-size: 0.85rem; font-weight: 800;
+            padding: 14px 40px; font-size: 0.85rem; font-weight: 800;
             border-radius: 6px; text-decoration: none;
             text-transform: uppercase; letter-spacing: 2px;
-            box-shadow: 0 8px 25px rgba(112, 0, 255, 0.5); border: none;
+            box-shadow: 0 6px 20px rgba(112, 0, 255, 0.4); border: none;
             cursor: pointer;
         }
         
-        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header { text-align: center; margin-bottom: 30px; width: 100%; }
         .section-header h2 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.3rem; font-weight: 900; margin-bottom: 12px;
+            font-size: 2rem; font-weight: 900; margin-bottom: 8px;
             text-transform: uppercase;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
         .section-header h2 span { color: #00A3FF; }
         
@@ -152,65 +148,71 @@
             max-width: 750px; 
             margin: 0 auto; 
             color: #F1F5F9; 
-            font-size: 1.05rem; 
-            line-height: 1.8; 
-            background: rgba(5, 11, 20, 0.8);
-            padding: 40px;
+            font-size: 1rem; 
+            line-height: 1.7; 
+            background: rgba(5, 11, 20, 0.85);
+            padding: 30px;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
-        .content-block p { margin-bottom: 20px; }
+        .content-block p { margin-bottom: 15px; }
         .content-block p:last-child { margin-bottom: 0; }
         
-        .card-container { display: flex; flex-direction: column; gap: 30px; max-width: 900px; margin: 0 auto; width: 100%; }
-        @media(min-width: 750px) {
-            .card-container { flex-direction: row; }
-        }
+        .card-container { display: flex; flex-direction: column; gap: 24px; max-width: 900px; margin: 0 auto; width: 100%; }
+        @media(min-width: 750px) { .card-container { flex-direction: row; } }
+        
         .card { 
             flex: 1;
             background-color: var(--card-blue); 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             border-radius: 12px; 
-            padding: 40px 28px; 
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            padding: 30px 24px; 
         }
-        .card.premium { border: 1px solid #7000FF; box-shadow: 0 20px 40px rgba(112, 0, 255, 0.15); }
-        .card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.35rem; margin-bottom: 6px; text-transform: uppercase; }
-        .card-meta { color: #00A3FF; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 20px; }
-        .card p { color: #E2E8F0; font-size: 0.92rem; margin-bottom: 25px; }
-        .card ul { color: #F1F5F9; font-size: 0.88rem; padding-left: 18px; line-height: 2.2; }
+        .card.premium { border: 1px solid #7000FF; }
+        .card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.25rem; margin-bottom: 4px; text-transform: uppercase; }
+        .card-meta { color: #00A3FF; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 15px; }
+        .card p { color: #E2E8F0; font-size: 0.9rem; margin-bottom: 20px; }
+        .card ul { color: #F1F5F9; font-size: 0.85rem; padding-left: 16px; line-height: 2; }
         
-        .timeline { max-width: 650px; margin: 0 auto; position: relative; padding: 30px 20px 30px 30px; border-left: 2px solid var(--border-glow); background: rgba(5, 11, 20, 0.8); border-radius: 0 12px 12px 0; }
-        .timeline-item { margin-bottom: 40px; position: relative; }
+        .timeline { max-width: 650px; margin: 0 auto; position: relative; padding: 25px; border-left: 2px solid var(--border-glow); background: rgba(5, 11, 20, 0.85); border-radius: 0 12px 12px 0; }
+        .timeline-item { margin-bottom: 30px; position: relative; }
         .timeline-item:last-child { margin-bottom: 0; }
         .timeline-item::before {
-            content: ''; position: absolute; left: -37px; top: 6px;
+            content: ''; position: absolute; left: -32px; top: 6px;
             width: 12px; height: 12px; background: #00A3FF; border-radius: 50%;
-            box-shadow: 0 0 12px #00A3FF;
+            box-shadow: 0 0 10px #00A3FF;
         }
-        .timeline-date { font-family: 'Orbitron', sans-serif; font-weight: 800; color: #00A3FF; font-size: 0.88rem; text-transform: uppercase; margin-bottom: 5px; }
-        .timeline-title { font-size: 1.2rem; font-weight: 700; color: var(--text-white); margin-bottom: 8px; }
+        .timeline-date { font-family: 'Orbitron', sans-serif; font-weight: 800; color: #00A3FF; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 4px; }
+        .timeline-title { font-size: 1.15rem; font-weight: 700; color: var(--text-white); margin-bottom: 6px; }
         
         .contact-box { 
             background-color: var(--card-blue); 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             border-radius: 12px; 
-            padding: 40px 30px; 
+            padding: 35px 25px; 
             text-align: center; 
             max-width: 500px; 
             margin: 0 auto; 
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            width: 100%;
         }
-        .contact-btn { display: inline-block; width: 100%; padding: 14px; background: rgba(0, 163, 255, 0.15); border: 1px solid #00A3FF; color: #00A3FF; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; border-radius: 6px; text-decoration: none; margin-top: 15px; }
+        .contact-btn { display: inline-block; width: 100%; padding: 12px; background: rgba(0, 163, 255, 0.15); border: 1px solid #00A3FF; color: #00A3FF; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; border-radius: 6px; text-decoration: none; margin-top: 15px; }
 
-        footer { background-color: rgba(3, 7, 15, 0.98); padding: 30px 24px; text-align: center; font-size: 0.8rem; color: #94A3B8; border-top: 1px solid var(--border-glow); margin-top: auto; }
+        footer { background-color: rgba(3, 7, 15, 0.98); padding: 25px; text-align: center; font-size: 0.75rem; color: #94A3B8; border-top: 1px solid var(--border-glow); margin-top: auto; width: 100%; }
     </style>
 </head>
 <body>
     <header>
         <div class="brand-wrapper" onclick="navigateTo('home')">
             <div class="logo-svg">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
                     <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="white"/>
                     <path d="M4 10V14C4 14 7 17 12 17C17 17 20 14 20 14V10" stroke="white" stroke-width="2"/>
+                    <path d="M12 11.5V21" stroke="white" stroke-width="2.5" stroke-dasharray="2 2"/>
+                </svg>
+            </div>
+            <div class="logo-text">Tryp<span>Car</span></div>
+        </div>
+        <nav>
+            <a id="nav-home" onclick="navigateTo('home')">Home</a>
+            <a id="nav-about" onclick="navigateTo('about')">About</a>
+            <a id="nav-services" onclick="navigateTo('services')">Tiers</a>
