@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrypCar | Premium Mobility</title>
   <style>
-    /* Reset and Core Sizing */
+    /* Premium Design System Reset */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,40 +13,34 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     
-    /* Fixed Full-Screen Photographic Background Image Wrapper */
+    /* RESTORED: Deep Premium Radial Glow Behind Content */
     html, body {
-      background-image: url('image_wWRU6C.png');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
       background-color: #030712;
-      color: #ffffff;
+      background-image: 
+        radial-gradient(circle at 50% 40%, #0f1e3d 0%, #030712 70%);
+      background-attachment: fixed;
+      color: #f8fafc;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Fixed Glassmorphic Header Navigation with Breakout Prevention */
+    /* Fixed Navigation Bar Matching Your Live Screenshot Layout */
     nav.navbar {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      flex-wrap: wrap;
-      row-gap: 1rem;
-      padding: 1.5rem 2rem;
-      background: rgba(3, 7, 18, 0.7);
+      gap: 1.25rem;
+      padding: 2rem 1.5rem;
+      background: rgba(3, 7, 18, 0.8);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
     
     /* Branding Typography */
     .navbar-logo {
       font-weight: 800;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       letter-spacing: 0.1em;
       color: #ffffff;
       text-transform: uppercase;
@@ -55,72 +49,66 @@
       color: #3b82f6;
       font-weight: 300;
       text-transform: lowercase;
-      letter-spacing: 0.02em;
     }
     
-    /* Link Cluster Layout array */
+    /* Navigation Array Alignment */
     .navbar-links {
       display: flex;
       gap: 1.75rem;
     }
     .navbar-links a {
-      color: #cbd5e1;
-      font-weight: 600;
+      color: #94a3b8;
+      font-weight: 700;
       text-transform: uppercase;
       font-size: 0.85rem;
       letter-spacing: 0.1em;
       text-decoration: none;
       position: relative;
-      padding: 0.25rem 0;
-    }
-    .navbar-links a:hover {
-      color: #ffffff;
+      padding: 0.5rem 0;
     }
     .navbar-links a.active {
       color: #3b82f6;
     }
-    /* Neon Tab Underline Highlight */
+    /* Clean Active Tab Underline Indicator */
     .navbar-links a.active::after {
       content: '';
       position: absolute;
-      bottom: -6px;
+      bottom: 0;
       left: 0;
       width: 100%;
       height: 2px;
       background: #3b82f6;
-      box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
     }
 
-    /* Floating Semi-Transparent Text Card to Keep Copy Readable over Image */
+    /* Core Content Container Matching Your Live Spacing */
     .content-container {
       max-width: 600px;
-      margin: 4rem auto;
-      padding: 2.5rem;
-      background: rgba(3, 7, 18, 0.8);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      margin: 3.5rem auto;
+      padding: 2rem;
+      background: rgba(4, 9, 24, 0.4);
       border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.03);
     }
     
-    /* Copy Headers */
+    /* High-End Heading Typography */
     h1 {
-      font-size: 2.6rem;
+      font-size: 2.5rem;
       font-weight: 800;
       letter-spacing: -0.01em;
       line-height: 1.2;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
       color: #ffffff;
     }
     
-    /* Blue Stripe Sidebar Subheader */
+    /* Blue Left Accent Border Subheading */
     .sub-heading {
       color: #3b82f6;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem;
       display: block;
       border-left: 2px solid #3b82f6;
       padding-left: 1rem;
@@ -128,31 +116,14 @@
     }
     
     p {
-      color: #cbd5e1;
-      font-size: 1.05rem;
-      line-height: 1.75;
-      margin-bottom: 1.5rem;
+      color: #94a3b8;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
       font-weight: 400;
     }
     p:last-of-type {
       margin-bottom: 0;
-    }
-
-    /* Mobile Scaling Logic - Centers and Organizes elements on Small Views */
-    @media (max-width: 580px) {
-      nav.navbar {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-        padding: 1.25rem 1rem;
-      }
-      .content-container {
-        margin: 2rem 1rem;
-        padding: 1.75rem;
-      }
-      h1 {
-        font-size: 2.1rem;
-      }
     }
   </style>
 </head>
