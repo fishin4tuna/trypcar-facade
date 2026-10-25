@@ -3,22 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrypCar | Smart Rides. Trusted Safety.</title>
+    <title>TrypCar | Premium Closed-Network Mobility</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-navy: #060E1A;
-            --card-blue: #0E1726;
+            --bg-navy: #040914;
+            --card-blue: #0A1120;
             --brand-gradient: linear-gradient(135deg, #00A3FF 0%, #7000FF 100%);
             --text-white: #FFFFFF;
             --text-muted: #8E9AA8;
             --border-glow: #1E293B;
-            --brand-cyan: #00A3FF;
-            --brand-violet: #7000FF;
-            --glass-bg: rgba(6, 14, 26, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.08);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -26,13 +22,16 @@
             background-color: var(--bg-navy);
             color: var(--text-white);
             line-height: 1.6;
+            overflow-x: hidden;
         }
+        
+        /* SLEEK APP NAVBAR */
         header {
             position: fixed;
             top: 0; left: 0; width: 100%;
-            background-color: rgba(6, 14, 26, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-glow);
+            background-color: rgba(4, 9, 20, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(30, 41, 59, 0.5);
             display: flex; justify-content: space-between; align-items: center;
             padding: 16px 24px; z-index: 1000;
         }
@@ -42,7 +41,7 @@
             background: var(--brand-gradient);
             border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 163, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 163, 255, 0.3);
         }
         .logo-text {
             font-family: 'Orbitron', sans-serif;
@@ -51,74 +50,94 @@
             text-transform: uppercase;
         }
         .logo-text span { color: #00A3FF; }
-        nav { display: flex; gap: 18px; }
         nav a {
             color: var(--text-muted); text-decoration: none;
             font-size: 0.8rem; font-weight: 700;
             text-transform: uppercase; letter-spacing: 1px;
+            border: 1px solid var(--border-glow);
+            padding: 6px 14px; border-radius: 20px;
+            background: rgba(14, 23, 38, 0.5);
         }
         
-        /* CINEMATIC HERO VIEWPORT WITH YOUR FULL RESOLUTION BACKDROP */
+        /* AMAZING HERO LANDING EXPERIENCE */
         .hero-container {
             min-height: 100vh;
-            width: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; padding: 140px 24px 80px 24px;
-            /* SEAMLESSLY BINDS YOUR MASTER UN劇PED CAMPUS IMAGE AS FULL BACKGROUND */
-            background: linear-gradient(180deg, rgba(6, 14, 26, 0.3) 0%, rgba(6, 14, 26, 0.6) 100%), 
-                        url('campus-hero.png') no-repeat center center;
-            background-size: cover;
+            position: relative;
+            background: radial-gradient(circle at center, #0B1528 0%, #040914 100%);
+        }
+        
+        /* INTERACTIVE LIVING GLOW EFFECT */
+        .hero-container::before {
+            content: '';
+            position: absolute; width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(0,163,255,0.15) 0%, rgba(112,0,255,0.05) 70%, transparent 100%);
+            top: 25%; filter: blur(40px);
+            animation: pulseGlow 8s infinite alternate ease-in-out;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.2) translate(10px, -20px); }
         }
 
-        /* PREMIUM FLOATING GLASS INTERFACE COMPONENT */
-        .brand-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            padding: 45px 35px;
-            border-radius: 24px;
-            max-width: 640px;
-            width: 100%;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        /* SMOOTH TRANSITION ENTRANCES */
+        .animate-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: smoothReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            z-index: 2;
         }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        @keyframes smoothReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .hero-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.6rem, 7vw, 4.0rem);
+            font-size: clamp(2.8rem, 9vw, 4.2rem);
             font-weight: 900;
-            margin-bottom: 8px; letter-spacing: 1px;
+            margin-bottom: 8px; letter-spacing: 2px;
             line-height: 1.1; text-transform: uppercase;
         }
-        .hero-title span { color: #00A3FF; font-weight: 700; }
+        .hero-title span { color: #00A3FF; }
         
-        /* OFFICIAL LOGO-SYNCED BRAND SLOGAN */
         .hero-slogan {
-            font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+            font-size: clamp(0.85rem, 4.5vw, 1.1rem);
             font-weight: 800;
-            text-transform: uppercase; letter-spacing: 3px;
-            background: linear-gradient(90deg, var(--brand-cyan), var(--brand-violet));
+            text-transform: uppercase; letter-spacing: 4px;
+            background: linear-gradient(90deg, #00A3FF, #7000FF);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
+            padding: 0 10px;
             line-height: 1.3;
         }
         .hero-subtitle {
-            font-size: 1.05rem; color: #E2E8F0;
-            max-width: 580px; margin-bottom: 40px;
-            line-height: 1.6;
+            font-size: 1.05rem; color: var(--text-muted);
+            max-width: 620px; margin-bottom: 50px;
+            line-height: 1.65;
         }
         .hero-cta {
-            display: inline-block;
             background: var(--brand-gradient); color: var(--text-white);
-            padding: 16px 45px; font-size: 0.95rem; font-weight: 800;
-            border-radius: 12px; text-decoration: none;
+            padding: 16px 45px; font-size: 0.9rem; font-weight: 800;
+            border-radius: 30px; text-decoration: none;
             text-transform: uppercase; letter-spacing: 2px;
-            box-shadow: 0 10px 25px rgba(0, 163, 255, 0.3);
+            box-shadow: 0 6px 20px rgba(112, 0, 255, 0.3); border: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hero-cta:active {
+            transform: scale(0.97);
+            box-shadow: 0 3px 10px rgba(112, 0, 255, 0.2);
         }
         
-        /* ALL PREVIOUS DISPATCH SECTIONS PRESERVED BELOW INTEGRITY LAYER */
+        /* PREMIUM TIERS GRID */
         .services-section {
             padding: 90px 24px; background-color: var(--bg-navy);
-            border-top: 1px solid var(--border-glow);
+            border-top: 1px solid rgba(30, 41, 59, 0.4);
         }
         .section-header { text-align: center; margin-bottom: 50px; }
         .section-header h2 {
@@ -128,20 +147,22 @@
         }
         .section-header h2 span { color: #00A3FF; }
         .card-container { display: flex; flex-direction: column; gap: 35px; max-width: 450px; margin: 0 auto; }
-        .card { background-color: var(--card-blue); border: 1px solid var(--border-glow); border-radius: 12px; padding: 40px 28px; }
-        .card.premium { border: 2px solid #7000FF; position: relative; }
+        .card { background-color: var(--card-blue); border: 1px solid var(--border-glow); border-radius: 16px; padding: 40px 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .card.premium { border: 2px solid #7000FF; position: relative; box-shadow: 0 4px 25px rgba(112, 0, 255, 0.15); }
         .badge {
             position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
             background: var(--brand-gradient); color: var(--text-white);
             padding: 4px 18px; font-size: 0.65rem; font-weight: 800;
-            border-radius: 20px; text-transform: uppercase;
+            border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;
         }
         .card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.35rem; margin-bottom: 6px; text-transform: uppercase; }
-        .card-meta { color: #00A3FF; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 20px; }
-        .card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; }
-        .card ul { color: #D1D9E6; font-size: 0.85rem; padding-left: 18px; line-height: 2.2; }
-        footer { background-color: #03070F; padding: 60px 24px; text-align: center; font-size: 0.75rem; color: #4A5568; border-top: 1px solid var(--border-glow); }
-        .legal-notice { max-width: 100%; margin: 0 auto; text-align: left; border-left: 2px solid #1E293B; padding-left: 15px; }
+        .card-meta { color: #00A3FF; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
+        .card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; line-height: 1.6; }
+        .card ul { color: #D1D9E6; font-size: 0.85rem; padding-left: 18px; line-height: 2.3; list-style-type: square; }
+        .card ul li::marker { color: #00A3FF; }
+        
+        footer { background-color: #02050C; padding: 60px 24px; text-align: center; font-size: 0.75rem; color: #4A5568; border-top: 1px solid var(--border-glow); }
+        .legal-notice { max-width: 100%; margin: 0 auto; text-align: left; border-left: 2px solid #1E293B; padding-left: 15px; line-height: 1.7; }
     </style>
 </head>
 <body>
@@ -157,24 +178,17 @@
             <div class="logo-text">Tryp<span>Car</span></div>
         </div>
         <nav>
-            <a href="#services">Tiers</a>
+            <a href="#services">Explore Tiers</a>
         </nav>
     </header>
     <main>
-        <!-- MASTER HERO BACKGROUND WRAPPER CORE -->
         <section class="hero-container">
-            <div class="brand-card">
-                <h1 class="hero-title">Tryp<span>Car</span></h1>
-                
-                <!-- OFFICIAL BRAND POSITIONING SLOGAN -->
-                <div class="hero-slogan">Smart Rides. Trusted Safety.</div>
-                
-                <p class="hero-subtitle">The Premium, Closed-Network Electric Rideshare Infrastructure Engineered Exclusively for Secure Institutional Environments. Built to Provide Total Asset Accountability and Uncompromised Fleet Reliability for Students, Faculty, and Staff.<sup>1</sup></p>
-                <a href="mailto:info@trypcar.com" class="hero-cta">Inquire Within</a>
-            </div>
+            <h1 class="hero-title animate-fade-in">Tryp<span>Car</span></h1>
+            <!-- POWERFUL APP HOOK BRIDGING USER VISIONS -->
+            <div class="hero-slogan animate-fade-in delay-1">Smart Rides. Trusted Safety.</div>
+            <p class="hero-subtitle animate-fade-in delay-2">The Premium, Closed-Network Electric Rideshare Infrastructure Engineered Exclusively for Secure Institutional Environments. Built to Provide Total Asset Accountability and Uncompromised Fleet Reliability for Students, Faculty, and Staff.<sup>1</sup></p>
+            <a href="mailto:info@trypcar.com" class="hero-cta animate-fade-in delay-3">Inquire Within</a>
         </section>
-
-        <!-- FULL ORIGINAL INFRASTRUCTURE SECTIONS SAFELY PRESERVED -->
         <section id="services" class="services-section">
             <div class="section-header">
                 <h2>Choose Your <span>Tryp</span></h2>
@@ -190,10 +204,3 @@
                         <li>Sleek, Compact EV Fleet Footprint</li>
                         <li>24/7 Monitored Safe Dispatch Protocol</li>
                     </ul>
-                </div>
-                <div class="card premium">
-                    <div class="badge">Ecosystem Preference</div>
-                    <h3>TrypCar Luxe</h3>
-                    <div class="card-meta">Premium Executive Mobility</div>
-                    <p>Elevate administrative and regional travel dynamics. High-end compact executive electric platforms coupled with top-rated, background-cleared operators. Engineered specifically for institutional events, formal logistics, faculty transit, and direct corridors to terminal hubs.</p>
-                    <ul>
