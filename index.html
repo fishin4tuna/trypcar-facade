@@ -83,3 +83,30 @@
     <footer>© 2026 TrypCar, Inc. All rights reserved. Tryp™, TrypCar™, and TrypLuxe™ are protected trademarks.</footer>
 </body>
 </html>
+<style>
+  /* Core layout adjustment to stop navigation item crash on mobile screens */
+  nav, .navbar, .nav-container {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 1.25rem !important;
+    padding: 1.25rem 2rem !important;
+    background: #070b19 !important;
+  }
+
+  /* Structural stacking rules targeting handheld screen widths */
+  @media (max-width: 540px) {
+    nav, .navbar, .nav-container {
+      justify-content: center !important;
+      text-align: center !important;
+      padding: 1rem !important;
+    }
+    nav div:last-child, .navbar-links, .nav-links {
+      width: 100% !important;
+      justify-content: center !important;
+      gap: 1.25rem !important;
+      margin-top: 0.25rem !important;
+    }
+  }
+</style>
