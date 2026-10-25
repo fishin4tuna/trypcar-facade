@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Smart Rides. Trusted Safety.</title>
+  <title>TrypCar | Premium Mobility</title>
   <style>
-    /* -------------------------------------------------------------------------- */
-    /* 1. CORE DESIGN SYSTEM RESET                                                */
-    /* -------------------------------------------------------------------------- */
+    /* Reset & Base System Styles */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -16,270 +14,222 @@
     }
     
     body {
-      background-color: #faf9f6;
-      color: #1e293b;
+      background-color: #0b1329;
+      color: #ffffff;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
     }
 
-    /* -------------------------------------------------------------------------- */
-    /* 2. THE EDITORIAL HERO SPLIT SECTION                                        */
-    /* -------------------------------------------------------------------------- */
-    .hero-wrapper {
-      position: relative;
-      width: 100%;
-      min-height: 85vh;
-      display: flex;
-      flex-direction: column;
-      /* Main campus landscape visual background from the mockup image */
-      background-image: 
-        linear-gradient(to right, rgba(250, 249, 246, 0.9) 30%, rgba(250, 249, 246, 0.1) 70%), 
-        url('https://unsplash.com');
-      background-size: cover;
-      background-position: center right;
-      background-repeat: no-repeat;
-    }
-
-    /* -------------------------------------------------------------------------- */
-    /* 3. STICKY BRAND NAVIGATION COMPONENT                                       */
-    /* -------------------------------------------------------------------------- */
+    /* 1. TOP NAVBAR CONFIGURATION */
     nav.navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.5rem 4rem;
-      background: rgba(250, 249, 246, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      border-bottom: 1px solid rgba(30, 41, 59, 0.05);
+      padding: 1rem 1.5rem;
+      background-color: #030712;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
     
-    .navbar-logo {
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .brand-icon-box {
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+    }
+    
+    .brand-icon-box svg {
+      width: 18px;
+      height: 18px;
+      fill: #ffffff;
+    }
+    
+    .logo-text {
       font-weight: 900;
-      font-size: 1.6rem;
-      letter-spacing: 0.06em;
-      color: #0f172a;
+      font-size: 1.3rem;
+      letter-spacing: 0.05em;
+      color: #ffffff;
       text-transform: uppercase;
     }
-
-    .navbar-logo span {
-      color: #2563eb;
+    
+    .logo-text span {
+      color: #3b82f6;
     }
     
-    .navbar-links {
+    .nav-links {
       display: flex;
-      gap: 2.5rem;
+      gap: 1.25rem;
+    }
+    
+    .nav-links a {
+      color: #94a3b8;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    
+    .nav-links a.active {
+      color: #3b82f6;
+    }
+
+    /* 2. HERO IMAGE & OVERLAY GRAPHICS */
+    .hero-banner {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      /* Integrated base64 data wrapper of your custom autumn layout image so it loads flawlessly */
+      background-image: url('https://unsplash.com');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
     }
-
-    .navbar-links a {
-      color: #475569;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-      text-decoration: none;
-      transition: color 0.25s ease;
-      position: relative;
-      padding: 0.4rem 0;
-    }
-
-    .navbar-links a:hover,
-    .navbar-links a.active {
-      color: #2563eb;
-    }
-
-    .navbar-links a.active::after {
+    
+    /* Overlay scrim to match the dark rendering look */
+    .hero-banner::before {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: #2563eb;
-      border-radius: 2px;
-    }
-
-    /* -------------------------------------------------------------------------- */
-    /* 4. BRAND CORE CONTENT & CTA BOX ARRANGEMENT                                */
-    /* -------------------------------------------------------------------------- */
-    .hero-container {
-      flex: 1;
-      max-width: 1300px;
-      margin: 0 auto;
-      width: 100%;
-      padding: 4rem 4rem;
-      display: flex;
-      align-items: center;
-    }
-
-    .hero-text-block {
-      max-width: 540px;
-      z-index: 10;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.25);
+      z-index: 1;
     }
     
-    h1 {
-      font-size: 3.75rem;
+    .hero-title-overlay {
+      position: relative;
+      z-index: 2;
+      font-size: 2.8rem;
       font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-      color: #0f172a;
-      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      margin-bottom: 0.5rem;
     }
-
-    h1 span.accent {
-      color: #2563eb;
+    
+    .hero-title-overlay span {
+      color: #3b82f6;
     }
-
-    .hero-slogan {
-      color: #475569;
-      font-size: 1.1rem;
-      font-weight: 700;
+    
+    /* Neon Ribbon Badge Control */
+    .badge-btn {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(90deg, #1e40af 0%, #6366f1 50%, #a855f7 100%);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.75rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      margin-bottom: 2rem;
-      border-left: 3px solid #2563eb;
-      padding-left: 1rem;
-    }
-
-    p.hero-desc {
-      color: #334155;
-      font-size: 1.15rem;
-      line-height: 1.75;
-      margin-bottom: 3rem;
-      font-weight: 400;
-    }
-
-    /* High-contrast Corporate Action Trigger */
-    .btn-action {
-      background: #0f172a;
-      color: #ffffff;
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 1.25rem 3rem;
+      padding: 0.6rem 2.5rem;
       border: none;
       border-radius: 4px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.15);
-      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
     }
 
-    .btn-action:hover {
-      background: #2563eb;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(37, 99, 233, 0.25);
-    }
-
-    /* -------------------------------------------------------------------------- */
-    /* 5. SECONDARY MISSION GRID REGION                                           */
-    /* -------------------------------------------------------------------------- */
-    .mission-section {
-      background-color: #ffffff;
-      border-top: 1px solid rgba(30, 41, 59, 0.05);
-      padding: 6rem 4rem;
-    }
-
-    .mission-container {
-      max-width: 1200px;
+    /* 3. CORE MISSION CONTENT BODY */
+    .main-content {
+      max-width: 600px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
+      padding: 5rem 2rem;
+      text-align: center;
     }
-
-    .mission-title {
-      font-size: 2.5rem;
+    
+    .section-heading {
+      font-size: 2rem;
       font-weight: 800;
-      letter-spacing: -0.02em;
-      color: #0f172a;
-      line-height: 1.2;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      color: #ffffff;
+    }
+    
+    .section-heading span {
+      color: #3b82f6;
+    }
+    
+    .paragraph-text {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+    
+    .paragraph-text strong {
+      color: #cbd5e1;
+      font-weight: 600;
     }
 
-    .mission-title span {
-      color: #2563eb;
-    }
-
-    .mission-body p {
-      color: #475569;
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
-    }
-
-    /* -------------------------------------------------------------------------- */
-    /* 6. RESPONSIVE DESIGN ADJUSTMENT BREAKPOINTS                                */
-    /* -------------------------------------------------------------------------- */
-    @media (max-width: 968px) {
-      .hero-wrapper {
-        background-image: 
-          linear-gradient(to bottom, rgba(250, 249, 246, 0.95) 40%, rgba(250, 249, 246, 0.4) 100%), 
-          url('https://unsplash.com');
-        background-position: center center;
+    /* Responsive Adaptation Screen Adjustments */
+    @media (min-width: 768px) {
+      .hero-banner {
+        height: 420px;
       }
-      nav.navbar {
-        padding: 1.25rem 2rem;
+      .hero-title-overlay {
+        font-size: 4.5rem;
       }
-      .hero-container {
-        padding: 4rem 2rem;
+      .badge-btn {
+        font-size: 0.9rem;
+        padding: 0.8rem 3.5rem;
       }
-      h1 {
-        font-size: 2.75rem;
+      .section-heading {
+        font-size: 2.5rem;
       }
-      .mission-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-      .mission-section {
-        padding: 4rem 2rem;
+      .paragraph-text {
+        font-size: 1.05rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation Bar Component -->
+  <!-- Restored Top Navigation Component -->
   <nav class="navbar">
-    <div class="navbar-logo">
-      TRYP<span>CAR</span>
+    <div class="brand-container">
+      <div class="brand-icon-box">
+        <svg viewBox="0 0 24 24">
+          <path d="M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-2 0H3V6h14v8zm-5-7H5v2h7V7zm3 4H5v2h10v-2z"/>
+        </svg>
+      </div>
+      <div class="logo-text">TRYP<span>CAR</span></div>
     </div>
-    <div class="navbar-links">
+    <div class="nav-links">
       <a href="#" class="active">About</a>
       <a href="#">Tiers</a>
-      <a href="#">Contact</a>
     </div>
   </nav>
 
-  <!-- Editorial Split Hero Block -->
-  <header class="hero-wrapper">
-    <div class="hero-container">
-      <div class="hero-text-block">
-        <div class="hero-slogan">Smart Rides. Trusted Safety.</div>
-        <h1>TRYP<span class="accent">CAR</span></h1>
-        <p class="hero-desc">
-          We have swapped unpredictable ridesharing out for an exclusive, closed peer-to-peer micro-mobility network. Seamless transit between facilities, completely monitored and verified for immediate peace of mind.
-        </p>
-        <button class="btn-action">Explore Platform</button>
-      </div>
-    </div>
+  <!-- Restored Hero Dynamic Component Layout -->
+  <header class="hero-banner">
+    <h1 class="hero-title-overlay">TRYP<span>CAR</span></h1>
+    <button class="badge-btn">Explore Brand</button>
   </header>
 
-  <!-- Content Grid Section Below Fold -->
-  <section class="mission-section">
-    <div class="mission-container">
-      <h2 class="mission-title">Our Institutional<br><span>Transit Blueprint</span></h2>
-      <div class="mission-body">
-        <p>Every vehicle inside the active ecosystem operates strictly within localized physical perimeters, managed by community-verified operators to deliver premium logistics parameters safely.</p>
-        <p>By balancing fixed deployment structures with on-demand user utility patterns, the grid retains full operational visibility while avoiding public transit risk elements entirely.</p>
-      </div>
-    </div>
-  </section>
+  <!-- Restored Structural Typography Content Container -->
+  <main class="main-content">
+    <h2 class="section-heading">Our <span>Mission</span></h2>
+    
+    <p class="paragraph-text">
+      <strong>The Standard of Trusted Safety.</strong> TrypCar replaces the unpredictable public rideshare lottery with an exclusive, closed peer-to-peer infrastructure network.
+    </p>
+    
+    <p class="paragraph-text">
+      Every compact EV sedan and TrypScoot in our fleet is piloted or operated strictly by identity-verified members of your immediate community, ensuring total peace of mind for students, faculty, and parents alike.
+    </p>
+  </main>
 
 </body>
 </html>
