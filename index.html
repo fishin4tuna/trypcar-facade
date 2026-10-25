@@ -10,7 +10,6 @@
     <style>
         :root {
             --bg-navy: #050B14;
-            --card-blue: rgba(9, 17, 32, 0.85);
             --brand-gradient: linear-gradient(135deg, #00A3FF 0%, #7000FF 100%);
             --text-white: #FFFFFF;
             --text-muted: #94A3B8;
@@ -21,7 +20,6 @@
             box-sizing: border-box; 
             margin: 0; 
             padding: 0; 
-            scroll-behavior: smooth; 
         }
         
         body {
@@ -30,6 +28,9 @@
             color: var(--text-white);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         /* Fixed Header Navbar */
@@ -83,20 +84,22 @@
             letter-spacing: 1.5px;
             transition: all 0.2s ease;
         }
-        nav a:hover { 
+        nav a:hover, nav a.active { 
             color: #00A3FF; 
             text-shadow: 0 0 8px rgba(0, 163, 255, 0.5); 
         }
         
-        /* Implements layout style from Screenshot 3 with clean vignette filters */
+        /* Layout Configuration from Screenshot 3 */
         .hero-showcase {
             position: relative;
+            flex: 1;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 140px 24px 60px 24px;
+            padding: 140px 24px 80px 24px;
+            /* Removed heavy dark overlay filters to ensure the vivid autumn leaves and crisp Tesla shine through */
             background-image: linear-gradient(to bottom, rgba(5, 11, 20, 0.4) 0%, rgba(5, 11, 20, 0) 40%, rgba(5, 11, 20, 0.85) 100%), 
                               url('extended-1920x1080.jpg'),
                               url('extended-1920×1080.jpg'),
@@ -109,9 +112,9 @@
         }
         
         .hero-text-block {
-            margin-top: 20px;
-            background: rgba(5, 11, 20, 0.4);
-            padding: 20px;
+            margin-top: 40px;
+            background: rgba(5, 11, 20, 0.3);
+            padding: 20px 30px;
             border-radius: 16px;
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
@@ -156,95 +159,7 @@
             box-shadow: 0 12px 30px rgba(112, 0, 255, 0.7);
         }
         
-        /* Section Formatting */
-        section.corporate-block {
-            padding: 100px 24px;
-            background-color: #060D1A;
-            scroll-margin-top: 80px;
-        }
-        section.corporate-block:nth-of-type(even) {
-            background-color: #0A1426;
-        }
-        
-        .section-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .section-header { 
-            text-align: center; 
-            margin-bottom: 45px; 
-        }
-        .section-header h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(1.8rem, 5vw, 2.4rem); 
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .section-header h2 span { color: #00A3FF; }
-        
-        .content-text {
-            color: #E2E8F0;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            font-weight: 400;
-        }
-        .content-text p {
-            margin-bottom: 24px;
-        }
-        
-        /* Grid Interface for Service Cards */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 20px;
-        }
-        .card {
-            background: var(--card-blue);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 35px 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-        }
-        .card.premium {
-            border-color: #7000FF;
-            box-shadow: 0 15px 35px rgba(112, 0, 255, 0.2);
-        }
-        .card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.35rem;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-        }
-        .card-meta {
-            color: #00A3FF;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
-        .card ul {
-            list-style-type: none;
-            margin-top: 15px;
-        }
-        .card ul li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            color: #CBD5E1;
-        }
-        .card ul li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #00A3FF;
-            font-weight: bold;
-        }
-
+        /* Restored Complete Legal Footer */
         footer {
             background-color: #030712;
             padding: 40px 24px;
@@ -252,6 +167,7 @@
             font-size: 0.8rem;
             color: #64748B;
             border-top: 1px solid var(--border-glow);
+            width: 100%;
         }
         
         @media (max-width: 680px) {
@@ -275,28 +191,30 @@
             <div class="logo-text">Tryp<span>Car</span></div>
         </div>
         <nav>
-            <a href="#about">About</a>
-            <a href="#tiers">Tiers</a>
-            <a href="#investors">Investors</a>
+            <a href="index.html" class="active">Home</a>
+            <a href="about.html">About</a>
+            <a href="tiers.html">Tiers</a>
+            <a href="investors.html">Investors</a>
+            <a href="contact.html">Contact</a>
         </nav>
     </header>
 
     <main>
-        <!-- Replicated Layout from Screenshot 3 -->
+        <!-- Replicated Layout Frame from Screenshot 3 -->
         <div class="hero-showcase">
             <div class="hero-text-block">
                 <h1 class="hero-title">Tryp<span>Car</span></h1>
                 <div class="hero-slogan">Smart Rides. Trusted Safety.</div>
             </div>
             <div>
-                <a href="#about" class="hero-cta">Explore Brand</a>
+                <a href="about.html" class="hero-cta">Explore Brand</a>
             </div>
         </div>
+    </main>
 
-        <!-- Corporate Profile Blocks -->
-        <section id="about" class="corporate-block">
-            <div class="section-container">
-                <div class="section-header">
-                    <h2>Our <span>Mission</span></h2>
-                </div>
-                <div class="content-text">
+    <footer>
+        © 2026 TrypCar, Inc. All rights reserved. Tryp™, TrypCar™, and TrypLuxe™ are protected trademarks.
+    </footer>
+
+</body>
+</html>
