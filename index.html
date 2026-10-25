@@ -24,6 +24,8 @@
             background-color: var(--bg-navy);
             color: var(--text-white);
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Fixed Navigation Header */
@@ -62,6 +64,9 @@
         nav a:hover { color: #00A3FF; }
 
         /* Full Screen Background Graphic Layout */
+        main {
+            flex: 1 0 auto;
+        }
         .hero-background-container {
             position: relative;
             width: 100%;
@@ -142,6 +147,18 @@
         .hero-cta:hover {
             transform: translateY(-2px);
         }
+
+        /* Sticky Trademark Footer */
+        footer {
+            flex-shrink: 0;
+            background-color: #03070F;
+            padding: 24px 20px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #4A5568;
+            border-top: 1px solid var(--border-glow);
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
@@ -174,6 +191,10 @@
             </div>
         </section>
     </main>
+
+    <footer>
+        © 2026 TrypCar, Inc. All rights reserved. Tryp™, TrypCar™, and TrypLuxe™ are protected trademarks.
+    </footer>
 
 </body>
 </html>
