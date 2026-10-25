@@ -5,42 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrypCar | Investors</title>
   <style>
-    /* Reset & Base Styles */
+    /* Global Structural Blueprint */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
-    body {
-      background-color: #050814;
+    html, body {
+      background-color: #050814 !important;
       color: #ffffff;
       min-height: 100vh;
     }
 
-    /* Fixed Navigation Bar Layout */
-    nav, .navbar, .nav-container {
+    /* Locked Header Configuration */
+    nav.navbar {
       display: flex !important;
       justify-content: space-between !important;
       align-items: center !important;
-      flex-wrap: wrap !important;
-      gap: 1.25rem !important;
+      flex-wrap: nowrap !important;
       padding: 1.25rem 2rem !important;
-      background: #070b19 !important;
+      background-color: #070b19 !important;
       position: sticky;
       top: 0;
       z-index: 1000;
       border-bottom: 1px solid #111a36;
+      width: 100%;
     }
     .navbar-logo {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
       font-weight: 900;
       font-size: 1.25rem;
       letter-spacing: 0.05em;
       color: #ffffff;
       text-transform: uppercase;
+      white-space: nowrap;
     }
     .navbar-logo span {
       color: #3b82f6;
@@ -48,6 +48,7 @@
     .navbar-links {
       display: flex;
       gap: 1.5rem;
+      align-items: center;
     }
     .navbar-links a {
       color: #94a3b8;
@@ -57,13 +58,14 @@
       letter-spacing: 0.05em;
       text-decoration: none;
       transition: color 0.2s ease;
+      white-space: nowrap;
     }
     .navbar-links a:hover,
     .navbar-links a.active {
       color: #3b82f6;
     }
 
-    /* Main Typography & Layout */
+    /* Layout Component Wrapper */
     .content-container {
       max-width: 600px;
       margin: 4rem auto;
@@ -91,25 +93,25 @@
       margin-bottom: 2rem;
     }
 
-    /* Responsive Phone Adjustments to prevent overlap */
+    /* Mobile Breakpoint Safety Rule */
     @media (max-width: 540px) {
-      nav, .navbar, .nav-container {
+      nav.navbar {
+        flex-wrap: wrap !important;
         justify-content: center !important;
         text-align: center !important;
         padding: 1rem !important;
+        gap: 0.75rem !important;
       }
       .navbar-links {
         width: 100% !important;
         justify-content: center !important;
         gap: 1.25rem !important;
-        margin-top: 0.25rem !important;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- FIXED NAVIGATION COMPONENT -->
   <nav class="navbar">
     <div class="navbar-logo">
       TRYP<span>CAR</span>
@@ -121,7 +123,6 @@
     </div>
   </nav>
 
-  <!-- BODY CONTENT AREA -->
   <main class="content-container">
     <h1>Investor Relations &<br><span style="color: #3b82f6;">Growth Potential</span></h1>
     <div class="sub-heading">Scaling Verified Micro-Mobility</div>
