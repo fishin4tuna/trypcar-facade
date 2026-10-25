@@ -10,12 +10,12 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     
     body {
       background-color: #060e1e;
       color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -52,10 +52,12 @@
       border-radius: 2px;
     }
     
+    /* Insulated Brand Typography - Moving away from ultra-wide styling */
     .brand-text {
-      font-weight: 800;
-      font-size: 1.35rem;
-      letter-spacing: 0.03em;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 900;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
       color: #ffffff;
     }
     
@@ -85,7 +87,7 @@
     .hero-display {
       position: relative;
       width: 100%;
-      height: 340px; 
+      height: 420px; 
       background-image: linear-gradient(180deg, rgba(6, 14, 30, 0.1) 0%, #060e1e 95%), 
                         url('extended-1920x1080.jpg');
       background-size: cover;
@@ -95,20 +97,32 @@
       justify-content: flex-start;
       align-items: center;
       text-align: center;
-      padding-top: 2rem;
+      padding-top: 4.5rem;
     }
     
+    /* Distinct Heavy Heading Style */
     .hero-heading {
-      font-size: 3.2rem;
+      font-family: "Arial Black", Gadget, sans-serif;
+      font-size: 3.5rem;
       font-weight: 900;
-      letter-spacing: 0.02em;
+      letter-spacing: -0.03em;
       color: #ffffff;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      margin-bottom: 0.25rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.6);
     }
     
     .hero-heading span {
       color: #3b82f6;
+    }
+
+    .hero-subheading {
+      color: #3b82f6;
+      font-weight: 800;
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      margin-bottom: 2.5rem;
+      text-transform: uppercase;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
     
     /* Purple Gradient Rectangle Explore Button */
@@ -119,11 +133,11 @@
       font-size: 0.85rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      padding: 0.6rem 2.2rem;
+      padding: 0.75rem 2.5rem;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 12 rgba(0, 0, 0, 0.3);
     }
 
     /* Mission Section Grid Block */
@@ -131,17 +145,18 @@
       width: 100%;
       max-width: 640px;
       margin: 0 auto;
-      padding: 4rem 1.5rem;
+      padding: 3rem 1.5rem;
       text-align: center;
     }
     
     .section-title {
+      font-family: "Arial Black", Gadget, sans-serif;
       font-size: 2.2rem;
       font-weight: 900;
-      letter-spacing: 0.05em;
+      letter-spacing: -0.01em;
       text-transform: uppercase;
       color: #ffffff;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
     
     .section-title span {
@@ -175,6 +190,7 @@
 
     <header class="hero-display">
       <h1 class="hero-heading">TRYP<span>CAR</span></h1>
+      <p class="hero-subheading">SMART RIDES. TRUSTED SAFETY.</p>
       <button class="btn-explore">Explore Brand</button>
     </header>
 
