@@ -89,7 +89,7 @@
             text-shadow: 0 0 8px rgba(0, 163, 255, 0.5); 
         }
         
-        /* Layout Configuration from Screenshot 3 */
+        /* Layout Configuration */
         .hero-showcase {
             position: relative;
             flex: 1;
@@ -99,7 +99,6 @@
             justify-content: space-between;
             align-items: center;
             padding: 140px 24px 80px 24px;
-            /* Removed heavy dark overlay filters to ensure the vivid autumn leaves and crisp Tesla shine through */
             background-image: linear-gradient(to bottom, rgba(5, 11, 20, 0.4) 0%, rgba(5, 11, 20, 0) 40%, rgba(5, 11, 20, 0.85) 100%), 
                               url('extended-1920x1080.jpg'),
                               url('extended-1920×1080.jpg'),
@@ -111,13 +110,9 @@
             text-align: center;
         }
         
+        /* Box container removed completely so typography rests elegantly on the backdrop */
         .hero-text-block {
             margin-top: 40px;
-            background: rgba(5, 11, 20, 0.3);
-            padding: 20px 30px;
-            border-radius: 16px;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
         }
         
         .hero-title {
@@ -159,7 +154,7 @@
             box-shadow: 0 12px 30px rgba(112, 0, 255, 0.7);
         }
         
-        /* Restored Complete Legal Footer */
+        /* Restored Legal Footer */
         footer {
             background-color: #030712;
             padding: 40px 24px;
@@ -200,7 +195,6 @@
     </header>
 
     <main>
-        <!-- Replicated Layout Frame from Screenshot 3 -->
         <div class="hero-showcase">
             <div class="hero-text-block">
                 <h1 class="hero-title">Tryp<span>Car</span></h1>
