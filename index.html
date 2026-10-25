@@ -43,7 +43,7 @@
       gap: 0.75rem;
     }
     
-    /* Reinserted missing graduation cap logo asset */
+    /* Graduation cap logo asset block */
     .navbar-icon {
       width: 32px;
       height: 32px;
@@ -79,11 +79,11 @@
       text-decoration: none;
     }
 
-    /* Immersive Visual Showcase - No Overlapping Text Distortions */
+    /* Immersive Visual Showcase - Image Container Restored */
     .hero-visual-showcase {
       width: 100%;
-      height: 55vh;
-      min-height: 360px;
+      height: 60vh;
+      min-height: 420px;
       margin-top: 60px;
       background-image: url('hero-bg.jpg');
       background-size: cover;
@@ -93,7 +93,7 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    /* Core Branding & CTA Section Safely Below the Graphic */
+    /* Core Branding & CTA Section Below the Graphic */
     .branding-section {
       background: #030712;
       padding: 3rem 1.5rem;
@@ -143,7 +143,7 @@
     /* Structural Section Block for Content */
     .main-content {
       background: #030712;
-      padding: 3rem 1.5rem 6rem 1.5rem;
+      padding: 3rem 1.5rem 4rem 1.5rem;
       max-width: 680px;
       margin: 0 auto;
       text-align: center;
@@ -169,6 +169,20 @@
       font-weight: 300;
     }
 
+    /* Premium Clean Production Footer */
+    footer.footer-block {
+      background: #020617;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .footer-copy {
+      color: #64748b;
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+    }
+
     @media (max-width: 640px) {
       .hero-title { font-size: 2.5rem; }
       .hero-tagline { font-size: 0.85rem; }
@@ -177,11 +191,10 @@
 </head>
 <body>
 
-  <!-- Cleaned Navbar with Reinserted Icon Base -->
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="navbar-logo-container">
       <div class="navbar-icon">
-        <!-- SVG Graduate Cap Graphic Asset -->
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>
       </div>
       <div class="navbar-logo">TRYP<span>CAR</span></div>
@@ -192,22 +205,27 @@
     </div>
   </nav>
 
-  <!-- Clear Unobstructed Visual Window Container -->
+  <!-- Restored Hero Background Image Block Window -->
   <div class="hero-visual-showcase"></div>
 
-  <!-- Safe, High-Contrast Typography & CTA Block Area -->
+  <!-- Safe, Clean Typography & CTA Layout Layer -->
   <section class="branding-section">
     <h1 class="hero-title">TRYP<span>CAR</span></h1>
     <div class="hero-tagline">Smart Rides. Trusted Safety.</div>
     <button class="btn-explore">Explore Brand</button>
   </section>
 
-  <!-- Clean Mission Content Section -->
+  <!-- Mission Content Section -->
   <main id="about" class="main-content">
     <h2 class="section-title">Our <span>Mission</span></h2>
     <p class="mission-p">TrypCar was born out of a simple reality: moving between institutional facilities should be effortless, pristine, and entirely safe. We replaced the unpredictable public rideshare lottery with an exclusive, closed peer-to-peer network.</p>
     <p class="mission-p">Every compact EV sedan and TrypScoot in our fleet is piloted or operated strictly by identity-verified members of your immediate community, ensuring total peace of mind for students, faculty, and parents alike.</p>
   </main>
+
+  <!-- Restored Production Footer with Copyright Elements -->
+  <footer class="footer-block">
+    <p class="footer-copy">&copy; 2026 TrypCar Technologies Inc. All rights reserved. Premium Institutional Mobility.</p>
+  </footer>
 
 </body>
 </html>
