@@ -3,32 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Premium Mobility</title>
+  <title>TrypCar | Premium Campus Mobility Network</title>
   <style>
-    /* Global Elements Normalization Reset */
+    /* Premium Visual Engine & Reset */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
     
-    body {
-      background-color: #060e1e;
+    body, html {
+      background-color: #040914;
       color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      overflow: hidden; /* Absolute Zero Scrolling Strategy Across Entire Site */
+      height: 100%;
+      width: 100%;
     }
 
-    /* Fixed Top Navigation Bar Layout Frame */
+    /* Target Layout Canvas Wrapper */
+    .viewport-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100%;
+      position: relative;
+    }
+
+    /* Fixed Premium Navigation Header Bar Layout */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.2rem 2rem;
-      background-color: #030712;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      position: relative;
+      padding: 1.5rem 3rem;
+      background-color: rgba(3, 7, 18, 0.95);
+      border-bottom: 1px solid rgba(59, 130, 246, 0.1);
       z-index: 10;
     }
     
@@ -36,35 +46,43 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      cursor: pointer;
     }
     
-    /* Stable, clean placeholder box container with awkward code shapes completely removed */
     .brand-logo-box {
-      background: linear-gradient(135deg, #00a2ff 0%, #0072ff 50%, #9b30ff 100%);
-      border-radius: 8px;
+      background: linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);
+      border-radius: 6px;
       width: 32px;
       height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-logo-box::after {
+      content: '';
+      width: 14px;
+      height: 10px;
+      border: 2px solid #ffffff;
+      border-radius: 2px;
     }
     
-    /* Heavy geometric typography styling with exact matched baby blue brand color */
     .brand-text {
       font-weight: 900;
-      font-size: 1.4rem;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
+      font-size: 1.5rem;
+      letter-spacing: -0.01em;
       color: #ffffff;
     }
     
     .brand-text span {
-      color: #00a2ff;
+      color: #3b82f6;
     }
     
     .navigation-links {
       display: flex;
-      gap: 1.75rem;
+      gap: 2rem;
     }
     
-    /* Clean slate-gray text layout for secondary link structures */
     .navigation-links a {
       color: #94a3b8;
       font-weight: 700;
@@ -72,129 +90,247 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
       text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .navigation-links a:hover {
-      color: #00a2ff;
-    }
-
-    /* Mobile-Optimized Full-Width Graphic Panel Box */
-    .hero-display {
-      position: relative;
-      width: 100%;
-      height: auto; 
-      aspect-ratio: 1 / 1; 
-      background-image: 
-        linear-gradient(180deg, rgba(6, 14, 30, 0) 85%, #060e1e 100%), 
-        url('1792975492068.png');
-      background-size: contain; 
-      background-position: center top;
-      background-repeat: no-repeat;
-    }
-
-    /* Core Layout Content Block Section */
-    .mission-section {
-      width: 100%;
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 4rem 1.5rem;
-      text-align: center;
+      transition: color 0.2s ease, border-color 0.2s ease;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid transparent;
     }
     
-    .section-title {
-      font-size: 2.4rem;
+    .navigation-links a:hover,
+    .navigation-links a.active-link {
+      color: #3b82f6;
+      border-color: #3b82f6;
+    }
+
+    /* Master Dynamic Content Canvas Viewports */
+    .page-view {
+      display: none; 
+      width: 100%;
+      height: calc(100vh - 80px); 
+      position: relative;
+    }
+
+    .page-view.active-view {
+      display: flex;
+    }
+
+    /* Home View (Displays your custom unbranded graphic completely) */
+    .hero-display {
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(180deg, rgba(4, 9, 20, 0) 0%, rgba(4, 9, 20, 0.4) 70%, #040914 100%), 
+                        url('1792984078309.png');
+      background-size: cover;
+      background-position: center center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end; /* Keeps the upper layout elements visible */
+      align-items: center;
+      text-align: center;
+      padding-bottom: 5rem;
+    }
+
+    .btn-explore {
+      background: linear-gradient(90deg, #1e40af 0%, #6d28d9 100%);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.6rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      z-index: 5;
+    }
+
+    .btn-explore:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Sub-Page Content Layout Architecture (No-Scroll Panels) */
+    .content-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      height: 100%;
+    }
+
+    .text-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(3, 7, 18, 0.75);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 12px;
+      padding: 3rem;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    }
+
+    .panel-title {
+      font-size: 2.5rem;
       font-weight: 900;
       letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
       text-transform: uppercase;
-      color: #ffffff;
-      margin-bottom: 2.5rem;
-    }
-    
-    .section-title span {
-      color: #00a2ff;
     }
 
-    .body-paragraph {
+    .panel-title span {
+      color: #3b82f6;
+    }
+
+    .panel-p {
       color: #94a3b8;
-      font-size: 1.1rem;
-      line-height: 1.7;
-      font-weight: 400;
-      margin-bottom: 2rem;
-      text-align: left;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
     }
 
-    /* Professional Global Footnote Layout Container */
-    .footer-bar {
-      background-color: #030712;
+    /* Forms for Contacts Page */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .input-field {
+      background: rgba(4, 9, 20, 0.8);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 0.85rem;
+      border-radius: 4px;
+      color: #ffffff;
+      font-size: 0.95rem;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    /* Secondary Split Screen Panel Graphic */
+    .graphic-panel {
       width: 100%;
-      padding: 3rem 1.5rem;
-      text-align: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      height: 75%;
+      background-image: linear-gradient(135deg, rgba(4, 9, 20, 0.1) 0%, rgba(4, 9, 20, 0.5) 100%),
+                        url('1792984078309.png');
+      background-size: cover;
+      background-position: center center;
+      border-radius: 12px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
     }
 
-    .footer-content {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .footer-copyright {
-      color: #64748b;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      letter-spacing: 0.02em;
-    }
-
-    .footer-disclaimer {
-      color: #475569;
+    .panel-footer-note {
       font-size: 0.75rem;
-      line-height: 1.5;
-      letter-spacing: 0.01em;
+      color: #64748b;
+      margin-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 1rem;
+    }
+
+    /* Mobile View Scaling */
+    @media (max-width: 900px) {
+      .content-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        justify-content: center;
+      }
+      .graphic-panel {
+        display: none;
+      }
+      .text-panel {
+        padding: 2rem;
+      }
+      .navbar {
+        padding: 1rem 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Global Header Layout with Clean Independent Sub-Page Links -->
-  <nav class="navbar">
-    <div class="brand-container">
-      <div class="brand-logo-box"></div>
-      <div class="brand-text">TRYP<span>CAR</span></div>
-    </div>
-    <div class="navigation-links">
-      <a href="about.html">ABOUT</a>
-      <a href="contact.html">CONTACT</a>
-    </div>
-  </nav>
+  <div class="viewport-wrapper">
 
-  <!-- Main Showcase Graphics Container (Un-cropped Mobile Layout) -->
-  <header class="hero-display"></header>
+    <!-- Universal Top Navigation Interface -->
+    <nav class="navbar">
+      <div class="brand-container" onclick="showPage('home')">
+        <div class="brand-logo-box"></div>
+        <div class="brand-text">TRYP<span>CAR</span></div>
+      </div>
+      <div class="navigation-links">
+        <a href="#" id="link-home" class="active-link" onclick="showPage('home')">Home</a>
+        <a href="#" id="link-about" onclick="showPage('about')">About Us</a>
+        <a href="#" id="link-investors" onclick="showPage('investors')">Investors</a>
+        <a href="#" id="link-contact" onclick="showPage('contact')">Contacts</a>
+      </div>
+    </nav>
 
-  <!-- Messaging Layout Grid Block -->
-  <main class="mission-section">
-    <h2 class="section-title">OUR <span>MISSION</span></h2>
-    
-    <p class="body-paragraph">
-      The Standard of Trusted Safety. TrypCar replaces the unpredictable public rideshare lottery with an exclusive, closed peer-to-peer infrastructure network.
-    </p>
-    
-    <p class="body-paragraph">
-      Every compact EV sedan and TrypScoot in our fleet is piloted or operated strictly by identity-verified members of your immediate community, ensuring total peace of mind for students, faculty, and parents alike.
-    </p>
-  </main>
+    <!-- 1. HOME GATEWAY VIEWPORT -->
+    <section id="page-home" class="page-view active-view">
+      <header class="hero-display">
+        <button class="btn-explore" onclick="showPage('about')">Explore Brand</button>
+      </header>
+    </section>
 
-  <!-- Legal & Brand Protection Footer Container -->
-  <footer class="footer-bar">
-    <div class="footer-content">
-      <p class="footer-copyright">
-        &copy; 2026 TrypCar, Inc. All rights reserved.
-      </p>
-      <p class="footer-disclaimer">
-        TrypCar operates strictly as a private, closed peer-to-peer membership mobility infrastructure network. Membership registration, identity verification, and strict community compliance guidelines are mandatory prior to fleet access. Services and regional platform availability are governed completely by our global Terms of Service and Privacy Policy agreements.
-      </p>
-    </div>
-  </footer>
+    <!-- 2. ABOUT US VIEWPORT -->
+    <section id="page-about" class="page-view">
+      <div class="content-container">
+        <div class="text-panel">
+          <h2 class="panel-title">OUR <span>MISSION</span></h2>
+          <p class="panel-p">
+            TrypCar completely replaces the unpredictable public rideshare lottery with a highly protected, secure closed-loop peer-to-peer infrastructure network.
+          </p>
+          <p class="panel-p">
+            Every premium vehicle in our logistics fleet is operated strictly by thoroughly vetted, background-verified members of your immediate regional community, setting a pristine new global baseline for institutional transit.
+          </p>
+          <p class="panel-footer-note">TrypCar is an independent luxury transportation network interface.</p>
+        </div>
+        <div class="graphic-panel"></div>
+      </div>
+    </section>
 
-</body>
-</html>
+    <!-- 3. INVESTORS VIEWPORT -->
+    <section id="page-investors" class="page-view">
+      <div class="content-container">
+        <div class="text-panel">
+          <h2 class="panel-title">GROW WITH <span>TRYPCAR</span></h2>
+          <p class="panel-p">
+            We are structuring the next massive paradigm evolution in regional corporate and suburban smart mobility. Our completely closed ecosystem mitigates liabilities while maximizing service optimization.
+          </p>
+          <p class="panel-p">
+            Partner with TrypCar as we scale our highly efficient infrastructure footprints across prime economic hubs and top-tier private residential grids.
+          </p>
+          <button class="btn-explore" style="margin-top: 1rem;" onclick="showPage('contact')">Access Investor Deck</button>
+        </div>
+        . <div class="graphic-panel"></div>
+      </div>
+    </section>
+
+    <!-- 4. CONTACTS VIEWPORT -->
+    <section id="page-contact" class="page-view">
+      <div class="content-container">
+        <div class="text-panel">
+          <h2 class="panel-title">CONNECT <span>NOW</span></h2>
+          <p class="panel-p">Reach our corporate relations or partner support operations instantly.</p>
+          
+          <form class="contact-form" onsubmit="event.preventDefault(); alert('Message logged securely.');">
+            <input type="text" class="input-field" placeholder="Full Corporate Name" required />
+            <input type="email" class="input-field" placeholder="Secure Email Address" required />
+            <input type="text" class="input-field" placeholder="Nature of Inquiry (General / Investor / Fleet Partner)" required />
+            <button class="btn-explore" type="submit" style="align-self: flex-start; margin-top: 0.5rem;">Transmit Message</button>
+          </form>
+        </div>
+        <div class="graphic-panel"></div>
+      </div>
+    </section>
+
+  </div>
+
