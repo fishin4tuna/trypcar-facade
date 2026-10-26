@@ -68,38 +68,61 @@
     
     .navigation-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.2rem;
     }
     
-    /* Kept exactly as you requested - clean white typography */
     .navigation-links a {
       color: #ffffff;
       font-weight: 700;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       letter-spacing: 0.05em;
       text-transform: uppercase;
       text-decoration: none;
+      transition: color 0.2s ease;
     }
 
-    /* Your Complete Artwork Canvas Viewport Box */
+    /* Critical Mobile Layout Engine - Responsive Framework Fixes */
+    @media (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        gap: 1.2rem;
+        padding: 1.5rem 1rem;
+        text-align: center;
+      }
+      
+      .navigation-links {
+        width: 100%;
+        justify-content: space-around;
+        gap: 0.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        padding-top: 1rem;
+      }
+      
+      .navigation-links a {
+        font-size: 0.7rem;
+      }
+    }
+
+    /* Your Complete Artwork Container - Configured for Mobile Scaling */
     .hero-display {
       position: relative;
       width: 100%;
       height: auto;
-      aspect-ratio: 1 / 1;
-      max-width: 900px;
+      /* Calculates heights across standard mobile viewpoints safely */
+      aspect-ratio: 16 / 19; 
+      max-width: 600px;
       margin: 0 auto;
       background-image: url('1792984078309.png');
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center top;
-      flex: 1;
+      padding: 0 1rem;
     }
 
     /* Greyed-out Protective Corporate Footer Row */
     .global-site-footer {
       width: 100%;
-      padding: 1.5rem 1rem;
+      padding: 2rem 1rem;
       text-align: center;
       background-color: #030712;
       border-top: 1px solid rgba(255, 255, 255, 0.03);
@@ -107,10 +130,11 @@
     }
 
     .footer-legal-text {
-      font-size: 0.72rem;
+      font-size: 0.65rem;
       color: #475569; 
       letter-spacing: 0.05em;
       text-transform: uppercase;
+      line-height: 1.5;
     }
   </style>
 </head>
@@ -129,11 +153,12 @@
     </div>
   </nav>
 
+  <!-- Complete image fits beautifully below navigation bar layout -->
   <header class="hero-display"></header>
 
   <footer class="global-site-footer">
     <div class="footer-legal-text">
-      © 2026 TrypCar, Inc. All Rights Reserved. Trademark & Copyright Protective Notice.
+      © 2026 TrypCar, Inc. All Rights Reserved. <br>Trademark & Copyright Protective Notice.
     </div>
   </footer>
 
