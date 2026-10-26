@@ -22,26 +22,28 @@
       min-height: 100vh;
     }
 
-    /* Original Navigation Bar Layout */
+    /* Fixed Navigation Bar Layout with clean vertical stacking for mobile */
     .navbar {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      padding: 1.2rem 1.5rem;
+      gap: 1rem;
+      padding: 1.2rem 1rem;
       background-color: #030712;
+      text-align: center;
     }
     
     .brand-container {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.6rem;
     }
     
     .brand-logo-box {
       background: linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);
       border-radius: 6px;
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -49,15 +51,15 @@
 
     .brand-logo-box::after {
       content: '';
-      width: 14px;
-      height: 10px;
+      width: 12px;
+      height: 8px;
       border: 2px solid #ffffff;
       border-radius: 2px;
     }
     
     .brand-text {
       font-weight: 800;
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       letter-spacing: 0.03em;
       color: #ffffff;
     }
@@ -66,49 +68,30 @@
       color: #3b82f6;
     }
     
+    /* Spreads links out evenly across the screen with plenty of tapping room */
     .navigation-links {
       display: flex;
-      gap: 1.2rem;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 360px;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
     
     .navigation-links a {
       color: #ffffff;
       font-weight: 700;
-      font-size: 0.75rem;
-      letter-spacing: 0.05em;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       text-decoration: none;
-      transition: color 0.2s ease;
     }
 
-    /* Critical Mobile Layout Engine - Responsive Framework Fixes */
-    @media (max-width: 600px) {
-      .navbar {
-        flex-direction: column;
-        gap: 1.2rem;
-        padding: 1.5rem 1rem;
-        text-align: center;
-      }
-      
-      .navigation-links {
-        width: 100%;
-        justify-content: space-around;
-        gap: 0.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        padding-top: 1rem;
-      }
-      
-      .navigation-links a {
-        font-size: 0.7rem;
-      }
-    }
-
-    /* Your Complete Artwork Container - Configured for Mobile Scaling */
+    /* Responsive Main Artwork Container */
     .hero-display {
       position: relative;
       width: 100%;
       height: auto;
-      /* Calculates heights across standard mobile viewpoints safely */
       aspect-ratio: 16 / 19; 
       max-width: 600px;
       margin: 0 auto;
@@ -116,10 +99,9 @@
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center top;
-      padding: 0 1rem;
     }
 
-    /* Greyed-out Protective Corporate Footer Row */
+    /* Corporate Footer Row */
     .global-site-footer {
       width: 100%;
       padding: 2rem 1rem;
@@ -153,7 +135,7 @@
     </div>
   </nav>
 
-  <!-- Complete image fits beautifully below navigation bar layout -->
+  <!-- Main artwork image block -->
   <header class="hero-display"></header>
 
   <footer class="global-site-footer">
