@@ -23,18 +23,18 @@
     /* Fixed Navigation Bar Layout */
     .navbar {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      padding: 1.2rem 1rem;
+      padding: 1rem 1.2rem;
       background-color: #030712;
       border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      position: relative;
+      z-index: 100;
     }
     
     .navigation-links {
       display: flex;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 280px; /* Slimmer footprint to lock down balanced desktop & mobile centering */
+      gap: 1.5rem;
     }
     
     .navigation-links a {
@@ -42,79 +42,192 @@
       font-weight: 500;
       font-size: 0.82rem;
       letter-spacing: 0.04em;
-      text-transform: none; /* About, Investors, Contact styling rule */
       text-decoration: none;
       transition: color 0.2s ease;
     }
     
-    .navigation-links a:hover,
-    .navigation-links a:active {
+    .navigation-links a:hover {
       color: #ffffff;
     }
 
-    /* Crisp Artwork Section - No more dark text overlays or shadows */
+    /* Premium Action Login Button */
+    .login-trigger-btn {
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: opacity 0.2s ease;
+    }
+
+    .login-trigger-btn:hover {
+      opacity: 0.8;
+    }
+
+    /* Interactive Functional Login Drawer */
+    .login-dropdown-drawer {
+      display: none; /* Controlled via simple JS toggle below */
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: #030712;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 1.2rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      z-index: 99;
+    }
+
+    .login-form-container {
+      max-width: 466px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .login-input-field {
+      width: 100%;
+      background-color: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 0.65rem 0.8rem;
+      color: #ffffff;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .login-input-field:focus {
+      border-color: #3b82f6;
+    }
+
+    .login-submit-btn {
+      background-color: #ffffff;
+      color: #030712;
+      border: none;
+      border-radius: 8px;
+      padding: 0.65rem;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .login-submit-btn:hover {
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Primary Hero Frame */
     .hero-container {
       width: 100%;
-      max-width: 500px; /* Locks mobile framework boundaries cleanly */
+      max-width: 500px;
       margin: 0 auto;
-      background-color: #060e1e;
     }
 
     .hero-image-asset {
       width: 100%;
       height: auto;
       display: block;
-      object-fit: contain; /* Keeps your poster completely uncropped and bright */
+      object-fit: contain;
     }
 
-    /* Adaptive Features Grid Framework */
-    .features-container {
+    /* Tight Intro Copy Block */
+    .intro-summary-box {
       width: 100%;
       max-width: 500px;
       margin: 0 auto;
-      padding: 2rem 1rem;
+      padding: 1.5rem 1.2rem 1rem 1.2rem;
     }
 
-    .features-grid {
-      display: grid;
-      grid-template-columns: 1fr; /* Stacks cards perfectly for vertical mobile scrolling */
-      gap: 1rem;
-    }
-
-    .feature-card {
-      background-color: #0b1528;
-      border: 1px solid rgba(59, 130, 246, 0.1);
-      border-radius: 12px;
-      padding: 1.5rem;
-      text-align: center;
-    }
-
-    .feature-icon-box {
-      font-size: 1.75rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .feature-title {
-      font-size: 1.05rem;
+    .intro-headline {
+      font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 0.25rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
       color: #ffffff;
     }
 
-    .feature-text {
-      font-size: 0.85rem;
-      color: #94a3b8;
-      line-height: 1.4;
+    .intro-body-text {
+      font-size: 0.92rem;
+      color: rgba(255, 255, 255, 0.65);
     }
 
-    /* Premium Corporate Site Footer */
+    /* Compact Dashboard Section */
+    .dashboard-section {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 0.5rem 1rem 2rem 1rem;
+    }
+
+    .dashboard-subtitle {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 0.85rem;
+      padding-left: 0.2rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .service-card {
+      background-color: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      height: 110px;
+      text-decoration: none;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .service-card:hover {
+      background-color: #1e293b;
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+    
+    .service-card:active {
+      transform: scale(0.98);
+    }
+
+    .service-icon-wrapper {
+      background-color: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .service-label-text {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    /* Clean Integrated Footer */
     .global-site-footer {
       width: 100%;
       padding: 2rem 1rem;
       text-align: center;
       background-color: #030712;
       border-top: 1px solid rgba(255, 255, 255, 0.03);
-      margin-top: 2rem;
     }
 
     .footer-legal-text {
@@ -122,63 +235,91 @@
       color: #475569; 
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      line-height: 1.5;
+      line-height: 1.4;
     }
   </style>
 </head>
 <body>
 
-  <!-- Streamlined Corporate Navigation Bar -->
+  <!-- Top Navigation Header -->
   <nav class="navbar">
     <div class="navigation-links">
       <a href="about.html">About</a>
-      <a href="investors.html">Investors</a>
-      <a href="contact.html">Contact</a>
+      <a href="support.html">Support</a>
+    </div>
+    <button class="login-trigger-btn" onclick="toggleLoginDrawer()">Log in ▾</button>
+
+    <!-- Slide Down Interactive Login Wrapper -->
+    <div class="login-dropdown-drawer" id="loginDrawer">
+      <div class="login-form-container">
+        <input type="text" placeholder="Campus email or username" class="login-input-field">
+        <input type="password" placeholder="Password" class="login-input-field">
+        <button class="login-submit-btn" onclick="handleMockLogin()">Continue</button>
+      </div>
     </div>
   </nav>
 
-  <!-- Clean, unshadowed artwork asset frame -->
+  <!-- Hero Image Area -->
   <div class="hero-container">
     <img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
   </div>
 
-  <!-- Responsive info grid section below the image -->
-  <main class="features-container">
-    <div class="features-grid">
+  <!-- Quick Context Primer -->
+  <section class="intro-summary-box">
+    <h1 class="intro-headline">Rethinking Campus Transit</h1>
+    <p class="intro-body-text">High-efficiency vehicle logistics built explicitly for elite university ecosystems and immediate localized dispatch.</p>
+  </section>
+
+  <!-- Immediately Accessible Action Dashboard -->
+  <main class="dashboard-section">
+    <h2 class="dashboard-subtitle">Explore TrypCar Services</h2>
+    <div class="services-grid">
       
-      <div class="feature-card">
-        <div class="feature-icon-box">🛡️</div>
-        <h3 class="feature-title">Verified Students</h3>
-        <p class="feature-text">Every rider and driver is completely campus identity verified.</p>
-      </div>
+      <a href="book.html" class="service-card">
+        <div class="service-icon-wrapper">🚗</div>
+        <span class="service-label-text">Book a Ride</span>
+      </a>
 
-      <div class="feature-card">
-        <div class="feature-icon-box">🤖</div>
-        <h3 class="feature-title">Smart Matching</h3>
-        <p class="feature-text">AI-powered matching algorithms for faster, trusted connections.</p>
-      </div>
+      <a href="reserve.html" class="service-card">
+        <div class="service-icon-wrapper">📅</div>
+        <span class="service-label-text">Reserve</span>
+      </a>
 
-      <div class="feature-card">
-        <div class="feature-icon-box">⚡</div>
-        <h3 class="feature-title">Electric and Efficient</h3>
-        <p class="feature-text">Sustainable, clean-energy sedan rides tailored for your campus environment.</p>
-      </div>
+      <a href="match.html" class="service-card">
+        <div class="service-icon-wrapper">🤝</div>
+        <span class="service-label-text">Peer Match</span>
+      </a>
 
-      <div class="feature-card">
-        <div class="feature-icon-box">🔒</div>
-        <h3 class="feature-title">Safe, Secure, Reliable</h3>
-        <p class="feature-text">Real-time path tracking, in-app support infrastructure, and absolute peace of mind.</p>
-      </div>
+      <a href="electric.html" class="service-card">
+        <div class="service-icon-wrapper">⚡</div>
+        <span class="service-label-text">Tryp Electric</span>
+      </a>
 
     </div>
   </main>
 
-  <!-- Legal Footer Row -->
+  <!-- Footer Framework -->
   <footer class="global-site-footer">
     <div class="footer-legal-text">
-      © 2026 TrypCar, Inc. All Rights Reserved. <br>Trademark & Copyright Protective Notice.
+      © 2026 TrypCar, Inc. All Rights Reserved. <br>Campus Transit Operations Legal Notice.
     </div>
   </footer>
+
+  <!-- Simple UX Controller Scripts -->
+  <script>
+    function toggleLoginDrawer() {
+      const drawer = document.getElementById('loginDrawer');
+      if (drawer.style.display === 'block') {
+        drawer.style.display = 'none';
+      } else {
+        drawer.style.display = 'block';
+      }
+    }
+
+    function handleMockLogin() {
+      alert("Account access portal is currently running in Preview Mode. Complete campus registration credentials will activate during phase launch!");
+    }
+  </script>
 
 </body>
 </html>
