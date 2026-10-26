@@ -31,11 +31,10 @@ border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 display: flex;
 justify-content: space-between;
 width: 100%;
-max-width: 420px; /* Expanded slightly to house new links neatly */
+max-width: 420px;
 gap: 0.5rem;
 }
 .navigation-links a {
-/* Changed from vibrant white to a clean, balanced slate grey */
 color: #94a3b8; 
 font-weight: 700;
 font-size: 0.68rem;
@@ -50,7 +49,7 @@ color: #ffffff;
 /* Crisp Artwork Section */
 .hero-container {
 width: 100%;
-max-width: 500px; /* Locks mobile framework boundaries cleanly */
+max-width: 500px;
 margin: 0 auto;
 background-color: #060e1e;
 }
@@ -58,52 +57,67 @@ background-color: #060e1e;
 width: 100%;
 height: auto;
 display: block;
-object-fit: contain; /* Keeps your poster completely uncropped and bright */
+object-fit: contain;
 }
-/* Adaptive Features Grid Framework */
+/* Restored 4-Grid Square Framework */
 .features-container {
 width: 100%;
 max-width: 500px;
 margin: 0 auto;
-padding: 2rem 1rem;
+padding: 1.5rem 0.75rem;
 }
 .features-grid {
 display: grid;
-grid-template-columns: 1fr; /* Stacks cards perfectly for vertical mobile scrolling */
-gap: 1rem;
+/* Pulls back your requested 2x2 square layout grid style */
+grid-template-columns: repeat(2, 1fr); 
+gap: 0.75rem;
 }
 .feature-card {
 background-color: #0b1528;
 border: 1px solid rgba(59, 130, 246, 0.1);
 border-radius: 12px;
-padding: 1.5rem;
+padding: 1.25rem 0.75rem;
 text-align: center;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: flex-start;
 }
 .feature-icon-box {
 margin-bottom: 0.75rem;
 display: flex;
 justify-content: center;
 align-items: center;
+height: 52px; /* Standardized height to keep cards uniform */
 }
 .feature-icon-box svg {
-width: 42px;
-height: 42px;
+width: 38px;
+height: 38px;
 fill: none;
-stroke: #3b82f6; /* Premium branding blue */
+stroke: #3b82f6;
 stroke-width: 2;
 stroke-linecap: round;
 stroke-linejoin: round;
 }
+/* Special Custom Sizing for the Restored Large Security Badge */
+.feature-icon-box.large-badge-box {
+height: 56px;
+}
+.feature-icon-box.large-badge-box svg {
+width: 48px;
+height: 48px;
+}
 .feature-title {
-font-size: 1.05rem;
+font-size: 0.88rem; /* Sized down slightly so headings don't wrap tightly in 2x2 grids */
 font-weight: 700;
-margin-bottom: 0.25rem;
+margin-bottom: 0.35rem;
 color: #ffffff;
+line-height: 1.2;
 }
 .feature-text {
-font-size: 0.85rem;
+font-size: 0.72rem;
 color: #94a3b8;
-line-height: 1.4;
+line-height: 1.3;
 }
 /* Premium Corporate Site Footer */
 .global-site-footer {
@@ -135,18 +149,21 @@ line-height: 1.5;
 <a href="contact.html">Contact</a>
 </div>
 </nav>
-<!-- Clean, unshadowed artwork asset frame -->
+<!-- Hero Artwork Container -->
 <div class="hero-container">
 <img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
 </div>
-<!-- Responsive info grid section below the image -->
+<!-- Restored 4-Grid Square Dashboard Section -->
 <main class="features-container">
 <div class="features-grid">
-<!-- Card 1: Verified Students (Big Security Shield Badge) -->
+<!-- Card 1: Verified Students (Large Security Badge + Green Checkmark) -->
 <div class="feature-card">
-<div class="feature-icon-box">
+<div class="feature-icon-box large-badge-box">
 <svg viewBox="0 0 24 24">
-<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+<!-- Shield Outer Frame -->
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" />
+<!-- Integrated Green Checkmark Overlay -->
+<path d="M9 11l2 2 4-4" stroke="#22c55e" stroke-width="2.5" />
 </svg>
 </div>
 <h3 class="feature-title">Verified Students</h3>
@@ -172,7 +189,7 @@ line-height: 1.5;
 <h3 class="feature-title">Electric and Efficient</h3>
 <p class="feature-text">Sustainable, clean-energy sedan rides tailored for your campus environment.</p>
 </div>
-<!-- Card 4: Safe, Secure, Reliable (Real-Time Radar/Target Tracking Map Pin) -->
+<!-- Card 4: Safe, Secure, Reliable (Real-Time Target/Radar Pin) -->
 <div class="feature-card">
 <div class="feature-icon-box">
 <svg viewBox="0 0 24 24">
