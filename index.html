@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrypCar | Premium Campus Mobility Network</title>
   <style>
-    /* Clean Reset */
+    /* Global Reset Engine */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,22 +13,25 @@
     }
     
     body {
-      background-color: #060e1e;
+      background-color: #030712;
       color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       -webkit-font-smoothing: antialiased;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* Top Center Header Navigation */
+    /* Fixed Top Center Nav Header */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1.2rem 1.5rem;
       background-color: #030712;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 10;
     }
     
     .brand-container {
@@ -68,94 +71,143 @@
     
     .navigation-links {
       display: flex;
-      gap: 1.2rem;
+      gap: 1.5rem;
     }
     
     .navigation-links a {
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 0.75rem;
+      color: #94a3b8;
+      font-weight: 600;
+      font-size: 0.8rem;
       letter-spacing: 0.05em;
       text-transform: uppercase;
       text-decoration: none;
       transition: color 0.2s ease;
     }
 
-    /* Mobile Layout Engine Rules */
-    @media (max-width: 600px) {
-      .navbar {
-        flex-direction: column;
-        gap: 1.2rem;
-        padding: 1.5rem 1rem;
-        text-align: center;
-      }
-      
-      .navigation-links {
-        width: 100%;
-        justify-content: space-around;
-        gap: 0.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        padding-top: 1rem;
-      }
-      
-      .navigation-links a {
-        font-size: 0.7rem;
-      }
+    .navigation-links a:hover,
+    .navigation-links a.active {
+      color: #ffffff;
     }
 
-    /* Fixed Hero Layout Image Block Container */
-    .hero-display {
-      position: relative;
-      width: 100%;
-      height: auto;
-      aspect-ratio: 16 / 19; 
-      max-width: 600px;
-      margin: 0 auto;
-      background-image: url('1792984078309.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center top;
-      padding: 0 1rem;
-    }
-
-    /* Restored Safe Feature Grid Overlay System */
-    .features-grid-overlay {
-      position: absolute;
-      bottom: 5%;
-      left: 5%;
-      right: 5%;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-    }
-
-    .feature-card {
-      background: rgba(3, 7, 18, 0.85);
-      border: 1px solid rgba(59, 130, 246, 0.2);
-      border-radius: 8px;
-      padding: 1rem;
-      backdrop-filter: blur(8px);
+    /* Main Content Mobile Wrapper */
+    .app-container {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      background-color: #060e1e;
     }
 
-    .feature-title {
-      font-size: 0.85rem;
-      font-weight: 700;
+    /* Restored High-Resolution Hero Visual Asset Frame */
+    .hero-banner-frame {
+      width: 100%;
+      position: relative;
+      background-image: url('1792984078309.png');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      aspect-ratio: 16 / 14;
+    }
+
+    /* Master 4-Column Metric Control Grid Panels */
+    .metrics-panel-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background-color: #030712;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      width: 100%;
+    }
+
+    .metric-tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.2rem 0.5rem;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .metric-tab-item:last-child {
+      border-right: none;
+    }
+
+    .metric-tab-item:hover {
+      background-color: rgba(59, 130, 246, 0.05);
+    }
+
+    .metric-icon-status {
+      font-size: 1.25rem;
+      margin-bottom: 0.4rem;
       color: #3b82f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .feature-desc {
-      font-size: 0.7rem;
+    .metric-label-caption {
+      font-size: 0.65rem;
+      font-weight: 700;
       color: #94a3b8;
-      line-height: 1.3;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
     }
 
-    /* Corporate Site Footer Row Layout */
+    .metric-tab-item.active .metric-label-caption {
+      color: #ffffff;
+    }
+
+    /* Core Application Operational Status Readout Block */
+    .status-feed-container {
+      padding: 1.5rem;
+      background-color: #060e1e;
+      flex: 1;
+    }
+
+    .status-card-notice {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .status-header-line {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .status-pulse-indicator {
+      width: 8px;
+      height: 8px;
+      background-color: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .status-headline {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.01em;
+    }
+
+    .status-body-text {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      line-height: 1.45;
+    }
+
+    /* Sticky Platform Footer Element */
     .global-site-footer {
       width: 100%;
-      padding: 2rem 1rem;
+      padding: 1.5rem 1rem;
       text-align: center;
       background-color: #030712;
       border-top: 1px solid rgba(255, 255, 255, 0.03);
@@ -163,46 +215,86 @@
     }
 
     .footer-legal-text {
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       color: #475569; 
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      line-height: 1.5;
+      line-height: 1.4;
+    }
+
+    /* Mobile Breakpoint Configurations */
+    @media (max-width: 600px) {
+      .navbar {
+        padding: 1rem;
+      }
+      .navigation-links {
+        gap: 1rem;
+      }
+      .navigation-links a {
+        font-size: 0.75rem;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Top Center Navigation Row -->
   <nav class="navbar">
     <div class="brand-container">
       <div class="brand-logo-box"></div>
       <div class="brand-text">TRYP<span>CAR</span></div>
     </div>
     <div class="navigation-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About Us</a>
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
       <a href="investors.html">Investors</a>
-      <a href="contact.html">Contacts</a>
+      <a href="contact.html">Contact</a>
     </div>
   </nav>
 
-  <!-- Image container hosts original interactive graphics overlays -->
-  <header class="hero-display">
-    <div class="features-grid-overlay">
-      <div class="feature-card">
-        <div class="feature-title">Safety Shield</div>
-        <div class="feature-desc">Real-time dynamic live tracking protection network operations.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-title">Campus Hub</div>
-        <div class="feature-desc">Exclusive immediate access routes to academic sectors.</div>
-      </div>
-    </div>
-  </header>
+  <!-- Mobile Screen Context Viewport -->
+  <div class="app-container">
+    
+    <!-- Hero graphic container -->
+    <div class="hero-banner-frame"></div>
 
+    <!-- Restored Original 4-Column Feature Grid Row -->
+    <section class="metrics-panel-row">
+      <div class="metric-tab-item active">
+        <div class="metric-icon-status">🛡️</div>
+        <div class="metric-label-caption">Safety Shield</div>
+      </div>
+      <div class="metric-tab-item">
+        <div class="metric-icon-status">⚡</div>
+        <div class="metric-label-caption">Fast Pass</div>
+      </div>
+      <div class="metric-tab-item">
+        <div class="metric-icon-status">📍</div>
+        <div class="metric-label-caption">Live Track</div>
+      </div>
+      <div class="metric-tab-item">
+        <div class="metric-icon-status">🎓</div>
+        <div class="metric-label-caption">Campus Hub</div>
+      </div>
+    </section>
+
+    <!-- Operational Feed Details Segment -->
+    <main class="status-feed-container">
+      <div class="status-card-notice">
+        <div class="status-header-line">
+          <div class="status-pulse-indicator"></div>
+          <h2 class="status-headline">Network Status: Active</h2>
+        </div>
+        <p class="status-body-text"> Premium network operations are running normally across all designated academic sectors and tracking stations.</p>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Global Legal Bar -->
   <footer class="global-site-footer">
     <div class="footer-legal-text">
-      © 2026 TrypCar, Inc. All Rights Reserved. <br>Trademark & Copyright Protective Notice.
+      © 2026 TrypCar, Inc. All Rights Reserved. <br>System Protection and Architecture Node.
     </div>
   </footer>
 
