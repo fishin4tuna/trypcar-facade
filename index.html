@@ -22,60 +22,22 @@
       min-height: 100vh;
     }
 
-    /* Fixed Navigation Bar Layout with clean vertical stacking for mobile */
+    /* Streamlined Navigation Bar Layout - Branding elements removed */
     .navbar {
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      gap: 1rem;
       padding: 1.2rem 1rem;
       background-color: #030712;
       text-align: center;
     }
     
-    .brand-container {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    
-    .brand-logo-box {
-      background: linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);
-      border-radius: 6px;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .brand-logo-box::after {
-      content: '';
-      width: 12px;
-      height: 8px;
-      border: 2px solid #ffffff;
-      border-radius: 2px;
-    }
-    
-    .brand-text {
-      font-weight: 800;
-      font-size: 1.3rem;
-      letter-spacing: 0.03em;
-      color: #ffffff;
-    }
-    
-    .brand-text span {
-      color: #3b82f6;
-    }
-    
-    /* Spreads links out evenly across the screen with plenty of tapping room */
+    /* Balanced horizontal navigation link row calibrated for mobile screens */
     .navigation-links {
       display: flex;
       justify-content: space-between;
       width: 100%;
       max-width: 360px;
-      padding-top: 0.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
     
     .navigation-links a {
@@ -123,10 +85,6 @@
 <body>
 
   <nav class="navbar">
-    <div class="brand-container">
-      <div class="brand-logo-box"></div>
-      <div class="brand-text">TRYP<span>CAR</span></div>
-    </div>
     <div class="navigation-links">
       <a href="index.html">Home</a>
       <a href="about.html">About Us</a>
