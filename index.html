@@ -1,302 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Premium Campus Mobility Network</title>
-  <style>
-    /* Global Reset Engine */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
-    body {
-      background-color: #030712;
-      color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* Fixed Top Center Nav Header */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 1.5rem;
-      background-color: #030712;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      z-index: 10;
-    }
-    
-    .brand-container {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    
-    .brand-logo-box {
-      background: linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);
-      border-radius: 6px;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .brand-logo-box::after {
-      content: '';
-      width: 14px;
-      height: 10px;
-      border: 2px solid #ffffff;
-      border-radius: 2px;
-    }
-    
-    .brand-text {
-      font-weight: 800;
-      font-size: 1.35rem;
-      letter-spacing: 0.03em;
-      color: #ffffff;
-    }
-    
-    .brand-text span {
-      color: #3b82f6;
-    }
-    
-    .navigation-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-    
-    .navigation-links a {
-      color: #94a3b8;
-      font-weight: 600;
-      font-size: 0.8rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .navigation-links a:hover,
-    .navigation-links a.active {
-      color: #ffffff;
-    }
-
-    /* Main Content Mobile Wrapper */
-    .app-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      background-color: #060e1e;
-    }
-
-    /* Restored High-Resolution Hero Visual Asset Frame */
-    .hero-banner-frame {
-      width: 100%;
-      position: relative;
-      background-image: url('1792984078309.png');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      aspect-ratio: 16 / 14;
-    }
-
-    /* Master 4-Column Metric Control Grid Panels */
-    .metrics-panel-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      background-color: #030712;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      width: 100%;
-    }
-
-    .metric-tab-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 1.2rem 0.5rem;
-      border-right: 1px solid rgba(255, 255, 255, 0.05);
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-
-    .metric-tab-item:last-child {
-      border-right: none;
-    }
-
-    .metric-tab-item:hover {
-      background-color: rgba(59, 130, 246, 0.05);
-    }
-
-    .metric-icon-status {
-      font-size: 1.25rem;
-      margin-bottom: 0.4rem;
-      color: #3b82f6;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .metric-label-caption {
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: #94a3b8;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-
-    .metric-tab-item.active .metric-label-caption {
-      color: #ffffff;
-    }
-
-    /* Core Application Operational Status Readout Block */
-    .status-feed-container {
-      padding: 1.5rem;
-      background-color: #060e1e;
-      flex: 1;
-    }
-
-    .status-card-notice {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
-      border: 1px solid rgba(59, 130, 246, 0.15);
-      border-radius: 12px;
-      padding: 1.25rem;
-    }
-
-    .status-header-line {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .status-pulse-indicator {
-      width: 8px;
-      height: 8px;
-      background-color: #10b981;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #10b981;
-    }
-
-    .status-headline {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 0.01em;
-    }
-
-    .status-body-text {
-      font-size: 0.75rem;
-      color: #94a3b8;
-      line-height: 1.45;
-    }
-
-    /* Sticky Platform Footer Element */
-    .global-site-footer {
-      width: 100%;
-      padding: 1.5rem 1rem;
-      text-align: center;
-      background-color: #030712;
-      border-top: 1px solid rgba(255, 255, 255, 0.03);
-      margin-top: auto;
-    }
-
-    .footer-legal-text {
-      font-size: 0.6rem;
-      color: #475569; 
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      line-height: 1.4;
-    }
-
-    /* Mobile Breakpoint Configurations */
-    @media (max-width: 600px) {
-      .navbar {
-        padding: 1rem;
-      }
-      .navigation-links {
-        gap: 1rem;
-      }
-      .navigation-links a {
-        font-size: 0.75rem;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrypCar | Premium Campus Mobility Network</title>
+<style>
+/* Clean Tech Reset */
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+body {
+background-color: #060e1e;
+color: #ffffff;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+-webkit-font-smoothing: antialiased;
+line-height: 1.5;
+}
+/* Fixed Navigation Bar Layout */
+.navbar {
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 1.2rem 1rem;
+background-color: #030712;
+border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+.navigation-links {
+display: flex;
+justify-content: space-between;
+width: 100%;
+max-width: 360px;
+}
+.navigation-links a {
+color: #ffffff;
+font-weight: 700;
+font-size: 0.72rem;
+letter-spacing: 0.04em;
+text-transform: uppercase;
+text-decoration: none;
+}
+/* Crisp Artwork Section - No more dark text overlays or shadows */
+.hero-container {
+width: 100%;
+max-width: 500px; /* Locks mobile framework boundaries cleanly */
+margin: 0 auto;
+background-color: #060e1e;
+}
+.hero-image-asset {
+width: 100%;
+height: auto;
+display: block;
+object-fit: contain; /* Keeps your poster completely uncropped and bright */
+}
+/* Adaptive Features Grid Framework */
+.features-container {
+width: 100%;
+max-width: 500px;
+margin: 0 auto;
+padding: 2rem 1rem;
+}
+.features-grid {
+display: grid;
+grid-template-columns: 1fr; /* Stacks cards perfectly for vertical mobile scrolling */
+gap: 1rem;
+}
+.feature-card {
+background-color: #0b1528;
+border: 1px solid rgba(59, 130, 246, 0.1);
+border-radius: 12px;
+padding: 1.5rem;
+text-align: center;
+}
+.feature-icon-box {
+font-size: 1.75rem;
+margin-bottom: 0.5rem;
+}
+.feature-title {
+font-size: 1.05rem;
+font-weight: 700;
+margin-bottom: 0.25rem;
+color: #ffffff;
+}
+.feature-text {
+font-size: 0.85rem;
+color: #94a3b8;
+line-height: 1.4;
+}
+/* Premium Corporate Site Footer */
+.global-site-footer {
+width: 100%;
+padding: 2rem 1rem;
+text-align: center;
+background-color: #030712;
+border-top: 1px solid rgba(255, 255, 255, 0.03);
+margin-top: 2rem;
+}
+.footer-legal-text {
+font-size: 0.65rem;
+color: #475569;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+line-height: 1.5;
+}
+</style>
 </head>
 <body>
-
-  <!-- Top Center Navigation Row -->
-  <nav class="navbar">
-    <div class="brand-container">
-      <div class="brand-logo-box"></div>
-      <div class="brand-text">TRYP<span>CAR</span></div>
-    </div>
-    <div class="navigation-links">
-      <a href="index.html" class="active">Home</a>
-      <a href="about.html">About</a>
-      <a href="investors.html">Investors</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </nav>
-
-  <!-- Mobile Screen Context Viewport -->
-  <div class="app-container">
-    
-    <!-- Hero graphic container -->
-    <div class="hero-banner-frame"></div>
-
-    <!-- Restored Original 4-Column Feature Grid Row -->
-    <section class="metrics-panel-row">
-      <div class="metric-tab-item active">
-        <div class="metric-icon-status">🛡️</div>
-        <div class="metric-label-caption">Safety Shield</div>
-      </div>
-      <div class="metric-tab-item">
-        <div class="metric-icon-status">⚡</div>
-        <div class="metric-label-caption">Fast Pass</div>
-      </div>
-      <div class="metric-tab-item">
-        <div class="metric-icon-status">📍</div>
-        <div class="metric-label-caption">Live Track</div>
-      </div>
-      <div class="metric-tab-item">
-        <div class="metric-icon-status">🎓</div>
-        <div class="metric-label-caption">Campus Hub</div>
-      </div>
-    </section>
-
-    <!-- Operational Feed Details Segment -->
-    <main class="status-feed-container">
-      <div class="status-card-notice">
-        <div class="status-header-line">
-          <div class="status-pulse-indicator"></div>
-          <h2 class="status-headline">Network Status: Active</h2>
-        </div>
-        <p class="status-body-text"> Premium network operations are running normally across all designated academic sectors and tracking stations.</p>
-      </div>
-    </main>
-
-  </div>
-
-  <!-- Global Legal Bar -->
-  <footer class="global-site-footer">
-    <div class="footer-legal-text">
-      © 2026 TrypCar, Inc. All Rights Reserved. <br>System Protection and Architecture Node.
-    </div>
-  </footer>
-
+<!-- Navigation Bar -->
+<nav class="navbar">
+<div class="navigation-links">
+<a href="index.html">Home</a>
+<a href="about.html">About Us</a>
+<a href="investors.html">Investors</a>
+<a href="contact.html">Contact</a>
+</div>
+</nav>
+<!-- Clean, unshadowed artwork asset frame -->
+<div class="hero-container">
+<img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
+</div>
+<!-- Responsive info grid section below the image -->
+<main class="features-container">
+<div class="features-grid">
+<div class="feature-card">
+<div class="feature-icon-box">■■</div>
+<h3 class="feature-title">Verified Students</h3>
+<p class="feature-text">Every rider and driver is completely campus identity verified.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon-box">■</div>
+<h3 class="feature-title">Smart Matching</h3>
+<p class="feature-text">AI-powered matching algorithms for faster, trusted connections.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon-box">■</div>
+<h3 class="feature-title">Electric and Efficient</h3>
+<p class="feature-text">Sustainable, clean-energy sedan rides tailored for your campus environment.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon-box">■</div>
+<h3 class="feature-title">Safe, Secure, Reliable</h3>
+<p class="feature-text">Real-time path tracking, in-app support infrastructure, and absolute peace of mind.</p>
+</div>
+</div>
+</main>
+<!-- Legal Footer Row -->
+<footer class="global-site-footer">
+<div class="footer-legal-text">
+© 2026 TrypCar, Inc. All Rights Reserved. <br>Trademark & Copyright Protective Notice.
+</div>
+</footer>
 </body>
 </html>
