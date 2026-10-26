@@ -31,17 +31,23 @@ border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 display: flex;
 justify-content: space-between;
 width: 100%;
-max-width: 360px;
+max-width: 420px; /* Expanded slightly to house new links neatly */
+gap: 0.5rem;
 }
 .navigation-links a {
-color: #ffffff;
+/* Changed from vibrant white to a clean, balanced slate grey */
+color: #94a3b8; 
 font-weight: 700;
-font-size: 0.72rem;
+font-size: 0.68rem;
 letter-spacing: 0.04em;
 text-transform: uppercase;
 text-decoration: none;
+transition: color 0.2s ease;
 }
-/* Crisp Artwork Section - No more dark text overlays or shadows */
+.navigation-links a:hover, .navigation-links a.active {
+color: #ffffff;
+}
+/* Crisp Artwork Section */
 .hero-container {
 width: 100%;
 max-width: 500px; /* Locks mobile framework boundaries cleanly */
@@ -74,8 +80,19 @@ padding: 1.5rem;
 text-align: center;
 }
 .feature-icon-box {
-font-size: 1.75rem;
-margin-bottom: 0.5rem;
+margin-bottom: 0.75rem;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.feature-icon-box svg {
+width: 42px;
+height: 42px;
+fill: none;
+stroke: #3b82f6; /* Premium branding blue */
+stroke-width: 2;
+stroke-linecap: round;
+stroke-linejoin: round;
 }
 .feature-title {
 font-size: 1.05rem;
@@ -110,9 +127,11 @@ line-height: 1.5;
 <!-- Navigation Bar -->
 <nav class="navbar">
 <div class="navigation-links">
-<a href="index.html">Home</a>
-<a href="about.html">About Us</a>
+<a href="index.html" class="active">Home</a>
+<a href="about.html">About</a>
 <a href="investors.html">Investors</a>
+<a href="support.html">Support</a>
+<a href="faq.html">FAQ's</a>
 <a href="contact.html">Contact</a>
 </div>
 </nav>
@@ -123,23 +142,44 @@ line-height: 1.5;
 <!-- Responsive info grid section below the image -->
 <main class="features-container">
 <div class="features-grid">
+<!-- Card 1: Verified Students (Big Security Shield Badge) -->
 <div class="feature-card">
-<div class="feature-icon-box">■■</div>
+<div class="feature-icon-box">
+<svg viewBox="0 0 24 24">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+</svg>
+</div>
 <h3 class="feature-title">Verified Students</h3>
 <p class="feature-text">Every rider and driver is completely campus identity verified.</p>
 </div>
+<!-- Card 2: Smart Matching (AI Lightning Engine) -->
 <div class="feature-card">
-<div class="feature-icon-box">■</div>
+<div class="feature-icon-box">
+<svg viewBox="0 0 24 24">
+<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+</svg>
+</div>
 <h3 class="feature-title">Smart Matching</h3>
 <p class="feature-text">AI-powered matching algorithms for faster, trusted connections.</p>
 </div>
+<!-- Card 3: Electric and Efficient (Eco Power Plug) -->
 <div class="feature-card">
-<div class="feature-icon-box">■</div>
+<div class="feature-icon-box">
+<svg viewBox="0 0 24 24">
+<path d="M18.5 2h-12C5.12 2 4 3.12 4 4.5V15c0 1.38 1.12 2.5 2.5 2.5h3.62l.38 3h-2a1 1 0 0 0 0 2h7a1 1 0 0 0 0-2h-2l.38-3h3.62c1.38 0 2.5-1.12 2.5-2.5V4.5C21 3.12 19.88 2 18.5 2z"/>
+</svg>
+</div>
 <h3 class="feature-title">Electric and Efficient</h3>
 <p class="feature-text">Sustainable, clean-energy sedan rides tailored for your campus environment.</p>
 </div>
+<!-- Card 4: Safe, Secure, Reliable (Real-Time Radar/Target Tracking Map Pin) -->
 <div class="feature-card">
-<div class="feature-icon-box">■</div>
+<div class="feature-icon-box">
+<svg viewBox="0 0 24 24">
+<path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/>
+<circle cx="12" cy="10" r="3"/>
+</svg>
+</div>
 <h3 class="feature-title">Safe, Secure, Reliable</h3>
 <p class="feature-text">Real-time path tracking, in-app support infrastructure, and absolute peace of mind.</p>
 </div>
