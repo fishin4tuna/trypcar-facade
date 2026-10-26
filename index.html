@@ -56,10 +56,12 @@
       border-radius: 2px;
     }
     
+    /* Heavy geometric typography styling to match the graphic brand text */
     .brand-text {
       font-weight: 900;
       font-size: 1.4rem;
-      letter-spacing: -0.01em;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
       color: #ffffff;
     }
     
@@ -72,8 +74,9 @@
       gap: 1.75rem;
     }
     
+    /* Clean slate-gray text layout for secondary link structures */
     .navigation-links a {
-      color: #3b82f6;
+      color: #94a3b8;
       font-weight: 700;
       font-size: 0.85rem;
       letter-spacing: 0.05em;
@@ -87,7 +90,7 @@
     }
     
     .navigation-links a.inactive {
-      color: #64748b;
+      color: #475569;
     }
 
     /* Mobile-Optimized Full-Width Graphic Panel Box */
@@ -167,14 +170,15 @@
 </head>
 <body>
 
-  <!-- Top Global Header Layout -->
+  <!-- Top Global Header Layout with Clean Gray Typography Links -->
   <nav class="navbar">
     <div class="brand-container">
       <div class="brand-logo-box"></div>
       <div class="brand-text">TRYP<span>CAR</span></div>
     </div>
     <div class="navigation-links">
-      <a href="#">ABOUT</a>
+      <a href="about.html">ABOUT</a>
+      <a href="contact.html">CONTACT</a>
       <a href="#" class="inactive">TIERS</a>
     </div>
   </nav>
