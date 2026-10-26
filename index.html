@@ -34,16 +34,22 @@
       display: flex;
       justify-content: space-between;
       width: 100%;
-      max-width: 360px;
+      max-width: 280px; /* Slimmer footprint to lock down balanced desktop & mobile centering */
     }
     
     .navigation-links a {
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 500;
+      font-size: 0.82rem;
       letter-spacing: 0.04em;
-      text-transform: uppercase;
+      text-transform: none; /* About, Investors, Contact styling rule */
       text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    
+    .navigation-links a:hover,
+    .navigation-links a:active {
+      color: #ffffff;
     }
 
     /* Crisp Artwork Section - No more dark text overlays or shadows */
@@ -122,11 +128,10 @@
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Streamlined Corporate Navigation Bar -->
   <nav class="navbar">
     <div class="navigation-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About Us</a>
+      <a href="about.html">About</a>
       <a href="investors.html">Investors</a>
       <a href="contact.html">Contact</a>
     </div>
