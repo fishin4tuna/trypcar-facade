@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrypCar | Premium Campus Mobility Network</title>
   <style>
-    /* Professional Tech Reset */
+    /* Clean Tech Reset */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -20,12 +20,12 @@
       line-height: 1.5;
     }
 
-    /* Floating Navigation Row */
+    /* Fixed Navigation Bar Layout */
     .navbar {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 1.5rem 1rem;
+      padding: 1.2rem 1rem;
       background-color: #030712;
       border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     }
@@ -34,96 +34,64 @@
       display: flex;
       justify-content: space-between;
       width: 100%;
-      max-width: 400px;
+      max-width: 360px;
     }
     
     .navigation-links a {
       color: #ffffff;
       font-weight: 700;
-      font-size: 0.75rem;
-      letter-spacing: 0.06em;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       text-decoration: none;
     }
 
-    /* Dynamic Hero Section - Adapts dynamically to any screen height */
-    .hero-section {
-      position: relative;
+    /* Crisp Artwork Section - No more dark text overlays or shadows */
+    .hero-container {
       width: 100%;
-      min-height: 60vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 4rem 1.5rem;
-      
-      /* Uses your graphic as a fluid responsive backdrop layer */
-      background-image: linear-gradient(180deg, rgba(6, 14, 30, 0.7) 0%, rgba(6, 14, 30, 0.4) 50%, #060e1e 100%), 
-                        url('1792984078309.png');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-    }
-
-    .hero-title {
-      font-size: 3rem;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      color: #ffffff;
-      margin-bottom: 0.5rem;
-    }
-
-    .hero-title span {
-      color: #3b82f6;
-    }
-
-    .hero-subtitle {
-      font-size: 0.85rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      color: #94a3b8;
-      text-transform: uppercase;
-    }
-
-    /* Dynamic Value Proposition Layout Grid Engine */
-    .features-container {
-      max-width: 1100px;
+      max-width: 500px; /* Locks mobile framework boundaries cleanly */
       margin: 0 auto;
-      padding: 4rem 1.5rem;
+      background-color: #060e1e;
     }
 
-    /* Desktop default: Elements align horizontally on wide screens */
+    .hero-image-asset {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain; /* Keeps your poster completely uncropped and bright */
+    }
+
+    /* Adaptive Features Grid Framework */
+    .features-container {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
+      grid-template-columns: 1fr; /* Stacks cards perfectly for vertical mobile scrolling */
+      gap: 1rem;
     }
 
     .feature-card {
       background-color: #0b1528;
       border: 1px solid rgba(59, 130, 246, 0.1);
       border-radius: 12px;
-      padding: 2rem 1.5rem;
+      padding: 1.5rem;
       text-align: center;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .feature-card:hover {
-      border-color: #3b82f6;
-      transform: translateY(-2px);
     }
 
     .feature-icon-box {
-      color: #3b82f6;
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
     }
 
     .feature-title {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
       color: #ffffff;
     }
 
@@ -133,14 +101,14 @@
       line-height: 1.4;
     }
 
-    /* Tech Footer Row */
+    /* Premium Corporate Site Footer */
     .global-site-footer {
       width: 100%;
-      padding: 2.5rem 1rem;
+      padding: 2rem 1rem;
       text-align: center;
       background-color: #030712;
       border-top: 1px solid rgba(255, 255, 255, 0.03);
-      margin-top: auto;
+      margin-top: 2rem;
     }
 
     .footer-legal-text {
@@ -148,31 +116,13 @@
       color: #475569; 
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      line-height: 1.6;
-    }
-
-    /* THE MAGIC RESPONSIVE MEDIA QUERY ENGINE */
-    /* Automatically triggers the moment a mobile screen size is detected */
-    @media (max-width: 768px) {
-      .hero-title {
-        font-size: 2.2rem;
-      }
-      
-      /* Forces horizontal boxes to safely drop down into a vertical thumb-scrolling column */
-      .features-grid {
-        grid-template-columns: 1fr;
-        gap: 1.2rem;
-      }
-
-      .feature-card {
-        padding: 1.5rem;
-      }
+      line-height: 1.5;
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Responsive Menu Framework -->
+  <!-- Navigation Bar -->
   <nav class="navbar">
     <div class="navigation-links">
       <a href="index.html">Home</a>
@@ -182,44 +132,43 @@
     </div>
   </nav>
 
-  <!-- Fluid Scalable Header Image Backdrop Layer -->
-  <header class="hero-section">
-    <h1 class="hero-title">TRYP<span>CAR</span></h1>
-    <p class="hero-subtitle">Exclusive Peer-To-Peer Premium Campus Mobility Network</p>
-  </header>
+  <!-- Clean, unshadowed artwork asset frame -->
+  <div class="hero-container">
+    <img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
+  </div>
 
-  <!-- Coded Adaptive Performance Layout Grid -->
+  <!-- Responsive info grid section below the image -->
   <main class="features-container">
     <div class="features-grid">
       
       <div class="feature-card">
         <div class="feature-icon-box">🛡️</div>
         <h3 class="feature-title">Verified Students</h3>
-        <p class="feature-text">Every rider and driver is completely campus verified.</p>
+        <p class="feature-text">Every rider and driver is completely campus identity verified.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon-box">🤖</div>
         <h3 class="feature-title">Smart Matching</h3>
-        <p class="feature-text">AI-powered matching for faster, better network connections.</p>
+        <p class="feature-text">AI-powered matching algorithms for faster, trusted connections.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon-box">⚡</div>
         <h3 class="feature-title">Electric and Efficient</h3>
-        <p class="feature-text">Sustainable, clean energy rides built for a cleaner campus environment.</p>
+        <p class="feature-text">Sustainable, clean-energy sedan rides tailored for your campus environment.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon-box">🔒</div>
         <h3 class="feature-title">Safe, Secure, Reliable</h3>
-        <p class="feature-text">Real-time tracking, in-app support infrastructure, and total peace of mind.</p>
+        <p class="feature-text">Real-time path tracking, in-app support infrastructure, and absolute peace of mind.</p>
       </div>
 
     </div>
   </main>
 
-  <!-- Base Legal Frame -->
+  <!-- Legal Footer Row -->
   <footer class="global-site-footer">
     <div class="footer-legal-text">
       © 2026 TrypCar, Inc. All Rights Reserved. <br>Trademark & Copyright Protective Notice.
