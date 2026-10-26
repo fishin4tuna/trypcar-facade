@@ -2,130 +2,229 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrypCar | Premium Campus Mobility Network</title>
   <style>
-    /* Professional Layout Reset */
+    /* Professional Tech Reset */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
     
-    html, body {
-      width: 100%;
-      min-height: 100vh;
+    body {
       background-color: #060e1e;
       color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
+      line-height: 1.5;
     }
 
-    /* Master Fluid Frame - Shrinks everything to fit perfectly on any device screen */
-    .site-container {
-      width: 100%;
-      max-width: 500px; /* Calibrates perfect structural width for mobile viewports */
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      padding-bottom: env(safe-area-inset-bottom);
-    }
-
-    /* Floating Transparent Navigation Bar Row */
+    /* Floating Navigation Row */
     .navbar {
-      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 1.2rem 1.5rem;
-      background: transparent;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 10;
+      padding: 1.5rem 1rem;
+      background-color: #030712;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     }
     
     .navigation-links {
       display: flex;
       justify-content: space-between;
       width: 100%;
-      max-width: 360px;
+      max-width: 400px;
     }
     
     .navigation-links a {
       color: #ffffff;
       font-weight: 700;
-      font-size: 0.72rem;
-      letter-spacing: 0.05em;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       text-decoration: none;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9); /* Guarantees high text visibility over the graphic */
     }
 
-    /* Liquid Image Engine - Guarantees zero text cropping or image truncation */
-    .hero-display {
-      width: 100%;
-      margin-top: 3.5rem; /* Pushes graphic safely down so floating menu never blocks it */
+    /* Dynamic Hero Section - Adapts dynamically to any screen height */
+    .hero-section {
       position: relative;
-    }
-
-    .hero-image-asset {
       width: 100%;
-      height: auto;
-      display: block;
-      object-fit: contain; /* Forces the image to reduce and fit completely without zooming */
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 1.5rem;
+      
+      /* Uses your graphic as a fluid responsive backdrop layer */
+      background-image: linear-gradient(180deg, rgba(6, 14, 30, 0.7) 0%, rgba(6, 14, 30, 0.4) 50%, #060e1e 100%), 
+                        url('1792984078309.png');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
     }
 
-    /* Integrated Bottom Brand Footer */
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title span {
+      color: #3b82f6;
+    }
+
+    .hero-subtitle {
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+
+    /* Dynamic Value Proposition Layout Grid Engine */
+    .features-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+    }
+
+    /* Desktop default: Elements align horizontally on wide screens */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background-color: #0b1528;
+      border: 1px solid rgba(59, 130, 246, 0.1);
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .feature-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+    }
+
+    .feature-icon-box {
+      color: #3b82f6;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
+
+    .feature-text {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+
+    /* Tech Footer Row */
     .global-site-footer {
       width: 100%;
-      padding: 2rem 1rem;
+      padding: 2.5rem 1rem;
       text-align: center;
       background-color: #030712;
       border-top: 1px solid rgba(255, 255, 255, 0.03);
-      margin-top: auto; /* Locks footer firmly at the base of the viewport */
+      margin-top: auto;
     }
 
     .footer-legal-text {
-      font-size: 0.62rem;
+      font-size: 0.65rem;
       color: #475569; 
       letter-spacing: 0.05em;
       text-transform: uppercase;
       line-height: 1.6;
     }
+
+    /* THE MAGIC RESPONSIVE MEDIA QUERY ENGINE */
+    /* Automatically triggers the moment a mobile screen size is detected */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.2rem;
+      }
+      
+      /* Forces horizontal boxes to safely drop down into a vertical thumb-scrolling column */
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+
+      .feature-card {
+        padding: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <div class="site-container">
-
-    <!-- Transparent navigation float over image background structure -->
-    <nav class="navbar">
-      <div class="navigation-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="investors.html">Investors</a>
-        <a href="contact.html">Contacts</a>
-      </div>
-    </nav>
-
-    <!-- Liquid responsive container containing the target graphics asset -->
-    <div class="hero-display">
-      <img src="1792984078309.png" alt="TrypCar Display Network" class="hero-image-asset">
+  <!-- Floating Responsive Menu Framework -->
+  <nav class="navbar">
+    <div class="navigation-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="investors.html">Investors</a>
+      <a href="contact.html">Contacts</a>
     </div>
+  </nav>
 
-    <footer class="global-site-footer">
-      <div class="footer-legal-text">
-        © 2026 TrypCar, Inc. All Rights Reserved. <br>Trademark & Copyright Protective Notice.
+  <!-- Fluid Scalable Header Image Backdrop Layer -->
+  <header class="hero-section">
+    <h1 class="hero-title">TRYP<span>CAR</span></h1>
+    <p class="hero-subtitle">Exclusive Peer-To-Peer Premium Campus Mobility Network</p>
+  </header>
+
+  <!-- Coded Adaptive Performance Layout Grid -->
+  <main class="features-container">
+    <div class="features-grid">
+      
+      <div class="feature-card">
+        <div class="feature-icon-box">🛡️</div>
+        <h3 class="feature-title">Verified Students</h3>
+        <p class="feature-text">Every rider and driver is completely campus verified.</p>
       </div>
-    </footer>
 
-  </div>
+      <div class="feature-card">
+        <div class="feature-icon-box">🤖</div>
+        <h3 class="feature-title">Smart Matching</h3>
+        <p class="feature-text">AI-powered matching for faster, better network connections.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-box">⚡</div>
+        <h3 class="feature-title">Electric and Efficient</h3>
+        <p class="feature-text">Sustainable, clean energy rides built for a cleaner campus environment.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-box">🔒</div>
+        <h3 class="feature-title">Safe, Secure, Reliable</h3>
+        <p class="feature-text">Real-time tracking, in-app support infrastructure, and total peace of mind.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Base Legal Frame -->
+  <footer class="global-site-footer">
+    <div class="footer-legal-text">
+      © 2026 TrypCar, Inc. All Rights Reserved. <br>Trademark & Copyright Protective Notice.
+    </div>
+  </footer>
 
 </body>
 </html>
