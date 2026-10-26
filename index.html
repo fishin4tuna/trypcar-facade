@@ -5,34 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrypCar | Premium Campus Mobility Network</title>
   <style>
-    /* Clean Reset */
+    /* Professional Reset */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
     
-    body {
+    html, body {
+      height: 100%;
       background-color: #060e1e;
       color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
     }
 
-    /* Streamlined Navigation Bar Layout - Branding elements removed */
+    /* Fullscreen Screen Container Framework */
+    .viewport-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100vh; /* Forces the layout to fill 100% of any device screen */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* Keeps navigation at top, footer at bottom */
+      
+      /* Main Background Configuration - Locks graphic edge-to-edge without voids */
+      background-image: linear-gradient(180deg, rgba(6, 14, 30, 0.4) 0%, rgba(6, 14, 30, 0) 40%, rgba(6, 14, 30, 0.8) 85%, #060e1e 100%), 
+                        url('1792984078309.png');
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+    }
+
+    /* Floating Transparent Navigation Bar - Merges links inside the image */
     .navbar {
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 1.2rem 1rem;
-      background-color: #030712;
-      text-align: center;
+      padding: 1.5rem 1rem;
+      background: transparent; /* Removes the solid black box overlay block */
+      z-index: 10;
     }
     
-    /* Balanced horizontal navigation link row calibrated for mobile screens */
     .navigation-links {
       display: flex;
       justify-content: space-between;
@@ -44,63 +59,60 @@
       color: #ffffff;
       font-weight: 700;
       font-size: 0.72rem;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       text-decoration: none;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); /* Ensures crisp legibility over artwork text */
     }
 
-    /* Responsive Main Artwork Container */
-    .hero-display {
-      position: relative;
-      width: 100%;
-      height: auto;
-      aspect-ratio: 16 / 19; 
-      max-width: 600px;
-      margin: 0 auto;
-      background-image: url('1792984078309.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center top;
+    /* Immersive Invisible Layout Spacer */
+    .hero-content-spacer {
+      flex-grow: 1;
     }
 
-    /* Corporate Footer Row */
+    /* Clean Integrated Minimalist Legal Footer */
     .global-site-footer {
       width: 100%;
-      padding: 2rem 1rem;
+      padding: 1.5rem 1rem;
       text-align: center;
-      background-color: #030712;
-      border-top: 1px solid rgba(255, 255, 255, 0.03);
-      margin-top: auto;
+      background: transparent;
+      z-index: 10;
     }
 
     .footer-legal-text {
       font-size: 0.65rem;
-      color: #475569; 
+      color: #94a3b8; 
       letter-spacing: 0.05em;
       text-transform: uppercase;
       line-height: 1.5;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
     }
   </style>
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="navigation-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About Us</a>
-      <a href="investors.html">Investors</a>
-      <a href="contact.html">Contacts</a>
-    </div>
-  </nav>
+  <div class="viewport-wrapper">
 
-  <!-- Main artwork image block -->
-  <header class="hero-display"></header>
+    <!-- Navbar now seamlessly floats on top inside your picture layout -->
+    <nav class="navbar">
+      <div class="navigation-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="investors.html">Investors</a>
+        <a href="contact.html">Contacts</a>
+      </div>
+    </nav>
 
-  <footer class="global-site-footer">
-    <div class="footer-legal-text">
-      © 2026 TrypCar, Inc. All Rights Reserved. <br>Trademark & Copyright Protective Notice.
-    </div>
-  </footer>
+    <!-- Keeps layout content fluidly expanding on screen -->
+    <div class="hero-content-spacer"></div>
+
+    <footer class="global-site-footer">
+      <div class="footer-legal-text">
+        © 2026 TrypCar, Inc. All Rights Reserved. <br>Trademark & Copyright Protective Notice.
+      </div>
+    </footer>
+
+  </div>
 
 </body>
 </html>
