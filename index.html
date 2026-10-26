@@ -25,7 +25,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.2rem 2rem;
+      padding: 0.8rem 1.5rem;
       background-color: #030712;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       position: relative;
@@ -35,50 +35,22 @@
     .brand-container {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.4rem;
     }
     
-    /* Brand logo container explicitly matching your cyan-to-purple gradient shape */
-    .brand-logo-box {
-      background: linear-gradient(135deg, #00d2ff 0%, #0072ff 50%, #9b30ff 100%);
-      border-radius: 9px;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    /* Custom vector code rendering the stylized white TC student road emblem */
-    .brand-logo-box::before {
-      content: '';
-      position: absolute;
-      width: 18px;
-      height: 4px;
-      background-color: #ffffff;
-      top: 9px;
-      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-      transform: scaleY(2);
-    }
-
-    .brand-logo-box::after {
-      content: 'C';
-      position: absolute;
-      color: #ffffff;
-      font-size: 1.1rem;
-      font-weight: 900;
-      font-family: 'Arial', sans-serif;
-      bottom: 6px;
-      font-style: italic;
-      letter-spacing: -1px;
+    /* Intentionally tiny logo frame scaling */
+    .brand-logo-img {
+      width: 12px;
+      height: 12px;
+      object-fit: contain;
+      border-radius: 2px;
     }
     
-    /* Heavy geometric typography styling with exact matched baby blue brand color */
+    /* Micro geometric typography styling for maximum squint factor */
     .brand-text {
       font-weight: 900;
-      font-size: 1.4rem;
-      letter-spacing: 0.02em;
+      font-size: 0.5rem;
+      letter-spacing: 0.01em;
       text-transform: uppercase;
       color: #ffffff;
     }
@@ -89,10 +61,10 @@
     
     .navigation-links {
       display: flex;
-      gap: 1.75rem;
+      gap: 1.5rem;
     }
     
-    /* Clean slate-gray text layout for secondary link structures */
+    /* Normal readable size for the actual site navigation links */
     .navigation-links a {
       color: #94a3b8;
       font-weight: 700;
@@ -184,10 +156,10 @@
 </head>
 <body>
 
-  <!-- Top Global Header Layout with Links Pointing to Independent Files -->
+  <!-- Top Global Header Layout with Matched Brand Logo Image Reference -->
   <nav class="navbar">
     <div class="brand-container">
-      <div class="brand-logo-box"></div>
+      <img src="logo.png" alt="TrypCar Logo" class="brand-logo-img">
       <div class="brand-text">TRYP<span>CAR</span></div>
     </div>
     <div class="navigation-links">
