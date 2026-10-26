@@ -79,7 +79,6 @@ body {
   max-width: 360px;
   margin: 0 auto;
 }
-/* Oversized Iconic Visual Focal Points */
 .oversized-icon-box {
   margin-bottom: 1.25rem;
   background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%);
@@ -87,7 +86,7 @@ body {
   border-radius: 50%;
 }
 .oversized-icon-box svg {
-  width: 72px;  /* Beautiful, giant mobile-first size */
+  width: 72px;  
   height: 72px;
   fill: none;
   stroke-width: 1.5;
@@ -118,7 +117,7 @@ body {
   color: #ffffff;
 }
 
-/* SECTION 2: 2x3 Rounded Mobility Bubble-Grid (Inspired by Uber) */
+/* SECTION 2: Vibrant Colored Bubble-Grid Framework */
 .bubble-grid-container {
   width: 100%;
   max-width: 500px;
@@ -127,41 +126,79 @@ body {
 }
 .bubble-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Sharp 3-column setup match */
+  grid-template-columns: repeat(3, 1fr); 
   gap: 0.75rem;
 }
 .bubble-card {
-  background-color: #111827; /* Rich dark slate bubble layer */
-  border-radius: 16px;       /* Smooth rounded look */
+  border-radius: 20px;       
   padding: 1.25rem 0.5rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.15s ease, background-color 0.15s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+
+/* Premium Dynamic Theme Coloring for Individual Grid Items */
+.bubble-blue {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+}
+.bubble-amber {
+  background: linear-gradient(135deg, #0f172a 0%, #78350f 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+}
+.bubble-emerald {
+  background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+}
+.bubble-purple {
+  background: linear-gradient(135deg, #0f172a 0%, #581c87 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+}
+.bubble-rose {
+  background: linear-gradient(135deg, #0f172a 0%, #881337 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+}
+.bubble-slate {
+  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+}
+
+/* UI Feedback Press Interactivity */
 .bubble-card:active {
-  transform: scale(0.96);
-  background-color: #1f2937;
+  transform: scale(0.95);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
 }
+
 .bubble-icon-holder {
-  margin-bottom: 0.75rem;
-  height: 40px;
+  margin-bottom: 0.6rem;
+  height: 42px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .bubble-icon-holder svg {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   fill: none;
-  stroke: #ffffff;
-  stroke-width: 2;
+  stroke-width: 2.2;
 }
+
+/* Targeted White Stroke Contrast Engine */
+.bubble-card svg {
+  stroke: #ffffff;
+}
+
 .bubble-label {
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #ffffff;
+  letter-spacing: 0.02em;
 }
 
 /* Premium Corporate Site Footer */
@@ -203,8 +240,6 @@ body {
 
 <!-- Main Centered Service Feed -->
 <main class="scrolling-features">
-  
-  <!-- Centered Row 1: Verified Campus Framework -->
   <div class="centered-row-card">
     <div class="oversized-icon-box">
       <svg viewBox="0 0 24 24">
@@ -216,7 +251,6 @@ body {
     <p class="row-text">Every single rider and driver is completely campus identity verified for peace of mind.</p>
   </div>
 
-  <!-- Centered Row 2: Smart Matching System -->
   <div class="centered-row-card">
     <div class="oversized-icon-box">
       <svg viewBox="0 0 24 24">
@@ -226,7 +260,6 @@ body {
     <h3 class="row-title">Smart Matching</h3>
     <p class="row-text">AI-powered scheduling algorithms instantly build your optimal pathing lines.</p>
   </div>
-
 </main>
 
 <!-- Section Label -->
@@ -236,50 +269,50 @@ body {
 <section class="bubble-grid-container">
   <div class="bubble-grid">
     
-    <!-- Bubble 1: Rides -->
-    <div class="bubble-card">
+    <!-- Bubble 1: Rides (Electric Blue Deep Gradient) -->
+    <div class="bubble-card bubble-blue">
       <div class="bubble-icon-holder">
-        <svg viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 1 14v2c0 .6.4 1 1 1h2" stroke="#3b82f6"/><circle cx="7" cy="17" r="2" stroke="#3b82f6"/><circle cx="17" cy="17" r="2" stroke="#3b82f6"/><path d="M7 17h10" stroke="#3b82f6"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 1 14v2c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M7 17h10"/></svg>
       </div>
       <span class="bubble-label">Ride</span>
     </div>
 
-    <!-- Bubble 2: Reserve -->
-    <div class="bubble-card">
+    <!-- Bubble 2: Reserve (Rich Amber Glow) -->
+    <div class="bubble-card bubble-amber">
       <div class="bubble-icon-holder">
-        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#3b82f6"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#3b82f6"/><circle cx="12" cy="16" r="1" fill="#3b82f6"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><circle cx="12" cy="16" r="1" fill="#ffffff"/></svg>
       </div>
       <span class="bubble-label">Reserve</span>
     </div>
 
-    <!-- Bubble 3: Campus Hubs -->
-    <div class="bubble-card">
+    <!-- Bubble 3: Campus Hubs (Vibrant Emerald Forest) -->
+    <div class="bubble-card bubble-emerald">
       <div class="bubble-icon-holder">
-        <svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" stroke="#3b82f6"/><circle cx="12" cy="10" r="3" stroke="#3b82f6"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
       </div>
       <span class="bubble-label">Hubs</span>
     </div>
 
-    <!-- Bubble 4: Premium Premium -->
-    <div class="bubble-card">
+    <!-- Bubble 4: Lux Tier (Deep Royal Purple) -->
+    <div class="bubble-card bubble-purple">
       <div class="bubble-icon-holder">
-        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke="#3b82f6"/></svg>
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
       </div>
       <span class="bubble-label">Lux</span>
     </div>
 
-    <!-- Bubble 5: Eco Clean -->
-    <div class="bubble-card">
+    <!-- Bubble 5: Eco Eco (Sharp Crimson Rose) -->
+    <div class="bubble-card bubble-rose">
       <div class="bubble-icon-holder">
-        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#3b82f6"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       </div>
       <span class="bubble-label">Eco</span>
     </div>
 
-    <!-- Bubble 6: Support Help -->
-    <div class="bubble-card">
+    <!-- Bubble 6: Support Help (Polished Muted Slate) -->
+    <div class="bubble-card bubble-slate">
       <div class="bubble-icon-holder">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#3b82f6"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01" stroke="#3b82f6"/></svg>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
       </div>
       <span class="bubble-label">Help</span>
     </div>
