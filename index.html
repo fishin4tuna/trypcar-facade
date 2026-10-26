@@ -7,206 +7,292 @@
 <style>
 /* Clean Tech Reset */
 * {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 body {
-background-color: #060e1e;
-color: #ffffff;
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
--webkit-font-smoothing: antialiased;
-line-height: 1.5;
+  background-color: #060e1e;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
 }
-/* Fixed Navigation Bar Layout */
+
+/* Fixed Compact Navigation Bar Layout */
 .navbar {
-display: flex;
-justify-content: center;
-align-items: center;
-padding: 1.2rem 1rem;
-background-color: #030712;
-border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.2rem 1rem;
+  background-color: #030712;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 .navigation-links {
-display: flex;
-justify-content: space-between;
-width: 100%;
-max-width: 420px;
-gap: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 420px;
+  gap: 0.5rem;
 }
 .navigation-links a {
-color: #94a3b8; 
-font-weight: 700;
-font-size: 0.68rem;
-letter-spacing: 0.04em;
-text-transform: uppercase;
-text-decoration: none;
-transition: color 0.2s ease;
+  color: #94a3b8; 
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 .navigation-links a:hover, .navigation-links a.active {
-color: #ffffff;
+  color: #ffffff;
 }
-/* Crisp Artwork Section */
+
+/* Hero Artwork Container */
 .hero-container {
-width: 100%;
-max-width: 500px;
-margin: 0 auto;
-background-color: #060e1e;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
 }
 .hero-image-asset {
-width: 100%;
-height: auto;
-display: block;
-object-fit: contain;
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
 }
-/* Restored 4-Grid Square Framework */
-.features-container {
-width: 100%;
-max-width: 500px;
-margin: 0 auto;
-padding: 1.5rem 0.75rem;
+
+/* SECTION 1: Centered Scrolling Service Rows */
+.scrolling-features {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
-.features-grid {
-display: grid;
-/* Pulls back your requested 2x2 square layout grid style */
-grid-template-columns: repeat(2, 1fr); 
-gap: 0.75rem;
+.centered-row-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 360px;
+  margin: 0 auto;
 }
-.feature-card {
-background-color: #0b1528;
-border: 1px solid rgba(59, 130, 246, 0.1);
-border-radius: 12px;
-padding: 1.25rem 0.75rem;
-text-align: center;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: flex-start;
+/* Oversized Iconic Visual Focal Points */
+.oversized-icon-box {
+  margin-bottom: 1.25rem;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%);
+  padding: 1rem;
+  border-radius: 50%;
 }
-.feature-icon-box {
-margin-bottom: 0.75rem;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 52px; /* Standardized height to keep cards uniform */
+.oversized-icon-box svg {
+  width: 72px;  /* Beautiful, giant mobile-first size */
+  height: 72px;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-.feature-icon-box svg {
-width: 38px;
-height: 38px;
-fill: none;
-stroke: #3b82f6;
-stroke-width: 2;
-stroke-linecap: round;
-stroke-linejoin: round;
+.row-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  letter-spacing: -0.01em;
 }
-/* Special Custom Sizing for the Restored Large Security Badge */
-.feature-icon-box.large-badge-box {
-height: 56px;
+.row-text {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.4;
 }
-.feature-icon-box.large-badge-box svg {
-width: 48px;
-height: 48px;
+
+/* Section Header Divider */
+.section-divider-title {
+  max-width: 500px;
+  margin: 2.5rem auto 1rem auto;
+  padding: 0 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #ffffff;
 }
-.feature-title {
-font-size: 0.88rem; /* Sized down slightly so headings don't wrap tightly in 2x2 grids */
-font-weight: 700;
-margin-bottom: 0.35rem;
-color: #ffffff;
-line-height: 1.2;
+
+/* SECTION 2: 2x3 Rounded Mobility Bubble-Grid (Inspired by Uber) */
+.bubble-grid-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 1.25rem 2rem 1.25rem;
 }
-.feature-text {
-font-size: 0.72rem;
-color: #94a3b8;
-line-height: 1.3;
+.bubble-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Sharp 3-column setup match */
+  gap: 0.75rem;
 }
+.bubble-card {
+  background-color: #111827; /* Rich dark slate bubble layer */
+  border-radius: 16px;       /* Smooth rounded look */
+  padding: 1.25rem 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+.bubble-card:active {
+  transform: scale(0.96);
+  background-color: #1f2937;
+}
+.bubble-icon-holder {
+  margin-bottom: 0.75rem;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+.bubble-icon-holder svg {
+  width: 36px;
+  height: 36px;
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2;
+}
+.bubble-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
 /* Premium Corporate Site Footer */
 .global-site-footer {
-width: 100%;
-padding: 2rem 1rem;
-text-align: center;
-background-color: #030712;
-border-top: 1px solid rgba(255, 255, 255, 0.03);
-margin-top: 2rem;
+  width: 100%;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  background-color: #030712;
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  margin-top: auto;
 }
 .footer-legal-text {
-font-size: 0.65rem;
-color: #475569;
-letter-spacing: 0.05em;
-text-transform: uppercase;
-line-height: 1.5;
+  font-size: 0.65rem;
+  color: #475569;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.5;
 }
 </style>
 </head>
 <body>
+
 <!-- Navigation Bar -->
 <nav class="navbar">
-<div class="navigation-links">
-<a href="index.html" class="active">Home</a>
-<a href="about.html">About</a>
-<a href="investors.html">Investors</a>
-<a href="support.html">Support</a>
-<a href="faq.html">FAQ's</a>
-<a href="contact.html">Contact</a>
-</div>
+  <div class="navigation-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="investors.html">Investors</a>
+    <a href="support.html">Support</a>
+    <a href="faq.html">FAQ's</a>
+    <a href="contact.html">Contact</a>
+  </div>
 </nav>
+
 <!-- Hero Artwork Container -->
 <div class="hero-container">
-<img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
+  <img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
 </div>
-<!-- Restored 4-Grid Square Dashboard Section -->
-<main class="features-container">
-<div class="features-grid">
-<!-- Card 1: Verified Students (Large Security Badge + Green Checkmark) -->
-<div class="feature-card">
-<div class="feature-icon-box large-badge-box">
-<svg viewBox="0 0 24 24">
-<!-- Shield Outer Frame -->
-<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" />
-<!-- Integrated Green Checkmark Overlay -->
-<path d="M9 11l2 2 4-4" stroke="#22c55e" stroke-width="2.5" />
-</svg>
-</div>
-<h3 class="feature-title">Verified Students</h3>
-<p class="feature-text">Every rider and driver is completely campus identity verified.</p>
-</div>
-<!-- Card 2: Smart Matching (AI Lightning Engine) -->
-<div class="feature-card">
-<div class="feature-icon-box">
-<svg viewBox="0 0 24 24">
-<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-</svg>
-</div>
-<h3 class="feature-title">Smart Matching</h3>
-<p class="feature-text">AI-powered matching algorithms for faster, trusted connections.</p>
-</div>
-<!-- Card 3: Electric and Efficient (Eco Power Plug) -->
-<div class="feature-card">
-<div class="feature-icon-box">
-<svg viewBox="0 0 24 24">
-<path d="M18.5 2h-12C5.12 2 4 3.12 4 4.5V15c0 1.38 1.12 2.5 2.5 2.5h3.62l.38 3h-2a1 1 0 0 0 0 2h7a1 1 0 0 0 0-2h-2l.38-3h3.62c1.38 0 2.5-1.12 2.5-2.5V4.5C21 3.12 19.88 2 18.5 2z"/>
-</svg>
-</div>
-<h3 class="feature-title">Electric and Efficient</h3>
-<p class="feature-text">Sustainable, clean-energy sedan rides tailored for your campus environment.</p>
-</div>
-<!-- Card 4: Safe, Secure, Reliable (Real-Time Target/Radar Pin) -->
-<div class="feature-card">
-<div class="feature-icon-box">
-<svg viewBox="0 0 24 24">
-<path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/>
-<circle cx="12" cy="10" r="3"/>
-</svg>
-</div>
-<h3 class="feature-title">Safe, Secure, Reliable</h3>
-<p class="feature-text">Real-time path tracking, in-app support infrastructure, and absolute peace of mind.</p>
-</div>
-</div>
+
+<!-- Main Centered Service Feed -->
+<main class="scrolling-features">
+  
+  <!-- Centered Row 1: Verified Campus Framework -->
+  <div class="centered-row-card">
+    <div class="oversized-icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" />
+        <path d="M9 11l2 2 4-4" stroke="#22c55e" stroke-width="2.5" />
+      </svg>
+    </div>
+    <h3 class="row-title">Verified Students</h3>
+    <p class="row-text">Every single rider and driver is completely campus identity verified for peace of mind.</p>
+  </div>
+
+  <!-- Centered Row 2: Smart Matching System -->
+  <div class="centered-row-card">
+    <div class="oversized-icon-box">
+      <svg viewBox="0 0 24 24">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#3b82f6"/>
+      </svg>
+    </div>
+    <h3 class="row-title">Smart Matching</h3>
+    <p class="row-text">AI-powered scheduling algorithms instantly build your optimal pathing lines.</p>
+  </div>
+
 </main>
-<!-- Legal Footer Row -->
+
+<!-- Section Label -->
+<h2 class="section-divider-title">Explore TrypCar</h2>
+
+<!-- Explore Bubble Grid Section -->
+<section class="bubble-grid-container">
+  <div class="bubble-grid">
+    
+    <!-- Bubble 1: Rides -->
+    <div class="bubble-card">
+      <div class="bubble-icon-holder">
+        <svg viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 1 14v2c0 .6.4 1 1 1h2" stroke="#3b82f6"/><circle cx="7" cy="17" r="2" stroke="#3b82f6"/><circle cx="17" cy="17" r="2" stroke="#3b82f6"/><path d="M7 17h10" stroke="#3b82f6"/></svg>
+      </div>
+      <span class="bubble-label">Ride</span>
+    </div>
+
+    <!-- Bubble 2: Reserve -->
+    <div class="bubble-card">
+      <div class="bubble-icon-holder">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#3b82f6"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#3b82f6"/><circle cx="12" cy="16" r="1" fill="#3b82f6"/></svg>
+      </div>
+      <span class="bubble-label">Reserve</span>
+    </div>
+
+    <!-- Bubble 3: Campus Hubs -->
+    <div class="bubble-card">
+      <div class="bubble-icon-holder">
+        <svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" stroke="#3b82f6"/><circle cx="12" cy="10" r="3" stroke="#3b82f6"/></svg>
+      </div>
+      <span class="bubble-label">Hubs</span>
+    </div>
+
+    <!-- Bubble 4: Premium Premium -->
+    <div class="bubble-card">
+      <div class="bubble-icon-holder">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke="#3b82f6"/></svg>
+      </div>
+      <span class="bubble-label">Lux</span>
+    </div>
+
+    <!-- Bubble 5: Eco Clean -->
+    <div class="bubble-card">
+      <div class="bubble-icon-holder">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#3b82f6"/></svg>
+      </div>
+      <span class="bubble-label">Eco</span>
+    </div>
+
+    <!-- Bubble 6: Support Help -->
+    <div class="bubble-card">
+      <div class="bubble-icon-holder">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#3b82f6"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01" stroke="#3b82f6"/></svg>
+      </div>
+      <span class="bubble-label">Help</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- Legal Footer -->
 <footer class="global-site-footer">
-<div class="footer-legal-text">
-© 2026 TrypCar, Inc. All Rights Reserved. <br>Trademark & Copyright Protective Notice.
-</div>
+  <div class="footer-legal-text">
+    © 2026 TrypCar, Inc. All Rights Reserved. <br>Trademark & Copyright Protective Notice.
+  </div>
 </footer>
+
 </body>
 </html>
