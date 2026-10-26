@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>TrypCar | Premium Campus Mobility Network</title>
   <style>
-    /* Professional Reset */
+    /* Professional Layout Reset */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,38 +13,40 @@
     }
     
     html, body {
-      height: 100%;
+      width: 100%;
+      min-height: 100vh;
       background-color: #060e1e;
       color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
-    }
-
-    /* Fullscreen Screen Container Framework */
-    .viewport-wrapper {
-      position: relative;
-      width: 100%;
-      height: 100vh; /* Forces the layout to fill 100% of any device screen */
       display: flex;
       flex-direction: column;
-      justify-content: space-between; /* Keeps navigation at top, footer at bottom */
-      
-      /* Main Background Configuration - Locks graphic edge-to-edge without voids */
-      background-image: linear-gradient(180deg, rgba(6, 14, 30, 0.4) 0%, rgba(6, 14, 30, 0) 40%, rgba(6, 14, 30, 0.8) 85%, #060e1e 100%), 
-                        url('1792984078309.png');
-      background-size: cover;
-      background-position: center top;
-      background-repeat: no-repeat;
+      overflow-x: hidden;
     }
 
-    /* Floating Transparent Navigation Bar - Merges links inside the image */
+    /* Master Fluid Frame - Shrinks everything to fit perfectly on any device screen */
+    .site-container {
+      width: 100%;
+      max-width: 500px; /* Calibrates perfect structural width for mobile viewports */
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    /* Floating Transparent Navigation Bar Row */
     .navbar {
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 1.5rem 1rem;
-      background: transparent; /* Removes the solid black box overlay block */
+      padding: 1.2rem 1.5rem;
+      background: transparent;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
       z-index: 10;
     }
     
@@ -62,38 +64,47 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
       text-decoration: none;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); /* Ensures crisp legibility over artwork text */
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9); /* Guarantees high text visibility over the graphic */
     }
 
-    /* Immersive Invisible Layout Spacer */
-    .hero-content-spacer {
-      flex-grow: 1;
+    /* Liquid Image Engine - Guarantees zero text cropping or image truncation */
+    .hero-display {
+      width: 100%;
+      margin-top: 3.5rem; /* Pushes graphic safely down so floating menu never blocks it */
+      position: relative;
     }
 
-    /* Clean Integrated Minimalist Legal Footer */
+    .hero-image-asset {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain; /* Forces the image to reduce and fit completely without zooming */
+    }
+
+    /* Integrated Bottom Brand Footer */
     .global-site-footer {
       width: 100%;
-      padding: 1.5rem 1rem;
+      padding: 2rem 1rem;
       text-align: center;
-      background: transparent;
-      z-index: 10;
+      background-color: #030712;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+      margin-top: auto; /* Locks footer firmly at the base of the viewport */
     }
 
     .footer-legal-text {
-      font-size: 0.65rem;
-      color: #94a3b8; 
+      font-size: 0.62rem;
+      color: #475569; 
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      line-height: 1.5;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
 
-  <div class="viewport-wrapper">
+  <div class="site-container">
 
-    <!-- Navbar now seamlessly floats on top inside your picture layout -->
+    <!-- Transparent navigation float over image background structure -->
     <nav class="navbar">
       <div class="navigation-links">
         <a href="index.html">Home</a>
@@ -103,8 +114,10 @@
       </div>
     </nav>
 
-    <!-- Keeps layout content fluidly expanding on screen -->
-    <div class="hero-content-spacer"></div>
+    <!-- Liquid responsive container containing the target graphics asset -->
+    <div class="hero-display">
+      <img src="1792984078309.png" alt="TrypCar Display Network" class="hero-image-asset">
+    </div>
 
     <footer class="global-site-footer">
       <div class="footer-legal-text">
