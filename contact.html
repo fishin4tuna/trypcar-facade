@@ -1,203 +1,417 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Contact</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-    
-    html, body {
-      background-color: #030712;
-      background-image: 
-        radial-gradient(circle at 50% -20%, #1e3a8a 0%, transparent 50%),
-        radial-gradient(circle at 0% 100%, #0f172a 0%, transparent 40%);
-      background-attachment: fixed;
-      color: #f8fafc;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrypCar | Premium Campus Mobility Network</title>
+<style>
+/* Clean Tech Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #060e1e;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
 
-    nav.navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 3rem;
-      background: rgba(3, 7, 18, 0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    
-    .navbar-logo {
-      display: flex;
-      align-items: center;
-      font-weight: 700;
-      font-size: 1.35rem;
-      letter-spacing: 0.12em;
-      color: #ffffff;
-      text-transform: uppercase;
-    }
-    .navbar-logo span {
-      color: #3b82f6;
-      font-weight: 300;
-      letter-spacing: 0.05em;
-      text-transform: lowercase;
-    }
-    
-    .navbar-links {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
-    .navbar-links a {
-      color: #94a3b8;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      padding: 0.5rem 0;
-    }
-    .navbar-links a:hover {
-      color: #ffffff;
-    }
-    .navbar-links a.active {
-      color: #3b82f6;
-    }
-    .navbar-links a.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: #3b82f6;
-      box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
-      border-radius: 2px;
-    }
+/* Fixed Compact Navigation Bar Layout */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.2rem 1rem;
+  background-color: #030712;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+.navigation-links {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 420px;
+  gap: 0.5rem;
+}
+.navigation-links a {
+  color: #94a3b8; 
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.navigation-links a:hover, .navigation-links a.active {
+  color: #ffffff;
+}
 
-    .content-container {
-      max-width: 680px;
-      margin: 6rem auto;
-      padding: 0 2rem;
-      flex: 1;
-    }
-    
-    h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      margin-bottom: 0.75rem;
-      color: #ffffff;
-    }
-    h1 span.accent {
-      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .sub-heading {
-      color: #60a5fa;
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 3rem;
-      display: inline-block;
-      border-left: 2px solid #3b82f6;
-      padding-left: 1rem;
-    }
-    p {
-      color: #cbd5e1;
-      font-size: 1.15rem;
-      line-height: 1.85;
-      margin-bottom: 2.5rem;
-      font-weight: 300;
-    }
+/* Master Layout Wrapper */
+.dashboard-view, .info-panel-view {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
 
-    .contact-link {
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 600;
-      border-bottom: 2px solid #3b82f6;
-      padding-bottom: 4px;
-      transition: all 0.2s ease;
-      display: inline-block;
-    }
-    .contact-link:hover {
-      color: #60a5fa;
-      border-color: #60a5fa;
-      text-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
-    }
+/* SECTION 1: Centered Scrolling Service Rows */
+.scrolling-features {
+  padding: 2rem 1.25rem 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.centered-row-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 360px;
+  margin: 0 auto;
+}
+.oversized-icon-box {
+  margin-bottom: 1.25rem;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%);
+  padding: 1rem;
+  border-radius: 50%;
+}
+.oversized-icon-box svg {
+  width: 72px;  
+  height: 72px;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.row-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+.row-text {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
 
-    footer.site-footer {
-      width: 100%;
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 2rem 2rem 4rem 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      text-align: left;
-    }
-    footer.site-footer p {
-      color: #475569;
-      font-size: 0.8rem;
-      line-height: 1.5;
-      letter-spacing: 0.02em;
-      font-weight: 400;
-      margin-bottom: 0;
-    }
+/* PREMIUM STUDENT SECURE PORTAL CARD WITH INTEGRATED BLENDED BORDER */
+.login-card-container {
+  padding: 1rem 1.25rem 2rem 1.25rem;
+}
+.secure-login-card {
+  background: #030712;
+  border-radius: 24px;
+  padding: 2rem 1.75rem;
+  position: relative;
+}
+/* Cool blended premium flowing border background wrapper effect */
+.secure-login-card::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #064e3b 100%);
+  border-radius: 26px;
+  z-index: -1;
+  opacity: 0.6;
+}
+.login-header-group {
+  margin-bottom: 1.5rem;
+}
+.login-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
+}
+.login-title-row svg {
+  width: 18px;
+  height: 18px;
+  stroke: #3b82f6;
+  fill: none;
+  stroke-width: 2.5;
+}
+.login-subtitle {
+  font-size: 0.82rem;
+  color: #64748b;
+}
+.input-field-group {
+  margin-bottom: 1.25rem;
+}
+.input-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+.styled-auth-input {
+  width: 100%;
+  background: #060e1e;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+.styled-auth-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+.login-action-btn {
+  width: 100%;
+  background: #3b82f6;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.95rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  margin-top: 0.5rem;
+}
+.login-action-btn:hover {
+  background: #2563eb;
+}
 
-    @media (max-width: 640px) {
-      nav.navbar {
-        padding: 1.25rem 1.5rem;
-      }
-      .content-container {
-        margin: 4rem auto;
-      }
-      h1 {
-        font-size: 2.25rem;
-      }
-    }
-  </style>
+/* Section Header Divider */
+.section-divider-title {
+  margin: 2.5rem auto 1rem auto;
+  padding: 0 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+/* SECTION 2: Vibrant Colored Bubble-Grid Framework */
+.bubble-grid-container {
+  padding: 0 1.25rem 2rem 1.25rem;
+}
+.bubble-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 0.75rem;
+}
+.bubble-card {
+  border-radius: 20px;       
+  padding: 1.25rem 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+.bubble-card:active {
+  transform: scale(0.96);
+}
+
+/* Premium Dynamic Theme Coloring for Individual Grid Items */
+.bubble-blue {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+}
+.bubble-amber {
+  background: linear-gradient(135deg, #0f172a 0%, #78350f 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+}
+.bubble-emerald {
+  background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+}
+.bubble-purple {
+  background: linear-gradient(135deg, #0f172a 0%, #581c87 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+}
+.bubble-rose {
+  background: linear-gradient(135deg, #0f172a 0%, #881337 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+}
+.bubble-slate {
+  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+}
+
+.bubble-icon-holder {
+  margin-bottom: 0.6rem;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bubble-icon-holder svg {
+  width: 38px;
+  height: 38px;
+  fill: none;
+  stroke-width: 2.2;
+}
+
+/* Targeted White Stroke Contrast Engine */
+.bubble-card svg {
+  stroke: #ffffff;
+}
+.bubble-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+/* INSTANT VIEWPORT SYSTEM (NO ANIMATION / DELAY) */
+.info-panel-view {
+  display: none;
+  padding: 2.5rem 1.5rem;
+}
+.back-button-container {
+  margin-bottom: 2rem;
+}
+.back-action-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.back-action-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+.content-card-frame {
+  border-radius: 24px;
+  padding: 2.5rem 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.panel-icon-shield {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.panel-icon-shield svg {
+  width: 36px;
+  height: 36px;
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2;
+}
+.panel-main-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+  color: #ffffff;
+}
+.panel-body-narrative {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+/* Modern Fortune 500 Legal Footer */
+.global-site-footer {
+  width: 100%;
+  max-width: 500px;
+  margin: 3rem auto 0 auto;
+  padding: 2rem 1.25rem 3rem 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+.footer-legal-text {
+  font-size: 0.68rem;
+  color: #64748b;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+.footer-legal-text strong {
+  color: #94a3b8;
+  font-weight: 600;
+}
+</style>
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="navbar-logo">
-      TRYP<span>car</span>
-    </div>
-    <div class="navbar-links">
-      <a href="index.html">About</a>
-      <a href="investors.html">Investors</a>
-      <a href="contact.html" class="active">Contact</a>
-    </div>
-  </nav>
+<!-- Navigation Bar -->
+<nav class="navbar">
+  <div class="navigation-links">
+    <a href="#" class="active" onclick="showDashboard()">Home</a>
+    <a href="#">About</a>
+    <a href="#">Investors</a>
+    <a href="#">Support</a>
+    <a href="#">FAQ's</a>
+    <a href="#">Contact</a>
+  </div>
+</nav>
 
-  <main class="content-container">
-    <h1>Connect With Our<br><span class="accent">Support Team</span></h1>
-    <div class="sub-heading">We Are Here To Assist You</div>
-    
-    <p>Have questions about your institutional network access, verification protocols, or corporate partnership configurations? Reach out directly via our official communication channel.</p>
-    
-    <p>Email our operations desk at: <br><br><a href="mailto:support@trypcar.com" class="contact-link">support@trypcar.com</a></p>
+<!-- MAIN HOMEPAGE DASHBOARD INTERFACE -->
+<div id="dashboardView" class="dashboard-view">
+  <main class="scrolling-features">
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" />
+          <path d="M9 11l2 2 4-4" stroke="#22c55e" stroke-width="2.5" />
+        </svg>
+      </div>
+      <h3 class="row-title">Verified Students</h3>
+      <p class="row-text">Every single rider and driver is completely campus identity verified for peace of mind.</p>
+    </div>
+
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#3b82f6"/>
+        </svg>
+      </div>
+      <h3 class="row-title">Smart Matching</h3>
+      <p class="row-text">AI-powered scheduling algorithms instantly build your optimal pathing lines.</p>
+    </div>
   </main>
 
-  <footer class="site-footer">
-    <p>&copy; 2026 TrypCar Technologies, Inc. All rights reserved. TrypCar, TrypScoot, and the TrypCar logo are registered trademarks or trademarks of TrypCar Technologies, Inc. in the United States and other countries.</p>
-  </footer>
-
-</body>
-</html>
+  <!-- STUDENT SECURE LOGIN COMPONENT WITH FLOWING COOL GRADIENT BORDER -->
+  <section class="login-card-container">
+    <div class="secure-login-card">
+      <div class="login-header-group">
+        <div class="login-title-row">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Secure Campus Gateway
+        </div>
+        <div class="login-subtitle">Enter your institutional credentials to authenticate access</div>
+      </div>
+      <div class="input-field-group">
+        <label class="input-label">Campus Email Address</label>
+        <input type="email" placeholder="student@university.edu" class="styled-auth-input">
+      </div>
+      <div class="input-field-group">
+        <label class="input-label">Gateway Access Password</label>
+        <input type="password" placeholder="••••••••••••" class="styled-auth-input">
+      </div>
