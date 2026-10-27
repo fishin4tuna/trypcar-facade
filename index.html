@@ -58,16 +58,11 @@ body {
   display: block;
   object-fit: contain;
 }
-
-/* Master View Layout Controls */
-.dashboard-view, .info-panel-view {
+/* SECTION 1: Centered Scrolling Service Rows */
+.scrolling-features {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-}
-
-/* SECTION 1: Centered Scrolling Service Rows */
-.scrolling-features {
   padding: 2rem 1.25rem 1rem 1.25rem;
   display: flex;
   flex-direction: column;
@@ -88,7 +83,7 @@ body {
   border-radius: 50%;
 }
 .oversized-icon-box svg {
-  width: 72px; 
+  width: 72px;    
   height: 72px;
   fill: none;
   stroke-width: 1.5;
@@ -108,9 +103,12 @@ body {
   line-height: 1.4;
 }
 
-/* CAMPUS GATEWAY SECURE INTEGRATED MODULE */
+/* CAMPUS GATEWAY SECURE AUTHENTICATION MODULE */
 .gateway-card-container {
-  padding: 1rem 1.25rem 2rem 1.25rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 2rem auto 0 auto;
+  padding: 0 1.25rem;
 }
 .secure-gateway-card {
   background: #0d1527;
@@ -121,76 +119,75 @@ body {
 }
 .gateway-header-group {
   margin-bottom: 1.5rem;
-  text-align: left;
 }
 .gateway-title-row {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  font-size: 1.15rem;
+  gap: 0.5rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #ffffff;
+  letter-spacing: -0.01em;
   margin-bottom: 0.25rem;
 }
 .gateway-title-row svg {
-  width: 18px;
-  height: 18px;
-  stroke: #3b82f6;
+  width: 20px;
+  height: 20px;
   fill: none;
-  stroke-width: 2.5;
+  stroke: #3b82f6;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .gateway-subtitle {
-  font-size: 0.82rem;
-  color: #64748b;
+  font-size: 0.8rem;
+  color: #94a3b8;
 }
 .gateway-input-group {
   margin-bottom: 1.25rem;
-  text-align: left;
 }
 .gateway-input-label {
   display: block;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #94a3b8;
+  letter-spacing: 0.04em;
+  color: #64748b;
   margin-bottom: 0.5rem;
 }
 .styled-gateway-input {
   width: 100%;
-  background: #030712;
+  background-color: #030712;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 0.85rem 1rem;
   color: #ffffff;
   font-size: 0.9rem;
-  font-family: inherit;
   transition: border-color 0.2s ease;
-  outline: none;
 }
 .styled-gateway-input:focus {
+  outline: none;
   border-color: #3b82f6;
 }
 .gateway-action-btn {
   width: 100%;
-  background: #3b82f6;
+  background-color: #3b82f6;
   color: #ffffff;
   border: none;
   border-radius: 12px;
-  padding: 0.95rem;
-  font-size: 0.85rem;
+  padding: 0.9rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
   cursor: pointer;
-  transition: background-color 0.15s ease;
-  margin-top: 0.5rem;
+  transition: background-color 0.2s ease;
 }
 .gateway-action-btn:hover {
-  background: #2563eb;
+  background-color: #2563eb;
 }
 
 /* Section Header Divider */
 .section-divider-title {
+  max-width: 500px;
   margin: 2.5rem auto 1rem auto;
   padding: 0 1.25rem;
   font-size: 1.1rem;
@@ -200,15 +197,18 @@ body {
 }
 /* SECTION 2: Vibrant Colored Bubble-Grid Framework */
 .bubble-grid-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
   padding: 0 1.25rem 2rem 1.25rem;
 }
 .bubble-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
+  grid-template-columns: repeat(3, 1fr);   
   gap: 0.75rem;
 }
 .bubble-card {
-  border-radius: 20px; 
+  border-radius: 20px;         
   padding: 1.25rem 0.5rem;
   text-align: center;
   display: flex;
@@ -218,7 +218,6 @@ body {
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 /* Premium Dynamic Theme Coloring for Individual Grid Items */
@@ -274,69 +273,6 @@ body {
   color: #ffffff;
   letter-spacing: 0.02em;
 }
-
-/* INTERNAL VIEWPORT PORTAL SYSTEM */
-.info-panel-view {
-  display: none;
-  padding: 2.5rem 1.25rem;
-}
-.back-button-container {
-  margin-bottom: 2rem;
-}
-.back-action-btn {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #94a3b8;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.65rem 1.4rem;
-  border-radius: 30px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-.back-action-btn:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
-}
-.content-card-frame {
-  border-radius: 24px;
-  padding: 3rem 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-.panel-icon-shield {
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-}
-.panel-icon-shield svg {
-  width: 38px;
-  height: 38px;
-  fill: none;
-  stroke: #ffffff;
-  stroke-width: 2.2;
-}
-.panel-main-title {
-  font-size: 1.85rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.75rem;
-  color: #ffffff;
-}
-.panel-body-narrative {
-  font-size: 0.98rem;
-  color: #94a3b8;
-  line-height: 1.6;
-}
-
 /* Modern Fortune 500 Legal Footer */
 .global-site-footer {
   width: 100%;
@@ -350,7 +286,6 @@ body {
   color: #64748b;
   line-height: 1.6;
   letter-spacing: 0.01em;
-  text-align: left;
 }
 .footer-legal-text strong {
   color: #94a3b8;
@@ -359,57 +294,83 @@ body {
 </style>
 </head>
 <body>
+
 <!-- Navigation Bar -->
 <nav class="navbar">
   <div class="navigation-links">
-    <a href="#" class="active" onclick="showDashboard()">Home</a>
-    <a href="#">About</a>
-    <a href="#">Investors</a>
-    <a href="#">Support</a>
-    <a href="#">FAQ's</a>
-    <a href="#">Contact</a>
+    <a href="index.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="investors.html">Investors</a>
+    <a href="support.html">Support</a>
+    <a href="faq.html">FAQ's</a>
+    <a href="contact.html">Contact</a>
   </div>
 </nav>
 
-<!-- MAIN HOMEPAGE CONTENT LAYER -->
-<div id="dashboardView" class="dashboard-view">
-  <!-- Hero Artwork Container -->
-  <div class="hero-container">
-    <img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
-  </div>
-  
-  <!-- Main Centered Service Feed -->
-  <main class="scrolling-features">
-    <div class="centered-row-card">
-      <div class="oversized-icon-box">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" />
-          <path d="M9 11l2 2 4-4" stroke="#22c55e" stroke-width="2.5" />
-        </svg>
-      </div>
-      <h3 class="row-title">Verified Students</h3>
-      <p class="row-text">Every single rider and driver is completely campus identity verified for peace of mind.</p>
-    </div>
-    <div class="centered-row-card">
-      <div class="oversized-icon-box">
-        <svg viewBox="0 0 24 24">
-          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#3b82f6"/>
-        </svg>
-      </div>
-      <h3 class="row-title">Smart Matching</h3>
-      <p class="row-text">AI-powered scheduling algorithms instantly build your optimal pathing lines.</p>
-    </div>
-  </main>
+<!-- Hero Artwork Container -->
+<div class="hero-container">
+  <img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
+</div>
 
-  <!-- CAMPUS GATEWAY SECURE AUTHENTICATION MODULE -->
-  <section class="gateway-card-container">
-    <div class="secure-gateway-card">
-      <div class="gateway-header-group">
-        <div class="gateway-title-row">
-          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          Secure Campus Gateway
-        </div>
-        <div class="gateway-subtitle">Enter your institutional credentials to authenticate access</div>
+<!-- Main Centered Service Feed -->
+<main class="scrolling-features">
+  <div class="centered-row-card">
+    <div class="oversized-icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" />
+        <path d="M9 11l2 2 4-4" stroke="#22c55e" stroke-width="2.5" />
+      </svg>
+    </div>
+    <h3 class="row-title">Verified Students</h3>
+    <p class="row-text">Every single rider and driver is completely campus identity verified for peace of mind.</p>
+  </div>
+  <div class="centered-row-card">
+    <div class="oversized-icon-box">
+      <svg viewBox="0 0 24 24">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#3b82f6"/>
+      </svg>
+    </div>
+    <h3 class="row-title">Smart Matching</h3>
+    <p class="row-text">AI-powered scheduling algorithms instantly build your optimal pathing lines.</p>
+  </div>
+</main>
+
+<!-- CAMPUS GATEWAY SECURE AUTHENTICATION MODULE -->
+<section class="gateway-card-container">
+  <div class="secure-gateway-card">
+    <div class="gateway-header-group">
+      <div class="gateway-title-row">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        Secure Campus Gateway
       </div>
-      <div class="gateway-input-group">
-        <label class="gateway-input-label">Campus Email Address</label>
+      <div class="gateway-subtitle">Enter your institutional credentials to authenticate access</div>
+    </div>
+    <div class="gateway-input-group">
+      <label class="gateway-input-label">Campus Email Address</label>
+      <input type="email" placeholder="student@university.edu" class="styled-gateway-input">
+    </div>
+    <div class="gateway-input-group">
+      <label class="gateway-input-label">Gateway Access Password</label>
+      <input type="password" placeholder="••••••••••••" class="styled-gateway-input">
+    </div>
+    <button class="gateway-action-btn" onclick="alert('Connection initialized.')">Initialize Connection</button>
+  </div>
+</section>
+
+<!-- Section Label -->
+<h2 class="section-divider-title">Explore TrypCar</h2>
+
+<!-- Explore Bubble Grid Section -->
+<section class="bubble-grid-container">
+  <div class="bubble-grid">
+        
+    <!-- Bubble 1: Rides (Electric Blue Deep Gradient) -->
+    <div class="bubble-card bubble-blue">
+      <div class="bubble-icon-holder">
+        <svg viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 1 14v2c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M7 17h10"/></svg>      </div>
+      <span class="bubble-label">Ride</span>
+    </div>
+
+    <!-- Bubble 2: Reserve (Rich Amber Glow) -->
+    <div class="bubble-card bubble-amber">
+      <div class="bubble-icon-holder">
