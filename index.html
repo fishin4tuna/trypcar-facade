@@ -5,344 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TrypCar | Premium Campus Mobility Network</title>
 <style>
-/* Clean Tech Reset */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-body {
-  background-color: #060e1e;
-  color: #ffffff;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.5;
-}
-
-/* Fixed Compact Navigation Bar Layout */
-.navbar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1.2rem 1rem;
-  background-color: #030712;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-}
-.navigation-links {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 420px;
-  gap: 0.5rem;
-}
-.navigation-links a {
-  color: #94a3b8; 
-  font-weight: 700;
-  font-size: 0.68rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-.navigation-links a:hover, .navigation-links a.active {
-  color: #ffffff;
-}
-
-/* Hero Artwork Container */
-.hero-container {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-}
-.hero-image-asset {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-}
-
-/* SECTION 1: Centered Scrolling Service Rows */
-.scrolling-features {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 2rem 1.25rem 1rem 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-.centered-row-card {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 360px;
-  margin: 0 auto;
-}
-.oversized-icon-box {
-  margin-bottom: 1.25rem;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%);
-  padding: 1rem;
-  border-radius: 50%;
-}
-.oversized-icon-box svg {
-  width: 72px;  
-  height: 72px;
-  fill: none;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.row-title {
-  font-size: 1.35rem;
-  font-weight: 800;
-  margin-bottom: 0.5rem;
-  color: #ffffff;
-  letter-spacing: -0.01em;
-}
-.row-text {
-  font-size: 0.88rem;
-  color: #94a3b8;
-  line-height: 1.4;
-}
-
-/* UPGRADED: High-Contrast Obsidian Login Portal Container */
-.login-section-container {
-  width: 100%;
-  max-width: 500px;
-  margin: 2rem auto 1rem auto;
-  padding: 0 1.25rem;
-}
-.login-card-wrapper {
-  background-color: #0b1528; /* High-contrast shaded card depth overlay */
-  border: 1px solid rgba(59, 130, 246, 0.15); /* Sleek tech perimeter illumination */
-  border-radius: 24px;
-  padding: 1.75rem;
-  max-width: 420px;
-  margin: 0 auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-}
-.login-header-group {
-  margin-bottom: 1.25rem;
-  text-align: left;
-}
-.login-main-heading {
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  color: #ffffff;
-  margin-bottom: 0.25rem;
-}
-.login-sub-heading {
-  font-size: 0.8rem;
-  color: #94a3b8;
-}
-.input-field-group {
-  margin-bottom: 1rem;
-  text-align: left;
-}
-.input-label-text {
-  display: block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  margin-bottom: 0.4rem;
-}
-.secure-data-input {
-  width: 100%;
-  padding: 0.85rem 1rem;
-  background-color: #030712;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  color: #ffffff;
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.secure-data-input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
-}
-.login-action-trigger {
-  width: 100%;
-  padding: 0.9rem;
-  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
-  border: none;
-  border-radius: 12px;
-  color: #ffffff;
-  font-weight: 700;
-  font-size: 0.88rem;
-  cursor: pointer;
-  margin-top: 0.5rem;
-  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
-  transition: transform 0.1s;
-}
-.login-action-trigger:active {
-  transform: scale(0.98);
-}
-
-/* NEW: Micro-Mobility TrypScootz Presentation Showcase Row */
-.scootz-section-container {
-  width: 100%;
-  max-width: 500px;
-  margin: 2.5rem auto 1rem auto;
-  padding: 0 1.25rem;
-}
-.scootz-card-wrapper {
-  background-color: #0b1528; /* Consistent high-contrast depth shade */
-  border: 1px solid rgba(16, 185, 129, 0.15); /* Premium Emerald Track Identifier */
-  border-radius: 24px;
-  padding: 1.75rem;
-  max-width: 420px;
-  margin: 0 auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  text-align: left;
-}
-.scootz-badge {
-  display: inline-block;
-  padding: 0.25rem 0.6rem;
-  background-color: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  border-radius: 9999px;
-  color: #10b981;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-.scootz-heading {
-  font-size: 1.35rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: #ffffff;
-  margin-bottom: 0.5rem;
-}
-.scootz-body {
-  font-size: 0.88rem;
-  color: #94a3b8;
-  line-height: 1.5;
-  margin-bottom: 1.25rem;
-}
-.scootz-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 0.85rem;
-  background: linear-gradient(135deg, #057857 0%, #064e3b 100%);
-  border: none;
-  border-radius: 12px;
-  color: #ffffff;
-  font-weight: 700;
-  font-size: 0.85rem;
-  cursor: pointer;
-  text-decoration: none;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(6, 78, 59, 0.25);
-}
-
-/* Section Header Divider */
-.section-divider-title {
-  max-width: 500px;
-  margin: 2.5rem auto 1rem auto;
-  padding: 0 1.25rem;
-  font-size: 1.1rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  color: #ffffff;
-}
-
-/* SECTION 2: Vibrant Colored Bubble-Grid Framework */
-.bubble-grid-container {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 0 1.25rem 2rem 1.25rem;
-}
-.bubble-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 0.75rem;
-}
-.bubble-link {
-  text-decoration: none;
-  display: block;
-}
-.bubble-card {
-  border-radius: 20px;       
-  padding: 1.25rem 0.5rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  height: 100%;
-}
-
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
+.navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+.navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 420px; gap: 0.5rem; }
+.navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
+.navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
+.hero-container { width: 100%; max-width: 500px; margin: 0 auto; }
+.hero-image-asset { width: 100%; height: auto; display: block; object-fit: contain; }
+.scrolling-features { width: 100%; max-width: 500px; margin: 0 auto; padding: 2rem 1.25rem 1rem 1.25rem; display: flex; flex-direction: column; gap: 2rem; }
+.centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: 0 auto; }
+.oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; }
+.oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff; letter-spacing: -0.01em; }
+.row-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.4; }
+.login-section-container { width: 100%; max-width: 500px; margin: 2rem auto 1rem auto; padding: 0 1.25rem; }
+.login-card-wrapper { background-color: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 24px; padding: 1.75rem; max-width: 420px; margin: 0 auto; }
+.login-header-group { margin-bottom: 1.25rem; text-align: left; }
+.login-main-heading { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; margin-bottom: 0.25rem; }
+.login-sub-heading { font-size: 0.8rem; color: #64748b; }
+.input-field-group { margin-bottom: 1rem; text-align: left; }
+.input-label-text { display: block; font-size: 0.72rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.4rem; }
+.secure-data-input { width: 100%; padding: 0.85rem 1rem; background-color: #030712; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; color: #ffffff; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+.secure-data-input:focus { border-color: #3b82f6; }
+.login-action-trigger { width: 100%; padding: 0.9rem; background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); border: none; border-radius: 12px; color: #ffffff; font-weight: 700; font-size: 0.88rem; cursor: pointer; margin-top: 0.5rem; box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25); }
+.section-divider-title { max-width: 500px; margin: 2.5rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; }
+.bubble-grid-container { width: 100%; max-width: 500px; margin: 0 auto; padding: 0 1.25rem 2rem 1.25rem; }
+.bubble-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+.bubble-link { text-decoration: none; display: block; }
+.bubble-card { border-radius: 20px; padding: 1.25rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); transition: transform 0.15s ease, box-shadow 0.15s ease; height: 100%; }
 .bubble-blue { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
 .bubble-amber { background: linear-gradient(135deg, #0f172a 0%, #78350f 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
 .bubble-emerald { background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
 .bubble-purple { background: linear-gradient(135deg, #0f172a 0%, #581c87 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
 .bubble-rose { background: linear-gradient(135deg, #0f172a 0%, #881337 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
 .bubble-slate { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-
-.bubble-link:active .bubble-card {
-  transform: scale(0.95);
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
-}
-.bubble-icon-holder {
-  margin-bottom: 0.6rem;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.bubble-icon-holder svg {
-  width: 38px;
-  height: 38px;
-  fill: none;
-  stroke-width: 2.2;
-}
-.bubble-card svg {
-  stroke: #ffffff;
-}
-.bubble-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.02em;
-}
-
-/* Modern Fortune 500 Legal Footer */
-.global-site-footer {
-  width: 100%;
-  max-width: 500px;
-  margin: 3rem auto 0 auto;
-  padding: 2rem 1.25rem 3rem 1.25rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-}
-.footer-legal-text {
-  font-size: 0.68rem;
-  color: #64748b;
-  line-height: 1.6;
-  letter-spacing: 0.01em;
-}
-.footer-legal-text strong {
-  color: #94a3b8;
-  font-weight: 600;
-}
+.bubble-link:active .bubble-card { transform: scale(0.95); box-shadow: 0 0 12px rgba(59, 130, 246, 0.3); }
+.bubble-icon-holder { margin-bottom: 0.6rem; height: 42px; display: flex; align-items: center; justify-content: center; }
+.bubble-icon-holder svg { width: 38px; height: 38px; fill: none; stroke-width: 2.2; stroke: #ffffff; }
+.bubble-label { font-size: 0.75rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; }
+.global-site-footer { width: 100%; max-width: 500px; margin: 3rem auto 0 auto; padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+.footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
+.footer-legal-text strong { color: #94a3b8; font-weight: 600; }
 </style>
 </head>
 <body>
 
-<!-- Navigation Bar -->
 <nav class="navbar">
   <div class="navigation-links">
     <a href="index.html" class="active">Home</a>
@@ -354,12 +62,10 @@ body {
   </div>
 </nav>
 
-<!-- Hero Artwork Container -->
 <div class="hero-container">
   <img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
 </div>
 
-<!-- Main Centered Service Feed -->
 <main class="scrolling-features">
   <div class="centered-row-card">
     <div class="oversized-icon-box">
@@ -383,19 +89,31 @@ body {
   </div>
 </main>
 
-<!-- High-Contrast Shaded Secure Login Portal Module -->
 <section class="login-section-container">
   <div class="login-card-wrapper">
     <div class="login-header-group">
       <h2 class="login-main-heading">Campus Portal Secure Login</h2>
       <p class="login-sub-heading">Please enter your verified university identity credentials.</p>
     </div>
-    
     <form action="#" method="POST">
       <div class="input-field-group">
         <label class="input-label-text">University Email</label>
-```html
-    <!-- Bubble 1: Rides (Electric Blue Deep Gradient) -->
+        <input type="email" class="secure-data-input" placeholder="student@university.edu" required>
+      </div>
+      <div class="input-field-group">
+        <label class="input-label-text">Secure Password</label>
+        <input type="password" class="secure-data-input" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="login-action-trigger">Authenticate Account</button>
+    </form>
+  </div>
+</section>
+
+<h2 class="section-divider-title">Explore TrypCar</h2>
+
+<section class="bubble-grid-container">
+  <div class="bubble-grid">
+    
     <a href="ride.html" class="bubble-link">
       <div class="bubble-card bubble-blue">
         <div class="bubble-icon-holder">
@@ -405,7 +123,6 @@ body {
       </div>
     </a>
 
-    <!-- Bubble 2: Reserve (Rich Amber Glow) -->
     <a href="reserve.html" class="bubble-link">
       <div class="bubble-card bubble-amber">
         <div class="bubble-icon-holder">
@@ -415,7 +132,6 @@ body {
       </div>
     </a>
 
-    <!-- Bubble 3: Campus Hubs (Vibrant Emerald Forest) -->
     <a href="hubs.html" class="bubble-link">
       <div class="bubble-card bubble-emerald">
         <div class="bubble-icon-holder">
@@ -425,7 +141,6 @@ body {
       </div>
     </a>
 
-    <!-- Bubble 4: Lux Tier (Deep Royal Purple) -->
     <a href="lux.html" class="bubble-link">
       <div class="bubble-card bubble-purple">
         <div class="bubble-icon-holder">
@@ -435,7 +150,6 @@ body {
       </div>
     </a>
 
-    <!-- Bubble 5: Eco Eco (Sharp Crimson Rose) -->
     <a href="eco.html" class="bubble-link">
       <div class="bubble-card bubble-rose">
         <div class="bubble-icon-holder">
@@ -445,25 +159,5 @@ body {
       </div>
     </a>
 
-    <!-- Bubble 6: Support Help (Polished Muted Slate) -->
     <a href="support.html" class="bubble-link">
       <div class="bubble-card bubble-slate">
-        <div class="bubble-icon-holder">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
-        </div>
-        <span class="bubble-label">Help</span>
-      </div>
-    </a>
-
-  </div>
-</section>
-
-<!-- Gold Standard Enterprise Footer -->
-<footer class="global-site-footer">
-  <div class="footer-legal-text">
-    <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, the TrypCar bubble matrix grid logo format, and all associated software UI design configurations, iconography, and system identifiers are protected trademarks of TrypCar, Inc. across federal and international jurisdictions.
-  </div>
-</footer>
-
-</body>
-    </html>
