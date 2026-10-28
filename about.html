@@ -1,247 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TrypCar | About Premium Campus Mobility</title>
-<style>
-/* Clean Tech Reset */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-body {
-  background-color: #060e1e;
-  color: #ffffff;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.5;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About TrypCar | Safe & Reliable Campus Ride Network</title>
+  <style>
+    /* Absolute Dark Layout Protection */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
+    
+    /* Layout Center Alignment Matrix */
+    .navbar, .scrolling-features, .section-divider-title, .global-site-footer {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
 
-/* Fixed Compact Navigation Bar Layout */
-.navbar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1.2rem 1rem;
-  background-color: #030712;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-}
-.navigation-links {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 420px;
-  gap: 0.5rem;
-}
-.navigation-links a {
-  color: #94a3b8; 
-  font-weight: 700;
-  font-size: 0.68rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-.navigation-links a:hover, .navigation-links a.active {
-  color: #ffffff;
-}
+    /* Fixed Compact Navigation Bar Layout */
+    .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 420px; gap: 0.5rem; }
+    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
+    .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
+    .navigation-links a.active { color: #3b82f6; }
 
-/* Page Frame Layout */
-.main-content-wrapper {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 2.5rem 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
+    /* Centered Row Content Features */
+    .scrolling-features { padding: 2.5rem 1.25rem 3rem 1.25rem; display: flex; flex-direction: column; gap: 2.5rem; }
+    .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: 0 auto; }
+    .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; }
+    .oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff; letter-spacing: -0.01em; }
+    .row-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; text-align: center; }
+    .section-divider-title { margin: 3.5rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; text-align: center; }
 
-/* Header Text Blocks */
-.portal-header-block {
-  text-align: left;
-}
-.portal-badge {
-  color: #3b82f6;
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-.portal-main-title {
-  font-size: 1.75rem;
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-}
+    /* Footer Layout Elements */
+    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
+    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
 
-/* Informational Narrative Block */
-.story-text-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-.story-paragraph {
-  font-size: 0.95rem;
-  color: #94a3b8;
-  line-height: 1.6;
-}
-.story-paragraph strong {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-/* Premium Verification Pillar Rows */
-.pillar-matrix {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-.pillar-row-card {
-  background-color: #030712;
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  border-radius: 20px;
-  padding: 1.5rem;
-  display: flex;
-  gap: 1.25rem;
-  align-items: flex-start;
-}
-.pillar-icon-box {
-  background-color: rgba(59, 130, 246, 0.08);
-  border: 1px solid rgba(59, 130, 246, 0.15);
-  padding: 0.6rem;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.pillar-icon-box svg {
-  width: 24px;
-  height: 24px;
-  stroke: #3b82f6;
-  stroke-width: 2;
-  fill: none;
-}
-.pillar-text-box {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-.pillar-title {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #ffffff;
-}
-.pillar-description {
-  font-size: 0.85rem;
-  color: #64748b;
-  line-height: 1.4;
-}
-
-/* Modern Fortune 500 Legal Footer */
-.global-site-footer {
-  width: 100%;
-  max-width: 500px;
-  margin: 3rem auto 0 auto;
-  padding: 2rem 1.25rem 3rem 1.25rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-}
-.footer-legal-text {
-  font-size: 0.68rem;
-  color: #64748b;
-  line-height: 1.6;
-  letter-spacing: 0.01em;
-}
-.footer-legal-text strong {
-  color: #94a3b8;
-  font-weight: 600;
-}
-</style>
+    /* Responsive Desktop Expansion Rules */
+    @media (min-width: 1024px) {
+      .navbar, .scrolling-features, .section-divider-title, .global-site-footer { max-width: 1000px; }
+      .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- Navigation Bar -->
-<nav class="navbar">
-  <div class="navigation-links">
-    <a href="index.html">Home</a>
-    <a href="about.html" class="active">About</a>
-    <a href="investors.html">Investors</a>
-    <a href="support.html">Support</a>
-    <a href="faq.html">FAQ's</a>
-    <a href="contact.html">Contact</a>
-  </div>
-</nav>
+  <!-- Synchronized Navigation Bar (Investors Link Stripped) -->
+  <nav class="navbar">
+    <div class="navigation-links">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="support.html">Support</a>
+      <a href="faq.html">FAQ's</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
 
-<!-- Main Portal Narrative Frame -->
-<main class="main-content-wrapper">
-  
-  <!-- Section Title Header -->
-  <div class="portal-header-block">
-    <span class="portal-badge">Our Mission</span>
-    <h1 class="portal-main-title">Redefining University Transit Architecture.</h1>
-  </div>
+  <!-- Section Header Title -->
+  <h2 class="section-divider-title">Our Vision</h2>
 
-  <!-- Deep Narrative Context -->
-  <div class="story-text-container">
-    <p class="story-paragraph">
-      TrypCar was engineered to solve a fundamental challenge across modern university environments: <strong>providing hyper-secure, reliable, and premium peer-to-peer mobility solutions</strong> exclusively mapped to active student parameters.
-    </p>
-    <p class="story-paragraph">
-      We bypass the chaotic vulnerabilities of standard, public-facing ride-hailing networks. By deploying closed-network infrastructure frameworks, TrypCar links student riders with peer student drivers, establishing an airtight ring of absolute accountability, convenience, and economic efficiency.
-    </p>
-  </div>
-
-  <!-- Three Tier High Trust Operational Pillars -->
-  <section class="pillar-matrix">
+  <!-- Clean, Simple & Friendly Campus Content -->
+  <main class="scrolling-features">
     
-    
-    <div class="pillar-row-card">
-      <div class="pillar-icon-box">
-        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <!-- Bulletin 1: Safety & Focus -->
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
       </div>
-      <div class="pillar-text-box">
-        <h4 class="pillar-title">Closed Campus Network</h4>
-        <p class="pillar-description">Every user account requires single sign-on authentication through valid institutional email channels before accessing services.</p>
-      </div>
+      <h3 class="row-title">Built for Your Campus</h3>
+      <p class="row-text">TrypCar is designed from the ground up to serve your specific college community. By focusing exclusively on verified students and faculty, we provide a safe, familiar, and closely knit ride experience that takes the stress out of getting around campus.</p>
     </div>
 
-    <!-- Pillar 2: Intelligent Routing -->
-    <div class="pillar-row-card">
-      <div class="pillar-icon-box">
-        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+    <!-- Bulletin 2: Reliability & Partnership -->
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
       </div>
-      <div class="pillar-text-box">
-        <h4 class="pillar-title">Algorithmic Pathing</h4>
-        <p class="pillar-description">Our background system instantly matches campus commute schedules, maximizing pathing efficiency while lowering transit overhead.</p>
-      </div>
+      <h3 class="row-title">Reliable Local Rides</h3>
+      <p class="row-text">We coordinate directly with your university parameters to ensure rides are always available when you need them most. By verifying everyone through official university email addresses, we keep our service reliable, trusted, and perfectly tailored to local school schedules.</p>
     </div>
 
-    <!-- Pillar 3: Premium Standard -->
-    <div class="pillar-row-card">
-      <div class="pillar-icon-box">
-        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      </div>
-      <div class="pillar-text-box">
-        <h4 class="pillar-title">Premium Vetting</h4>
-        <p class="pillar-description">Driver records, vehicle parameters, and background data lines are manually checked to guarantee an ultra-premium peer experience.</p>
-      </div>
+  </main>
+
+  <!-- Complete Hardcoded Corporate Trademark Footer -->
+  <footer class="global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs, cryptography-driven institutional authentication fields, custom vector icon sets, and underlying identity validation frameworks are fully protected under registered trademarks of TrypCar, Inc. across federal and international jurisdictions.
     </div>
-
-  </section>
-
-</main>
-
-<!-- Gold Standard Enterprise Footer -->
-<footer class="global-site-footer">
-  <div class="footer-legal-text">
-    <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, the TrypCar bubble matrix grid logo format, and all associated software UI design configurations, iconography, and system identifiers are protected trademarks of TrypCar, Inc. across federal and international jurisdictions.
-  </div>
-</footer>
+  </footer>
 
 </body>
 </html>
