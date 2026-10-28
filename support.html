@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Support | TrypCar Help Center</title>
+  <style>
+    /* Absolute Dark Layout Protection */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
+    
+    /* Layout Center Alignment Containers */
+    .navbar, .embedded-gateway-container, .scrolling-features, .section-divider-title, .global-site-footer {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Fixed Navigation Bar Layout */
+    .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 420px; gap: 0.5rem; }
+    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
+    .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
+    .navigation-links a.active { color: #3b82f6; }
+    
+    .section-divider-title { margin: 3rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; text-align: center; }
+    .embedded-gateway-container { padding: 0 1.25rem 2rem 1.25rem; }
+    
+    /* Premium Slate Panel Card */
+    .enterprise-gateway-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; width: 100%; padding: 2.25rem 1.5rem; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); text-align: center; }
+    .gateway-security-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.62rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .gateway-title-text { color: #ffffff; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .gateway-institutional-subline { font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.25rem; font-weight: 500; }
+    
+    /* Centered Row Content Features */
+    .scrolling-features { padding: 1.5rem 1.25rem 2.5rem 1.25rem; display: flex; flex-direction: column; gap: 2rem; }
+    .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 380px; margin: 0 auto; background-color: rgba(11, 19, 41, 0.4); border: 1px solid rgba(148, 163, 184, 0.06); padding: 1.5rem 1.25rem; border-radius: 8px; }
+    .oversized-icon-box { margin-bottom: 1rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(6, 14, 30, 0) 70%); padding: 0.75rem; border-radius: 50%; }
+    .oversized-icon-box svg { width: 48px; height: 48px; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .row-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.4rem; color: #ffffff; letter-spacing: -0.01em; }
+    .row-text { font-size: 0.85rem; color: #94a3b8; line-height: 1.4; text-align: center; }
+
+    /* Footer Formatting */
+    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
+    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+
+    /* Laptop Responsive Scaling */
+    @media (min-width: 1024px) {
+      .navbar, .embedded-gateway-container, .scrolling-features, .section-divider-title, .global-site-footer { max-width: 1000px; }
+      .scrolling-features { flex-direction: row; justify-content: center; align-items: stretch; gap: 2rem; }
+      .centered-row-card { flex: 1; margin: 0; }
+      .enterprise-gateway-card { max-width: 650px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Synchronized Navigation Bar (Active Support Tab) -->
+  <nav class="navbar">
+    <div class="navigation-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="support.html" class="active">Support</a>
+      <a href="faq.html">FAQ's</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <h2 class="section-divider-title">Help Center</h2>
+
+  <!-- Primary Welcome Billboard Box -->
+  <section class="embedded-gateway-container">
+    <div class="enterprise-gateway-card">
+      <div class="gateway-security-badge">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 2px;"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        Here for your campus community
+      </div>
+      <div class="gateway-title-text">How can we help you today?</div>
+      <div class="gateway-institutional-subline">We are dedicated to keeping your rides smooth, reliable, and safe.</div>
+      <div class="gateway-institutional-subline" style="color: #3b82f6; font-weight: 700;">Email support anytime: info@trypcar.com</div>
+    </div>
+  </section>
+
+  <!-- Clear Help Category Blocks -->
+  <main class="scrolling-features">
+    
+    <!-- Support Block 1: Rider Help -->
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24" stroke="#3b82f6">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+      <h3 class="row-title">Rider Support</h3>
+      <p class="row-text">Need help booking a ride or checking an off-campus 5-mile boundary trip? Our team is available around the clock to assist you with account questions, schedules, or ride feedback.</p>
+    </div>
+
+    <!-- Support Block 2: Driver Help -->
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24" stroke="#22c55e">
+          <circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path>
+        </svg>
+      </div>
+      <h3 class="row-title">Driver Resources</h3>
+      <p class="row-text">Are you a verified campus guide? Find helpful materials on navigating university shortcuts, organizing drop-off points, keeping trips efficient, and maintaining premium service standards.</p>
+    </div>
+
+    <!-- Support Block 3: Partner Help -->
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24" stroke="#a855f7">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      </div>
+      <h3 class="row-title">University Partnerships</h3>
+      <p class="row-text">We coordinate closely with university boards and administrative staff. Reach out directly for compliance verification questions, campus network custom limits, or vehicle fleet details.</p>
+    </div>
+
+  </main>
+
+  <!-- Complete Hardcoded Corporate Trademark Footer -->
+  <footer class="global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs, cryptography-driven institutional authentication fields, custom vector icon sets, and underlying identity validation frameworks are fully protected under registered trademarks of TrypCar, Inc. across federal and international jurisdictions.
+    </div>
+  </footer>
+</body>
+</html>
