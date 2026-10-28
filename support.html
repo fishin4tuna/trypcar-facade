@@ -164,7 +164,7 @@
     </div>
   </footer>
 
-  <!-- SMARTER RESPONSIVE LIVE ROUTING DICTIONARY SCRIPT -->
+  <!-- UNIVERSAL MOBILE KEYWORD PARSING ENGINE -->
   <script>
     function toggleChatSession() {
       document.getElementById('chatWindow').classList.toggle('active');
@@ -174,8 +174,8 @@
     }
     function executeUserMessage() {
       const input = document.getElementById('chatInput');
-      const val = input.value.trim();
-      if (!val) return;
+      const val = input.value;
+      if (!val || !val.trim()) return;
       
       const feed = document.getElementById('chatFeed');
       const userBubble = document.createElement('div');
@@ -184,34 +184,38 @@
       feed.appendChild(userBubble);
       
       input.value = '';
-      feed.scrollTop = feed.scrollHeight;
       
-      // Smart Router Logic Matrix
+      // Immediate structural scroll fix
+      setTimeout(() => { feed.scrollTop = feed.scrollHeight; }, 30);
+      
       setTimeout(() => {
         const botBubble = document.createElement('div');
         botBubble.className = "msg-bubble msg-bot";
         
-        const text = val.toLowerCase();
+        // Advanced parsing cleans out hidden mobile spacing arrays cleanly
+        const text = val.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim();
         let reply = "Thanks for asking! Our support staff can help you directly with that via email at info@trypcar.com, or you can drop us a line on our main Contact page.";
         
         if (text.includes('ride') || text.includes('reserve') || text.includes('lux') || text.includes('eco')) {
-          reply = "Our ride services blend smoothly right into daily campus schedules. Verified students and staff can request standard trips, book slots in advance, or select premium tiers safely.";
+          reply = "Our ride options blend smoothly into daily campus schedules. Verified students and staff can request standard trips, book slots in advance, or select premium options safely.";
         } else if (text.includes('scoot') || text.includes('scootz')) {
-          reply = "Scootz™ is our custom micro-scooter option designed for quick trips between lecture halls and campus hubs. They are completely linked to the local ride network grid!";
-        } else if (text.includes('boundary') || text.includes('distance') || text.includes('mile') || text.includes('range') || text.includes('limit')) {
-          reply = "TrypCar serves your campus and the local neighborhood up to a fixed 5-mile boundary! This makes it simple to visit off-campus housing or area grocery stores safely.";
-        } else if (text.includes('driver') || text.includes('guide')) {
-          reply = "Every single TrypCar driver is an expert campus guide who knows shortcuts around school construction, dorm setups, and area drop-off points perfectly.";
-        } else if (text.includes('account') || text.includes('email') || text.includes('.edu')) {
+          reply = "Scootz™ is our custom scooter option designed for quick trips between lecture halls and campus hubs. They are completely integrated into the local network grid!";
+        } else if (text.includes('bound') || text.includes('dist') || text.includes('mile') || text.includes('rang') || text.includes('limit') || text.includes('5')) {
+          reply = "TrypCar serves your campus and the local neighborhood up to a fixed 5-mile boundary limit! This makes it simple to visit off-campus housing or area grocery stores safely.";
+        } else if (text.includes('driv') || text.includes('guid')) {
+          reply = "Every single TrypCar driver is an expert campus guide who knows shortcuts around school construction, dorm setups, and area drop-off locations perfectly.";
+        } else if (text.includes('acc') || text.includes('mail') || text.includes('edu') || text.includes('log') || text.includes('pass')) {
           reply = "To keep the network completely safe, everyone signs in using their official university email address. This ensures a verified, close-knit ride network for your school.";
-        } else if (text.includes('hello') || text.includes('hi ') || text.includes('hey')) {
+        } else if (text.includes('hell') || text.includes('hi') || text.includes('hey') || text.includes('yo')) {
           reply = "Hello! 👋 I can help you with questions about our 5-mile boundaries, campus ride options, or driver screening rules. What's on your mind?";
         }
         
         botBubble.innerText = reply;
         feed.appendChild(botBubble);
-        feed.scrollTop = feed.scrollHeight;
-      }, 750);
+        
+        // Pushes content clear of on-screen mobile viewports smoothly
+        setTimeout(() => { feed.scrollTop = feed.scrollHeight; }, 50);
+      }, 650);
     }
   </script>
 </body>
