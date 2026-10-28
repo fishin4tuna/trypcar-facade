@@ -4,8 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrypCar | Institutional Investment Framework & Market Scale</title>
-  <!-- Direct Link to your centralized design vault stylesheet -->
-  <link rel="stylesheet" href="sub-style.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
+    .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 420px; gap: 0.5rem; }
+    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
+    .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
+    .navigation-links a.active { color: #3b82f6; }
+    .scrolling-features { width: 100%; max-width: 500px; margin: 0 auto; padding: 2.5rem 1.25rem 3rem 1.25rem; display: flex; flex-direction: column; gap: 2.5rem; }
+    .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: 0 auto; }
+    .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; }
+    .oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff; letter-spacing: -0.01em; }
+    .row-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; text-align: center; }
+    .section-divider-title { max-width: 500px; margin: 3.5rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; text-align: center; }
+    .embedded-gateway-container { width: 100%; max-width: 500px; margin: 2.5rem auto 0 auto; padding: 0 1.25rem; }
+    .enterprise-gateway-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; width: 100%; padding: 3rem 2.5rem; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7); text-align: center; }
+    .corporate-input-label { display: block; font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; text-align: left; }
+    .corporate-text-field { width: 100%; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; padding: 0.85rem 1rem; color: #ffffff; font-size: 0.9rem; letter-spacing: 0.01em; transition: border-color 0.2s ease, box-shadow 0.2s ease; margin-bottom: 1rem; }
+    .corporate-text-field:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
+    .corporate-submit-btn { width: 100%; background-color: #2563eb; color: #ffffff; border: none; border-radius: 6px; padding: 1rem; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; margin-top: 1rem; transition: background-color 0.15s ease; }
+    .corporate-submit-btn:hover { background-color: #1d4ed8; }
+    .gateway-security-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.65rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    .global-site-footer { width: 100%; max-width: 500px; margin: 3rem auto 0 auto; padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
+    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+    @media (min-width: 1024px) {
+      .navbar, .scrolling-features, .section-divider-title, .embedded-gateway-container, .global-site-footer { max-width: 1000px; }
+      .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
+    }
+  </style>
 </head>
 <body>
 
@@ -24,7 +53,7 @@
   <!-- Investor Header Title -->
   <h2 class="section-divider-title">Venture Capital & Market Scale Framework</h2>
 
-  <!-- INVESTMENT COMPLIANCE GATEWAY MODULE -->
+  <!-- INVESTMENT ENTRY MODULE -->
   <section class="embedded-gateway-container">
     <div class="enterprise-gateway-card">
       
@@ -33,21 +62,19 @@
         Encrypted Authentication Node
       </div>
       
-      <div class="gateway-logo" style="font-size: 1.5rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 0.5rem; color: #ffffff;">Venture Capital Platform</div>
-      <div class="gateway-institutional-subline">Authorized Partners Only &bull; Secured Registry Lock</div>
+      <div class="gateway-logo" style="font-size: 1.5rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1.5rem; color: #ffffff;">University Portal Platform</div>
       
-      <form onsubmit="handleInvestorHandshake(event)">
-        <div>
-          <label class="corporate-input-label">Institutional Access Key</label>
-          <input type="text" class="corporate-text-field" placeholder="Firm Routing Identifier" required>
+      <form onsubmit="handlePortalHandshake(event)">
+        <div class="input-group" style="text-align: left;">
+          <label class="corporate-input-label">Authorized Campus Email</label>
+          <input type="email" class="corporate-text-field" placeholder="username@university.edu" required>
         </div>
-        <div>
-          <label class="corporate-input-label">Private Network Token</label>
+        <div class="input-group" style="text-align: left;">
+          <label class="corporate-input-label">Network Security Password</label>
           <input type="password" class="corporate-text-field" placeholder="••••••••" required>
         </div>
         <button type="submit" class="corporate-submit-btn">Verify Institutional Credentials</button>
       </form>
-      
     </div>
   </section>
 
@@ -87,9 +114,9 @@
   </footer>
 
   <script>
-    function handleInvestorHandshake(event) {
+    function handlePortalHandshake(event) {
       event.preventDefault();
-      alert('Security Handshake Initiated. Authorizing credentials against enterprise ledger...');
+      alert('Handshake protocol initialized. Syncing credentials with campus registries...');
     }
   </script>
 </body>
