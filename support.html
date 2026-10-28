@@ -149,10 +149,10 @@
       <button class="chat-window-close" onclick="toggleChatSession()">&times;</button>
     </div>
     <div class="chat-message-feed" id="chatFeed">
-      <div class="msg-bubble msg-bot">Hi there! 👋 I am Xen, your campus support assistant. How can we help you get around today?</div>
+      <div class="msg-bubble msg-bot">Hi there! 👋 I am Xen, your campus support assistant. Ask me about our rides, boundaries, or university safety policies!</div>
     </div>
     <div class="chat-input-toolbar">
-      <input type="text" class="chat-input-field" id="chatInput" placeholder="Ask a question..." onkeypress="handleChatEnter(event)">
+      <input type="text" class="chat-input-field" id="chatInput" placeholder="Type a message..." onkeypress="handleChatEnter(event)">
       <button class="chat-send-btn" onclick="executeUserMessage()">&rarr;</button>
     </div>
   </div>
@@ -164,6 +164,7 @@
     </div>
   </footer>
 
+  <!-- SMARTER RESPONSIVE LIVE ROUTING DICTIONARY SCRIPT -->
   <script>
     function toggleChatSession() {
       document.getElementById('chatWindow').classList.toggle('active');
@@ -185,13 +186,32 @@
       input.value = '';
       feed.scrollTop = feed.scrollHeight;
       
+      // Smart Router Logic Matrix
       setTimeout(() => {
         const botBubble = document.createElement('div');
         botBubble.className = "msg-bubble msg-bot";
-        botBubble.innerText = "Thank you for reaching out! Our campus support team has received your message and will reply via email shortly. You can also contact us at info@trypcar.com.";
+        
+        const text = val.toLowerCase();
+        let reply = "Thanks for asking! Our support staff can help you directly with that via email at info@trypcar.com, or you can drop us a line on our main Contact page.";
+        
+        if (text.includes('ride') || text.includes('reserve') || text.includes('lux') || text.includes('eco')) {
+          reply = "Our ride services blend smoothly right into daily campus schedules. Verified students and staff can request standard trips, book slots in advance, or select premium tiers safely.";
+        } else if (text.includes('scoot') || text.includes('scootz')) {
+          reply = "Scootz™ is our custom micro-scooter option designed for quick trips between lecture halls and campus hubs. They are completely linked to the local ride network grid!";
+        } else if (text.includes('boundary') || text.includes('distance') || text.includes('mile') || text.includes('range') || text.includes('limit')) {
+          reply = "TrypCar serves your campus and the local neighborhood up to a fixed 5-mile boundary! This makes it simple to visit off-campus housing or area grocery stores safely.";
+        } else if (text.includes('driver') || text.includes('guide')) {
+          reply = "Every single TrypCar driver is an expert campus guide who knows shortcuts around school construction, dorm setups, and area drop-off points perfectly.";
+        } else if (text.includes('account') || text.includes('email') || text.includes('.edu')) {
+          reply = "To keep the network completely safe, everyone signs in using their official university email address. This ensures a verified, close-knit ride network for your school.";
+        } else if (text.includes('hello') || text.includes('hi ') || text.includes('hey')) {
+          reply = "Hello! 👋 I can help you with questions about our 5-mile boundaries, campus ride options, or driver screening rules. What's on your mind?";
+        }
+        
+        botBubble.innerText = reply;
         feed.appendChild(botBubble);
         feed.scrollTop = feed.scrollHeight;
-      }, 800);
+      }, 750);
     }
   </script>
 </body>
