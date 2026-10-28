@@ -164,7 +164,7 @@
     </div>
   </footer>
 
-  <!-- UNIVERSAL MOBILE KEYWORD PARSING ENGINE -->
+  <!-- ADVANCED WORD-BOUNDARY ROUTING ENGINE -->
   <script>
     function toggleChatSession() {
       document.getElementById('chatWindow').classList.toggle('active');
@@ -185,35 +185,34 @@
       
       input.value = '';
       
-      // Immediate structural scroll fix
       setTimeout(() => { feed.scrollTop = feed.scrollHeight; }, 30);
       
       setTimeout(() => {
         const botBubble = document.createElement('div');
         botBubble.className = "msg-bubble msg-bot";
         
-        // Advanced parsing cleans out hidden mobile spacing arrays cleanly
-        const text = val.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim();
+        // Lowercases and prepares clean word boundaries
+        const text = val.toLowerCase().trim();
         let reply = "Thanks for asking! Our support staff can help you directly with that via email at info@trypcar.com, or you can drop us a line on our main Contact page.";
         
-        if (text.includes('ride') || text.includes('reserve') || text.includes('lux') || text.includes('eco')) {
-          reply = "Our ride options blend smoothly into daily campus schedules. Verified students and staff can request standard trips, book slots in advance, or select premium options safely.";
-        } else if (text.includes('scoot') || text.includes('scootz')) {
+        // Exact standalone keyword boundary checking (\b) eliminates internal word errors
+        if (/\b(ride|rides|reserve|lux|eco)\b/.test(text)) {
+          reply = "Our ride options blend smoothly into daily campus schedules. Verified students and staff can request standard trips, book slots in advance, or select premium choices safely.";
+        } else if (/\b(scoot|scootz|scooter|scooters)\b/.test(text)) {
           reply = "Scootz™ is our custom scooter option designed for quick trips between lecture halls and campus hubs. They are completely integrated into the local network grid!";
-        } else if (text.includes('bound') || text.includes('dist') || text.includes('mile') || text.includes('rang') || text.includes('limit') || text.includes('5')) {
+        } else if (/\b(boundary|boundaries|distance|mile|miles|range|limit|5)\b/.test(text)) {
           reply = "TrypCar serves your campus and the local neighborhood up to a fixed 5-mile boundary limit! This makes it simple to visit off-campus housing or area grocery stores safely.";
-        } else if (text.includes('driv') || text.includes('guid')) {
+        } else if (/\b(driver|drivers|guide|guides)\b/.test(text)) {
           reply = "Every single TrypCar driver is an expert campus guide who knows shortcuts around school construction, dorm setups, and area drop-off locations perfectly.";
-        } else if (text.includes('acc') || text.includes('mail') || text.includes('edu') || text.includes('log') || text.includes('pass')) {
+        } else if (/\b(account|email|edu|login|password)\b/.test(text)) {
           reply = "To keep the network completely safe, everyone signs in using their official university email address. This ensures a verified, close-knit ride network for your school.";
-        } else if (text.includes('hell') || text.includes('hi') || text.includes('hey') || text.includes('yo')) {
+        } else if (/\b(hello|hi|hey|greetings|sup)\b/.test(text)) {
           reply = "Hello! 👋 I can help you with questions about our 5-mile boundaries, campus ride options, or driver screening rules. What's on your mind?";
         }
         
         botBubble.innerText = reply;
         feed.appendChild(botBubble);
         
-        // Pushes content clear of on-screen mobile viewports smoothly
         setTimeout(() => { feed.scrollTop = feed.scrollHeight; }, 50);
       }, 650);
     }
