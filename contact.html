@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Enterprise Communications Portal</title>
+  <title>Contact TrypCar | Friendly & Professional Campus Ride Network</title>
   <style>
     /* Absolute Dark Layout Protection */
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,7 +25,7 @@
     .section-divider-title { margin: 3rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; text-align: center; }
     .embedded-gateway-container { padding: 0 1.25rem; }
     
-    /* Classy Slate Form Panel Cards */
+    /* Premium Slate Form Panel Cards */
     .enterprise-gateway-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; width: 100%; padding: 2rem 1.5rem; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); text-align: center; }
     .corporate-input-label { display: block; font-size: 0.68rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-align: left; }
     .corporate-text-field { width: 100%; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; padding: 0.8rem 1rem; color: #ffffff; font-size: 0.9rem; letter-spacing: 0.01em; transition: border-color 0.2s ease; margin-bottom: 1.25rem; }
@@ -55,7 +55,7 @@
   </style>
 </head>
 <body>
-  <!-- Synchronized Navigation Bar (Investors Link Stripped) -->
+  <!-- Synchronized Navigation Bar (Active Contact Tab) -->
   <nav class="navbar">
     <div class="navigation-links">
       <a href="index.html">Home</a>
@@ -66,40 +66,41 @@
     </div>
   </nav>
 
-  <h2 class="section-divider-title">Contact Our Network</h2>
+  <h2 class="section-divider-title">Get in Touch</h2>
 
   <section class="embedded-gateway-container" style="margin-bottom: 3rem;">
     <div class="enterprise-gateway-card">
       <div class="gateway-security-badge">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 2px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-        Secure Communication Routing Node
+        We'd love to hear from you
       </div>
-      <div class="gateway-title-text" id="contactTitle">Communications Portal</div>
-      <div class="gateway-institutional-subline">Direct Routing Matrix &bull; Inquiries Dispatched to info@trypcar.com</div>
+      <div class="gateway-title-text">Contact TrypCar</div>
+      <div class="gateway-institutional-subline">Drop us a line and our team will get back to you shortly at info@trypcar.com.</div>
       
       <form onsubmit="handleInquiryDispatch(event)">
         <div>
-          <label class="corporate-input-label">Inquiry Classification</label>
-          <select class="corporate-select-field" id="inquiryType" onchange="adaptFormAesthetic()" required>
-            <option value="student">Student Rider Network</option>
-            <option value="faculty">Faculty & Campus Staff Mobility</option>
-            <option value="compliance">University Administration & Compliance</option>
-            <option value="investor">Venture Capital / Investor Inquiry</option>
+          <label class="corporate-input-label">Who are you?</label>
+          <select class="corporate-select-field" id="inquiryType" required>
+            <option value="student">Student Rider</option>
+            <option value="faculty">Faculty & Staff</option>
+            <option value="partnership">University Partnerships</option>
+            <option value="investor">Investor Inquiry</option>
+            <option value="general">General Question</option>
           </select>
         </div>
         <div>
-          <label class="corporate-input-label">Your Name</label>
+          <label class="corporate-input-label">Name</label>
           <input type="text" class="corporate-text-field" placeholder="John Doe" required>
         </div>
         <div>
-          <label class="corporate-input-label">Authorized Contact Email</label>
-          <input type="email" class="corporate-text-field" placeholder="name@domain.com" required>
+          <label class="corporate-input-label">Email</label>
+          <input type="email" class="corporate-text-field" placeholder="you@example.com" required>
         </div>
         <div>
-          <label class="corporate-input-label">Message Body</label>
-          <textarea class="corporate-textarea-field" placeholder="Specify your network requirements..." required></textarea>
+          <label class="corporate-input-label">Message</label>
+          <textarea class="corporate-textarea-field" placeholder="How can we help?" required></textarea>
         </div>
-        <button type="submit" class="corporate-submit-btn" id="dispatchBtn">Transmit Secure Message</button>
+        <button type="submit" class="corporate-submit-btn">Send Message</button>
       </form>
     </div>
   </section>
@@ -112,32 +113,9 @@
   </footer>
 
   <script>
-    function adaptFormAesthetic() {
-      const type = document.getElementById('inquiryType').value;
-      const title = document.getElementById('contactTitle');
-      const button = document.getElementById('dispatchBtn');
-      if (type === 'investor') {
-        title.innerText = "Investor Relations Gate";
-        button.innerText = "Initiate Investor Briefing";
-        button.style.background = "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)";
-      } else if (type === 'compliance') {
-        title.innerText = "Institutional Compliance Node";
-        button.innerText = "File Administrative Inquiry";
-        button.style.background = "#2563eb";
-      } else {
-        title.innerText = "Communications Portal";
-        button.innerText = "Transmit Secure Message";
-        button.style.background = "#2563eb";
-      }
-    }
     function handleInquiryDispatch(event) {
       event.preventDefault();
-      const type = document.getElementById('inquiryType').value;
-      if (type === 'investor') {
-        alert('Transmission successful. Encrypted Investor Briefing request routed to strategic relations vault at info@trypcar.com.');
-      } else {
-        alert('Transmission successful. Secure network message dispatched to administrative queues at info@trypcar.com.');
-      }
+      alert('Thank you! Your message has been sent to our team at info@trypcar.com. We will get back to you soon.');
     }
   </script>
 </body>
