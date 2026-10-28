@@ -10,7 +10,7 @@
     body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
     
     /* Layout Center Alignment Matrix */
-    .navbar, .scrolling-features, .section-divider-title, .global-site-footer {
+    .navbar, .scrolling-features, .section-divider-title, .global-site-footer, .corporate-mission-box {
       width: 100%;
       max-width: 500px;
       margin: 0 auto;
@@ -23,8 +23,12 @@
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
     .navigation-links a.active { color: #3b82f6; }
 
+    /* Mission Statement Highlight Area */
+    .corporate-mission-box { padding: 2rem 1.25rem 0 1.25rem; text-align: center; }
+    .mission-paragraph { font-size: 0.95rem; color: #e2e8f0; line-height: 1.6; margin-bottom: 1.5rem; }
+
     /* Centered Row Content Features */
-    .scrolling-features { padding: 2.5rem 1.25rem 3rem 1.25rem; display: flex; flex-direction: column; gap: 2.5rem; }
+    .scrolling-features { padding: 2rem 1.25rem 3rem 1.25rem; display: flex; flex-direction: column; gap: 3rem; }
     .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: 0 auto; }
     .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; }
     .oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
@@ -39,8 +43,9 @@
 
     /* Responsive Desktop Expansion Rules */
     @media (min-width: 1024px) {
-      .navbar, .scrolling-features, .section-divider-title, .global-site-footer { max-width: 1000px; }
-      .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
+      .navbar, .scrolling-features, .section-divider-title, .global-site-footer, .corporate-mission-box { max-width: 1200px; }
+      .scrolling-features { flex-direction: row; justify-content: center; align-items: flex-start; gap: 2rem; }
+      .corporate-mission-box { max-width: 800px; }
     }
   </style>
 </head>
@@ -60,7 +65,20 @@
   <!-- Section Header Title -->
   <h2 class="section-divider-title">Our Vision</h2>
 
-  <!-- Clean, Simple & Friendly Campus Content -->
+  <!-- Integrated Polished Mission Statements -->
+  <section class="corporate-mission-box">
+    <p class="mission-paragraph">
+      TrypCar, Inc. was created to serve the vital needs of faculty and students at colleges and universities all across the globe.
+    </p>
+    <p class="mission-paragraph">
+      In today's modern world, safety, security, and prompt transportation are no longer just a luxury—they are an absolute necessity.
+    </p>
+    <p class="mission-paragraph" style="color: #94a3b8; font-style: italic;">
+      At TrypCar, we believe in observing, anticipating, and planning for both social and economic shifts to better serve our campus communities.
+    </p>
+  </section>
+
+  <!-- Clean, Simple & Friendly Campus Content Blocks -->
   <main class="scrolling-features">
     
     <!-- Bulletin 1: Safety & Focus -->
@@ -74,7 +92,18 @@
       <p class="row-text">TrypCar is designed from the ground up to serve your specific college community. By focusing exclusively on verified students and faculty, we provide a safe, familiar, and closely knit ride experience that takes the stress out of getting around campus.</p>
     </div>
 
-    <!-- Bulletin 2: Reliability & Partnership -->
+    <!-- Bulletin 2: Seamless Ecosystem -->
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <h3 class="row-title">A Seamless Ecosystem</h3>
+      <p class="row-text">Our unique ride options blend smoothly into the natural rhythm of daily campus life. Whether heading to an early seminar, moving between busy lecture halls, or catching an evening study group, TrypCar fits perfectly into your academic routine.</p>
+    </div>
+
+    <!-- Bulletin 3: Knowledgeable Drivers -->
     <div class="centered-row-card">
       <div class="oversized-icon-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -82,8 +111,8 @@
           <polyline points="12 6 12 12 16 14"></polyline>
         </svg>
       </div>
-      <h3 class="row-title">Reliable Local Rides</h3>
-      <p class="row-text">We coordinate directly with your university parameters to ensure rides are always available when you need them most. By verifying everyone through official university email addresses, we keep our service reliable, trusted, and perfectly tailored to local school schedules.</p>
+      <h3 class="row-title">Expert Campus Guides</h3>
+      <p class="row-text">Every single TrypCar driver is deeply knowledgeable about your specific university layout. From knowing every shortcut around construction to identifying exact dorm drop-offs and landmark halls, our drivers ensure your trip is fast, smart, and efficient.</p>
     </div>
 
   </main>
