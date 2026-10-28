@@ -3,95 +3,132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Premium Campus Mobility Network</title>
+  <title>TrypCar | Institutional Governance & Resource Portal</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
-    
-    /* Responsive Content Shell - Handles mobile center column and desktop expansion */
-    .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .bubble-grid-container, .global-site-footer {
-      width: 100%;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    /* Fixed Compact Navigation Bar Layout */
     .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
     .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 420px; gap: 0.5rem; }
     .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
-    
-    /* Hero Artwork Layout */
-    .hero-image-asset { width: 100%; height: auto; display: block; object-fit: contain; }
-    
-    /* Value Row Features */
-    .scrolling-features { padding: 2.5rem 1.25rem 1.5rem 1.25rem; display: flex; flex-direction: column; gap: 2.5rem; }
+    .navigation-links a.active { color: #3b82f6; }
+    .scrolling-features { width: 100%; max-width: 500px; margin: 0 auto; padding: 2.5rem 1.25rem 3rem 1.25rem; display: flex; flex-direction: column; gap: 2.5rem; }
     .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: 0 auto; }
     .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; }
     .oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
     .row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff; letter-spacing: -0.01em; }
-    .row-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.4; }
-    .section-divider-title { margin: 3.5rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; }
-    
-    /* --- INTEGRATED CAMPUS GATEWAY CORE DESIGN --- */
-    .embedded-gateway-container { margin-top: 2.5rem; padding: 0 1.25rem; }
-    .enterprise-gateway-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; width: 100%; padding: 2.25rem 1.75rem; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(37, 99, 235, 0.05); text-align: center; }
-    .corporate-input-label { display: block; font-size: 0.68rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.45rem; text-align: left; }
-    .corporate-text-field { width: 100%; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.15); border-radius: 6px; padding: 0.85rem 1rem; color: #ffffff; font-size: 0.9rem; letter-spacing: 0.01em; transition: all 0.2s ease; margin-bottom: 1.25rem; }
+    .row-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; text-align: center; }
+    .section-divider-title { max-width: 500px; margin: 3.5rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; text-align: center; }
+    .embedded-gateway-container { width: 100%; max-width: 500px; margin: 2.5rem auto 0 auto; padding: 0 1.25rem; }
+    .enterprise-gateway-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; width: 100%; padding: 3rem 2.5rem; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7); text-align: center; }
+    .corporate-input-label { display: block; font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; text-align: left; }
+    .corporate-text-field { width: 100%; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; padding: 0.85rem 1rem; color: #ffffff; font-size: 0.9rem; letter-spacing: 0.01em; transition: border-color 0.2s ease, box-shadow 0.2s ease; margin-bottom: 1rem; }
     .corporate-text-field:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
-    .corporate-submit-btn { width: 100%; background-color: #2563eb; color: #ffffff; border: none; border-radius: 6px; padding: 0.95rem; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; margin-top: 0.25rem; transition: background-color 0.15s ease; }
+    .corporate-submit-btn { width: 100%; background-color: #2563eb; color: #ffffff; border: none; border-radius: 6px; padding: 1rem; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; margin-top: 1rem; transition: background-color 0.15s ease; }
     .corporate-submit-btn:hover { background-color: #1d4ed8; }
-    .gateway-security-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.62rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem; }
-    .gateway-title-text { color: #ffffff; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.35rem; }
-    .gateway-institutional-subline { font-size: 0.72rem; color: #64748b; margin-bottom: 1.75rem; font-weight: 500; }
-    
-    /* Bubble Roster Framework Layout Config */
-    .bubble-grid-container { padding: 0 1.25rem 2rem 1.25rem; }
-    .bubble-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-    .bubble-card { border-radius: 20px; padding: 1.25rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); transition: transform 0.15s ease, box-shadow 0.15s ease; }
-    .bubble-blue { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-    .bubble-amber { background: linear-gradient(135deg, #0f172a 0%, #78350f 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-    .bubble-emerald { background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-    .bubble-purple { background: linear-gradient(135deg, #0f172a 0%, #581c87 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-    .bubble-rose { background: linear-gradient(135deg, #0f172a 0%, #881337 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-    .bubble-slate { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-    .bubble-card:active { transform: scale(0.95); }
-    .bubble-icon-holder { margin-bottom: 0.6rem; height: 42px; display: flex; align-items: center; justify-content: center; }
-    .bubble-icon-holder svg { width: 38px; height: 38px; fill: none; stroke-width: 1.8; stroke: #ffffff; }
-    .bubble-label { font-size: 0.75rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; }
-    
-    /* Footer Layout Elements */
-    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+    .gateway-security-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.65rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    .global-site-footer { width: 100%; max-width: 500px; margin: 3rem auto 0 auto; padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
     .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
     .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
-
-    /* --- DESKTOP AUTOMATED STRETCH & GRID LAYER MODIFIER --- */
     @media (min-width: 1024px) {
-      .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .bubble-grid-container, .global-site-footer {
-        max-width: 1000px; /* Expands width cleanly across laptops and desktops */
-      }
-      .scrolling-features {
-        flex-direction: row; /* Converts standard mobile rows into a clean multi-column side-by-side layout */
-        justify-content: center;
-        gap: 3rem;
-      }
-      .bubble-grid {
-        grid-template-columns: repeat(6, 1fr); /* Expands the 3x2 block grid into a continuous line of 6 icons */
-        gap: 1rem;
-      }
-      .enterprise-gateway-card {
-        max-width: 550px; /* Safely expands input window for precise keyboard layout targeting */
-        margin: 0 auto;
-      }
+      .navbar, .scrolling-features, .section-divider-title, .embedded-gateway-container, .global-site-footer { max-width: 1000px; }
+      .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
     }
   </style>
 </head>
+<body>
+
+  <!-- Navigation Layer -->
+  <nav class="navbar">
+    <div class="navigation-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="investors.html" class="active">Investors</a>
+      <a href="support.html">Support</a>
+      <a href="faq.html">FAQ's</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Investor Header Title -->
+  <h2 class="section-divider-title">Institutional Resource Request Terminal</h2>
+
+  <!-- COMPLIANT SEC REGULATORY SCREENING MODULE -->
+  <section class="embedded-gateway-container">
+    <div class="enterprise-gateway-card">
+      
+      <div class="gateway-security-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 2px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        Institutional Information Node
+      </div>
+      
+      <div class="gateway-logo" style="font-size: 1.5rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1.5rem; color: #ffffff;">TrypCar Partner Gateway</div>
+      
+      <form onsubmit="handlePortalHandshake(event)">
+        <div class="input-group" style="text-align: left;">
+          <label class="corporate-input-label">Institutional Partner Corporate Email</label>
+          <input type="email" class="corporate-text-field" placeholder="partner@firm.com" required>
+        </div>
+        <div class="input-group" style="text-align: left;">
+          <label class="corporate-input-label">Pre-Authorized Access Key</label>
+          <input type="password" class="corporate-text-field" placeholder="Enter Reference Key" required>
+        </div>
+        <button type="submit" class="corporate-submit-btn">Request Data Room Package Drop</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Investment Logic Bulletins -->
+  <main class="scrolling-features">
+    
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+      </div>
+      <h3 class="row-title">Regulated Privacy Standard</h3>
+      <p class="row-text">This interface does not constitute an open solicitation, public offering document, or investment invitation. TrypCar maintains strict adherence to non-solicitation guidelines. Detailed corporate architecture, validation white papers, and campus node operational metrics are shared exclusively via encrypted institutional handshakes with verified venture capital partners.</p>
+    </div>
+
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+          <polyline points="2 17 12 22 22 17"></polyline>
+          <polyline points="2 12 12 17 22 12"></polyline>
+        </svg>
+      </div>
+      <h3 class="row-title">Closed Node Mechanics</h3>
+      <p class="row-text">Our network scaling operations rely on ring-fenced infrastructure deployments. By processing resource distributions on a strictly private, invited basis, we preserve total SEC boundary isolation. VCs are provided structured data room clearances containing localized performance indicators and token-registry mechanics.</p>
+    </div>
+
+  </main>
+
+  <!-- Gold Standard Corporate Legal Protection Footer Section -->
+  <footer class="global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, and all associated resource request portals, compliance tracking files, single-viewport layouts, and data packaging frameworks are the exclusive protected intellectual property of TrypCar, Inc. under federal and international trade secret legislation.
+    </div>
+  </footer>
+
+  <script>
+    function handlePortalHandshake(event) {
+      event.preventDefault();
+      alert('Handshake protocol initialized. Secure Data Room Package Drop dispatched to institutional partner registry.');
+    }
+  </script>
+</body>
+</html>
 <body>
   <nav class="navbar">
     <div class="navigation-links">
       <a href="index.html" class="active">Home</a>
       <a href="about.html">About</a>
-      <a href="investors.html">Investors</a>
       <a href="support.html">Support</a>
       <a href="faq.html">FAQ's</a>
       <a href="contact.html">Contact</a>
