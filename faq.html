@@ -5,160 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrypCar | Frequently Asked Questions</title>
   <style>
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-    }
-    body { 
-      background-color: #060e1e; 
-      color: #ffffff; 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; 
-      -webkit-font-smoothing: antialiased; 
-      line-height: 1.5; 
-    }
-    .navbar, .faq-container, .global-site-footer { 
-      width: 100%; 
-      max-width: 500px; 
-      margin: 0 auto; 
-    }
-    .navbar { 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      padding: 1.2rem 1rem; 
-      background-color: #030712; 
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03); 
-    }
-    .navigation-links { 
-      display: flex; 
-      justify-content: space-between; 
-      width: 100%; 
-      max-width: 360px; 
-      gap: 0.5rem; 
-    }
-    .navigation-links a { 
-      color: #94a3b8; 
-      font-weight: 700; 
-      font-size: 0.68rem; 
-      letter-spacing: 0.04em; 
-      text-transform: uppercase; 
-      text-decoration: none; 
-      transition: color 0.2s ease; 
-    }
-    .navigation-links a:hover, .navigation-links a.active { 
-      color: #ffffff; 
-    }
-    .navigation-links a.active { 
-      color: #3b82f6; 
-    }
-    .section-divider-title { 
-      margin: 3rem auto 1rem auto; 
-      padding: 0 1.25rem; 
-      font-size: 1.25rem; 
-      font-weight: 800; 
-      letter-spacing: -0.02em; 
-      color: #ffffff; 
-      text-align: center; 
-    }
-    .faq-container { 
-      padding: 0 1.25rem 3rem 1.25rem; 
-    }
-    .category-header { 
-      font-size: 0.75rem; 
-      font-weight: 800; 
-      color: #3b82f6; 
-      margin: 2.5rem 0 0.8rem 0; 
-      letter-spacing: 0.06em; 
-      text-transform: uppercase; 
-      text-align: left; 
-    }
-    .faq-item { 
-      background-color: #0b1329; 
-      border: 1px solid rgba(148, 163, 184, 0.12); 
-      border-radius: 8px; 
-      margin-bottom: 0.75rem; 
-      overflow: hidden; 
-      transition: border-color 0.2s ease; 
-    }
-    .faq-trigger { 
-      width: 100%; 
-      background: none; 
-      border: none; 
-      padding: 1.1rem 1.25rem; 
-      text-align: left; 
-      color: #ffffff; 
-      font-size: 0.9rem; 
-      font-weight: 700; 
-      cursor: pointer; 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      gap: 1rem; 
-    }
-    .faq-icon { 
-      font-size: 1.1rem; 
-      color: #64748b; 
-      transition: transform 0.2s ease, color 0.2s ease; 
-      user-select: none; 
-    }
-    .faq-content { 
-      max-height: 0; 
-      overflow: hidden; 
-      transition: max-height 0.25s ease-out; 
-      background-color: rgba(3, 7, 18, 0.4); 
-    }
-    .faq-text { 
-      padding: 0 1.25rem 1.25rem 1.25rem; 
-      font-size: 0.85rem; 
-      color: #94a3b8; 
-      line-height: 1.5; 
-      text-align: left; 
-    }
-    .faq-item.active { 
-      border-color: #2563eb; 
-    }
-    .faq-item.active .faq-icon { 
-      transform: rotate(45deg); 
-      color: #3b82f6; 
-    }
-    .global-site-footer { 
-      padding: 2rem 1.25rem 3rem 1.25rem; 
-      border-top: 1px solid rgba(255, 255, 255, 0.04); 
-    }
-    .footer-legal-text { 
-      font-size: 0.68rem; 
-      color: #64748b; 
-      line-height: 1.6; 
-      letter-spacing: 0.01em; 
-    }
-    
-    @media (min-width: 1024px) { 
-      .navbar, .faq-container, .global-site-footer { 
-        max-width: 1000px; 
-      } 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
+    .navbar, .faq-container, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
+    .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
+    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
+    .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
+    .navigation-links a.active { color: #3b82f6; }
+    .section-divider-title { margin: 3rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; color: #ffffff; text-align: center; }
+    .faq-container { padding: 0 1.25rem 3rem 1.25rem; }
+    .category-header { font-size: 0.75rem; font-weight: 800; color: #3b82f6; margin: 2.5rem 0 0.8rem 0; letter-spacing: 0.06em; text-transform: uppercase; text-align: left; }
+    .faq-item { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s ease; }
+    .faq-trigger { width: 100%; background: none; border: none; padding: 1.1rem 1.25rem; text-align: left; color: #ffffff; font-size: 0.9rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .faq-icon { font-size: 1.1rem; color: #64748b; transition: transform 0.2s ease, color 0.2s ease; user-select: none; }
+    .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.25s ease-out; background-color: rgba(3, 7, 18, 0.4); }
+    .faq-text { padding: 0 1.25rem 1.25rem 1.25rem; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; text-align: left; }
+    .faq-item.active { border-color: #2563eb; }
+    .faq-item.active .faq-icon { transform: rotate(45deg); color: #3b82f6; }
+    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+    @media (min-width: 1024px) {
+      .navbar, .faq-container, .global-site-footer { max-width: 1000px; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Top Navigation Module -->
   <nav class="navbar">
     <div class="navigation-links">
-      <a href="index.html">Home</a>
+      <a href="./">Home</a>
       <a href="about.html">About</a>
       <a href="support.html">Support</a>
       <a href="faq.html" class="active">FAQ's</a>
       <a href="contact.html">Contact</a>
     </div>
   </nav>
-
+  
   <h2 class="section-divider-title">Got Questions? We Have Answers.</h2>
-
-  <!-- Accordion Questions Content -->
+  
   <main class="faq-container">
     <div class="category-header">Institutional Protocols</div>
-    
     <div class="faq-item">
       <button class="faq-trigger" onclick="toggleFaq(this)">
         <span>How does TrypCar mitigate institutional liability?</span>
@@ -170,9 +55,8 @@
         </div>
       </div>
     </div>
-
-    <div class="category-header">The Local Boundary</div>
     
+    <div class="category-header">The Local Boundary</div>
     <div class="faq-item">
       <button class="faq-trigger" onclick="toggleFaq(this)">
         <span>How far does TrypCar go?</span>
@@ -186,14 +70,6 @@
     </div>
   </main>
 
-  <!-- Complete Standardized Hardcoded Corporate Trademark Footer -->
-  <footer class="global-site-footer">
-    <div class="footer-legal-text">
-      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs, cryptography-driven institutional authentication fields, custom vector icon sets, and underlying identity validation frameworks are fully protected under registered trademarks of TrypCar, Inc. across federal and international jurisdictions.
-    </div>
-  </footer>
-
-  <!-- Accordion Toggle Scripts -->
   <script>
     function toggleFaq(button) {
       const item = button.parentElement;
@@ -206,5 +82,124 @@
       }
     }
   </script>
+
+  <footer class="global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+    </div>
+  </footer>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Support | TrypCar Help Center</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; position: relative; min-height: 100vh; }
+    .navbar, .embedded-gateway-container, .scrolling-features, .section-divider-title, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
+    .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
+    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
+    .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
+    .navigation-links a.active { color: #3b82f6; }
+    .section-divider-title { margin: 3rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; text-align: center; }
+    .embedded-gateway-container { padding: 0 1.25rem 1rem 1.25rem; }
+    .enterprise-gateway-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; width: 100%; padding: 2.25rem 1.5rem; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); text-align: center; }
+    .gateway-security-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.62rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .gateway-title-text { color: #ffffff; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .gateway-institutional-subline { font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.25rem; font-weight: 500; }
+    .scrolling-features { padding: 1.5rem 1.25rem 2.5rem 1.25rem; display: flex; flex-direction: column; gap: 2rem; }
+    .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 380px; margin: 0 auto; background-color: rgba(11, 19, 41, 0.4); border: 1px solid rgba(148, 163, 184, 0.06); padding: 1.5rem 1.25rem; border-radius: 8px; }
+    .oversized-icon-box { margin-bottom: 1rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(6, 14, 30, 0) 70%); padding: 0.75rem; border-radius: 50%; }
+    .oversized-icon-box svg { width: 48px; height: 48px; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .row-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.4rem; color: #ffffff; letter-spacing: -0.01em; }
+    .row-text { font-size: 0.85rem; color: #94a3b8; line-height: 1.4; text-align: center; }
+    .chat-bubble-launcher { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background-color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,0,0,0.4); cursor: pointer; z-index: 1000; transition: transform 0.2s ease; border: none; }
+    .chat-bubble-launcher:hover { transform: scale(1.05); }
+    .chat-bubble-launcher svg { width: 28px; height: 28px; fill: none; stroke: #060e1e; stroke-width: 2.2; }
+    .chat-session-window { position: fixed; bottom: 95px; right: 20px; width: 340px; height: 440px; background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.15); border-radius: 16px; box-shadow: 0 12px 36px rgba(0,0,0,0.6); display: flex; flex-direction: column; z-index: 1000; overflow: hidden; transform: translateY(20px); opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    .chat-session-window.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .chat-window-header { background-color: #030712; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; }
+    .chat-bot-profile { display: flex; align-items: center; gap: 0.5rem; }
+    .chat-bot-avatar { width: 28px; height: 28px; background-color: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; color: #ffffff; }
+    .chat-bot-name-box { text-align: left; }
+    .chat-bot-title { font-size: 0.85rem; font-weight: 800; color: #ffffff; }
+    .chat-bot-status { font-size: 0.65rem; color: #22c55e; display: flex; align-items: center; gap: 0.2rem; }
+    .chat-window-close { background: none; border: none; color: #64748b; cursor: pointer; font-size: 1.2rem; }
+    .chat-message-feed { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem; background-color: #060e1e; }
+    .msg-bubble { max-width: 80%; padding: 0.6rem 0.85rem; border-radius: 14px; font-size: 0.82rem; line-height: 1.4; word-wrap: break-word; }
+    .msg-bot { background-color: #1e293b; color: #ffffff; align-self: flex-start; border-top-left-radius: 2px; }
+    .msg-user { background-color: #2563eb; color: #ffffff; align-self: flex-end; border-top-right-radius: 2px; }
+    .chat-input-toolbar { padding: 0.75rem; background-color: #030712; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 0.5rem; }
+    .chat-input-field { flex: 1; background-color: #060e1e; border: 1px solid rgba(148, 163, 184, 0.15); border-radius: 20px; padding: 0.5rem 1rem; color: #ffffff; font-size: 0.82rem; }
+    .chat-input-field:focus { outline: none; border-color: #2563eb; }
+    .chat-send-btn { background-color: #ffffff; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #060e1e; font-weight: bold; font-size: 0.85rem; }
+    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
+    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+    @media (min-width: 1024px) {
+      .navbar, .embedded-gateway-container, .scrolling-features, .section-divider-title, .global-site-footer { max-width: 1000px; }
+      .scrolling-features { flex-direction: row; justify-content: center; align-items: stretch; gap: 2rem; }
+      .centered-row-card { flex: 1; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navigation-links">
+      <a href="./">Home</a>
+      <a href="about.html">About</a>
+      <a href="support.html" class="active">Support</a>
+      <a href="faq.html">FAQ's</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <h2 class="section-divider-title">Help Center</h2>
+
+  <section class="embedded-gateway-container">
+    <div class="enterprise-gateway-card">
+      <div class="gateway-security-badge">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 2px;">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        Here for your campus community
+      </div>
+      <div class="gateway-title-text">How can we help you today?</div>
+      <div class="gateway-institutional-subline">We are dedicated to keeping your rides smooth, reliable, and safe.</div>
+      <div class="gateway-institutional-subline" style="color: #3b82f6; font-weight: 700;">Email support anytime: info@trypcar.com</div>
+    </div>
+  </section>
+
+  <main class="scrolling-features">
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24" stroke="#3b82f6"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      </div>
+      <h3 class="row-title">Rider Support</h3>
+      <p class="row-text">Need help booking a ride or checking an off-campus 5-mile boundary trip? Our team is available around the clock to assist you with account questions, schedules, or ride feedback.</p>
+    </div>
+
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24" stroke="#22c55e"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
+      </div>
+      <h3 class="row-title">Driver Resources</h3>
+      <p class="row-text">Are you a verified campus guide? Find helpful materials on navigating university shortcuts, organizing drop-off points, keeping trips efficient, and maintaining premium service standards.</p>
+    </div>
+
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24" stroke="#a855f7"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      </div>
+      <h3 class="row-title">University Partnerships</h3>
+      <p class="row-text">We coordinate closely with university boards and administrative staff. Reach out directly for compliance verification questions, campus network custom limits, or vehicle fleet details.</p>
+    </div>
+  </main>
+
+  <button class="chat-bubble-launcher" onclick="toggleChatSession()" aria-label="Open Chat Assistance">
