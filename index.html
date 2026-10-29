@@ -33,20 +33,40 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
     
-    /* Sleek Multi-Line Blue Compliance Banner */
+    /* Perfect Vertical Text-Stack Compliance Banner Box */
     .partner-briefing-banner {
       width: 100%;
       background-color: #1e3a8a;
       border-bottom: 1px solid rgba(59, 130, 246, 0.2);
-      padding: 0.6rem 1.25rem;
+      padding: 1.25rem 1rem;
       text-align: center;
-      font-size: 0.72rem;
-      font-weight: 700;
-      line-height: 1.4;
-      letter-spacing: 0.02em;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    
+    /* Uppercase White Spaced Header Line */
+    .banner-header-title {
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: #ffffff;
     }
-    .partner-briefing-banner strong { color: #60a5fa; text-transform: uppercase; margin-right: 0.25rem; }
+    
+    /* Tidy, Balanced Message Box Constraint */
+    .banner-text-message {
+      font-size: 0.72rem;
+      font-weight: 700;
+      line-height: 1.5;
+      letter-spacing: 0.02em;
+      color: #ffffff;
+      max-width: 600px;
+      text-wrap: balance;
+    }
 
     /* Center Axis Alignment Matrix */
     .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer {
@@ -126,9 +146,10 @@
 </head>
 <body>
 
-  <!-- Restored Original Blue Compliance Banner Layout -->
+  <!-- Optimized Two-Line Stacked Compliance Banner Block -->
   <div class="partner-briefing-banner">
-    <strong>Coming Soon:</strong> TrypCar is in development and not yet operating. Join our waitlist to be the first to know when we launch.
+    <div class="banner-header-title">Coming Soon</div>
+    <div class="banner-text-message">TrypCar is in development and not yet operating. Join our waitlist to be the first to know when we launch.</div>
   </div>
 
   <nav class="navbar">
