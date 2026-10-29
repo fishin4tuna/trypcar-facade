@@ -49,7 +49,7 @@
       text-wrap: balance;
     }
 
-    .navbar, .about-container, .global-site-footer {
+    .navbar, .about-container, .site-footer {
       width: 100%;
       max-width: 500px;
       margin: 0 auto;
@@ -69,12 +69,22 @@
     .about-text { font-size: 0.9rem; color: #94a3b8; line-height: 1.6; text-align: left; margin-bottom: 1rem; }
     .about-text:last-child { margin-bottom: 0; }
 
-    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
-    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
-    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+    /* Uniform Footer Container Section */
+    .site-footer {
+      background-color: #0b1528;
+      padding: 2.25rem 1.25rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+      box-sizing: border-box;
+    }
+    .footer-legal-text {
+      color: #a4b3cc;
+      font-size: 11px;
+      line-height: 1.5;
+      text-align: left;
+    }
 
     @media (min-width: 1024px) {
-      .navbar, .about-container, .global-site-footer { max-width: 1000px; }
+      .navbar, .about-container, .site-footer { max-width: 1000px; }
     }
   </style>
 </head>
@@ -108,9 +118,9 @@
     </div>
   </main>
 
-  <footer class="global-site-footer">
+  <footer class="site-footer">
     <div class="footer-legal-text">
-      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+      &copy; 2026 TrypCar, Inc. All rights reserved. TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all ASSOCIATED software user interface designs, cryptography-driven institutional authentication fields, custom vector icon sets, and underlying identity validation frameworks are fully protected under registered trademarks of TrypCar, Inc. across federal and international jurisdictions.
     </div>
   </footer>
 </body>
