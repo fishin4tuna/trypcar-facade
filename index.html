@@ -77,7 +77,7 @@
       text-wrap: balance;
     }
 
-    .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer {
+    .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .transposed-notice-container, .global-site-footer {
       width: 100%;
       max-width: 500px;
       margin: 0 auto;
@@ -141,7 +141,7 @@
       display: flex; 
       flex-direction: column; 
       align-items: center; 
-      max-width: 360px; 
+      max-width: 360px; 2
       margin: 0 auto; 
     }
     .oversized-icon-box { 
@@ -289,6 +289,23 @@
     .bubble-icon-holder { margin-bottom: 0.6rem; height: 42px; display: flex; align-items: center; justify-content: center; }
     .bubble-icon-holder svg { width: 38px; height: 38px; fill: none; stroke-width: 2.2; stroke: #ffffff; }
     .bubble-label { font-size: 0.75rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; }
+    
+    /* Transposed Institutional Framework Notice Block Stylings */
+    .transposed-notice-container {
+      padding: 0 1.25rem 2rem 1.25rem;
+    }
+    .institutional-notice-card {
+      background-color: rgba(30, 58, 138, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: left;
+    }
+    .notice-card-text {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
         
     .global-site-footer { 
       padding: 2rem 1.25rem 3rem 1.25rem; 
@@ -301,60 +318,75 @@
       letter-spacing: 0.01em; 
     }
     .footer-legal-text strong { 
-      color: #94a3b8; 
-      font-weight: 600; 
-    }
-    
-    @media (min-width: 1024px) {
-      .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer { max-width: 1000px; }
-      .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
-      .bubble-grid { grid-template-columns: repeat(6, 1fr); gap: 1rem; }
-    }
-  </style>
-</head>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | About Our Vision</title>
+  <title>TrypCar | Frequently Asked Questions</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
-    .navbar, .about-container, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
+    .navbar, .faq-container, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
     .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
     .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
     .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
     .navigation-links a.active { color: #3b82f6; }
-    .about-container { padding: 3rem 1.25rem; text-align: center; }
-    .about-icon { margin-bottom: 1.5rem; color: #3b82f6; }
-    .about-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; color: #ffffff; }
-    .about-text { font-size: 0.95rem; color: #94a3b8; line-height: 1.6; margin-bottom: 1.5rem; text-align: left; }
+    .section-divider-title { margin: 3rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; color: #ffffff; text-align: center; }
+    .faq-container { padding: 0 1.25rem 3rem 1.25rem; }
+    .category-header { font-size: 0.75rem; font-weight: 800; color: #3b82f6; margin: 2.5rem 0 0.8rem 0; letter-spacing: 0.06em; text-transform: uppercase; text-align: left; }
+    .faq-item { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s ease; }
+    .faq-trigger { width: 100%; background: none; border: none; padding: 1.1rem 1.25rem; text-align: left; color: #ffffff; font-size: 0.9rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .faq-icon { font-size: 1.1rem; color: #64748b; transition: transform 0.2s ease, color 0.2s ease; user-select: none; }
+    .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.25s ease-out; background-color: rgba(3, 7, 18, 0.4); }
+    .faq-text { padding: 0 1.25rem 1.25rem 1.25rem; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; text-align: left; }
+    .faq-item.active { border-color: #2563eb; }
+    .faq-item.active .faq-icon { transform: rotate(45deg); color: #3b82f6; }
     .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
     .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
-    @media (min-width: 1024px) { .navbar, .about-container, .global-site-footer { max-width: 1000px; } }
+    @media (min-width: 1024px) { .navbar, .faq-container, .global-site-footer { max-width: 1000px; } }
   </style>
 </head>
 <body>
   <nav class="navbar">
     <div class="navigation-links">
       <a href="index.html">Home</a>
-      <a href="about.html" class="active">About</a>
+      <a href="about.html">About</a>
       <a href="support.html">Support</a>
-      <a href="faq.html">FAQ's</a>
+      <a href="faq.html" class="active">FAQ's</a>
       <a href="contact.html">Contact</a>
     </div>
   </nav>
 
-  <main class="about-container">
-    <div class="about-icon">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+  <h2 class="section-divider-title">Got Questions? We Have Answers.</h2>
+
+  <main class="faq-container">
+    <div class="category-header">Institutional Protocols</div>
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How does TrypCar mitigate institutional liability?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          TrypCar operates as a completely independent, third-party logistics platform. By validating users exclusively through individual, private academic registries and maintaining strict off-campus insurance requirements, we completely isolate the host university from operational liabilities or transit risk.
+        </div>
+      </div>
     </div>
-    <h1 class="about-title">Expert Campus Guides</h1>
-    <p class="about-text">
-      Our ecosystem framework represents a deep paradigm shift in local transit operations. Built exclusively to keep community elements tightly synchronized, TrypCar manages institutional logistics from an entirely custom framework designed specifically around localized service maps, university identity verification checkpoints, and optimized transit safety algorithms.
-    </p>
+
+    <div class="category-header">The Local Boundary</div>
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How far does TrypCar go?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          We operate within an intentional 5-mile boundary radiating from the center of campus. This deliberate setup turns the app into a premium neighborhood utility.
+        </div>
+      </div>
+    </div>
   </main>
 
   <footer class="global-site-footer">
@@ -362,5 +394,18 @@
       <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks. All concept designs, algorithmic network descriptions, institutional protocols, and waitlist directory systems are property of TrypCar, Inc. and protected under corporate trademark frameworks 2026.
     </div>
   </footer>
+
+  <script>
+    function toggleFaq(button) {
+      const item = button.parentElement;
+      const content = button.nextElementSibling;
+      item.classList.toggle('active');
+      if (item.classList.contains('active')) {
+        content.style.maxHeight = content.scrollHeight + "px";
+      } else {
+        content.style.maxHeight = "0";
+      }
+    }
+  </script>
 </body>
 </html>
