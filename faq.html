@@ -5,27 +5,65 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrypCar | Frequently Asked Questions</title>
   <style>
+    /* Global Core Style Engine */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; min-height: 100vh; display: flex; flex-direction: column; }
-    .navbar, .faq-container, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
+    
+    .navbar, .faq-container, .global-site-footer {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
     .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
     .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
     .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
     .navigation-links a.active { color: #3b82f6; }
+    
     .section-divider-title { margin: 3rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; color: #ffffff; text-align: center; }
     .faq-container { padding: 0 1.25rem 3rem 1.25rem; flex: 1; }
     .category-header { font-size: 0.75rem; font-weight: 800; color: #3b82f6; margin: 2.5rem 0 0.8rem 0; letter-spacing: 0.06em; text-transform: uppercase; text-align: left; }
-    .faq-item { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s ease; }
-    .faq-trigger { width: 100%; background: none; border: none; padding: 1.1rem 1.25rem; text-align: left; color: #ffffff; font-size: 0.9rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    
+    /* Strict Flat-State Accordion Container Framework */
+    .faq-item {
+      background-color: #0b1329;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+    }
+    
+    /* Clean Seamless Trigger Panel (No Color Flashing on Touch) */
+    .faq-trigger {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.1rem 1.25rem;
+      text-align: left;
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
     .faq-icon { font-size: 1.1rem; color: #64748b; transition: transform 0.2s ease, color 0.2s ease; user-select: none; }
     .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.25s ease-out; background-color: rgba(3, 7, 18, 0.4); }
     .faq-text { padding: 1.25rem; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; text-align: left; }
-    .faq-item.active { border-color: #2563eb; }
+    
+    /* Removed the blue border highlights and background color animations for a pure seamless expand */
     .faq-item.active .faq-icon { transform: rotate(45deg); color: #3b82f6; }
+    
     .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); margin-top: auto; }
     .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
     .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+    
     @media (min-width: 1024px) {
       .navbar, .faq-container, .global-site-footer { max-width: 1000px; }
     }
@@ -45,6 +83,7 @@
   <h2 class="section-divider-title">Got Questions? We Have Answers.</h2>
   
   <main class="faq-container">
+    <!-- Chapter 1 -->
     <div class="category-header">Institutional Protocols</div>
     
     <div class="faq-item">
@@ -78,35 +117,12 @@
       </button>
       <div class="faq-content">
         <div class="faq-text">
-          Cryptographic validation keys are dispatched securely to student email records. Handshake handshake sequences isolate active traffic lines from external node interference.
+          Cryptographic validation keys are dispatched securely to student email records. Handshake sequences isolate active traffic lines from external node interference.
         </div>
       </div>
     </div>
 
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>What compliance standards are maintained?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-content">
-        <div class="faq-text">
-          We match corporate identity verification parameters with regional transportation regulations, insulating fleet networks through explicit digital charters.
-        </div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>How are driver background screenings executed?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-content">
-        <div class="faq-text">
-          Every campus guide undergoes strict background registries syncing and identity credential handshakes before obtaining active access privileges.
-        </div>
-      </div>
-    </div>
-
+    <!-- Chapter 2 -->
     <div class="category-header">The Local Boundary</div>
     
     <div class="faq-item">
@@ -133,31 +149,66 @@
       </div>
     </div>
 
+    <!-- Chapter 3 -->
+    <div class="category-header">Driver Guidelines</div>
+    
     <div class="faq-item">
       <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>Are off-campus housing sites included?</span>
+        <span>How are driver backgrounds checked?</span>
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-content">
         <div class="faq-text">
-          Yes, provided the residential coordinates map perfectly inside our active local utility perimeter layers.
+          Every campus driver undergoes strict background registry checks and active identity credential verification handshakes before getting access to the network dashboard.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>Are routes locked to campus parameters?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          Yes. AI algorithms optimize navigation paths utilizing authorized school shortcuts, avoiding construction nodes and keeping trips highly efficient.
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 4 -->
+    <div class="category-header">Rider Access & Billing</div>
+    
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>Who is authorized to use the campus gateway?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          Access is limited strictly to active students, faculty, and administrative staff members holding a verified institutional edu email ledger asset.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How are trip transactions settled?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          Transactions use a secure front-end handshake vault. Payments link cleanly to verified merchant options without saving clear text account keys to the root repository.
         </div>
       </div>
     </div>
   </main>
-
-  <footer class="global-site-footer">
-    <div class="footer-legal-text">
-      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
-    </div>
-  </footer>
 
   <script>
     function toggleFaq(button) {
       const item = button.parentElement;
       const content = button.nextElementSibling;
       
-      // Close all other accordion items to keep it clean
       document.querySelectorAll('.faq-item').forEach(el => {
         if (el !== item) {
           el.classList.remove('active');
@@ -173,5 +224,11 @@
       }
     }
   </script>
+
+  <footer class="global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+    </div>
+  </footer>
 </body>
 </html>
