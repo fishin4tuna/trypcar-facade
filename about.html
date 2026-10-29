@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Institutional Vision & Campus Safety Framework</title>
+  <title>TrypCar | Our Vision & Campus Safety Framework</title>
   <style>
     /* Global Core Style Engine */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; min-height: 100vh; display: flex; flex-direction: column; }
     
-    .navbar, .scrolling-features, .section-divider-title, .global-site-footer { 
+    .navbar, .scrolling-features, .vision-header-container, .global-site-footer { 
       width: 100%; 
       max-width: 500px; 
       margin: 0 auto; 
@@ -21,12 +21,15 @@
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
     .navigation-links a.active { color: #3b82f6; }
     
-    .section-divider-title { margin: 3.5rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; text-align: center; }
-    .scrolling-features { padding: 2.5rem 1.25rem 3rem 1.25rem; display: flex; flex-direction: column; gap: 2.5rem; flex: 1; }
+    /* Clean Centered Vision Header Content Layout Block */
+    .vision-header-container { margin: 3.5rem auto 1rem auto; padding: 0 1.25rem; text-align: center; }
+    .section-divider-title { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; color: #ffffff; margin-bottom: 0.75rem; }
+    .vision-intro-text { font-size: 0.92rem; color: #94a3b8; line-height: 1.5; max-width: 420px; margin: 0 auto; }
     
+    .scrolling-features { padding: 1.5rem 1.25rem 3rem 1.25rem; display: flex; flex-direction: column; gap: 2.5rem; flex: 1; }
     .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: 0 auto; }
-    .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; }
-    .oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+    .oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-linecap: round; stroke-linejoin: round; }
     
     .row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff; letter-spacing: -0.01em; }
     .row-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; text-align: center; }
@@ -36,7 +39,7 @@
     .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
     
     @media (min-width: 1024px) {
-      .navbar, .scrolling-features, .section-divider-title, .global-site-footer { max-width: 1000px; }
+      .navbar, .scrolling-features, .vision-header-container, .global-site-footer { max-width: 1000px; }
       .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
     }
   </style>
@@ -52,14 +55,21 @@
     </div>
   </nav>
   
-  <h2 class="section-divider-title">Our Institutional Vision</h2>
+  <!-- Fully Populated Vision Header Block -->
+  <div class="vision-header-container">
+    <h2 class="section-divider-title">Our Vision</h2>
+    <p class="vision-intro-text">Redefining student transit through localized tech architecture. We aim to build a friction-free, ultra-secure mobility layer tailored exclusively to modern university ecosystems.</p>
+  </div>
   
   <main class="scrolling-features">
-    <!-- Vision Card 1 -->
+    <!-- Vision Card 1: Custom Shield with Verified Green Checkmark Layer -->
     <div class="centered-row-card">
       <div class="oversized-icon-box">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        <svg viewBox="0 0 24 24">
+          <!-- Blue Outer Security Shield Base Path -->
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" stroke-width="1.8" />
+          <!-- Re-aligned Green Checkmark Path Layer Embedded into Center Node -->
+          <path d="M9 11l2 2 4-4" stroke="#22c55e" stroke-width="2.2" />
         </svg>
       </div>
       <h3 class="row-title">Selective Isolation Model</h3>
