@@ -35,6 +35,7 @@
       margin: 0; 
       padding: 0; 
     }
+    
     body { 
       background-color: #060e1e; 
       color: #ffffff; 
@@ -91,6 +92,7 @@
       background-color: #030712; 
       border-bottom: 1px solid rgba(255, 255, 255, 0.03); 
     }
+
     .navigation-links { 
       display: flex; 
       justify-content: space-between; 
@@ -98,6 +100,7 @@
       max-width: 360px; 
       gap: 0.5rem; 
     }
+
     .navigation-links a { 
       color: #94a3b8; 
       font-weight: 700; 
@@ -107,6 +110,7 @@
       text-decoration: none; 
       transition: color 0.2s ease; 
     }
+
     .navigation-links a:hover, .navigation-links a.active { 
       color: #ffffff; 
     }
@@ -115,12 +119,14 @@
       margin-top: 0.5rem; 
       text-align: center; 
     }
+
     .hero-image-asset { 
       width: 100%; 
       height: auto; 
       display: block; 
       object-fit: contain; 
     }
+        
     .hero-caption { 
       display: block; 
       font-size: 0.72rem; 
@@ -136,6 +142,7 @@
       flex-direction: column; 
       gap: 2rem; 
     }
+
     .centered-row-card { 
       text-align: center; 
       display: flex; 
@@ -144,12 +151,14 @@
       max-width: 360px; 
       margin: 0 auto; 
     }
+
     .oversized-icon-box { 
       margin-bottom: 1.25rem; 
       background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); 
       padding: 1rem; 
       border-radius: 50%; 
     }
+
     .oversized-icon-box svg { 
       width: 72px; 
       height: 72px; 
@@ -158,6 +167,7 @@
       stroke-linecap: round; 
       stroke-linejoin: round; 
     }
+
     .row-title { 
       font-size: 1.35rem; 
       font-weight: 800; 
@@ -165,6 +175,7 @@
       color: #ffffff; 
       letter-spacing: -0.01em; 
     }
+
     .row-text { 
       font-size: 0.88rem; 
       color: #94a3b8; 
@@ -185,6 +196,7 @@
       margin: 1.5rem auto 0 auto; 
       padding: 0 1.25rem; 
     }
+
     .enterprise-gateway-card { 
       background-color: #0b1329; 
       border: 1px solid rgba(148, 163, 184, 0.12); 
@@ -194,6 +206,7 @@
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); 
       text-align: center; 
     }
+
     .corporate-input-label { 
       display: block; 
       font-size: 0.68rem; 
@@ -204,6 +217,7 @@
       margin-bottom: 0.4rem; 
       text-align: left; 
     }
+
     .corporate-text-field { 
       width: 100%; 
       background-color: #030712; 
@@ -216,11 +230,13 @@
       transition: border-color 0.2s ease, box-shadow 0.2s ease; 
       margin-bottom: 1rem; 
     }
+
     .corporate-text-field:focus { 
       outline: none; 
       border-color: #2563eb; 
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); 
     }
+
     .corporate-submit-btn { 
       width: 100%; 
       background-color: #2563eb; 
@@ -235,9 +251,11 @@
       margin-top: 0.25rem; 
       transition: background-color 0.15s ease; 
     }
+
     .corporate-submit-btn:hover { 
       background-color: #1d4ed8; 
     }
+
     .gateway-security-badge { 
       display: inline-flex; 
       align-items: center; 
@@ -249,6 +267,7 @@
       letter-spacing: 0.08em; 
       margin-bottom: 0.75rem; 
     }
+
     .gateway-title-text { 
       color: #ffffff; 
       font-size: 1.25rem; 
@@ -260,11 +279,13 @@
     .bubble-grid-container { 
       padding: 0 1.25rem 2rem 1.25rem; 
     }
+
     .bubble-grid { 
       display: grid; 
       grid-template-columns: repeat(3, 1fr); 
       gap: 0.75rem; 
     }
+
     .bubble-card { 
       border-radius: 20px; 
       padding: 1.25rem 0.5rem; 
@@ -279,46 +300,70 @@
       transition: transform 0.15s ease, box-shadow 0.15s ease; 
       cursor: pointer; 
     }
+
     .bubble-blue { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
     .bubble-amber { background: linear-gradient(135deg, #0f172a 0%, #78350f 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
     .bubble-emerald { background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
     .bubble-purple { background: linear-gradient(135deg, #0f172a 0%, #581c87 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
     .bubble-rose { background: linear-gradient(135deg, #0f172a 0%, #881337 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
     .bubble-slate { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-    .bubble-card:active { transform: scale(0.95); }
-    .bubble-icon-holder { margin-bottom: 0.6rem; height: 42px; display: flex; align-items: center; justify-content: center; }
-    .bubble-icon-holder svg { width: 38px; height: 38px; fill: none; stroke-width: 2.2; stroke: #ffffff; }
-    .bubble-label { font-size: 0.75rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; }
+    
+    .bubble-card:active { 
+      transform: scale(0.95); 
+    }
+
+    .bubble-icon-holder { 
+      margin-bottom: 0.6rem; 
+      height: 42px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+    }
+
+    .bubble-icon-holder svg { 
+      width: 38px; 
+      height: 38px; 
+      fill: none; 
+      stroke-width: 2.2; 
+      stroke: #ffffff; 
+    }
+
+    .bubble-label { 
+      font-size: 0.75rem; 
+      font-weight: 700; 
+      color: #ffffff; 
+      letter-spacing: 0.02em; 
+    }
         
     .global-site-footer { 
       padding: 2rem 1.25rem 3rem 1.25rem; 
       border-top: 1px solid rgba(255, 255, 255, 0.04); 
     }
+
     .footer-legal-text { 
       font-size: 0.68rem; 
       color: #64748b; 
       line-height: 1.6; 
       letter-spacing: 0.01em; 
     }
-    
-    /* Perfect Shading Alignment Rule: Matches FAQ page weight exactly */
-    .global-site-footer strong {
-      color: #94a3b8;
-      font-weight: 700;
+
+    .footer-legal-text strong { 
+      color: #94a3b8; 
+      font-weight: 600; 
     }
-    
+
     @media (min-width: 1024px) {
       .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer { max-width: 1000px; }
       .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
-      .bubble-grid { grid-template-columns: repeat(6, 1fr); gap: 1rem; }
-    }
-  </style>
-</head>
 <body>
+
+  <!-- Top Announcement Banner Node -->
   <div class="partner-briefing-banner">
-    <div class="banner-header-title">SOMETHING GREAT IS COMING SOON!</div>
+    <div class="banner-header-title">SOMETHING GREAT IS COMING SOON</div>
     <div class="banner-text-message">TrypCar is in development and not yet operating. Join our waitlist to be the first to know when we launch.</div>
   </div>
+
+  <!-- Global Header Navigation Menu -->
   <nav class="navbar">
     <div class="navigation-links">
       <a href="index.html" class="active">Home</a>
@@ -328,10 +373,14 @@
       <a href="contact.html">Contact</a>
     </div>
   </nav>
+
+  <!-- Hero Core Media Showcase -->
   <div class="hero-container">
     <img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
     <span class="hero-caption">Concept preview. Features shown are planned and not yet available.</span>
   </div>
+
+  <!-- Corporate Marketing Value Pillars -->
   <main class="scrolling-features">
     <div class="centered-row-card">
       <div class="oversized-icon-box">
@@ -343,6 +392,7 @@
       <h3 class="row-title">SAFE. RELIABLE. TRUSTED.</h3>
       <p class="row-text">A private fleet being built exclusively for verified students and faculty members.</p>
     </div>
+
     <div class="centered-row-card">
       <div class="oversized-icon-box">
         <svg viewBox="0 0 24 24">
@@ -353,6 +403,8 @@
       <p class="row-text">AI-powered scheduling algorithms will instantly build your optimal pathing lines upon activation.</p>
     </div>
   </main>
+
+  <!-- Secure Academic Handshake Portal Node -->
   <section class="embedded-gateway-container">
     <div class="enterprise-gateway-card">
       <div class="gateway-security-badge">
@@ -363,6 +415,7 @@
         Secure Institutional Access Node
       </div>
       <div class="gateway-title-text" id="gatewayTitle">TrypCar Campus Gateway</div>
+            
       <form onsubmit="handlePortalHandshake(event)">
         <div>
           <label class="corporate-input-label">University Email Address</label>
@@ -374,13 +427,17 @@
         </div>
         <button type="submit" class="corporate-submit-btn" id="submitBtn">Verify University Credentials</button>
       </form>
+            
       <div style="margin-top: 1.25rem; font-size: 0.75rem; color: #94a3b8;">
         <span id="toggleText">New to TrypCar?</span> 
         <a href="javascript:void(0)" onclick="toggleFormMode()" id="toggleLink" style="color: #3b82f6; text-decoration: none; font-weight: 700; margin-left: 0.25rem;">Create an Account</a>
       </div>
     </div>
   </section>
+
+  <!-- Interactive Utility Segment Container -->
   <h2 class="section-divider-title">Explore TrypCar</h2>
+  
   <section class="bubble-grid-container">
     <div class="bubble-grid">
       <div class="bubble-card bubble-blue"><span class="bubble-label">Ride</span></div>
@@ -391,19 +448,26 @@
       <div class="bubble-card bubble-slate"><span class="bubble-label">Scootz</span></div>
     </div>
   </section>
+
+  <!-- Complete Compliant Trademark Protection Footer -->
   <footer class="global-site-footer">
     <div class="footer-legal-text">
-      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs, cryptography-driven institutional authentication fields, custom vector icon sets, and underlying identity validation frameworks are fully protected under registered trademarks of TrypCar, Inc. across federal and international jurisdictions.
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs, cryptographic student institutional authentication fields, custom vector micro-graphics, and underlying identity validation frameworks are fully protected under registered trademarks of TrypCar, Inc. across federal and international jurisdictions.
     </div>
   </footer>
+
+  <!-- Core User Portal Logic Node -->
   <script>
     let isLoginMode = true;
+
     function toggleFormMode() {
       const title = document.getElementById('gatewayTitle');
       const submitBtn = document.getElementById('submitBtn');
       const toggleText = document.getElementById('toggleText');
       const toggleLink = document.getElementById('toggleLink');
+
       isLoginMode = !isLoginMode;
+
       if (isLoginMode) {
         title.innerText = "TrypCar Campus Gateway";
         submitBtn.innerText = "Verify University Credentials";
@@ -416,6 +480,7 @@
         toggleLink.innerText = "Sign In";
       }
     }
+
     function handlePortalHandshake(event) {
       event.preventDefault();
       alert(isLoginMode ? "Authentication node handshake successful. Welcome to the waitlist framework!" : "Registration logged. Your academic identity token will be verified shortly.");
