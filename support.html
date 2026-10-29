@@ -10,7 +10,7 @@
     body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; position: relative; min-height: 100vh; }
     
     /* Layout Center Alignment Containers */
-    .navbar, .embedded-gateway-container, .scrolling-features, .section-divider-title, .global-site-footer {
+    .navbar, .embedded-gateway-container, .scrolling-features, .section-divider-title, .site-footer {
       width: 100%;
       max-width: 500px;
       margin: 0 auto;
@@ -58,22 +58,31 @@
     
     .chat-message-feed { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem; background-color: #060e1e; }
     .msg-bubble { max-width: 80%; padding: 0.6rem 0.85rem; border-radius: 14px; font-size: 0.82rem; line-height: 1.4; word-wrap: break-word; }
-    .msg-bot { background-color: #1e293b; color: #ffffff; align-self: flex-start; border-top-left-radius: 2px; }
-    .msg-user { background-color: #2563eb; color: #ffffff; align-self: flex-end; border-top-right-radius: 2px; }
+    .msg-bubble msg-bot { background-color: #1e293b; color: #ffffff; align-self: flex-start; border-top-left-radius: 2px; }
+    .msg-bubble msg-user { background-color: #2563eb; color: #ffffff; align-self: flex-end; border-top-right-radius: 2px; }
     
     .chat-input-toolbar { padding: 0.75rem; background-color: #030712; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 0.5rem; }
     .chat-input-field { flex: 1; background-color: #060e1e; border: 1px solid rgba(148, 163, 184, 0.15); border-radius: 20px; padding: 0.5rem 1rem; color: #ffffff; font-size: 0.82rem; }
     .chat-input-field:focus { outline: none; border-color: #2563eb; }
     .chat-send-btn { background-color: #ffffff; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #060e1e; font-weight: bold; font-size: 0.85rem; }
 
-    /* Footer Formatting */
-    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
-    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
-    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+    /* Uniform Footer Container Section */
+    .site-footer {
+      background-color: #0b1528;
+      padding: 2.25rem 1.25rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+      box-sizing: border-box;
+    }
+    .footer-legal-text {
+      color: #a4b3cc;
+      font-size: 11px;
+      line-height: 1.5;
+      text-align: left;
+    }
 
-    /* Laptop Responsive Scaling */
+    /* Laptop Responsive Scaling Layout */
     @media (min-width: 1024px) {
-      .navbar, .embedded-gateway-container, .scrolling-features, .section-divider-title, .global-site-footer { max-width: 1000px; }
+      .navbar, .embedded-gateway-container, .scrolling-features, .section-divider-title, .site-footer { max-width: 1000px; }
       .scrolling-features { flex-direction: row; justify-content: center; align-items: stretch; gap: 2rem; }
       .centered-row-card { flex: 1; margin: 0; }
       .enterprise-gateway-card { max-width: 650px; margin: 0 auto; }
@@ -125,97 +134,3 @@
     </div>
     <div class="centered-row-card">
       <div class="oversized-icon-box">
-        <svg viewBox="0 0 24 24" stroke="#a855f7"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-      </div>
-      <h3 class="row-title">University Partnerships</h3>
-      <p class="row-text">We coordinate closely with university boards and administrative staff. Reach out directly for compliance verification questions, campus network custom limits, or vehicle fleet details.</p>
-    </div>
-  </main>
-
-  <!-- FLOATING CHAT ASSISTANT COMPONENT ENGINE -->
-  <button class="chat-bubble-launcher" onclick="toggleChatSession()" aria-label="Open Chat Assistance">
-    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-  </button>
-
-  <div class="chat-session-window" id="chatWindow">
-    <div class="chat-window-header">
-      <div class="chat-bot-profile">
-        <div class="chat-bot-avatar">X</div>
-        <div class="chat-bot-name-box">
-          <div class="chat-bot-title">Xen</div>
-          <div class="chat-bot-status"><span style="width:6px; height:6px; background-color:#22c55e; border-radius:50%;"></span>Support Online</div>
-        </div>
-      </div>
-      <button class="chat-window-close" onclick="toggleChatSession()">&times;</button>
-    </div>
-    <div class="chat-message-feed" id="chatFeed">
-      <div class="msg-bubble msg-bot">Hi there! 👋 I am Xen, your campus support assistant. Ask me about our rides, boundaries, or university safety policies!</div>
-    </div>
-    <div class="chat-input-toolbar">
-      <input type="text" class="chat-input-field" id="chatInput" placeholder="Type a message..." onkeypress="handleChatEnter(event)">
-      <button class="chat-send-btn" onclick="executeUserMessage()">&rarr;</button>
-    </div>
-  </div>
-
-  <!-- Complete Hardcoded Corporate Trademark Footer -->
-  <footer class="global-site-footer">
-    <div class="footer-legal-text">
-      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs, cryptography-driven institutional authentication fields, custom vector icon sets, and underlying identity validation frameworks are fully protected under registered trademarks of TrypCar, Inc. across federal and international jurisdictions.
-    </div>
-  </footer>
-
-  <!-- ADVANCED WORD-BOUNDARY ROUTING ENGINE -->
-  <script>
-    function toggleChatSession() {
-      document.getElementById('chatWindow').classList.toggle('active');
-    }
-    function handleChatEnter(e) {
-      if (e.key === 'Enter') executeUserMessage();
-    }
-    function executeUserMessage() {
-      const input = document.getElementById('chatInput');
-      const val = input.value;
-      if (!val || !val.trim()) return;
-      
-      const feed = document.getElementById('chatFeed');
-      const userBubble = document.createElement('div');
-      userBubble.className = "msg-bubble msg-user";
-      userBubble.innerText = val;
-      feed.appendChild(userBubble);
-      
-      input.value = '';
-      
-      setTimeout(() => { feed.scrollTop = feed.scrollHeight; }, 30);
-      
-      setTimeout(() => {
-        const botBubble = document.createElement('div');
-        botBubble.className = "msg-bubble msg-bot";
-        
-        // Lowercases and prepares clean word boundaries
-        const text = val.toLowerCase().trim();
-        let reply = "Thanks for asking! Our support staff can help you directly with that via email at info@trypcar.com, or you can drop us a line on our main Contact page.";
-        
-        // Exact standalone keyword boundary checking (\b) eliminates internal word errors
-        if (/\b(ride|rides|reserve|lux|eco)\b/.test(text)) {
-          reply = "Our ride options blend smoothly into daily campus schedules. Verified students and staff can request standard trips, book slots in advance, or select premium choices safely.";
-        } else if (/\b(scoot|scootz|scooter|scooters)\b/.test(text)) {
-          reply = "Scootz™ is our custom scooter option designed for quick trips between lecture halls and campus hubs. They are completely integrated into the local network grid!";
-        } else if (/\b(boundary|boundaries|distance|mile|miles|range|limit|5)\b/.test(text)) {
-          reply = "TrypCar serves your campus and the local neighborhood up to a fixed 5-mile boundary limit! This makes it simple to visit off-campus housing or area grocery stores safely.";
-        } else if (/\b(driver|drivers|guide|guides)\b/.test(text)) {
-          reply = "Every single TrypCar driver is an expert campus guide who knows shortcuts around school construction, dorm setups, and area drop-off locations perfectly.";
-        } else if (/\b(account|email|edu|login|password)\b/.test(text)) {
-          reply = "To keep the network completely safe, everyone signs in using their official university email address. This ensures a verified, close-knit ride network for your school.";
-        } else if (/\b(hello|hi|hey|greetings|sup)\b/.test(text)) {
-          reply = "Hello! 👋 I can help you with questions about our 5-mile boundaries, campus ride options, or driver screening rules. What's on your mind?";
-        }
-        
-        botBubble.innerText = reply;
-        feed.appendChild(botBubble);
-        
-        setTimeout(() => { feed.scrollTop = feed.scrollHeight; }, 50);
-      }, 650);
-    }
-  </script>
-</body>
-</html>
