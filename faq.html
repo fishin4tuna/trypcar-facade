@@ -32,23 +32,28 @@
     /* Centered Header Section */
     .section-divider-title { margin: 3rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; color: #ffffff; text-align: center; }
 
-    /* Premium Interactive Accordion Styling */
+    /* Native Accordion Wrapper & Styling */
     .faq-container { padding: 0 1.25rem 3rem 1.25rem; }
     .category-header { font-size: 0.75rem; font-weight: 800; color: #3b82f6; margin: 2.5rem 0 0.8rem 0; letter-spacing: 0.06em; text-transform: uppercase; text-align: left; }
-    .faq-item { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s ease; }
-    .faq-item:hover { border-color: rgba(148, 163, 184, 0.25); }
     
-    .faq-trigger { width: 100%; background: none; border: none; padding: 1.1rem 1.25rem; text-align: left; color: #ffffff; font-size: 0.9rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-    .faq-icon { font-size: 1.1rem; color: #64748b; transition: transform 0.2s ease, color 0.2s ease; user-select: none; }
+    /* Native Accordion Item Configuration */
+    details.faq-item { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s ease; }
+    details.faq-item:hover { border-color: rgba(148, 163, 184, 0.25); }
     
-    .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.25s ease-out; background-color: rgba(3, 7, 18, 0.4); }
+    /* Native Toggle Header Trigger */
+    summary.faq-trigger { padding: 1.1rem 1.25rem; font-size: 0.9rem; font-weight: 700; color: #ffffff; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; list-style: none; user-select: none; }
+    summary.faq-trigger::-webkit-details-marker { display: none; }
+    
+    /* Custom Indicator State Integration */
+    summary.faq-trigger::after { content: '+'; font-size: 1.1rem; color: #64748b; transition: transform 0.2s ease, color 0.2s ease; }
+    details.faq-item[open] { border-color: #2563eb; }
+    details.faq-item[open] summary.faq-trigger::after { content: '−'; color: #3b82f6; }
+    
+    /* Dropdown Text Content Area */
+    .faq-content { background-color: rgba(3, 7, 18, 0.4); }
     .faq-text { padding: 0 1.25rem 1.25rem 1.25rem; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; text-align: left; }
-    
-    /* Interactive Active Layout Overrides */
-    .faq-item.active { border-color: #2563eb; }
-    .faq-item.active .faq-icon { transform: rotate(45deg); color: #3b82f6; }
 
-    /* Footer Layout Elements */
+    /* Transparent Startup Legal Footer Elements */
     .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
     .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
     .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
@@ -80,114 +85,98 @@
     <!-- Institutional Protocols -->
     <div class="category-header">Institutional Protocols</div>
 
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>How does TrypCar mitigate institutional liability?</span>
-        <span class="faq-icon">+</span>
-      </button>
+    <details class="faq-item">
+      <summary class="faq-trigger">How does TrypCar mitigate institutional liability?</summary>
       <div class="faq-content">
         <div class="faq-text">
           TrypCar operates as a completely independent, third-party logistics platform. By validating users exclusively through individual, private academic registries and maintaining strict off-campus insurance requirements, we completely isolate the host university from operational liabilities or transit risk.
         </div>
       </div>
-    </div>
+    </details>
 
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>How does the platform assist with campus congestion?</span>
-        <span class="faq-icon">+</span>
-      </button>
+    <details class="faq-item">
+      <summary class="faq-trigger">How does the platform assist with campus congestion?</summary>
       <div class="faq-content">
         <div class="faq-text">
-          TrypCar actively decreases single-occupancy student vehicles on campus. By optimizing local pathing lanes and utilizing high-efficiency transit assets like TrypScootz and grouped rides, we minimize the demand for campus parking structures and reduce peak-hour traffic bottlenecks.
+          TrypCar actively decreases single-occupancy student vehicles on campus. By optimizing local pathing lanes and utilizing high-efficiency transit assets like Scootz™ and grouped rides, we minimize the demand for campus parking structures and reduce peak-hour traffic bottlenecks.
         </div>
       </div>
-    </div>
+    </details>
 
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>What prevents unauthorized public access?</span>
-        <span class="faq-icon">+</span>
-      </button>
+    <details class="faq-item">
+      <summary class="faq-trigger">What prevents unauthorized public access?</summary>
       <div class="faq-content">
         <div class="faq-text">
           Our system enforces a continuous verification check. If an email address becomes inactive, is suspended, or fails to pass our automated term registry updates, access to the network is revoked instantly. Anonymous public access is systematically impossible.
         </div>
       </div>
-    </div>
+    </details>
 
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>How are campus traffic codes enforced?</span>
-        <span class="faq-icon">+</span>
-      </button>
+    <details class="faq-item">
+      <summary class="faq-trigger">How are campus traffic codes enforced?</summary>
       <div class="faq-content">
         <div class="faq-text">
           We maintain a strict zero-tolerance policy. Speed, route adherence, and driver habits are monitored continuously through user feedback systems. Individuals who violate local campus codes or traffic guidelines face immediate and permanent network suspension.
         </div>
       </div>
-    </div>
+    </details>
 
     <!-- Rider Essentials -->
     <div class="category-header">Rider Essentials</div>
     
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>How do I secure a ride on campus?</span>
-        <span class="faq-icon">+</span>
-      </button>
+    <details class="faq-item">
+      <summary class="faq-trigger">How do I secure a ride on campus?</summary>
       <div class="faq-content">
         <div class="faq-text">
-          Getting around is incredibly simple. Just log into your verified campus account, select your preferred way to travel from the main layout board, and set your pickup spot. You will be connected with a neighborhood driver in moments.
+          Getting around is incredibly simple. Just log into your verified campus account, select your preferred way to travel from the main priority access pre-registration framework, and set your pickup spot. You will be connected with a neighborhood driver in moments.
         </div>
       </div>
-    </div>
+    </details>
 
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>What exactly is TrypScootz?</span>
-        <span class="faq-icon">+</span>
-      </button>
+    <details class="faq-item">
+      <summary class="faq-trigger">What exactly is Scootz™?</summary>
       <div class="faq-content">
         <div class="faq-text">
-          TrypScootz is our custom micro-mobility option designed for quick, nimble trips across campus walkways. If you are rushing between classrooms or heading to a nearby dining hall, TrypScootz gives you instant, flexible access to local electric scooters right from the palm of your hand.
+          Scootz™ is our custom micro-mobility option designed for quick, nimble trips across campus walkways. If you are rushing between classrooms or heading to a nearby dining hall, Scootz™ gives you instant, flexible access to local electric scooters right from the palm of your hand.
         </div>
       </div>
-    </div>
+    </details>
 
     <!-- Campus Trust & Safety -->
     <div class="category-header">Campus Trust & Safety</div>
 
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>Who is allowed to drive for the network?</span>
-        <span class="faq-icon">+</span>
-      </button>
+    <details class="faq-item">
+      <summary class="faq-trigger">Who is allowed to drive for the network?</summary>
       <div class="faq-content">
         <div class="faq-text">
           Safety is our absolute foundation. We maintain a community of drivers consisting entirely of background-checked, campus-vetted students and university staff. Every driver goes through rigorous identity validation to ensure complete peace of mind for every trip.
         </div>
       </div>
-    </div>
+    </details>
 
     <!-- The Local Boundary -->
     <div class="category-header">The Local Boundary</div>
 
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>How far does TrypCar go?</span>
-        <span class="faq-icon">+</span>
-      </button>
+    <details class="faq-item">
+      <summary class="faq-trigger">How far does TrypCar go?</summary>
       <div class="faq-content">
         <div class="faq-text">
           We operate within an intentional 5-mile boundary radiating from the center of campus. This deliberate setup turns the app into a premium neighborhood utility, covering all student housing, local grocery spots, popular off-campus restaurants, and student hangouts while keeping the network localized and hyper-focused.
         </div>
       </div>
-    </div>
+    </details>
 
   </main>
 
-  <!-- Complete Hardcoded Corporate Waitlist & Transparent Pre-Launch Disclaimer Footer -->
+  <!-- Complete Hardcoded Corporate Trademark & Startup Notice Footer -->
   <footer class="global-site-footer">
     <div class="footer-legal-text">
-      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, TrypScootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated user interface layout properties are registered trademarks of TrypCar, Inc. across federal and international jurisdictions.
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs, institutional authentication fields, custom vector icon sets, and underlying identity validation frameworks are fully protected under registered trademarks of TrypCar, Inc. across federal and international jurisdictions.
+      <span style="display:block; margin-top: 0.8rem; color: #475569; font-weight: 500;">
+        Notice: This platform is currently showcasing our upcoming interactive production framework. Ride assets, micro-mobility fleets, and campus access gateways are under active development for our academic launch sequence. Pre-registrations are utilized solely for market demand analytics and priority queue management.
+      </span>
+    </div>
+  </footer>
+
+</body>
+</html>
