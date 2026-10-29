@@ -68,7 +68,7 @@
   <!-- Main Accordion Shell -->
   <main class="faq-container">
 
-    <!-- NEW SECTION: Institutional Protocols -->
+    <!-- Institutional Protocols -->
     <div class="category-header">Institutional Protocols</div>
 
     <div class="faq-item">
@@ -119,7 +119,7 @@
       </div>
     </div>
 
-    <!-- Category 2: Rider Essentials -->
+    <!-- Rider Essentials -->
     <div class="category-header">Rider Essentials</div>
     
     <div class="faq-item">
@@ -146,7 +146,7 @@
       </div>
     </div>
 
-    <!-- Category 3: Campus Trust & Safety -->
+    <!-- Campus Trust & Safety -->
     <div class="category-header">Campus Trust & Safety</div>
 
     <div class="faq-item">
@@ -161,12 +161,12 @@
       </div>
     </div>
 
-    <!-- Category 4: The Local Boundary -->
+    <!-- The Local Boundary -->
     <div class="category-header">The Local Boundary</div>
 
     <div class="faq-item">
       <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>How far can a TrypCar travel?</span>
+        <span>How far does TrypCar go?</span>
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-content">
@@ -193,3 +193,5 @@
       const isOpen = item.classList.contains('active');
       
       document.querySelectorAll('.faq-item').forEach(otherItem => {
+        if (otherItem !== item) {
+          otherItem.classList.remove('active');
