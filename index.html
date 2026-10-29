@@ -319,7 +319,7 @@
     <div class="banner-text-message">TrypCar is in development and not yet operating. Join our waitlist to be the first to know when we launch.</div>
   </div>
 
-  <!-- Corporate Header Navigation -->
+  <!-- Header Navigation Matrix -->
   <nav class="navbar">
     <div class="navigation-links">
       <a href="index.html" class="active">Home</a>
@@ -330,13 +330,13 @@
     </div>
   </nav>
 
-  <!-- Hero Space Image Display Element -->
+  <!-- Hero Space Graphic Asset -->
   <div class="hero-container">
     <img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
     <span class="hero-caption">Concept preview. Features shown are planned and not yet available.</span>
   </div>
 
-  <!-- Features Framework Row Matrix -->
+  <!-- Features Grid Layout -->
   <main class="scrolling-features">
     <div class="centered-row-card">
       <div class="oversized-icon-box">
@@ -360,7 +360,7 @@
     </div>
   </main>
 
-  
+  <!-- Access Portal Forms Gateway Section -->
   <section class="embedded-gateway-container">
     <div class="enterprise-gateway-card">
       <div class="gateway-security-badge">
@@ -391,7 +391,7 @@
     </div>
   </section>
 
-  <!-- Navigation Grid Matrix Bubbles -->
+  <!-- Interactive Modules Bubble System -->
   <h2 class="section-divider-title">Explore TrypCar</h2>
   <section class="bubble-grid-container">
     <div class="bubble-grid">
@@ -404,11 +404,38 @@
     </div>
   </section>
 
-  <!-- Complete Standard Footer Matrix Layer -->
+  <!-- Fully Extended Master Trademark Framework Layer -->
   <footer class="global-site-footer">
     <div class="footer-legal-text">
-      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks of TrypCar, Inc. across federal and international jurisdictions.
     </div>
   </footer>
+
+  <!-- Node Dynamic Operational Handshake Script Modules -->
+  <script>
+    let isLoginMode = true;
+    function toggleFormMode() {
+      const title = document.getElementById('gatewayTitle');
+      const submitBtn = document.getElementById('submitBtn');
+      const toggleText = document.getElementById('toggleText');
+      const toggleLink = document.getElementById('toggleLink');
+      isLoginMode = !isLoginMode;
+      if (isLoginMode) {
+        title.innerText = "TrypCar Campus Gateway";
+        submitBtn.innerText = "Verify University Credentials";
+        toggleText.innerText = "New to TrypCar?";
+        toggleLink.innerText = "Create an Account";
+      } else {
+        title.innerText = "Join the TrypCar Waitlist";
+        submitBtn.innerText = "Register Institutional Account";
+        toggleText.innerText = "Already registered?";
+        toggleLink.innerText = "Sign In";
+      }
+    }
+    function handlePortalHandshake(event) {
+      event.preventDefault();
+      alert(isLoginMode ? "Authentication node handshake successful. Welcome to the waitlist framework!" : "Registration logged. Your academic identity token will be verified shortly.");
+    }
+  </script>
 </body>
 </html>
