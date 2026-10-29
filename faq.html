@@ -1,1 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrypCar | Frequently Asked Questions</title>
+  <!-- Links natively to your unified master design system -->
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Premium Interactive Accordion Styling */
+    .faq-container {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto 3rem auto;
+      padding: 0 1.25rem;
+    }
+    .category-header {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #3b82f6;
+      margin: 2.5rem 0 1rem 0;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .faq-item {
+      background-color: #0b1329;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+    .faq-item:hover {
+      border-color: rgba(148, 163, 184, 0.25);
+    }
+    .faq-trigger {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.1rem 1.25rem;
+      text-align: left;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .faq-icon {
+      font-size: 1.2rem;
+      color: #64748b;
+      transition: transform 0.2s ease, color 0.2s ease;
+      user-select: none;
+    }
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease-out;
+      background-color: rgba(3, 7, 18, 0.4);
+    }
+    .faq-text {
+      padding: 0 1.25rem 1.25rem 1.25rem;
+      font-size: 0.88rem;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+    /* Active State Classes toggled by our JavaScript Engine */
+    .faq-item.active {
+      border-color: #2563eb;
+    }
+    .faq-item.active .faq-icon {
+      transform: rotate(45deg);
+      color: #3b82f6;
+    }
+    
+    @media (min-width: 1024px) {
+      .faq-container { max-width: 800px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Synchronized Navigation Bar (Investors Link Stripped) -->
+  <nav class="navbar">
+    <div class="navigation-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="support.html">Support</a>
+      <a href="faq.html" class="active">FAQ's</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Main Accordion Shell -->
+  <main class="faq-container">
+    <h2 class="section-divider-title" style="margin-top: 3rem; text-align: center;">Got Questions? We Have Answers.</h2>
+
+    <!-- Category 1: Rider Essentials -->
+    <div class="category-header">Rider Essentials</div>
+    
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How do I secure a ride on campus?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          Getting around is incredibly simple. Just log into your verified campus account, select your preferred way to travel from the main layout board, and set your pickup spot. You will be connected with a neighborhood driver in moments.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>What exactly is Scootz™?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          Scootz™ is our custom micro-mobility option designed for quick, nimble trips across campus walkways. If you are rushing between classrooms or heading to a nearby dining hall, Scootz™ gives you instant, flexible access to local electric scooters right from the palm of your hand.
+        </div>
+      </div>
+    </div>
+
+    <!-- Category 2: Campus Trust & Safety -->
+    <div class="category-header">Campus Trust & Safety</div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>Who is allowed to drive for the network?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          Safety is our absolute foundation. We maintain a community of drivers consisting entirely of background-checked, campus-vetted students and university staff. Every driver goes through rigorous identity validation to ensure complete peace of mind for every trip.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How does account verification work?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          To keep the network exclusive and trusted, everyone must sign up using their official university email address. We verify your academic status instantly before granting access, ensuring that anonymous or unverified individuals can never enter the app.
+        </div>
+      </div>
+    </div>
+
+    <!-- Category 3: The Local Boundary -->
+    <div class="category-header">The Local Boundary</div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How far can a TrypCar travel?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          We operate within an intentional 5-mile boundary radiating from the center of campus. This deliberate setup turns the app into a premium neighborhood utility, covering all student housing, local grocery spots, popular off-campus restaurants, and student hangouts while keeping the network localized and hyper-focused.
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Complete Hardcoded Corporate Trademark Footer -->
+  <footer class="global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs, cryptography-driven institutional authentication fields, custom vector icon sets, and underlying identity validation frameworks are fully protected under registered trademarks of TrypCar, Inc. across federal and international jurisdictions.
+    </div>
+  </footer>
+
+  <script>
+    /* Smooth Interactive Toggle Engine */
+    function toggleFaq(button) {
+      const item = button.parentElement;
+      const content = button.nextElementSibling;
+      const isOpen = item.classList.contains('active');
+      
+      // Close all other open items first to maintain a clean layout
+      document.querySelectorAll('.faq-item').forEach(otherItem => {
+        if (otherItem !== item) {
+          otherItem.classList.remove('active');
+          otherItem.querySelector('.faq-content').style.maxHeight = null;
+        }
+      });
+      
+      // Toggle the selected item
+      if (!isOpen) {
+        item.classList.add('active');
+        content.style.maxHeight = content.scrollHeight + "px";
+      } else {
+        item.classList.remove('active');
+        content.style.maxHeight = null;
+      }
+    }
+  </script>
+</body>
+</html>
 
