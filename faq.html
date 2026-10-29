@@ -68,7 +68,58 @@
   <!-- Main Accordion Shell -->
   <main class="faq-container">
 
-    <!-- Category 1: Rider Essentials -->
+    <!-- NEW SECTION: Institutional Protocols -->
+    <div class="category-header">Institutional Protocols</div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How does TrypCar mitigate institutional liability?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          TrypCar operates as a completely independent, third-party logistics platform. By validating users exclusively through individual, private academic registries and maintaining strict off-campus insurance requirements, we completely isolate the host university from operational liabilities or transit risk.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How does the platform assist with campus congestion?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          TrypCar actively decreases single-occupancy student vehicles on campus. By optimizing local pathing lanes and utilizing high-efficiency transit assets like Scootz™ and grouped rides, we minimize the demand for campus parking structures and reduce peak-hour traffic bottlenecks.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>What prevents unauthorized public access?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          Our system enforces a continuous verification check. If an email address becomes inactive, is suspended, or fails to pass our automated term registry updates, access to the network is revoked instantly. Anonymous public access is systematically impossible.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How are campus traffic codes enforced?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          We maintain a strict zero-tolerance policy. Speed, route adherence, and driver habits are monitored continuously through user feedback systems. Individuals who violate local campus codes or traffic guidelines face immediate and permanent network suspension.
+        </div>
+      </div>
+    </div>
+
+    <!-- Category 2: Rider Essentials -->
     <div class="category-header">Rider Essentials</div>
     
     <div class="faq-item">
@@ -95,7 +146,7 @@
       </div>
     </div>
 
-    <!-- Category 2: Campus Trust & Safety -->
+    <!-- Category 3: Campus Trust & Safety -->
     <div class="category-header">Campus Trust & Safety</div>
 
     <div class="faq-item">
@@ -110,19 +161,7 @@
       </div>
     </div>
 
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>How does account verification work?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-content">
-        <div class="faq-text">
-          To keep the network exclusive and trusted, everyone must sign up using their official university email address. We verify your academic status instantly before granting access, ensuring that anonymous or unverified individuals can never enter the app.
-        </div>
-      </div>
-    </div>
-
-    <!-- Category 3: The Local Boundary -->
+    <!-- Category 4: The Local Boundary -->
     <div class="category-header">The Local Boundary</div>
 
     <div class="faq-item">
@@ -154,20 +193,3 @@
       const isOpen = item.classList.contains('active');
       
       document.querySelectorAll('.faq-item').forEach(otherItem => {
-        if (otherItem !== item) {
-          otherItem.classList.remove('active');
-          otherItem.querySelector('.faq-content').style.maxHeight = null;
-        }
-      });
-      
-      if (!isOpen) {
-        item.classList.add('active');
-        content.style.maxHeight = content.scrollHeight + "px";
-      } else {
-        item.classList.remove('active');
-        content.style.maxHeight = null;
-      }
-    }
-  </script>
-</body>
-</html>
