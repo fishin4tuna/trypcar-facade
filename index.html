@@ -67,18 +67,43 @@
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
     .navigation-links a.active { color: #3b82f6; }
     
-    /* Premium Streamlined Hero Interface */
-    .hero-container { text-align: center; padding-top: 1.5rem; }
+    /* Premium Native Image Overlay Shield System */
+    .hero-container { position: relative; text-align: center; padding-top: 1.5rem; overflow: hidden; }
     .hero-image-asset { width: 100%; height: auto; display: block; object-fit: contain; margin: 0 auto; }
     
+    /* Precision Text Replacement Shield Layer */
+    .image-text-mask-shield {
+      position: absolute;
+      top: 15.5%;
+      left: 17.5%;
+      width: 55%;
+      height: 12%;
+      background-color: #12213d;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      text-align: left;
+      padding-left: 0.2rem;
+      z-index: 10;
+    }
+    .shield-pillar-text {
+      color: #3b82f6;
+      font-size: 0.55rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
     .scrolling-features { padding: 2.5rem 1.25rem 1.5rem 1.25rem; display: flex; flex-direction: column; gap: 2.5rem; }
     .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: 0 auto; }
     .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; }
-    .oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .oversized-icon-box svg { width: 72px; height: 72px; fill: fill; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
     .row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff; letter-spacing: -0.01em; }
     .row-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; }
     
-    /* Strategically Placed TrypScootz & Core Fleet Positioning Section */
+    /* Strategically Placed TrypScootz Presentation Section */
     .trypscootz-section { padding: 3rem 1.25rem 1rem 1.25rem; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.02); }
     .scootz-heading { font-size: 1.35rem; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
     .scootz-subheading { font-size: 0.95rem; color: #3b82f6; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
@@ -120,29 +145,13 @@
 
     /* Fluid Grid Desktop Scaling Engine */
     @media (min-width: 1024px) {
-      .coming-soon-banner, .navbar, .hero-container, .scrolling-features, .trypscootz-section, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer {
-        max-width: 1000px;
-      }
-      .scrolling-features {
-        flex-direction: row;
-        justify-content: center;
-        gap: 3rem;
-      }
-      .bubble-grid {
-        grid-template-columns: repeat(6, 1fr);
-        gap: 1rem;
-      }
-      .enterprise-gateway-card { max-width: 550px; margin: 0 auto; }
-    }
-  </style>
-</head>
 <body>
   <!-- Vibrant Top Status Banner -->
   <div class="coming-soon-banner">
     🚀 Something great is coming soon
   </div>
 
-  <!-- Synchronized Navigation Bar (Investors Link Stripped) -->
+  <!-- Synchronized Navigation Bar Layout -->
   <nav class="navbar">
     <div class="navigation-links">
       <a href="index.html" class="active">Home</a>
@@ -153,8 +162,11 @@
     </div>
   </nav>
 
-  <!-- Clean, Graphic-First Hero Frame (No Text Blocks Above Image) -->
+  <!-- Clean, Graphic Hero Frame with Text-Destroyer Code Shield Overlay -->
   <div class="hero-container">
+    <div class="image-text-mask-shield">
+      <span class="shield-pillar-text">SAFE. RELIABLE. TRUSTED.</span>
+    </div>
     <img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
   </div>
 
@@ -170,7 +182,7 @@
     <div class="centered-row-card">
       <div class="oversized-icon-box">
         <svg viewBox="0 0 24 24">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" />
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" fill="none" />
           <path d="M9 11l2 2 4-4" stroke="#22c55e" stroke-width="2.5" />
         </svg>
       </div>
@@ -180,7 +192,7 @@
     <div class="centered-row-card">
       <div class="oversized-icon-box">
         <svg viewBox="0 0 24 24">
-          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#3b82f6"/>
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#3b82f6" fill="none" />
         </svg>
       </div>
       <h3 class="row-title">Smart Matching</h3>
