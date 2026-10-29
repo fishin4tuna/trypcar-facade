@@ -3,251 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- Global Search Engine Verification & Indexing Modules -->
-  <title>TrypCar | Premium Campus Mobility Network & On-Demand Rides</title>
-  <meta name="description" content="TrypCar is pioneering the future of exclusive campus mobility networks. Join the priority access waitlist for on-demand rides, campus hubs, and Scootz™ micromobility.">
-  <meta name="keywords" content="TrypCar, Tryp Car, campus rideshare, university mobility, Scootz, college scooter sharing, student transportation, safe campus rides">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://trypcar.com">
-
-  <!-- Premium Corporate Schema.org Structured Data for Google Sitelinks -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "TrypCar, Inc.",
-    "url": "https://trypcar.com",
-    "logo": "https://trypcar.com1792984078309.png",
-    "description": "Premium campus mobility and student rideshare network restricted to verified university email registries.",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "email": "info@trypcar.com",
-      "contactType": "customer support"
-    },
-    "hasPart": [
-      { "@type": "WebPage", "name": "About Our Vision", "url": "https://trypcar.comabout.html" },
-      { "@type": "WebPage", "name": "Frequently Asked Questions", "url": "https://trypcar.comfaq.html" },
-      { "@type": "WebPage", "name": "Support Center", "url": "https://trypcar.comsupport.html" },
-      { "@type": "WebPage", "name": "Contact Portal", "url": "https://trypcar.comcontact.html" }
-    ]
-  }
-  </script>
-
+  <title>TrypCar | Our Vision & Campus Leadership</title>
   <style>
     /* Global Self-Contained Style Engine */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
     
-    /* Content Centering Shell for Mobile Viewports */
-    .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer {
+    /* Center Axis Layout Alignment Matrix */
+    .coming-soon-banner, .navbar, .about-container, .global-site-footer {
       width: 100%;
       max-width: 500px;
       margin: 0 auto;
     }
 
-    /* Balanced 5-Link Navigation Bar */
+    /* Vibrant Blue Top "Coming Soon" Alert Banner */
+    .coming-soon-banner {
+      background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 50%, #1d4ed8 100%);
+      color: #ffffff;
+      text-align: center;
+      padding: 0.5rem 1rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Fixed Compact Navigation Bar Layout */
     .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
     .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
     .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
     .navigation-links a.active { color: #3b82f6; }
+
+    /* Layout Typography & Blocks */
+    .about-container { padding: 3rem 1.25rem; }
+    .section-title { font-size: 1.6rem; font-weight: 800; color: #ffffff; margin-bottom: 1rem; letter-spacing: -0.02em; text-align: center; }
+    .vision-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+    .vision-card h3 { font-size: 1.1rem; font-weight: 800; color: #3b82f6; margin-bottom: 0.75rem; }
+    .vision-text { font-size: 0.9rem; color: #94a3b8; line-height: 1.6; margin-bottom: 1rem; }
     
-    .hero-image-asset { width: 100%; height: auto; display: block; object-fit: contain; }
-    .scrolling-features { padding: 2rem 1.25rem 1rem 1.25rem; display: flex; flex-direction: column; gap: 2rem; }
-    .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: 0 auto; }
-    .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; }
-    .oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-    .row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff; letter-spacing: -0.01em; }
-    .row-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.4; }
-    .section-divider-title { margin: 2.5rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; text-align: center; }
-    
-    .embedded-gateway-container { margin: 1.5rem auto 0 auto; padding: 0 1.25rem; }
-    .enterprise-gateway-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; width: 100%; padding: 2rem 1.75rem; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); text-align: center; }
-    .corporate-input-label { display: block; font-size: 0.68rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-align: left; }
-    .corporate-text-field { width: 100%; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; padding: 0.8rem 1rem; color: #ffffff; font-size: 0.9rem; letter-spacing: 0.01em; transition: border-color 0.2s ease, box-shadow 0.2s ease; margin-bottom: 1rem; }
-    .corporate-text-field:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
-    .corporate-submit-btn { width: 100%; background-color: #2563eb; color: #ffffff; border: none; border-radius: 6px; padding: 0.9rem; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; margin-top: 0.25rem; transition: background-color 0.15s ease; }
-    .corporate-submit-btn:hover { background-color: #1d4ed8; }
-    .gateway-security-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.62rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
-    .gateway-title-text { color: #ffffff; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-    .gateway-subline-text { font-size: 0.8rem; color: #94a3b8; margin-bottom: 1.25rem; }
-    
-    .bubble-grid-container { padding: 0 1.25rem 2rem 1.25rem; }
-    .bubble-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-    .bubble-card { border-radius: 20px; padding: 1.25rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); transition: transform 0.15s ease, box-shadow 0.15s ease; }
-    .bubble-blue { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-    .bubble-amber { background: linear-gradient(135deg, #0f172a 0%, #78350f 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-    .bubble-emerald { background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-    .bubble-purple { background: linear-gradient(135deg, #0f172a 0%, #581c87 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-    .bubble-rose { background: linear-gradient(135deg, #0f172a 0%, #881337 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-    .bubble-slate { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
-    .bubble-card:active { transform: scale(0.95); }
-    .bubble-icon-holder { margin-bottom: 0.6rem; height: 42px; display: flex; align-items: center; justify-content: center; }
-    .bubble-icon-holder svg { width: 38px; height: 38px; fill: none; stroke-width: 2.2; stroke: #ffffff; }
-    .bubble-label { font-size: 0.75rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; }
+    /* Footer Layout Elements */
     .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
     .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
     .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
 
-    /* Fluid Grid Desktop Scaling Engine */
     @media (min-width: 1024px) {
-      .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer {
-        max-width: 1000px;
-      }
-      .scrolling-features {
-        flex-direction: row;
-        justify-content: center;
-        gap: 3rem;
-      }
-      .bubble-grid {
-        grid-template-columns: repeat(6, 1fr);
-        gap: 1rem;
-      }
+      .coming-soon-banner, .navbar, .about-container, .global-site-footer { max-width: 1000px; }
     }
   </style>
 </head>
 <body>
-  <!-- Simplified Navigation Layout (Investors Link Stripped) -->
+
+  <!-- Vibrant Top Status Banner -->
+  <div class="coming-soon-banner">
+    🚀 Something Great Is Coming Soon
+  </div>
+
+  <!-- Synchronized Navigation Bar -->
   <nav class="navbar">
     <div class="navigation-links">
-      <a href="index.html" class="active">Home</a>
-      <a href="about.html">About</a>
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
       <a href="support.html">Support</a>
       <a href="faq.html">FAQ's</a>
       <a href="contact.html">Contact</a>
     </div>
   </nav>
 
-  <div class="hero-container">
-    <img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
-  </div>
-
-  <main class="scrolling-features">
-    <div class="centered-row-card">
-      <div class="oversized-icon-box">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" />
-          <path d="M9 11l2 2 4-4" stroke="#22c55e" stroke-width="2.5" />
-        </svg>
-      </div>
-      <h3 class="row-title">Verified Students</h3>
-      <p class="row-text">Our future rider and driver pools will consist entirely of identity-verified campus members.</p>
+  <!-- Main Copy Presentation Shell -->
+  <main class="about-container">
+    <h2 class="section-title">Our Vision</h2>
+    
+    <div class="vision-card">
+      <h3>The Neighborhood Isolation Model</h3>
+      <p class="vision-text">
+        TrypCar is pioneering an exclusive campus lifestyle network that reshapes how university communities move. By containing our ride grid inside a rigorous, hyper-localized 5-mile boundary, we intentionally separate our network from massive public transit services.
+      </p>
+      <p class="vision-text">
+        This targeted approach turns the platform into a premier campus utility. It provides direct, highly responsive transit channels connecting student housing centers, research hubs, Greek life corridors, and neighborhood dining spots.
+      </p>
     </div>
-    <div class="centered-row-card">
-      <div class="oversized-icon-box">
-        <svg viewBox="0 0 24 24">
-          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#3b82f6"/>
-        </svg>
-      </div>
-      <h3 class="row-title">Smart Matching</h3>
-      <p class="row-text">Advanced scheduling algorithms designed to automatically build optimal pathing lines.</p>
+
+    <div class="vision-card">
+      <h3>Vetted Student Driver Peer-Pools</h3>
+      <p class="vision-text">
+        Trust is our core infrastructure. Unlike open commercial platforms, our future driver community will be recruited exclusively from outstanding campus students and academic staff.
+      </p>
+      <p class="vision-text">
+        Every operator undergoes extensive university directory validation, identity confirmation, and background checks. This ensures that every ride taken across our network remains safe, personal, and fundamentally institutional.
+      </p>
     </div>
   </main>
-
-  <section class="embedded-gateway-container">
-    <div class="enterprise-gateway-card">
-      <div class="gateway-security-badge">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-        Secure Pre-Registration Registry
-      </div>
-      <div class="gateway-title-text" id="gatewayTitle">TrypCar Priority Access</div>
-      <div class="gateway-subline-text" id="gatewaySubline">Pioneering the future of elite campus mobility. Launching 2027.</div>
-      
-      <form onsubmit="handlePortalHandshake(event)">
-        <div>
-          <label class="corporate-input-label">University Email Address</label>
-          <input type="email" class="corporate-text-field" placeholder="username@university.edu" required>
-        </div>
-        <div>
-          <label class="corporate-input-label">Account Password</label>
-          <input type="password" class="corporate-text-field" placeholder="••••••••" required>
-        </div>
-        <button type="submit" class="corporate-submit-btn" id="submitBtn">Join Priority Waitlist</button>
-      </form>
-      <div style="margin-top: 1.25rem; font-size: 0.75rem; color: #94a3b8;">
-        <span id="toggleText">Want to check institutional status?</span> 
-        <a href="javascript:void(0)" onclick="toggleFormMode()" id="toggleLink" style="color: #3b82f6; text-decoration: none; font-weight: 700; margin-left: 0.25rem;">View Campus Schedule</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Centered Divider Title Layer -->
-  <h2 class="section-divider-title">Explore TrypCar Services</h2>
-
-  <section class="bubble-grid-container">
-    <div class="bubble-grid">
-      
-      <!-- Bubble 1: Ride -->
-      <div class="bubble-card bubble-blue">
-        <div class="bubble-icon-holder">
-          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-            <path d="M5 18H19M7 14h10l1.2-3.6c.2-.6-.2-1.4-.9-1.4H5.7c-.7 0-1.1.8-.9 1.4L7 14z" />
-            <rect x="4" y="14" width="16" height="4" rx="1" />
-            <circle cx="7" cy="18" r="1.5" />
-            <circle cx="17" cy="18" r="1.5" />
-          </svg>
-        </div>
-        <span class="bubble-label">Ride</span>
-      </div>
-
-      <!-- Bubble 2: Reserve -->
-      <div class="bubble-card bubble-amber">
-        <div class="bubble-icon-holder">
-          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-            <rect x="3" y="4" width="18" height="16" rx="2" />
-            <line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" />
-            <line x1="3" y1="10" x2="21" y2="10" />
-            <circle cx="12" cy="15" r="1.5" />
-          </svg>
-        </div>
-        <span class="bubble-label">Reserve</span>
-      </div>
-
-      <!-- Bubble 3: Campus Hubs -->
-      <div class="bubble-card bubble-emerald">
-        <div class="bubble-icon-holder">
-          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-            <path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7z" />
-            <circle cx="12" cy="9" r="2.5" />
-            <path d="M8 9a4 4 0 0 1 8 0" />
-          </svg>
-        </div>
-        <span class="bubble-label">Hubs</span>
-      </div>
-
-      <!-- Bubble 4: Lux Tier -->
-      <div class="bubble-card bubble-purple">
-        <div class="bubble-icon-holder">
-          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-            <path d="M2 4l3 13h14l3-13-5 5-5-7-5 7-5-5zM5 17h14M7 20h10" />
-          </svg>
-        </div>
-        <span class="bubble-label">Lux</span>
-      </div>
-
-      <!-- Bubble 5: Eco Options -->
-      <div class="bubble-card bubble-rose">
-        <div class="bubble-icon-holder">
-          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
-            <path d="M12 2A10 10 0 0 0 2 12c0 5.5 4.5 10 10 10V12H2M12 2c5.5 0 10 4.5 10 10s-4.5 10-10 10M12 12l4-4" />
-          </svg>
-        </div>
-        <span class="bubble-label">Eco</span>
-      </div>
-
-      <!-- Bubble 6: Scootz -->
-      <div class="bubble-card bubble-slate">
-        <div class="bubble-icon-holder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 8h-3v10" /><path d="M6 18h9" /><circle cx="5" cy="18" r="2" /><circle cx="17" cy="18" r="2" />
-          </svg>
-        </div>
-        <span class="bubble-label">Scootz</span>
-      </div>
-
-    </div>
-  </section>
 
   <!-- Complete Hardcoded Corporate Waitlist & Trademark Guardrail Footer -->
   <footer class="global-site-footer">
@@ -258,40 +106,204 @@
       </span>
     </div>
   </footer>
-
-  <script>
-    let isSignUpMode = false;
-    function toggleFormMode() {
-      isSignUpMode = !isSignUpMode;
-      const title = document.getElementById('gatewayTitle');
-      const subline = document.getElementById('gatewaySubline');
-      const submitBtn = document.getElementById('submitBtn');
-      const toggleText = document.getElementById('toggleText');
-      const toggleLink = document.getElementById('toggleLink');
-      
-      if (isSignUpMode) {
-        title.innerText = "Campus Rollout Schedule";
-        subline.innerText = "Review upcoming deployment windows for partner universities.";
-        submitBtn.innerText = "Request My Campus Launch";
-        toggleText.innerText = "Want priority access?";
-        toggleLink.innerText = "Join Waitlist";
-      } else {
-        title.innerText = "TrypCar Priority Access";
-        subline.innerText = "Pioneering the future of elite campus mobility. Launching 2027.";
-        submitBtn.innerText = "Join Priority Waitlist";
-        toggleText.innerText = "Want to check institutional status?";
-        toggleLink.innerText = "View Campus Schedule";
-      }
-    }
-    
-    function handlePortalHandshake(event) {
-      event.preventDefault();
-      if (isSignUpMode) {
-        alert('Institutional submission archived. Campus demand indexes updated.');
-      } else {
-        alert('Pre-registration confirmed! Your profile has been pinned to the priority launch waitlist. Strategic updates will be dispatched to your email inbox.');
-      }
-    }
-  </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrypCar | Frequently Asked Questions</title>
+  <style>
+    /* Global Self-Contained Style Engine */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
+    
+    /* Center Axis Layout Alignment Matrix */
+    .coming-soon-banner, .navbar, .faq-container, .global-site-footer {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Vibrant Blue Top "Coming Soon" Alert Banner */
+    .coming-soon-banner {
+      background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 50%, #1d4ed8 100%);
+      color: #ffffff;
+      text-align: center;
+      padding: 0.5rem 1rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Fixed Compact Navigation Bar Layout */
+    .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
+    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
+    .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
+    .navigation-links a.active { color: #3b82f6; }
+
+    /* Centered Header Section */
+    .section-divider-title { margin: 3rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; color: #ffffff; text-align: center; }
+
+    /* Premium Interactive Accordion Styling */
+    .faq-container { padding: 0 1.25rem 3rem 1.25rem; }
+    .category-header { font-size: 0.75rem; font-weight: 800; color: #3b82f6; margin: 2.5rem 0 0.8rem 0; letter-spacing: 0.06em; text-transform: uppercase; text-align: left; }
+    .faq-item { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s ease; }
+    .faq-trigger { width: 100%; background: none; border: none; padding: 1.1rem 1.25rem; text-align: left; color: #ffffff; font-size: 0.9rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .faq-icon { font-size: 1.1rem; color: #64748b; transition: transform 0.2s ease, color 0.2s ease; user-select: none; }
+    .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.25s ease-out; background-color: rgba(3, 7, 18, 0.4); }
+    .faq-text { padding: 0 1.25rem 1.25rem 1.25rem; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; text-align: left; }
+    
+    /* Interactive Active Layout Overrides */
+    .faq-item.active { border-color: #2563eb; }
+    .faq-item.active .faq-icon { transform: rotate(45deg); color: #3b82f6; }
+
+    /* Footer Layout Elements */
+    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
+    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+    
+    @media (min-width: 1024px) {
+      .coming-soon-banner, .navbar, .faq-container, .global-site-footer { max-width: 1000px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Vibrant Top Status Banner -->
+  <div class="coming-soon-banner">
+    🚀 Something Great Is Coming Soon
+  </div>
+
+  <!-- Synchronized Navigation Bar (Active Hook on FAQ's) -->
+  <nav class="navbar">
+    <div class="navigation-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="support.html">Support</a>
+      <a href="faq.html" class="active">FAQ's</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <h2 class="section-divider-title">Got Questions? We Have Answers.</h2>
+
+  <main class="faq-container">
+    <!-- Institutional Protocols -->
+    <div class="category-header">Institutional Protocols</div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How does TrypCar mitigate institutional liability?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          TrypCar operates as a completely independent, third-party logistics platform. By validating users exclusively through individual, private academic registries and maintaining strict off-campus insurance requirements, we completely isolate the host university from operational liabilities or transit risk.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How does the platform assist with campus congestion?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          TrypCar actively decreases single-occupancy student vehicles on campus. By optimizing local pathing lanes and utilizing high-efficiency transit assets like Scootz™ and grouped rides, we minimize the demand for campus parking structures and reduce peak-hour traffic bottlenecks.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>What prevents unauthorized public access?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          Our system enforces a continuous verification check. If an email address becomes inactive, is suspended, or fails to pass our automated term registry updates, access to the network is revoked instantly. Anonymous public access is systematically impossible.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How are campus traffic codes enforced?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          We maintain a strict zero-tolerance policy. Speed, route adherence, and driver habits are monitored continuously through user feedback systems. Individuals who violate local campus codes or traffic guidelines face immediate and permanent network suspension.
+        </div>
+      </div>
+    </div>
+
+    <!-- Rider Essentials -->
+    <div class="category-header">Rider Essentials</div>
+    
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How do I secure a ride on campus?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          Getting around is incredibly simple. Just log into your verified campus account, select your preferred way to travel from the main layout board, and set your pickup spot. You will be connected with a neighborhood driver in moments.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>What exactly is Scootz™?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          Scootz™ is our custom micro-mobility option designed for quick, nimble trips across campus walkways. If you are rushing between classrooms or heading to a nearby dining hall, Scootz™ gives you instant, flexible access to local electric scooters right from the palm of your hand.
+        </div>
+      </div>
+    </div>
+
+    <!-- Campus Trust & Safety -->
+    <div class="category-header">Campus Trust & Safety</div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>Who is allowed to drive for the network?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          Safety is our absolute foundation. We maintain a community of drivers consisting entirely of background-checked, campus-vetted students and university staff. Every driver goes through rigorous identity validation to ensure complete peace of mind for every trip.
+        </div>
+      </div>
+    </div>
+
+    <!-- The Local Boundary -->
+    <div class="category-header">The Local Boundary</div>
+
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        <span>How far does TrypCar go?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-content">
+        <div class="faq-text">
+          We operate within an intentional 5-mile boundary radiating from the center of campus. This deliberate setup turns the app into a premium neighborhood utility, covering all student housing, local grocery spots, popular off-campus restaurants, and student hangouts while keeping the network localized and hyper-focused.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Complete Hardcoded Corporate Waitlist & Trademark Guardrail Footer -->
+  <footer class="global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid configuration, and all associated user interface designs are registered trademarks of TrypCar, Inc. across federal and international jurisdictions.
