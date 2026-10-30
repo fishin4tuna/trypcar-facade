@@ -5,29 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FAQ | TrypCar</title>
   <style>
+    /* Global Core Style Engine */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.6; padding: 0 1rem; }
-    .navbar, .content-container, .footer-nav, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
+    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; min-height: 100vh; display: flex; flex-direction: column; }
+    
+    .navbar, .content-container, .footer-nav, .global-site-footer { 
+      width: 100%; 
+      max-width: 500px; 
+      margin: 0 auto; 
+    }
+    
     .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
     .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
     .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
+    .navigation-links a.active { color: #3b82f6; }
     
-    .content-container { margin-top: 2rem; padding: 0 1.25rem; }
-    h1 { color: #3b82f6; font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center; }
-    .faq-category-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #3b82f6; margin: 1.5rem 0 0.75rem 0; }
-    .faq-item { margin-bottom: 1rem; background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 8px; padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; }
-    .faq-text-wrapper { flex: 1; }
-    .faq-question { font-weight: 700; color: #ffffff; font-size: 0.95rem; }
-    .faq-icon { color: #94a3b8; font-size: 1.1rem; font-weight: 400; margin-left: 1rem; }
+    .content-container { padding: 2rem 1.25rem 3rem 1.25rem; flex: 1; }
+    .page-title { color: #3b82f6; font-size: 1.6rem; font-weight: 800; margin-bottom: 2rem; text-align: center; letter-spacing: -0.02em; }
     
-    .global-site-footer { padding: 2rem 0 0.5rem 0; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+    /* Category Headers Styling */
+    .faq-category-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #3b82f6; margin: 1.75rem 0 0.75rem 0; }
+    .faq-category-title:first-of-type { margin-top: 0; }
+    
+    /* Interactive Card Row Architecture */
+    .faq-item { margin-bottom: 0.75rem; background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 8px; padding: 1.1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .faq-question { font-weight: 700; color: #ffffff; font-size: 0.9rem; line-height: 1.4; padding-right: 0.5rem; }
+    .faq-icon { color: #94a3b8; font-size: 1.1rem; font-weight: 300; }
+    
+    .global-site-footer { padding: 2rem 1.25rem 0.5rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); margin-top: auto; }
     .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; text-align: left; }
     .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
-
-    .footer-nav { display: flex; justify-content: flex-start; gap: 1.5rem; padding-bottom: 3rem; margin-top: 0.5rem; }
+    
+    .footer-nav { display: flex; justify-content: flex-start; gap: 1.5rem; padding-bottom: 3rem; margin-top: 0.5rem; padding-left: 1.25rem; padding-right: 1.25rem; }
     .footer-nav a { color: #3b82f6; font-weight: 600; font-size: 0.68rem; text-decoration: none; }
     .footer-nav a:hover { color: #ffffff; }
+    
     @media (min-width: 1024px) {
       .navbar, .content-container, .footer-nav, .global-site-footer { max-width: 1000px; }
     }
@@ -45,33 +58,38 @@
   </nav>
 
   <main class="content-container">
-    <h1>Frequently Asked Questions</h1>
+    <h1 class="page-title">Frequently Asked Questions</h1>
     
+    <!-- Category 1 -->
+    <div class="faq-category-title">Safety & Verification</div>
     <div class="faq-item">
-      <div class="faq-text-wrapper">
-        <div class="faq-question">How are driver backgrounds checked?</div>
-      </div>
+      <div class="faq-question">How are driver backgrounds checked?</div>
       <div class="faq-icon">+</div>
     </div>
     <div class="faq-item">
-      <div class="faq-text-wrapper">
-        <div class="faq-question">Are routes limited to campus parameters?</div>
-      </div>
+      <div class="faq-question">Are routes limited to campus parameters?</div>
       <div class="faq-icon">+</div>
     </div>
 
+    <!-- Category 2 -->
     <div class="faq-category-title">User Access & Billing</div>
-    
     <div class="faq-item">
-      <div class="faq-text-wrapper">
-        <div class="faq-question">Who is authorized to use the campus gateway?</div>
-      </div>
+      <div class="faq-question">Who is authorized to use the campus gateway?</div>
       <div class="faq-icon">+</div>
     </div>
     <div class="faq-item">
-      <div class="faq-text-wrapper">
-        <div class="faq-question">How are trip transactions settled?</div>
-      </div>
+      <div class="faq-question">How are trip transactions settled?</div>
+      <div class="faq-icon">+</div>
+    </div>
+
+    <!-- Category 3 -->
+    <div class="faq-category-title">Ecosystem Boundaries</div>
+    <div class="faq-item">
+      <div class="faq-question">What defines the localized grid limit?</div>
+      <div class="faq-icon">+</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">How does micro-mobility integration operate?</div>
       <div class="faq-icon">+</div>
     </div>
   </main>
