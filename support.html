@@ -7,23 +7,43 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.6; padding: 0 1rem; }
-    .navbar, .content-container, .footer-nav, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
+    .navbar, .content-container, .xen-chat-container, .footer-nav, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
     .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
     .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
     .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
     
-    .content-container { margin-top: 2rem; padding: 0 1.25rem; }
+    .content-container { margin-top: 2rem; padding: 0 1.25rem; text-align: center; }
     h1 { color: #3b82f6; font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center; }
     p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.5rem; text-align: center; }
     
-    .footer-nav { display: flex; justify-content: flex-start; gap: 1.5rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
-    .footer-nav a { color: #3b82f6; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; }
-    .footer-nav a:hover { color: #ffffff; }
-    .global-site-footer { padding: 1rem 0 3rem 0; }
+    /* Xen Bubble AI Chat Interface Block */
+    .xen-chat-container { margin: 1.5rem auto 0 auto; padding: 0 1.25rem; }
+    .xen-chat-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; padding: 1.5rem; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); text-align: left; }
+    .xen-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 0.75rem; }
+    .xen-avatar { width: 32px; height: 32px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; color: #ffffff; }
+    .xen-title-text { font-weight: 800; font-size: 0.95rem; color: #ffffff; }
+    .xen-status { font-size: 0.68rem; color: #22c55e; font-weight: 600; margin-left: auto; display: flex; align-items: center; gap: 0.25rem; }
+    .xen-status::before { content: ""; width: 6px; height: 6px; background-color: #22c55e; border-radius: 50%; display: inline-block; }
+    
+    .xen-dialogue-box { height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.25rem; padding-right: 0.25rem; }
+    .bubble-msg { max-width: 85%; padding: 0.75rem 1rem; border-radius: 12px; font-size: 0.84rem; line-height: 1.4; }
+    .bubble-msg.ai { background-color: #1e293b; color: #f1f5f9; border-top-left-radius: 2px; }
+    
+    .xen-input-row { display: flex; gap: 0.5rem; }
+    .xen-input-field { flex: 1; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; padding: 0.7rem 0.9rem; color: #ffffff; font-size: 0.88rem; }
+    .xen-input-field:focus { outline: none; border-color: #3b82f6; }
+    .xen-send-btn { background-color: #3b82f6; color: #ffffff; border: none; border-radius: 6px; padding: 0 1.2rem; font-size: 0.84rem; font-weight: 700; cursor: pointer; }
+    
+    .global-site-footer { padding: 2rem 0 0.5rem 0; }
     .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; text-align: left; }
+    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+
+    .footer-nav { display: flex; justify-content: flex-start; gap: 1.5rem; padding-bottom: 3rem; margin-top: 0.5rem; }
+    .footer-nav a { color: #3b82f6; font-weight: 600; font-size: 0.68rem; text-decoration: none; }
+    .footer-nav a:hover { color: #ffffff; }
     @media (min-width: 1024px) {
-      .navbar, .content-container, .footer-nav, .global-site-footer { max-width: 1000px; }
+      .navbar, .content-container, .xen-chat-container, .footer-nav, .global-site-footer { max-width: 1000px; }
     }
   </style>
 </head>
@@ -40,18 +60,35 @@
 
   <main class="content-container">
     <h1>Support Node</h1>
-    <p>Need technical help with your institutional account link parameters? Reach out directly via our contact link or look through the framework FAQ guide details.</p>
+    <p>Need technical help with your institutional account link parameters? Chat instantly with our localized intelligence framework below.</p>
   </main>
+
+  <section class="xen-chat-container">
+    <div class="xen-chat-card">
+      <div class="xen-header">
+        <div class="xen-avatar">X</div>
+        <div class="xen-title-text">Xen AI Assistant</div>
+        <div class="xen-status">Online</div>
+      </div>
+      <div class="xen-dialogue-box">
+        <div class="bubble-msg ai">Hello! I am Xen, your campus mobility helper node. How can I assist with your TrypCar account link or active verification lines tonight?</div>
+      </div>
+      <div class="xen-input-row">
+        <input type="text" class="xen-input-field" placeholder="Ask Xen a question..." readonly>
+        <button class="xen-send-btn" disabled>Send</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+    </div>
+  </footer>
 
   <nav class="footer-nav">
     <a href="terms.html">Terms of Service</a>
     <a href="privacy.html">Privacy Policy</a>
   </nav>
-
-  <footer class="global-site-footer">
-    <div class="footer-legal-text">
-      &copy; 2026 TrypCar, Inc. All rights reserved. TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
-    </div>
-  </footer>
 </body>
 </html>
