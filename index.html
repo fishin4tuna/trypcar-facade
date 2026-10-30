@@ -96,6 +96,14 @@
     .corporate-input-label { display: block; font-size: 0.68rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-align: left; }
     .corporate-text-field { width: 100%; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; padding: 0.8rem 1rem; color: #ffffff; font-size: 0.9rem; letter-spacing: 0.01em; transition: border-color 0.2s ease, box-shadow 0.2s ease; margin-bottom: 1rem; }
     .corporate-text-field:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
+    
+    /* Compliance Checkbox Interface Nodes */
+    .compliance-wrapper { display: none; align-items: flex-start; gap: 0.5rem; text-align: left; margin-bottom: 1rem; padding: 0 0.1rem; }
+    .compliance-checkbox { margin-top: 0.2rem; cursor: pointer; accent-color: #2563eb; }
+    .compliance-label-text { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; }
+    .compliance-label-text a { color: #3b82f6; text-decoration: none; font-weight: 700; }
+    .compliance-label-text a:hover { text-decoration: underline; }
+
     .corporate-submit-btn { width: 100%; background-color: #2563eb; color: #ffffff; border: none; border-radius: 6px; padding: 0.9rem; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; margin-top: 0.25rem; transition: background-color 0.15s ease; }
     .corporate-submit-btn:hover { background-color: #1d4ed8; }
     .gateway-security-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.62rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
@@ -118,6 +126,9 @@
     .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
     .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
     .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+    .footer-nav-links { display: flex; gap: 1rem; margin-top: 1rem; }
+    .footer-nav-links a { font-size: 0.68rem; color: #3b82f6; text-decoration: none; font-weight: 700; }
+    
     @media (min-width: 1024px) {
       .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer { max-width: 1000px; }
       .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
@@ -133,7 +144,7 @@
   
   <nav class="navbar">
     <div class="navigation-links">
-      <a href="./" class="active">Home</a>
+      <a href="/" class="active">Home</a>
       <a href="about.html">About</a>
       <a href="support.html">Support</a>
       <a href="faq.html">FAQ's</a>
@@ -189,6 +200,15 @@
           <label class="corporate-input-label">Account Password</label>
           <input type="password" class="corporate-text-field" placeholder="••••••••" required>
         </div>
+        
+        <!-- Interactive Verification Box Locked Above Signup Action Button -->
+        <div class="compliance-wrapper" id="complianceBox">
+          <input type="checkbox" class="compliance-checkbox" id="complianceCheck">
+          <label class="compliance-label-text" for="complianceCheck">
+            I agree to the <a href="terms.html" target="_blank">Terms of Service</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>
+          </label>
+        </div>
+
         <button type="submit" class="corporate-submit-btn" id="submitBtn">Verify University Credentials</button>
       </form>
       
@@ -281,6 +301,66 @@
     <div class="footer-legal-text">
       <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
     </div>
+    <div class="footer-nav-links">
+      <a href="terms.html">Terms of Service</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
   </footer>
+
+  <script>
+    let isSignUpMode = false;
+    
+    function toggleFormMode() {
+      const title = document.getElementById('gatewayTitle');
+      const submitBtn = document.getElementById('submitBtn');
+      const toggleText = document.getElementById('toggleText');
+      const toggleLink = document.getElementById('toggleLink');
+      const complianceBox = document.getElementById('complianceBox');
+      const complianceCheck = document.getElementById('complianceCheck');
+      
+      isSignUpMode = !isSignUpMode;
+      
+      if (isSignUpMode) {
+        title.innerText = "Create TrypCar Account";
+        submitBtn.innerText = "Register University Email";
+        toggleText.innerText = "Already registered?";
+        toggleLink.innerText = "Sign In";
+        
+        // Show checkbox and make it required for sign up
+        complianceBox.style.display = "flex";
+        complianceCheck.required = true;
+      } else {
+        title.innerText = "TrypCar Campus Gateway";
+        submitBtn.innerText = "Verify University Credentials";
+        toggleText.innerText = "New to TrypCar?";
+        toggleLink.innerText = "Create an Account";
+        
+        // Hide checkbox and disable constraint for sign in
+        complianceBox.style.display = "none";
+        complianceCheck.required = false;
+        complianceCheck.checked = false;
+      }
+    }
+
+    function handlePortalHandshake(event) {
+      event.preventDefault();
+      
+      if (isSignUpMode) {
+        const complianceCheck = document.getElementById('complianceCheck');
+        if (!complianceCheck.checked) {
+          alert('Error: You must accept the Terms of Service and Privacy Policy to proceed.');
+          return;
+        }
+        
+        // Capture specific system audit fields according to specifications
+        const auditDate = "October 29, 2026";
+        const logTime = new Date().toLocaleTimeString();
+        
+        alert('Registration protocol initialized.\n\n[AUDIT RECORD INDEXED]:\n- Date: ' + auditDate + '\n- Time: ' + logTime + '\n- Version Accepted: TrypCar TOS/PP Version (October 29, 2026)\n\nValidation sequence routed to institutional inbox...');
+      } else {
+        alert('Handshake protocol initialized. Syncing credentials with campus registries...');
+      }
+    }
+  </script>
 </body>
 </html>
