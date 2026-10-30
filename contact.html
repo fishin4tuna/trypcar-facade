@@ -3,49 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Contact Portal</title>
-  <meta name="description" content="Access the TrypCar contact portal. Submit inquiries, document network issues, or contact the developmental system administration team.">
-  <meta name="robots" content="index, nofollow">
+  <title>Contact | TrypCar</title>
   <style>
-    /* Global Core Style Engine Alignment */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; min-height: 100vh; display: flex; flex-direction: column; }
+    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.6; padding: 0 1rem; }
     
-    .navbar, .support-container, .global-site-footer {
-      width: 100%;
-      max-width: 500px;
-      margin: 0 auto;
-    }
+    .navbar, .embedded-gateway-container, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
     
     .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
     .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
     .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
-    .navigation-links a.active { color: #3b82f6; }
     
-    .section-divider-title { margin: 2.5rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; color: #ffffff; text-align: center; }
+    .embedded-gateway-container { margin: 2rem auto 0 auto; padding: 0 1.25rem; }
+    .enterprise-gateway-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; width: 100%; padding: 2rem 1.75rem; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); text-align: center; }
+    .corporate-input-label { display: block; font-size: 0.68rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-align: left; }
+    .corporate-text-field { width: 100%; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; padding: 0.8rem 1rem; color: #ffffff; font-size: 0.9rem; letter-spacing: 0.01em; transition: border-color 0.2s ease, box-shadow 0.2s ease; margin-bottom: 1rem; }
+    .corporate-text-field:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
+    .corporate-submit-btn { width: 100%; background-color: #2563eb; color: #ffffff; border: none; border-radius: 6px; padding: 0.9rem; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; margin-top: 0.25rem; transition: background-color 0.15s ease; }
+    .corporate-submit-btn:hover { background-color: #1d4ed8; }
+    .gateway-title-text { color: #ffffff; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
     
-    .support-container { padding: 0 1.25rem 3rem 1.25rem; flex: 1; }
-    .support-form-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; width: 100%; padding: 2rem 1.5rem; box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45); text-align: center; }
-    
-    .form-input-label { display: block; font-size: 0.68rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-align: left; }
-    .form-text-field { width: 100%; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; padding: 0.8rem 1rem; color: #ffffff; font-size: 0.9rem; margin-bottom: 1.25rem; transition: border-color 0.2s ease; }
-    .form-text-field:focus { outline: none; border-color: #2563eb; }
-    
-    .form-textarea-field { width: 100%; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; padding: 0.8rem 1rem; color: #ffffff; font-size: 0.9rem; min-height: 120px; resize: vertical; margin-bottom: 1.5rem; font-family: inherit; transition: border-color 0.2s ease; }
-    .form-textarea-field:focus { outline: none; border-color: #2563eb; }
-    
-    .form-submit-btn { width: 100%; background-color: #2563eb; color: #ffffff; border: none; border-radius: 6px; padding: 0.9rem; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; transition: background-color 0.15s ease; }
-    .form-submit-btn:hover { background-color: #1d4ed8; }
-    
-    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); margin-top: auto; }
-    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; text-align: justify; }
+    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); text-align: center; }
+    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; text-align: left; margin-bottom: 1.5rem; }
     .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
-    .footer-nav-links { display: flex; gap: 1rem; margin-top: 1rem; }
-    .footer-nav-links a { font-size: 0.68rem; color: #3b82f6; text-decoration: none; font-weight: 700; }
     
+    .footer-nav { display: flex; justify-content: center; gap: 2.5rem; border: none; padding: 0; margin: 0; }
+    .footer-nav a { color: #3b82f6; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; }
+    .footer-nav a:hover { color: #ffffff; }
+
     @media (min-width: 1024px) {
-      .navbar, .support-container, .global-site-footer { max-width: 1000px; }
+      .navbar, .embedded-gateway-container, .global-site-footer { max-width: 1000px; }
     }
   </style>
 </head>
@@ -55,48 +43,140 @@
       <a href="./">Home</a>
       <a href="about.html">About</a>
       <a href="support.html">Support</a>
-      <a href="faq.html">FAQ's</a>
+      <a href="faq.html">FAQ</a>
       <a href="contact.html" class="active">Contact</a>
     </div>
   </nav>
 
-  <h2 class="section-divider-title">Contact Portal</h2>
-  
-  <main class="support-container">
-    <div class="support-form-card">
-      <form onsubmit="handleSupportSubmit(event)">
+  <section class="embedded-gateway-container">
+    <div class="enterprise-gateway-card">
+      <div class="gateway-title-text">Contact Corporate Portal</div>
+      <form onsubmit="event.preventDefault();">
         <div>
-          <label class="form-input-label">Name</label>
-          <input type="text" class="form-text-field" placeholder="John Doe" required>
+          <label class="corporate-input-label">Your Name</label>
+          <input type="text" class="corporate-text-field" placeholder="Student Name" required>
         </div>
         <div>
-          <label class="form-input-label">Email</label>
-          <input type="email" class="form-text-field" placeholder="username@university.edu" required>
+          <label class="corporate-input-label">Institutional Email</label>
+          <input type="email" class="corporate-text-field" placeholder="username@university.edu" required>
         </div>
         <div>
-          <label class="form-input-label">Message</label>
-          <textarea class="form-textarea-field" placeholder="How can we help?" required></textarea>
+          <label class="corporate-input-label">Message Details</label>
+          <textarea class="corporate-text-field" rows="4" placeholder="Inquire about transmission links..." style="resize: none;" required></textarea>
         </div>
-        <button type="submit" class="form-submit-btn">Transmit Message</button>
+        <button type="submit" class="corporate-submit-btn">Transmit Corporate Message</button>
       </form>
+    </div>
+  </section>
+
+  <footer class="global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+    </div>
+    <nav class="footer-nav">
+      <a href="terms.html">Terms of Service</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </nav>
+  </footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrypCar | Our Vision & Campus Safety Framework</title>
+  <style>
+    /* Global Core Style Engine */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; min-height: 100vh; display: flex; flex-direction: column; padding: 0 1rem; }
+    
+    .navbar, .scrolling-features, .vision-header-container, .global-site-footer { 
+      width: 100%; 
+      max-width: 500px; 
+      margin: 0 auto; 
+    }
+    
+    .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
+    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
+    .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
+    .navigation-links a.active { color: #3b82f6; }
+    
+    .vision-header-container { margin: 3.5rem auto 1rem auto; padding: 0 1.25rem; text-align: center; }
+    .section-divider-title { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; color: #ffffff; margin-bottom: 0.75rem; }
+    .vision-intro-text { font-size: 0.92rem; color: #94a3b8; line-height: 1.5; max-width: 420px; margin: 0 auto; }
+    
+    .scrolling-features { padding: 1.5rem 1.25rem 3rem 1.25rem; display: flex; flex-direction: column; gap: 2.5rem; flex: 1; }
+    .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: 0 auto; }
+    .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+    .oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    
+    .row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff; letter-spacing: -0.01em; }
+    .row-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; text-align: center; }
+    
+    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); margin-top: auto; text-align: center; }
+    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; text-align: left; margin-bottom: 1.5rem; }
+    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+    
+    .footer-nav { display: flex; justify-content: center; gap: 2.5rem; border: none; padding: 0; margin: 0; }
+    .footer-nav a { color: #3b82f6; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; }
+    .footer-nav a:hover { color: #ffffff; }
+    
+    @media (min-width: 1024px) {
+      .navbar, .scrolling-features, .vision-header-container, .global-site-footer { max-width: 1000px; }
+      .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navigation-links">
+      <a href="./">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="support.html">Support</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+  
+  <div class="vision-header-container">
+    <h2 class="section-divider-title">Our Vision</h2>
+    <p class="vision-intro-text">Redefining student transit through localized tech architecture. We aim to build a friction-free, ultra-secure mobility layer tailored exclusively to modern university ecosystems.</p>
+  </div>
+  
+  <main class="scrolling-features">
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" stroke-width="1.8" />
+          <path d="M9 11l2 2 4-4" stroke="#22c55e" stroke-width="2.2" />
+        </svg>
+      </div>
+      <h3 class="row-title">Selective Isolation Model</h3>
+      <p class="row-text">TrypCar operates with an intentional charter of selective isolation. We build localized mobility frameworks designed solely for verified campus environments. This deliberate constraint allows us to maintain unparalleled safety levels, zero municipal overlap, and highly predictable usage patterns across our network.</p>
+    </div>
+    
+    <div class="centered-row-card">
+      <div class="oversized-icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+      </div>
+      <h3 class="row-title">Institutional Integration</h3>
+      <p class="row-text">By integrating directly with institutional parameters and validating users exclusively through academic email registries, this minimizes potential liability from schools and universities. TrypCar delivers predictable, secure, and highly reliable transit assets optimized specifically for university communities.</p>
     </div>
   </main>
 
   <footer class="global-site-footer">
     <div class="footer-legal-text">
-      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs, cryptographic driver institutional authentication fields, custom vector asset graphics, and underlying identity validation frameworks are fully protected under registered trademarks of TrypCar, Inc. across federal and international jurisdictions.
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
     </div>
-    <div class="footer-nav-links">
+    <nav class="footer-nav">
       <a href="terms.html">Terms of Service</a>
       <a href="privacy.html">Privacy Policy</a>
-    </div>
+    </nav>
   </footer>
-
-  <script>
-    function handleSupportSubmit(event) {
-      event.preventDefault();
-      alert('Transmission protocol initialized. Message securely logged with system queues.');
-    }
-  </script>
 </body>
 </html>
