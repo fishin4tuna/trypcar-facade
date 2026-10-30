@@ -3,71 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Frequently Asked Questions</title>
+  <title>FAQ | TrypCar</title>
   <style>
-    /* Global Core Style Engine */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; min-height: 100vh; display: flex; flex-direction: column; }
-    
-    .navbar, .faq-container, .global-site-footer {
-      width: 100%;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-    
+    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.6; padding: 0 1rem; }
+    .navbar, .content-container, .footer-nav, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
     .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
     .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
     .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
-    .navigation-links a.active { color: #3b82f6; }
     
-    .section-divider-title { margin: 3rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; color: #ffffff; text-align: center; }
-    .faq-container { padding: 0 1.25rem 3rem 1.25rem; flex: 1; }
-    .category-header { font-size: 0.75rem; font-weight: 800; color: #3b82f6; margin: 2.5rem 0 0.8rem 0; letter-spacing: 0.06em; text-transform: uppercase; text-align: left; }
+    .content-container { margin-top: 2rem; padding: 0 1.25rem; }
+    h1 { color: #3b82f6; font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center; }
+    .faq-category-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #3b82f6; margin: 1.5rem 0 0.75rem 0; }
+    .faq-item { margin-bottom: 1rem; background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 8px; padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; }
+    .faq-text-wrapper { flex: 1; }
+    .faq-question { font-weight: 700; color: #ffffff; font-size: 0.95rem; }
+    .faq-icon { color: #94a3b8; font-size: 1.1rem; font-weight: 400; margin-left: 1rem; }
     
-    /* Strict Flat-State Accordion Container Framework */
-    .faq-item {
-      background-color: #0b1329;
-      border: 1px solid rgba(148, 163, 184, 0.12);
-      border-radius: 8px;
-      margin-bottom: 0.75rem;
-      overflow: hidden;
-    }
-    
-    /* Clean Seamless Trigger Panel (No Color Flashing on Touch) */
-    .faq-trigger {
-      width: 100%;
-      background: none;
-      border: none;
-      padding: 1.1rem 1.25rem;
-      text-align: left;
-      color: #ffffff;
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      outline: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    
-    .faq-icon { font-size: 1.1rem; color: #64748b; transition: transform 0.2s ease, color 0.2s ease; user-select: none; }
-    .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.25s ease-out; background-color: rgba(3, 7, 18, 0.4); }
-    .faq-text { padding: 1.25rem; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; text-align: left; }
-    
-    /* Removed the blue border highlights and background color animations for a pure seamless expand */
-    .faq-item.active .faq-icon { transform: rotate(45deg); color: #3b82f6; }
-    
-    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); margin-top: auto; }
-    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
+    .global-site-footer { padding: 2rem 0 0.5rem 0; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; text-align: left; }
     .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
-    .footer-nav-links { display: flex; gap: 1rem; margin-top: 1rem; }
-    .footer-nav-links a { font-size: 0.68rem; color: #3b82f6; text-decoration: none; font-weight: 700; }
-    
+
+    .footer-nav { display: flex; justify-content: flex-start; gap: 1.5rem; padding-bottom: 3rem; margin-top: 0.5rem; }
+    .footer-nav a { color: #3b82f6; font-weight: 600; font-size: 0.68rem; text-decoration: none; }
+    .footer-nav a:hover { color: #ffffff; }
     @media (min-width: 1024px) {
-      .navbar, .faq-container, .global-site-footer { max-width: 1000px; }
+      .navbar, .content-container, .footer-nav, .global-site-footer { max-width: 1000px; }
     }
   </style>
 </head>
@@ -77,163 +39,52 @@
       <a href="./">Home</a>
       <a href="about.html">About</a>
       <a href="support.html">Support</a>
-      <a href="faq.html" class="active">FAQ's</a>
+      <a href="faq.html" class="active">FAQ</a>
       <a href="contact.html">Contact</a>
     </div>
   </nav>
-  
-  <h2 class="section-divider-title">Got Questions? We Have Answers.</h2>
-  
-  <main class="faq-container">
-    <!-- Chapter 1 -->
-    <div class="category-header">Institutional Protocols</div>
+
+  <main class="content-container">
+    <h1>Frequently Asked Questions</h1>
     
     <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>How does TrypCar mitigate institutional liability?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-content">
-        <div class="faq-text">
-          TrypCar operates as a completely independent, third-party logistics platform. By validating users exclusively through individual, private academic registries and maintaining strict off-campus insurance requirements, we completely isolate the host university from operational liabilities or transit risk.
-        </div>
+      <div class="faq-text-wrapper">
+        <div class="faq-question">How are driver backgrounds checked?</div>
       </div>
+      <div class="faq-icon">+</div>
     </div>
-
     <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>Are university servers or infrastructure required?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-content">
-        <div class="faq-text">
-          No. TrypCar is a completely self-contained cloud network ecosystem. We do not integrate directly into core university mainframes or require internal database write permissions, eliminating systemic security vulnerabilities.
-        </div>
+      <div class="faq-text-wrapper">
+        <div class="faq-question">Are routes limited to campus parameters?</div>
       </div>
+      <div class="faq-icon">+</div>
     </div>
 
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>How are registration tokens validated?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-content">
-        <div class="faq-text">
-          Cryptographic validation keys are dispatched securely to student email records. Handshake sequences isolate active traffic lines from external node interference.
-        </div>
-      </div>
-    </div>
-
-    <!-- Chapter 2 -->
-    <div class="category-header">The Local Boundary</div>
+    <div class="faq-category-title">User Access & Billing</div>
     
     <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>How far does TrypCar go?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-content">
-        <div class="faq-text">
-          We operate within an intentional 5-mile boundary radiating from the center of campus. This deliberate setup turns the app into a premium neighborhood utility.
-        </div>
+      <div class="faq-text-wrapper">
+        <div class="faq-question">Who is authorized to use the campus gateway?</div>
       </div>
+      <div class="faq-icon">+</div>
     </div>
-
     <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>Can I book a trip outside the 5-mile limit?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-content">
-        <div class="faq-text">
-          Trips initiating or terminating outside the fixed 5-mile network grid are automatically isolated. This deliberate boundary constraint ensures unparalleled predictability.
-        </div>
+      <div class="faq-text-wrapper">
+        <div class="faq-question">How are trip transactions settled?</div>
       </div>
-    </div>
-
-    <!-- Chapter 3 -->
-    <div class="category-header">Driver Guidelines</div>
-    
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>How are driver backgrounds checked?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-content">
-        <div class="faq-text">
-          Every campus driver undergoes strict background registry checks and active identity credential verification handshakes before getting access to the network dashboard.
-        </div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>Are routes locked to campus parameters?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-content">
-        <div class="faq-text">
-          Yes. AI algorithms optimize navigation paths utilizing authorized school shortcuts, avoiding construction nodes and keeping trips highly efficient.
-        </div>
-      </div>
-    </div>
-
-    <!-- Chapter 4 -->
-    <div class="category-header">Rider Access & Billing</div>
-    
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>Who is authorized to use the campus gateway?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-content">
-        <div class="faq-text">
-          Access is limited strictly to active students, faculty, and administrative staff members holding a verified institutional edu email ledger asset.
-        </div>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        <span>How are trip transactions settled?</span>
-        <span class="faq-icon">+</span>
-      </button>
-      <div class="faq-content">
-        <div class="faq-text">
-          Transactions use a secure front-end handshake vault. Payments link cleanly to verified merchant options without saving clear text account keys to the root repository.
-        </div>
-      </div>
+      <div class="faq-icon">+</div>
     </div>
   </main>
-
-  <script>
-    function toggleFaq(button) {
-      const item = button.parentElement;
-      const content = button.nextElementSibling;
-      
-      document.querySelectorAll('.faq-item').forEach(el => {
-        if (el !== item) {
-          el.classList.remove('active');
-          el.querySelector('.faq-content').style.maxHeight = "0";
-        }
-      });
-
-      item.classList.toggle('active');
-      if (item.classList.contains('active')) {
-        content.style.maxHeight = content.scrollHeight + "px";
-      } else {
-        content.style.maxHeight = "0";
-      }
-    }
-  </script>
 
   <footer class="global-site-footer">
     <div class="footer-legal-text">
       <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
     </div>
-    <div class="footer-nav-links">
-      <a href="terms.html">Terms of Service</a>
-    </div>
   </footer>
+
+  <nav class="footer-nav">
+    <a href="terms.html">Terms of Service</a>
+    <a href="privacy.html">Privacy Policy</a>
+  </nav>
 </body>
 </html>
