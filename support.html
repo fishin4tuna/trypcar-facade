@@ -10,9 +10,9 @@
     body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; position: relative; min-height: 100vh; display: flex; flex-direction: column; }
     
     .navbar, .embedded-gateway-container, .scrolling-features, .section-divider-title, .footer-nav, .global-site-footer { 
-      width: 100%; 
-      max-width: 500px; 
-      margin: 0 auto; 
+       width: 100%; 
+       max-width: 500px; 
+       margin: 0 auto; 
     }
     
     .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
@@ -36,7 +36,7 @@
     .row-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.4rem; color: #ffffff; letter-spacing: -0.01em; }
     .row-text { font-size: 0.85rem; color: #94a3b8; line-height: 1.4; text-align: center; }
     
-    /* Strict Floating Zen Launcher Fixed Layout Boundaries (No Mobile Highlights) */
+    /* Strict Floating Zen Launcher Fixed Layout Boundaries */
     .chat-bubble-launcher { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background-color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,0,0,0.4); cursor: pointer; z-index: 1000; transition: transform 0.2s ease; border: none; outline: none; -webkit-tap-highlight-color: transparent; }
     .chat-bubble-launcher:hover { transform: scale(1.05); }
     .chat-bubble-launcher svg { width: 28px; height: 28px; fill: none; stroke: #060e1e; stroke-width: 2.2; }
@@ -123,3 +123,59 @@
       <p class="row-text">Are you a verified campus guide? Find helpful materials on navigating university shortcuts, organizing drop-off points, keeping trips efficient, and maintaining premium service standards.</p>
     </div>
 
+    <div class="centered-row-card">
+  <script>
+    function toggleChatSession() {
+      document.getElementById('chatWindow').classList.toggle('active');
+    }
+    function handleChatEnter(e) {
+      if (e.key === 'Enter') executeUserMessage();
+    }
+    function executeUserMessage() {
+      const input = document.getElementById('chatInput');
+      const val = input.value;
+      if (!val || !val.trim()) return;
+      const feed = document.getElementById('chatFeed');
+      const userBubble = document.createElement('div');
+      userBubble.className = "msg-bubble msg-user";
+      userBubble.innerText = val;
+      feed.appendChild(userBubble);
+      input.value = '';
+      setTimeout(() => { feed.scrollTop = feed.scrollHeight; }, 30);
+      setTimeout(() => {
+        const botBubble = document.createElement('div');
+        botBubble.className = "msg-bubble msg-bot";
+        const text = val.toLowerCase().trim();
+        let reply = "Thanks for asking! Our support staff can help you directly via email at info@trypcar.com, or you can drop us a line on our main Contact page.";
+        if (/\b(ride|rides|reserve|lux|eco)\b/.test(text)) {
+          reply = "Our ride options blend smoothly into daily campus schedules. Verified students and staff can request standard trips, book slots in advance, or select premium choices safely.";
+        } else if (/\b(scoot|scootz|scooter|scooters)\b/.test(text)) {
+          reply = "Scootz™ is our custom scooter option designed for quick trips between lecture halls and campus hubs. They are completely integrated into the local network grid!";
+        } else if (/\b(boundary|boundaries|distance|mile|miles|range|limit|5)\b/.test(text)) {
+          reply = "TrypCar serves your campus and the local neighborhood up to a fixed 5-mile boundary limit! This makes it simple to visit off-campus housing or area grocery stores safely.";
+        } else if (/\b(driver|drivers|guide|guides)\b/.test(text)) {
+          reply = "Every single TrypCar driver is an expert campus guide who knows shortcuts around school construction, dorm setups, and area drop-off locations perfectly.";
+        } else if (/\b(account|email|edu|login|password)\b/.test(text)) {
+          reply = "To keep the network completely safe, everyone signs in using their official university email address. This ensures a verified, close-knit ride network for your school.";
+        } else if (/\b(hello|hi|hey|greetings|sup)\b/.test(text)) {
+          reply = "Hello! I can help you with questions about our 5-mile boundaries, campus ride options, or driver screening rules. What's on your mind?";
+        }
+        botBubble.innerText = reply;
+        feed.appendChild(botBubble);
+        setTimeout(() => { feed.scrollTop = feed.scrollHeight; }, 50);
+      }, 650);
+    }
+  </script>
+
+  <footer class="global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+    </div>
+  </footer>
+
+  <nav class="footer-nav">
+    <a href="terms.html">Terms of Service</a>
+    <a href="privacy.html">Privacy Policy</a>
+  </nav>
+</body>
+</html>
