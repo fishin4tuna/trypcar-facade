@@ -33,7 +33,16 @@
     .faq-item:hover { border-color: rgba(59, 130, 246, 0.25); }
     .faq-item.active { border-color: rgba(59, 130, 246, 0.45); }
     
-    .faq-header { padding: 1.1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    /* Removed Tap Highlight Color Parameter to Block Mobile Flashing Overlay */
+    .faq-header { 
+      padding: 1.1rem 1.25rem; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      cursor: pointer; 
+      -webkit-tap-highlight-color: transparent; 
+      user-select: none;
+    }
     .faq-question { font-weight: 700; color: #ffffff; font-size: 0.9rem; line-height: 1.4; padding-right: 0.5rem; }
     .faq-icon { color: #94a3b8; font-size: 1.1rem; font-weight: 300; transition: transform 0.2s ease, color 0.2s ease; line-height: 1; display: inline-block; }
     
@@ -186,7 +195,7 @@
           if (!isOpen) {
             item.classList.add('active');
             drawer.style.maxHeight = drawer.scrollHeight + 'px';
-            icon.textContent = '−'; // Changes plus sign to minus
+            icon.textContent = '−';
             icon.style.transform = 'rotate(180deg)';
           }
         });
