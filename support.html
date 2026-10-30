@@ -13,17 +13,15 @@
     .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
     
-    .content-container { margin-top: 2rem; padding: 0 1.25rem; text-align: center; }
+    .content-container { margin-top: 2rem; padding: 0 1.25rem; }
     h1 { color: #3b82f6; font-size: 1.75rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center; }
     p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.5rem; text-align: center; }
     
-    .global-site-footer { padding: 1rem 0 0.5rem 0; border-top: 1px solid rgba(255, 255, 255, 0.04); margin-top: 3rem; text-align: center; }
-    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; text-align: center; }
-    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
-
-    .footer-nav { display: flex; justify-content: center; gap: 1.5rem; padding-bottom: 3rem; margin-top: 0.5rem; }
-    .footer-nav a { color: #3b82f6; font-weight: 600; font-size: 0.68rem; text-decoration: none; }
+    .footer-nav { display: flex; justify-content: flex-start; gap: 1.5rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+    .footer-nav a { color: #3b82f6; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; }
     .footer-nav a:hover { color: #ffffff; }
+    .global-site-footer { padding: 1rem 0 3rem 0; }
+    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; text-align: left; }
     @media (min-width: 1024px) {
       .navbar, .content-container, .footer-nav, .global-site-footer { max-width: 1000px; }
     }
@@ -45,15 +43,15 @@
     <p>Need technical help with your institutional account link parameters? Reach out directly via our contact link or look through the framework FAQ guide details.</p>
   </main>
 
-  <footer class="global-site-footer">
-    <div class="footer-legal-text">
-      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
-    </div>
-  </footer>
-
   <nav class="footer-nav">
     <a href="terms.html">Terms of Service</a>
     <a href="privacy.html">Privacy Policy</a>
   </nav>
+
+  <footer class="global-site-footer">
+    <div class="footer-legal-text">
+      &copy; 2026 TrypCar, Inc. All rights reserved. TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+    </div>
+  </footer>
 </body>
 </html>
