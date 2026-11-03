@@ -9,7 +9,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; position: relative; min-height: 100vh; display: flex; flex-direction: column; }
     
-    .navbar, .embedded-gateway-container, .scrolling-features, .section-divider-title, .footer-nav, .global-site-footer { 
+    .navbar, .embedded-gateway-container, .scrolling-features, .section-divider-title, .global-site-footer { 
       width: 100%; 
       max-width: 500px; 
       margin: 0 auto; 
@@ -62,16 +62,16 @@
     .chat-input-field:focus { outline: none; border-color: #2563eb; }
     .chat-send-btn { background-color: #ffffff; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #060e1e; font-weight: bold; font-size: 0.85rem; outline: none; -webkit-tap-highlight-color: transparent; }
     
-    .global-site-footer { padding: 2rem 1.25rem 0.5rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); margin-top: auto; }
+    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); margin-top: auto; }
     .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
     .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
     
-    .footer-nav { display: flex; justify-content: center; gap: 1.5rem; padding-bottom: 3rem; margin-top: 0.5rem; padding-left: 1.25rem; padding-right: 1.25rem; }
+    .footer-nav { display: flex; justify-content: flex-start; gap: 1.5rem; margin-top: 0.75rem; }
     .footer-nav a { color: #3b82f6; font-weight: 600; font-size: 0.68rem; text-decoration: none; }
     .footer-nav a:hover { color: #ffffff; }
     
     @media (min-width: 1024px) {
-      .navbar, .embedded-gateway-container, .scrolling-features, .section-divider-title, .footer-nav, .global-site-footer { max-width: 1000px; }
+      .navbar, .embedded-gateway-container, .scrolling-features, .section-divider-title, .global-site-footer { max-width: 1000px; }
       .scrolling-features { flex-direction: row; justify-content: center; align-items: stretch; gap: 2rem; }
       .centered-row-card { flex: 1; margin: 0; }
     }
@@ -122,60 +122,10 @@
       <h3 class="row-title">Driver Resources</h3>
       <p class="row-text">Are you a verified campus guide? Find helpful materials on navigating university shortcuts, organizing drop-off points, keeping trips efficient, and maintaining premium service standards.</p>
     </div>
+  </main>
 
-    <div class="centered-row-card">
   <script>
     function toggleChatSession() {
       document.getElementById('chatWindow').classList.toggle('active');
     }
     function handleChatEnter(e) {
-      if (e.key === 'Enter') executeUserMessage();
-    }
-    function executeUserMessage() {
-      const input = document.getElementById('chatInput');
-      const val = input.value;
-      if (!val || !val.trim()) return;
-      const feed = document.getElementById('chatFeed');
-      const userBubble = document.createElement('div');
-      userBubble.className = "msg-bubble msg-user";
-      userBubble.innerText = val;
-      feed.appendChild(userBubble);
-      input.value = '';
-      setTimeout(() => { feed.scrollTop = feed.scrollHeight; }, 30);
-      setTimeout(() => {
-        const botBubble = document.createElement('div');
-        botBubble.className = "msg-bubble msg-bot";
-        const text = val.toLowerCase().trim();
-        let reply = "Thanks for asking! Our support staff can help you directly via email at info@trypcar.com, or you can drop us a line on our main Contact page.";
-        if (/\b(ride|rides|reserve|lux|eco)\b/.test(text)) {
-          reply = "Our ride options blend smoothly into daily campus schedules. Verified students and staff can request standard trips, book slots in advance, or select premium choices safely.";
-        } else if (/\b(scoot|scootz|scooter|scooters)\b/.test(text)) {
-          reply = "Scootz™ is our custom scooter option designed for quick trips between lecture halls and campus hubs. They are completely integrated into the local network grid!";
-        } else if (/\b(boundary|boundaries|distance|mile|miles|range|limit|5)\b/.test(text)) {
-          reply = "TrypCar serves your campus and the local neighborhood up to a fixed 5-mile boundary limit! This makes it simple to visit off-campus housing or area grocery stores safely.";
-        } else if (/\b(driver|drivers|guide|guides)\b/.test(text)) {
-          reply = "Every single TrypCar driver is an expert campus guide who knows shortcuts around school construction, dorm setups, and area drop-off locations perfectly.";
-        } else if (/\b(account|email|edu|login|password)\b/.test(text)) {
-          reply = "To keep the network completely safe, everyone signs in using their official university email address. This ensures a verified, close-knit ride network for your school.";
-        } else if (/\b(hello|hi|hey|greetings|sup)\b/.test(text)) {
-          reply = "Hello! I can help you with questions about our 5-mile boundaries, campus ride options, or driver screening rules. What's on your mind?";
-        }
-        botBubble.innerText = reply;
-        feed.appendChild(botBubble);
-        setTimeout(() => { feed.scrollTop = feed.scrollHeight; }, 50);
-      }, 650);
-    }
-  </script>
-
-  <footer class="global-site-footer">
-    <div class="footer-legal-text">
-      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
-    </div>
-  </footer>
-
-  <nav class="footer-nav" style="justify-content: center;">
-    <a href="terms.html">Terms of Service</a>
-    <a href="privacy.html">Privacy Policy</a>
-  </nav>
-</body>
-</html>
