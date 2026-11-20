@@ -23,53 +23,16 @@
     ]
   }
   </script>
-  <script>
-    const info = {
-      ride: { b: "On-Demand Campus Transit", h: "TrypCar Ride", d: "Peer-to-peer rides exclusively for .edu-verified university students within our 5-mile campus utility zone.", l: ["• 100% campus identity verified riders & drivers", "• Predictable flat-zone student pricing", "• Live trip tracking & campus safety share"] },
-      reserve: { b: "Scheduled Pathing", h: "TrypCar Reserve", d: "Schedule rides up to 14 days ahead for early exams, recurring weekly classes, or airport runs.", l: ["• Guaranteed pickup windows with zero surge pricing", "• AI-powered matching with regular student commuters", "• Set once for your whole semester schedule"] },
-      hubs: { b: "Smart Pickup Zones", h: "TrypCar Hubs", d: "Designated, well-lit campus boarding landmarks near dorms, libraries, Greek row, and transit gates.", l: ["• Eliminates curbside traffic & address confusion", "• Rapid walk-up dispatch during peak class changes", "• Monitored, high-visibility campus locations"] },
-      lux: { b: "Elevated Comfort", h: "TrypCar Lux", d: "Late-model sedans, spacious SUVs, and top-rated student drivers for formals, game days, and group nights out.", l: ["• Seating for up to 6 verified passengers", "• Top 5% highest-rated student driver tier", "• Priority dispatch on busy campus weekends"] },
-      eco: { b: "Zero-Emission & Shared", h: "TrypCar Eco", d: "Request EV/hybrid rides or share seats along the same campus corridor to split fares and cut emissions.", l: ["• Save up to 40% on shared campus corridor lines", "• EV & hybrid vehicle preference matching", "• Track your semester carbon savings"] },
-      scootz: { b: "Micro-Mobility Network", h: "Scootz™ Electric Scooters", d: "Grab a sleek electric scooter for fast cross-campus hops between classes when four wheels aren't needed.", l: ["• 15 MPH geo-fenced campus speed compliance", "• 1-tap QR unlock directly inside TrypCar", "• Convenient docks at all TrypCar Hubs"] }
-    };
-    function showInfo(k) {
-      const x = info[k];
-      if (!x) return;
-      document.getElementById("mBadge").textContent = x.b;
-      document.getElementById("mHead").textContent = x.h;
-      document.getElementById("mBody").textContent = x.d;
-      document.getElementById("mList").innerHTML = x.l.map(function(i) { return "<li>" + i + "</li>"; }).join("");
-      document.getElementById("infoModal").style.display = "flex";
-    }
-    function hideInfo() {
-      document.getElementById("infoModal").style.display = "none";
-    }
-    let reg = false;
-    function toggleFormMode() {
-      reg = !reg;
-      document.getElementById("gatewayTitle").textContent = reg ? "Join TrypCar Waitlist" : "TrypCar Campus Gateway";
-      document.getElementById("submitBtn").textContent = reg ? "Request Early Access" : "Verify University Credentials";
-      document.getElementById("toggleText").textContent = reg ? "Already verified?" : "New to TrypCar?";
-      document.getElementById("toggleLink").textContent = reg ? "Sign In" : "Create an Account";
-    }
-    function handlePortalHandshake(e) {
-      e.preventDefault();
-      const em = document.getElementById("campusEmail").value.trim();
-      const box = document.getElementById("gatewayMsg");
-      box.style.display = "block";
-      box.textContent = em.toLowerCase().endsWith(".edu") ? "Node Verified: " + em + " logged for early access." : "Please use a valid .edu university email.";
-    }
-  </script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
-    .partner-briefing-banner { width: 100%; max-width: 500px; margin: 0 auto; background-color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2); padding: 0.8rem 1rem; text-align: center; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem; }
+    .partner-briefing-banner { width: 100%; max-width: 500px; margin: 0 auto; background-color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2); padding: 0.8rem 1rem; text-align: center; color: #ffffff; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
     .banner-header-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #ffffff; }
-    .banner-text-message { font-size: 0.68rem; font-weight: 700; line-height: 1.4; letter-spacing: 0.01em; color: #ffffff; text-wrap: balance; }
+    .banner-text-message { font-size: 0.68rem; font-weight: 700; line-height: 1.4; color: #ffffff; }
     .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
     .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
     .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
-    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
+    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; }
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
     .hero-container { margin-top: 0.5rem; text-align: center; }
     .hero-image-asset { width: 100%; height: auto; display: block; object-fit: contain; }
@@ -78,25 +41,49 @@
     .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: 0 auto; }
     .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; }
     .oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-    .row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff; letter-spacing: -0.01em; }
+    .row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff; }
     .row-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.4; }
-    .section-divider-title { margin: 2.5rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; text-align: center; }
+    .section-divider-title { margin: 2.5rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.1rem; font-weight: 800; color: #ffffff; text-align: center; }
     .embedded-gateway-container { margin: 1.5rem auto 0 auto; padding: 0 1.25rem; }
     .enterprise-gateway-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; width: 100%; padding: 2rem 1.75rem; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); text-align: center; }
     .corporate-input-label { display: block; font-size: 0.68rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-align: left; }
-    .corporate-text-field { width: 100%; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; padding: 0.8rem 1rem; color: #ffffff; font-size: 0.9rem; letter-spacing: 0.01em; margin-bottom: 1rem; }
-    .corporate-text-field:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
-    .corporate-submit-btn { width: 100%; background-color: #2563eb; color: #ffffff; border: none; border-radius: 6px; padding: 0.9rem; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; margin-top: 0.25rem; }
-    .corporate-submit-btn:hover { background-color: #1d4ed8; }
+    .corporate-text-field { width: 100%; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; padding: 0.8rem 1rem; color: #ffffff; font-size: 0.9rem; margin-bottom: 1rem; }
+    .corporate-text-field:focus { outline: none; border-color: #2563eb; }
+    .corporate-submit-btn { width: 100%; background-color: #2563eb; color: #ffffff; border: none; border-radius: 6px; padding: 0.9rem; font-size: 0.88rem; font-weight: 700; cursor: pointer; margin-top: 0.25rem; }
     .gateway-security-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.62rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
-    .gateway-title-text { color: #ffffff; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+    .gateway-title-text { color: #ffffff; font-size: 1.25rem; font-weight: 800; margin-bottom: 1.25rem; }
     .bubble-grid-container { padding: 0 1.25rem 2rem 1.25rem; }
     .bubble-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-    .bubble-card { border-radius: 20px; padding: 1.15rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.08); transition: transform 0.15s ease; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .bubble-card { border-radius: 20px; padding: 1.15rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.08); transition: transform 0.15s ease; cursor: pointer; }
     .bubble-blue { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); }
     .bubble-amber { background: linear-gradient(135deg, #0f172a 0%, #78350f 100%); }
     .bubble-emerald { background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%); }
     .bubble-purple { background: linear-gradient(135deg, #0f172a 0%, #581c87 100%); }
+    .bubble-rose { background: linear-gradient(135deg, #0f172a 0%, #881337 100%); }
+    .bubble-slate { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); }
+    .bubble-card:active { transform: scale(0.95); }
+    .bubble-icon-holder { margin-bottom: 0.45rem; height: 34px; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    .bubble-icon-holder svg { width: 30px; height: 30px; fill: none; stroke-width: 2; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; }
+    .bubble-label { font-size: 0.78rem; font-weight: 700; color: #ffffff; pointer-events: none; }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(3, 7, 18, 0.86); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 1.25rem; z-index: 9999; }
+    .modal-box { background: #0b1329; border: 1px solid rgba(59, 130, 246, 0.45); border-radius: 16px; width: 100%; max-width: 400px; padding: 1.6rem; position: relative; text-align: left; }
+    .modal-x { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.08); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; }
+    .modal-badge { display: inline-block; font-size: 0.62rem; font-weight: 800; text-transform: uppercase; color: #60a5fa; background: rgba(59,130,246,0.15); padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; }
+    .modal-head { font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 0.45rem; }
+    .modal-body { font-size: 0.86rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 1rem; }
+    .modal-list { list-style: none; border-top: 1px solid rgba(148,163,184,0.15); padding-top: 0.85rem; margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.8rem; color: #94a3b8; }
+    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
+    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; }
+    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+    .footer-legal-links { margin-top: 0.85rem; display: flex; gap: 1.1rem; }
+    .footer-legal-links a { color: #3b82f6; text-decoration: none; font-weight: 700; font-size: 0.72rem; }
+    @media (min-width: 1024px) {
+      .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer { max-width: 1000px; }
+      .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
+      .bubble-grid { grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+    }
+  </style>
+</head>
 <body>
   <div class="partner-briefing-banner">
     <div class="banner-header-title">Coming Soon</div>
@@ -208,5 +195,27 @@
       </div>
     </div>
   </footer>
-</body>
-</html>
+  <script>
+    const info = {
+      ride: { b: "On-Demand Campus Transit", h: "TrypCar Ride", d: "Peer-to-peer rides exclusively for .edu-verified university students within our 5-mile campus utility zone.", l: ["• 100% campus identity verified riders & drivers", "• Predictable flat-zone student pricing", "• Live trip tracking & campus safety share"] },
+      reserve: { b: "Scheduled Pathing", h: "TrypCar Reserve", d: "Schedule rides up to 14 days ahead for early exams, recurring weekly classes, or airport runs.", l: ["• Guaranteed pickup windows with zero surge pricing", "• AI-powered matching with regular student commuters", "• Set once for your whole semester schedule"] },
+      hubs: { b: "Smart Pickup Zones", h: "TrypCar Hubs", d: "Designated, well-lit campus boarding landmarks near dorms, libraries, Greek row, and transit gates.", l: ["• Eliminates curbside traffic & address confusion", "• Rapid walk-up dispatch during peak class changes", "• Monitored, high-visibility campus locations"] },
+      lux: { b: "Elevated Comfort", h: "TrypCar Lux", d: "Late-model sedans, spacious SUVs, and top-rated student drivers for formals, game days, and group nights out.", l: ["• Seating for up to 6 verified passengers", "• Top 5% highest-rated student driver tier", "• Priority dispatch on busy campus weekends"] },
+      eco: { b: "Zero-Emission & Shared", h: "TrypCar Eco", d: "Request EV/hybrid rides or share seats along the same campus corridor to split fares and cut emissions.", l: ["• Save up to 40% on shared campus corridor lines", "• EV & hybrid vehicle preference matching", "• Track your semester carbon savings"] },
+      scootz: { b: "Micro-Mobility Network", h: "Scootz™ Electric Scooters", d: "Grab a sleek electric scooter for fast cross-campus hops between classes when four wheels aren't needed.", l: ["• 15 MPH geo-fenced campus speed compliance", "• 1-tap QR unlock directly inside TrypCar", "• Convenient docks at all TrypCar Hubs"] }
+    };
+    function showInfo(k) {
+      const x = info[k];
+      if (!x) return;
+      document.getElementById("mBadge").textContent = x.b;
+      document.getElementById("mHead").textContent = x.h;
+      document.getElementById("mBody").textContent = x.d;
+      document.getElementById("mList").innerHTML = x.l.map(function(i) { return "<li>" + i + "</li>"; }).join("");
+      document.getElementById("infoModal").style.display = "flex";
+    }
+    function hideInfo() {
+      document.getElementById("infoModal").style.display = "none";
+    }
+    let reg = false;
+    function toggleFormMode() {
+      reg = !reg;
