@@ -8,54 +8,37 @@
   <meta name="keywords" content="TrypCar, Tryp Car, campus mobility, university transit ride, Scootz scooter sharing, student transportation, campus rideshare">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://trypcar.com">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "TrypCar, Inc.",
-    "url": "https://trypcar.com",
-    "logo": "https://trypcar.com1792984078309.png",
-    "description": "Premium campus mobility and student rideshare network architecture.",
-    "hasPart": [
-      { "@type": "WebPage", "name": "About Our Vision", "url": "https://trypcar.comabout.html" },
-      { "@type": "WebPage", "name": "Frequently Asked Questions", "url": "https://trypcar.comfaq.html" },
-      { "@type": "WebPage", "name": "Contact Portal", "url": "https://trypcar.comcontact.html" }
-    ]
-  }
-  </script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
-    .partner-briefing-banner { width: 100%; max-width: 500px; margin: 0 auto; background-color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2); padding: 0.8rem 1rem; text-align: center; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem; }
-    .banner-header-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #ffffff; }
-    .banner-text-message { font-size: 0.68rem; font-weight: 700; line-height: 1.4; letter-spacing: 0.01em; color: #ffffff; text-wrap: balance; }
-    .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
-    .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
-    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
-    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
-    .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
+    body { background: #060e1e; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.5; }
+    .partner-briefing-banner, .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
+    .partner-briefing-banner { background: #1e3a8a; border-bottom: 1px solid rgba(59,130,246,0.2); padding: 0.8rem 1rem; text-align: center; display: flex; flex-direction: column; gap: 0.35rem; }
+    .banner-header-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+    .banner-text-message { font-size: 0.68rem; font-weight: 700; line-height: 1.4; }
+    .navbar { display: flex; justify-content: center; padding: 1.2rem 1rem; background: #030712; border-bottom: 1px solid rgba(255,255,255,0.03); }
+    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; }
+    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; }
+    .navigation-links a:hover, .navigation-links a.active { color: #fff; }
     .hero-container { margin-top: 0.5rem; text-align: center; }
-    .hero-image-asset { width: 100%; height: auto; display: block; object-fit: contain; }
+    .hero-image-asset { width: 100%; height: auto; display: block; }
     .hero-caption { display: block; font-size: 0.72rem; color: #64748b; margin-top: 0.5rem; padding: 0 1.25rem; font-style: italic; }
-    .scrolling-features { padding: 2rem 1.25rem 1rem 1.25rem; display: flex; flex-direction: column; gap: 2rem; }
+    .scrolling-features { padding: 2rem 1.25rem 1rem; display: flex; flex-direction: column; gap: 2rem; }
     .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: 0 auto; }
-    .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; }
+    .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, rgba(6,14,30,0) 70%); padding: 1rem; border-radius: 50%; }
     .oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-    .row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff; letter-spacing: -0.01em; }
+    .row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; }
     .row-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.4; }
-    .section-divider-title { margin: 2.5rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; text-align: center; }
-    .embedded-gateway-container { margin: 1.5rem auto 0 auto; padding: 0 1.25rem; }
-    .enterprise-gateway-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; width: 100%; padding: 2rem 1.75rem; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); text-align: center; }
+    .section-divider-title { margin: 2.5rem auto 1rem; padding: 0 1.25rem; font-size: 1.1rem; font-weight: 800; text-align: center; }
+    .embedded-gateway-container { margin: 1.5rem auto 0; padding: 0 1.25rem; }
+    .enterprise-gateway-card { background: #0b1329; border: 1px solid rgba(148,163,184,0.12); border-radius: 12px; padding: 2rem 1.75rem; box-shadow: 0 15px 30px rgba(0,0,0,0.5); text-align: center; }
     .corporate-input-label { display: block; font-size: 0.68rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-align: left; }
-    .corporate-text-field { width: 100%; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; padding: 0.8rem 1rem; color: #ffffff; font-size: 0.9rem; letter-spacing: 0.01em; transition: border-color 0.2s ease, box-shadow 0.2s ease; margin-bottom: 1rem; }
-    .corporate-text-field:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
-    .corporate-submit-btn { width: 100%; background-color: #2563eb; color: #ffffff; border: none; border-radius: 6px; padding: 0.9rem; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; margin-top: 0.25rem; transition: background-color 0.15s ease; }
-    .corporate-submit-btn:hover { background-color: #1d4ed8; }
+    .corporate-text-field { width: 100%; background: #030712; border: 1px solid rgba(148,163,184,0.2); border-radius: 6px; padding: 0.8rem 1rem; color: #fff; font-size: 0.9rem; margin-bottom: 1rem; }
+    .corporate-submit-btn { width: 100%; background: #2563eb; color: #fff; border: none; border-radius: 6px; padding: 0.9rem; font-size: 0.88rem; font-weight: 700; cursor: pointer; }
     .gateway-security-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.62rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
-    .gateway-title-text { color: #ffffff; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
-    .bubble-grid-container { padding: 0 1.25rem 2rem 1.25rem; }
+    .gateway-title-text { font-size: 1.25rem; font-weight: 800; margin-bottom: 1.25rem; }
+    .bubble-grid-container { padding: 0 1.25rem 2rem; }
     .bubble-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-    .bubble-card { border-radius: 20px; padding: 1.25rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); transition: transform 0.15s ease, box-shadow 0.15s ease; cursor: pointer; text-decoration: none; }
+    .bubble-card { border-radius: 20px; padding: 1.25rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: transform 0.15s ease; }
     .bubble-blue { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
     .bubble-amber { background: linear-gradient(135deg, #0f172a 0%, #78350f 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
     .bubble-emerald { background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
@@ -64,30 +47,29 @@
     .bubble-slate { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
     .bubble-card:active { transform: scale(0.95); }
     .bubble-icon-holder { margin-bottom: 0.6rem; height: 42px; display: flex; align-items: center; justify-content: center; }
-    .bubble-icon-holder svg { width: 38px; height: 38px; fill: none; stroke-width: 2.2; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; }
-    .bubble-label { font-size: 0.75rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; }
-    .bubble-modal-overlay { position: fixed; inset: 0; background: rgba(3, 7, 18, 0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 1.25rem; z-index: 9999; }
+    .bubble-icon-holder svg { width: 38px; height: 38px; fill: none; stroke-width: 2.2; stroke: #fff; stroke-linecap: round; stroke-linejoin: round; }
+    .bubble-label { font-size: 0.75rem; font-weight: 700; color: #fff; }
+    .bubble-modal-overlay { position: fixed; inset: 0; background: rgba(3,7,18,0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 1.25rem; z-index: 9999; }
     .bubble-modal-overlay.open { display: flex; }
-    .bubble-modal-card { background: #0b1329; border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 16px; width: 100%; max-width: 400px; padding: 1.75rem; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75); position: relative; text-align: left; }
-    .modal-close-btn { position: absolute; top: 1rem; right: 1rem; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); color: #94a3b8; width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .modal-tag { display: inline-block; font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #3b82f6; background: rgba(59, 130, 246, 0.15); padding: 0.25rem 0.65rem; border-radius: 999px; margin-bottom: 0.75rem; }
-    .modal-title { font-size: 1.4rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem; }
-    .modal-description { font-size: 0.88rem; color: #94a3b8; line-height: 1.55; margin-bottom: 1.25rem; }
-    .modal-highlights { list-style: none; border-top: 1px solid rgba(148, 163, 184, 0.12); padding-top: 1rem; margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.55rem; }
-    .modal-highlights li { font-size: 0.82rem; color: #cbd5e1; display: flex; align-items: center; gap: 0.5rem; }
-    .modal-highlights li::before { content: "•"; color: #3b82f6; font-weight: 800; }
-    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
-    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
-    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+    .bubble-modal-card { background: #0b1329; border: 1px solid rgba(59,130,246,0.35); border-radius: 16px; width: 100%; max-width: 400px; padding: 1.75rem; position: relative; text-align: left; }
+    .modal-close-btn { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.06); border: none; color: #94a3b8; width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; }
+    .modal-tag { display: inline-block; font-size: 0.62rem; font-weight: 800; text-transform: uppercase; color: #3b82f6; background: rgba(59,130,246,0.15); padding: 0.25rem 0.65rem; border-radius: 999px; margin-bottom: 0.75rem; }
+    .modal-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .modal-description { font-size: 0.88rem; color: #94a3b8; margin-bottom: 1.25rem; }
+    .modal-highlights { list-style: none; border-top: 1px solid rgba(148,163,184,0.12); padding-top: 1rem; margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.82rem; color: #cbd5e1; }
+    .global-site-footer { padding: 2rem 1.25rem 3rem; border-top: 1px solid rgba(255,255,255,0.04); }
+    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; }
+    .footer-legal-text strong { color: #94a3b8; }
     .footer-legal-links { margin-top: 0.75rem; display: flex; gap: 1rem; }
     .footer-legal-links a { color: #3b82f6; text-decoration: none; font-weight: 700; font-size: 0.72rem; }
-    @media (min-width: 1024px) {
-      .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer { max-width: 1000px; }
+  </style>
+</head>
 <body>
   <div class="partner-briefing-banner">
     <div class="banner-header-title">Coming Soon</div>
     <div class="banner-text-message">TrypCar is in development and not yet operating. Join our waitlist to be the first to know when we launch.</div>
   </div>
+
   <nav class="navbar">
     <div class="navigation-links">
       <a href="index.html" class="active">Home</a>
@@ -97,10 +79,12 @@
       <a href="contact.html">Contact</a>
     </div>
   </nav>
+
   <div class="hero-container">
     <img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
     <span class="hero-caption">Concept preview. Features shown are planned and not yet available.</span>
   </div>
+
   <main class="scrolling-features">
     <div class="centered-row-card">
       <div class="oversized-icon-box">
@@ -109,6 +93,7 @@
       <h3 class="row-title">Verified Students</h3>
       <p class="row-text">Every single rider and driver will be completely campus identity verified for total peace of mind.</p>
     </div>
+
     <div class="centered-row-card">
       <div class="oversized-icon-box">
         <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#3b82f6"/></svg>
@@ -117,6 +102,7 @@
       <p class="row-text">AI-powered scheduling algorithms will instantly build your optimal pathing lines upon activation.</p>
     </div>
   </main>
+
   <section class="embedded-gateway-container" id="campusGatewaySection">
     <div class="enterprise-gateway-card">
       <div class="gateway-security-badge">
@@ -124,6 +110,7 @@
         Secure Institutional Access Node
       </div>
       <div class="gateway-title-text" id="gatewayTitle">TrypCar Campus Gateway</div>
+
       <form onsubmit="handlePortalHandshake(event)">
         <div>
           <label class="corporate-input-label">University Email Address</label>
@@ -141,42 +128,63 @@
         </div>
         <button type="submit" class="corporate-submit-btn" id="submitBtn">Verify University Credentials</button>
       </form>
+
       <div id="gatewayStatusMsg" style="display: none; margin-top: 1rem; padding: 0.75rem; border-radius: 6px; background: rgba(37, 99, 235, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); color: #93c5fd; font-size: 0.78rem; font-weight: 600;"></div>
+
       <div style="margin-top: 1.25rem; font-size: 0.75rem; color: #94a3b8;">
         <span id="toggleText">New to TrypCar?</span>
         <a href="javascript:void(0)" onclick="toggleFormMode()" id="toggleLink" style="color: #3b82f6; text-decoration: none; font-weight: 700; margin-left: 0.25rem;">Create an Account</a>
       </div>
     </div>
   </section>
+
   <h2 class="section-divider-title">Explore TrypCar</h2>
   <section class="bubble-grid-container">
     <div class="bubble-grid">
       <div class="bubble-card bubble-blue" onclick="openBubbleModal('ride')">
-        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M5 17H3a1 1 0 0 1-1-1v-4l2.3-5.2A2 2 0 0 1 6.1 5.5h11.8a2 2 0 0 1 1.8 1.3L22 12v4a1 1 0 0 1-1 1h-2"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M9.5 17h5"/><path d="M3 12h18"/></svg></div>
+        <div class="bubble-icon-holder">
+          <svg viewBox="0 0 24 24"><path d="M5 17H3a1 1 0 0 1-1-1v-4l2.3-5.2A2 2 0 0 1 6.1 5.5h11.8a2 2 0 0 1 1.8 1.3L22 12v4a1 1 0 0 1-1 1h-2"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M9.5 17h5"/><path d="M3 12h18"/></svg>
+        </div>
         <span class="bubble-label">Ride</span>
       </div>
+
       <div class="bubble-card bubble-amber" onclick="openBubbleModal('reserve')">
-        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="15" cy="16" r="3"/><polyline points="15 14.5 15 16 16 16.5"/></svg></div>
+        <div class="bubble-icon-holder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="15" cy="16" r="3"/><polyline points="15 14.5 15 16 16 16.5"/></svg>
+        </div>
         <span class="bubble-label">Reserve</span>
       </div>
+
       <div class="bubble-card bubble-emerald" onclick="openBubbleModal('hubs')">
-        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg></div>
+        <div class="bubble-icon-holder">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg>
+        </div>
         <span class="bubble-label">Hubs</span>
       </div>
+
       <div class="bubble-card bubble-purple" onclick="openBubbleModal('lux')">
-        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div class="bubble-icon-holder">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
         <span class="bubble-label">Lux</span>
       </div>
+
       <div class="bubble-card bubble-rose" onclick="openBubbleModal('eco')">
-        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></div>
+        <div class="bubble-icon-holder">
+          <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+        </div>
         <span class="bubble-label">Eco</span>
       </div>
+
       <div class="bubble-card bubble-slate" onclick="openBubbleModal('scootz')">
-        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 18h7"/><path d="M17 15.5L14.5 6H12"/><path d="M14.5 6h2.5"/></svg></div>
+        <div class="bubble-icon-holder">
+          <svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 18h7"/><path d="M17 15.5L14.5 6H12"/><path d="M14.5 6h2.5"/></svg>
+        </div>
         <span class="bubble-label">Scootz</span>
       </div>
     </div>
   </section>
+
   <div class="bubble-modal-overlay" id="bubbleModal" onclick="closeBubbleModal()">
     <div class="bubble-modal-card" onclick="event.stopPropagation()">
       <button class="modal-close-btn" onclick="closeBubbleModal()">&times;</button>
@@ -187,6 +195,7 @@
       <button type="button" class="corporate-submit-btn" onclick="jumpToWaitlist()">Join Waitlist for Early Access</button>
     </div>
   </div>
+
   <footer class="global-site-footer">
     <div class="footer-legal-text">
       <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
@@ -196,16 +205,57 @@
       </div>
     </div>
   </footer>
+
   <script>
     const bubbleData = {
-      ride: { tag: "On-Demand Campus Transit", title: "TrypCar Ride", desc: "Fast, peer-to-peer campus rides within our intentional 5-mile university utility boundary—exclusively for verified students.", bullets: ["100% .edu campus identity verified drivers & riders", "Predictable, student-friendly flat zone pricing", "Real-time route tracking & emergency campus share"] },
-      reserve: { tag: "Scheduled Pathing", title: "TrypCar Reserve", desc: "Lock in your rides ahead of time for early morning exams, airport runs, or recurring weekly class schedules.", bullets: ["Schedule rides up to 14 days in advance", "AI-powered matching pairs you with regular commuters", "Guaranteed pickup windows with zero last-minute stress"] },
-      hubs: { tag: "Smart Pickup Zones", title: "TrypCar Hubs", desc: "Designated high-efficiency campus boarding points positioned near dorms, libraries, Greek row, and transit centers.", bullets: ["Eliminates curbside congestion & wait times", "Well-lit, high-visibility campus landmark zones", "Instant walk-up matching during peak class changes"] },
-      lux: { tag: "Elevated Comfort", title: "TrypCar Lux", desc: "Upgraded vehicles and top-rated student drivers for formal events, game days, parent visits, or group nights out.", bullets: ["Late-model sedans & spacious SUVs", "Highest-rated verified student driver tier", "Priority dispatch during busy campus weekends"] },
-      eco: { tag: "Zero-Emission & Shared", title: "TrypCar Eco", desc: "Ride in electric or hybrid vehicles—or share a seat along the same corridor to cut costs and lower your campus footprint.", bullets: ["EV & hybrid vehicle preference matching", "Split fares automatically on shared campus lines", "Tracks your semester carbon reduction milestones"] },
-      scootz: { tag: "Micro-Mobility Network", title: "Scootz™", desc: "Grab an electric scooter for quick cross-campus hops between classes when four wheels aren't needed.", bullets: ["Seamless unlock directly inside the TrypCar app", "Geo-fenced campus speed & parking compliance", "First-mile / last-mile connection to TrypCar Hubs"] }
-    };
-    function openBubbleModal(key) {
-      const item = bubbleData[key];
-      if (!item) return;
-      document.getElementById("modalTag").textContent = item.tag;
+      ride: {
+        tag: "On-Demand Campus Transit",
+        title: "TrypCar Ride",
+        desc: "Fast, peer-to-peer campus rides within our intentional 5-mile university utility boundary—exclusively for verified students.",
+        bullets: [
+          "100% .edu campus identity verified drivers & riders",
+          "Predictable, student-friendly flat zone pricing",
+          "Real-time route tracking & emergency campus share"
+        ]
+      },
+      reserve: {
+        tag: "Scheduled Pathing",
+        title: "TrypCar Reserve",
+        desc: "Lock in your rides ahead of time for early morning exams, airport runs, or recurring weekly class schedules.",
+        bullets: [
+          "Schedule rides up to 14 days in advance",
+          "AI-powered matching pairs you with regular commuters",
+          "Guaranteed pickup windows with zero last-minute stress"
+        ]
+      },
+      hubs: {
+        tag: "Smart Pickup Zones",
+        title: "TrypCar Hubs",
+        desc: "Designated high-efficiency campus boarding points positioned near dorms, libraries, Greek row, and transit centers.",
+        bullets: [
+          "Eliminates curbside congestion & wait times",
+          "Well-lit, high-visibility campus landmark zones",
+          "Instant walk-up matching during peak class changes"
+        ]
+      },
+      lux: {
+        tag: "Elevated Comfort",
+        title: "TrypCar Lux",
+        desc: "Upgraded vehicles and top-rated student drivers for formal events, game days, parent visits, or group nights out.",
+        bullets: [
+          "Late-model sedans & spacious SUVs",
+          "Highest-rated verified student driver tier",
+          "Priority dispatch during busy campus weekends"
+        ]
+      },
+      eco: {
+        tag: "Zero-Emission & Shared",
+        title: "TrypCar Eco",
+        desc: "Ride in electric or hybrid vehicles—or share a seat along the same corridor to cut costs and lower your campus footprint.",
+        bullets: [
+          "EV & hybrid vehicle preference matching",
+          "Split fares automatically on shared campus lines",
+          "Tracks your semester carbon reduction milestones"
+        ]
+      },
+      scootz: {
