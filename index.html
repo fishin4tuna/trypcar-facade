@@ -55,8 +55,7 @@
     .gateway-title-text { color: #ffffff; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
     .bubble-grid-container { padding: 0 1.25rem 2rem 1.25rem; }
     .bubble-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-    .bubble-card { border-radius: 20px; padding: 1.25rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; cursor: pointer; user-select: none; }
-    .bubble-card:hover { transform: translateY(-2px); border-color: rgba(255, 255, 255, 0.25); }
+    .bubble-card { border-radius: 20px; padding: 1.25rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); transition: transform 0.15s ease, box-shadow 0.15s ease; cursor: pointer; text-decoration: none; }
     .bubble-blue { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
     .bubble-amber { background: linear-gradient(135deg, #0f172a 0%, #78350f 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
     .bubble-emerald { background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
@@ -64,28 +63,26 @@
     .bubble-rose { background: linear-gradient(135deg, #0f172a 0%, #881337 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
     .bubble-slate { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); }
     .bubble-card:active { transform: scale(0.95); }
+    .bubble-icon-holder { margin-bottom: 0.6rem; height: 42px; display: flex; align-items: center; justify-content: center; }
+    .bubble-icon-holder svg { width: 38px; height: 38px; fill: none; stroke-width: 2.2; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; }
     .bubble-label { font-size: 0.75rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; }
-    .bubble-modal-overlay { position: fixed; inset: 0; background-color: rgba(3, 7, 18, 0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 1.25rem; z-index: 9999; }
+    .bubble-modal-overlay { position: fixed; inset: 0; background: rgba(3, 7, 18, 0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 1.25rem; z-index: 9999; }
     .bubble-modal-overlay.open { display: flex; }
-    .bubble-modal-card { background-color: #0b1329; border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 16px; width: 100%; max-width: 400px; padding: 1.75rem; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75); position: relative; text-align: left; }
-    .modal-close-btn { position: absolute; top: 1rem; right: 1rem; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); color: #94a3b8; width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .modal-close-btn:hover { background: rgba(255, 255, 255, 0.15); color: #ffffff; }
+    .bubble-modal-card { background: #0b1329; border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 16px; width: 100%; max-width: 400px; padding: 1.75rem; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75); position: relative; text-align: left; }
+    .modal-close-btn { position: absolute; top: 1rem; right: 1rem; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); color: #94a3b8; width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     .modal-tag { display: inline-block; font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #3b82f6; background: rgba(59, 130, 246, 0.15); padding: 0.25rem 0.65rem; border-radius: 999px; margin-bottom: 0.75rem; }
-    .modal-title { font-size: 1.4rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+    .modal-title { font-size: 1.4rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem; }
     .modal-description { font-size: 0.88rem; color: #94a3b8; line-height: 1.55; margin-bottom: 1.25rem; }
     .modal-highlights { list-style: none; border-top: 1px solid rgba(148, 163, 184, 0.12); padding-top: 1rem; margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.55rem; }
     .modal-highlights li { font-size: 0.82rem; color: #cbd5e1; display: flex; align-items: center; gap: 0.5rem; }
-    .modal-highlights li::before { content: "•"; color: #3b82f6; font-weight: 800; font-size: 1rem; }
+    .modal-highlights li::before { content: "•"; color: #3b82f6; font-weight: 800; }
     .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
     .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
     .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+    .footer-legal-links { margin-top: 0.75rem; display: flex; gap: 1rem; }
+    .footer-legal-links a { color: #3b82f6; text-decoration: none; font-weight: 700; font-size: 0.72rem; }
     @media (min-width: 1024px) {
       .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer { max-width: 1000px; }
-      .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
-      .bubble-grid { grid-template-columns: repeat(6, 1fr); gap: 1rem; }
-    }
-  </style>
-</head>
 <body>
   <div class="partner-briefing-banner">
     <div class="banner-header-title">Coming Soon</div>
@@ -120,7 +117,7 @@
       <p class="row-text">AI-powered scheduling algorithms will instantly build your optimal pathing lines upon activation.</p>
     </div>
   </main>
-  <section class="embedded-gateway-container">
+  <section class="embedded-gateway-container" id="campusGatewaySection">
     <div class="enterprise-gateway-card">
       <div class="gateway-security-badge">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
@@ -139,14 +136,14 @@
         <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; text-align: left;">
           <input type="checkbox" id="legalConsent" required style="accent-color: #2563eb;">
           <label for="legalConsent" style="font-size: 0.72rem; color: #94a3b8;">
-            I agree to the <a href="terms.html" style="color: #3b82f6; text-decoration: none;">Terms of Service</a> and <a href="privacy.html" style="color: #3b82f6; text-decoration: none;">Privacy Policy</a>
+            I agree to the <a href="terms.html" style="color: #3b82f6; text-decoration: none; font-weight: 600;">Terms of Service</a> and <a href="privacy.html" style="color: #3b82f6; text-decoration: none; font-weight: 600;">Privacy Policy</a>
           </label>
         </div>
         <button type="submit" class="corporate-submit-btn" id="submitBtn">Verify University Credentials</button>
       </form>
       <div id="gatewayStatusMsg" style="display: none; margin-top: 1rem; padding: 0.75rem; border-radius: 6px; background: rgba(37, 99, 235, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); color: #93c5fd; font-size: 0.78rem; font-weight: 600;"></div>
       <div style="margin-top: 1.25rem; font-size: 0.75rem; color: #94a3b8;">
-        <span id="toggleText">New to TrypCar?</span> 
+        <span id="toggleText">New to TrypCar?</span>
         <a href="javascript:void(0)" onclick="toggleFormMode()" id="toggleLink" style="color: #3b82f6; text-decoration: none; font-weight: 700; margin-left: 0.25rem;">Create an Account</a>
       </div>
     </div>
@@ -154,30 +151,48 @@
   <h2 class="section-divider-title">Explore TrypCar</h2>
   <section class="bubble-grid-container">
     <div class="bubble-grid">
-      <div class="bubble-card bubble-blue" onclick="openBubbleModal('ride')"><span class="bubble-label">Ride</span></div>
-      <div class="bubble-card bubble-amber" onclick="openBubbleModal('reserve')"><span class="bubble-label">Reserve</span></div>
-      <div class="bubble-card bubble-emerald" onclick="openBubbleModal('hubs')"><span class="bubble-label">Hubs</span></div>
-      <div class="bubble-card bubble-purple" onclick="openBubbleModal('lux')"><span class="bubble-label">Lux</span></div>
-      <div class="bubble-card bubble-rose" onclick="openBubbleModal('eco')"><span class="bubble-label">Eco</span></div>
-      <div class="bubble-card bubble-slate" onclick="openBubbleModal('scootz')"><span class="bubble-label">Scootz</span></div>
+      <div class="bubble-card bubble-blue" onclick="openBubbleModal('ride')">
+        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M5 17H3a1 1 0 0 1-1-1v-4l2.3-5.2A2 2 0 0 1 6.1 5.5h11.8a2 2 0 0 1 1.8 1.3L22 12v4a1 1 0 0 1-1 1h-2"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M9.5 17h5"/><path d="M3 12h18"/></svg></div>
+        <span class="bubble-label">Ride</span>
+      </div>
+      <div class="bubble-card bubble-amber" onclick="openBubbleModal('reserve')">
+        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="15" cy="16" r="3"/><polyline points="15 14.5 15 16 16 16.5"/></svg></div>
+        <span class="bubble-label">Reserve</span>
+      </div>
+      <div class="bubble-card bubble-emerald" onclick="openBubbleModal('hubs')">
+        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg></div>
+        <span class="bubble-label">Hubs</span>
+      </div>
+      <div class="bubble-card bubble-purple" onclick="openBubbleModal('lux')">
+        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <span class="bubble-label">Lux</span>
+      </div>
+      <div class="bubble-card bubble-rose" onclick="openBubbleModal('eco')">
+        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></div>
+        <span class="bubble-label">Eco</span>
+      </div>
+      <div class="bubble-card bubble-slate" onclick="openBubbleModal('scootz')">
+        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 18h7"/><path d="M17 15.5L14.5 6H12"/><path d="M14.5 6h2.5"/></svg></div>
+        <span class="bubble-label">Scootz</span>
+      </div>
     </div>
   </section>
   <div class="bubble-modal-overlay" id="bubbleModal" onclick="closeBubbleModal()">
     <div class="bubble-modal-card" onclick="event.stopPropagation()">
-      <button class="modal-close-btn" onclick="closeBubbleModal()" aria-label="Close modal">&times;</button>
+      <button class="modal-close-btn" onclick="closeBubbleModal()">&times;</button>
       <span class="modal-tag" id="modalTag">TrypCar Ecosystem</span>
       <h3 class="modal-title" id="modalTitle">Feature Title</h3>
       <p class="modal-description" id="modalDesc">Feature description goes here.</p>
       <ul class="modal-highlights" id="modalBullets"></ul>
-      <button type="button" class="corporate-submit-btn" onclick="closeBubbleModal()">Got It</button>
+      <button type="button" class="corporate-submit-btn" onclick="jumpToWaitlist()">Join Waitlist for Early Access</button>
     </div>
   </div>
   <footer class="global-site-footer">
     <div class="footer-legal-text">
       <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
-      <div style="margin-top: 0.75rem; display: flex; gap: 1rem;">
-        <a href="terms.html" style="color: #94a3b8; text-decoration: none; font-weight: 600;">Terms of Service</a>
-        <a href="privacy.html" style="color: #94a3b8; text-decoration: none; font-weight: 600;">Privacy Policy</a>
+      <div class="footer-legal-links">
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
       </div>
     </div>
   </footer>
@@ -194,31 +209,3 @@
       const item = bubbleData[key];
       if (!item) return;
       document.getElementById("modalTag").textContent = item.tag;
-      document.getElementById("modalTitle").textContent = item.title;
-      document.getElementById("modalDesc").textContent = item.desc;
-      const list = document.getElementById("modalBullets");
-      list.innerHTML = "";
-      item.bullets.forEach(function(text) {
-        const li = document.createElement("li");
-        li.textContent = text;
-        list.appendChild(li);
-      });
-      document.getElementById("bubbleModal").classList.add("open");
-    }
-    function closeBubbleModal() {
-      document.getElementById("bubbleModal").classList.remove("open");
-    }
-    document.addEventListener("keydown", function(e) {
-      if (e.key === "Escape") closeBubbleModal();
-    });
-    let isRegisterMode = false;
-    function toggleFormMode() {
-      isRegisterMode = !isRegisterMode;
-      document.getElementById("gatewayTitle").textContent = isRegisterMode ? "Join TrypCar Waitlist" : "TrypCar Campus Gateway";
-      document.getElementById("submitBtn").textContent = isRegisterMode ? "Request Early Campus Access" : "Verify University Credentials";
-      document.getElementById("toggleText").textContent = isRegisterMode ? "Already verified?" : "New to TrypCar?";
-      document.getElementById("toggleLink").textContent = isRegisterMode ? "Sign In" : "Create an Account";
-      document.getElementById("gatewayStatusMsg").style.display = "none";
-    }
-    function handlePortalHandshake(event) {
-      event.preventDefault();
