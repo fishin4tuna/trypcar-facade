@@ -55,7 +55,7 @@
     .gateway-title-text { color: #ffffff; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
     .bubble-grid-container { padding: 0 1.25rem 2rem 1.25rem; }
     .bubble-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-    .bubble-card { border-radius: 20px; padding: 1.25rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.08); transition: transform 0.15s ease; cursor: pointer; }
+    .bubble-card { border-radius: 20px; padding: 1.15rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.08); transition: transform 0.15s ease; cursor: pointer; }
     .bubble-blue { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); }
     .bubble-amber { background: linear-gradient(135deg, #0f172a 0%, #78350f 100%); }
     .bubble-emerald { background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%); }
@@ -63,6 +63,8 @@
     .bubble-rose { background: linear-gradient(135deg, #0f172a 0%, #881337 100%); }
     .bubble-slate { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); }
     .bubble-card:active { transform: scale(0.95); }
+    .bubble-icon-holder { margin-bottom: 0.45rem; height: 34px; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    .bubble-icon-holder svg { width: 30px; height: 30px; fill: none; stroke-width: 2; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; }
     .bubble-label { font-size: 0.78rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; pointer-events: none; }
     .modal-backdrop { position: fixed; inset: 0; background: rgba(3, 7, 18, 0.86); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 1.25rem; z-index: 9999; }
     .modal-box { background: #0b1329; border: 1px solid rgba(59, 130, 246, 0.45); border-radius: 16px; width: 100%; max-width: 400px; padding: 1.6rem; position: relative; text-align: left; box-shadow: 0 20px 50px rgba(0,0,0,0.85); }
@@ -74,6 +76,9 @@
     .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
     .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
     .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+    .footer-legal-links { margin-top: 0.85rem; display: flex; gap: 1.1rem; }
+    .footer-legal-links a { color: #3b82f6; text-decoration: none; font-weight: 700; font-size: 0.72rem; }
+    .footer-legal-links a:hover { text-decoration: underline; }
     @media (min-width: 1024px) {
       .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer { max-width: 1000px; }
       .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
@@ -131,6 +136,10 @@
           <label class="corporate-input-label">Account Password</label>
           <input type="password" class="corporate-text-field" placeholder="••••••••" required>
         </div>
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;text-align:left;">
+          <input type="checkbox" id="legalConsent" required style="accent-color:#2563eb;">
+          <label for="legalConsent" style="font-size:0.72rem;color:#94a3b8;">I agree to the <a href="terms.html" style="color:#3b82f6;text-decoration:none;font-weight:700;">Terms of Service</a> and <a href="privacy.html" style="color:#3b82f6;text-decoration:none;font-weight:700;">Privacy Policy</a></label>
+        </div>
         <button type="submit" class="corporate-submit-btn" id="submitBtn">Verify University Credentials</button>
       </form>
       <div id="gatewayMsg" style="display:none;margin-top:1rem;font-size:0.78rem;color:#60a5fa;font-weight:700;"></div>
@@ -143,12 +152,30 @@
   <h2 class="section-divider-title">Explore TrypCar</h2>
   <section class="bubble-grid-container">
     <div class="bubble-grid">
-      <div class="bubble-card bubble-blue" onclick="showInfo('ride')"><span class="bubble-label">Ride</span></div>
-      <div class="bubble-card bubble-amber" onclick="showInfo('reserve')"><span class="bubble-label">Reserve</span></div>
-      <div class="bubble-card bubble-emerald" onclick="showInfo('hubs')"><span class="bubble-label">Hubs</span></div>
-      <div class="bubble-card bubble-purple" onclick="showInfo('lux')"><span class="bubble-label">Lux</span></div>
-      <div class="bubble-card bubble-rose" onclick="showInfo('eco')"><span class="bubble-label">Eco</span></div>
-      <div class="bubble-card bubble-slate" onclick="showInfo('scootz')"><span class="bubble-label">Scootz</span></div>
+      <div class="bubble-card bubble-blue" onclick="showInfo('ride')">
+        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M5 17H3a1 1 0 0 1-1-1v-4l2.3-5.2A2 2 0 0 1 6.1 5.5h11.8a2 2 0 0 1 1.8 1.3L22 12v4a1 1 0 0 1-1 1h-2"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M9.5 17h5"/><path d="M3 12h18"/></svg></div>
+        <span class="bubble-label">Ride</span>
+      </div>
+      <div class="bubble-card bubble-amber" onclick="showInfo('reserve')">
+        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="15" cy="16" r="3"/><polyline points="15 14.5 15 16 16 16.5"/></svg></div>
+        <span class="bubble-label">Reserve</span>
+      </div>
+      <div class="bubble-card bubble-emerald" onclick="showInfo('hubs')">
+        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg></div>
+        <span class="bubble-label">Hubs</span>
+      </div>
+      <div class="bubble-card bubble-purple" onclick="showInfo('lux')">
+        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <span class="bubble-label">Lux</span>
+      </div>
+      <div class="bubble-card bubble-rose" onclick="showInfo('eco')">
+        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></div>
+        <span class="bubble-label">Eco</span>
+      </div>
+      <div class="bubble-card bubble-slate" onclick="showInfo('scootz')">
+        <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 18h7"/><path d="M17 15.5L14.5 6H12"/><path d="M14.5 6h2.5"/></svg></div>
+        <span class="bubble-label">Scootz</span>
+      </div>
     </div>
   </section>
   <div class="modal-backdrop" id="infoModal" onclick="hideInfo()">
@@ -164,6 +191,10 @@
   <footer class="global-site-footer">
     <div class="footer-legal-text">
       <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+      <div class="footer-legal-links">
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
     </div>
   </footer>
   <script>
@@ -189,16 +220,3 @@
       reg = !reg;
       document.getElementById("gatewayTitle").textContent = reg ? "Join TrypCar Waitlist" : "TrypCar Campus Gateway";
       document.getElementById("submitBtn").textContent = reg ? "Request Early Access" : "Verify University Credentials";
-      document.getElementById("toggleText").textContent = reg ? "Already verified?" : "New to TrypCar?";
-      document.getElementById("toggleLink").textContent = reg ? "Sign In" : "Create an Account";
-    }
-    function handlePortalHandshake(e) {
-      e.preventDefault();
-      const em = document.getElementById("campusEmail").value.trim();
-      const box = document.getElementById("gatewayMsg");
-      box.style.display = "block";
-      box.textContent = em.toLowerCase().endsWith(".edu") ? "Node Verified: " + em + " logged for early access." : "Please use a valid .edu university email.";
-    }
-  </script>
-</body>
-</html>
