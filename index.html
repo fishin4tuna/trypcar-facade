@@ -23,6 +23,43 @@
     ]
   }
   </script>
+  <script>
+    const info = {
+      ride: { b: "On-Demand Campus Transit", h: "TrypCar Ride", d: "Peer-to-peer rides exclusively for .edu-verified university students within our 5-mile campus utility zone.", l: ["• 100% campus identity verified riders & drivers", "• Predictable flat-zone student pricing", "• Live trip tracking & campus safety share"] },
+      reserve: { b: "Scheduled Pathing", h: "TrypCar Reserve", d: "Schedule rides up to 14 days ahead for early exams, recurring weekly classes, or airport runs.", l: ["• Guaranteed pickup windows with zero surge pricing", "• AI-powered matching with regular student commuters", "• Set once for your whole semester schedule"] },
+      hubs: { b: "Smart Pickup Zones", h: "TrypCar Hubs", d: "Designated, well-lit campus boarding landmarks near dorms, libraries, Greek row, and transit gates.", l: ["• Eliminates curbside traffic & address confusion", "• Rapid walk-up dispatch during peak class changes", "• Monitored, high-visibility campus locations"] },
+      lux: { b: "Elevated Comfort", h: "TrypCar Lux", d: "Late-model sedans, spacious SUVs, and top-rated student drivers for formals, game days, and group nights out.", l: ["• Seating for up to 6 verified passengers", "• Top 5% highest-rated student driver tier", "• Priority dispatch on busy campus weekends"] },
+      eco: { b: "Zero-Emission & Shared", h: "TrypCar Eco", d: "Request EV/hybrid rides or share seats along the same campus corridor to split fares and cut emissions.", l: ["• Save up to 40% on shared campus corridor lines", "• EV & hybrid vehicle preference matching", "• Track your semester carbon savings"] },
+      scootz: { b: "Micro-Mobility Network", h: "Scootz™ Electric Scooters", d: "Grab a sleek electric scooter for fast cross-campus hops between classes when four wheels aren't needed.", l: ["• 15 MPH geo-fenced campus speed compliance", "• 1-tap QR unlock directly inside TrypCar", "• Convenient docks at all TrypCar Hubs"] }
+    };
+    function showInfo(k) {
+      const x = info[k];
+      if (!x) return;
+      document.getElementById("mBadge").textContent = x.b;
+      document.getElementById("mHead").textContent = x.h;
+      document.getElementById("mBody").textContent = x.d;
+      document.getElementById("mList").innerHTML = x.l.map(function(i) { return "<li>" + i + "</li>"; }).join("");
+      document.getElementById("infoModal").style.display = "flex";
+    }
+    function hideInfo() {
+      document.getElementById("infoModal").style.display = "none";
+    }
+    let reg = false;
+    function toggleFormMode() {
+      reg = !reg;
+      document.getElementById("gatewayTitle").textContent = reg ? "Join TrypCar Waitlist" : "TrypCar Campus Gateway";
+      document.getElementById("submitBtn").textContent = reg ? "Request Early Access" : "Verify University Credentials";
+      document.getElementById("toggleText").textContent = reg ? "Already verified?" : "New to TrypCar?";
+      document.getElementById("toggleLink").textContent = reg ? "Sign In" : "Create an Account";
+    }
+    function handlePortalHandshake(e) {
+      e.preventDefault();
+      const em = document.getElementById("campusEmail").value.trim();
+      const box = document.getElementById("gatewayMsg");
+      box.style.display = "block";
+      box.textContent = em.toLowerCase().endsWith(".edu") ? "Node Verified: " + em + " logged for early access." : "Please use a valid .edu university email.";
+    }
+  </script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
@@ -55,37 +92,11 @@
     .gateway-title-text { color: #ffffff; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
     .bubble-grid-container { padding: 0 1.25rem 2rem 1.25rem; }
     .bubble-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-    .bubble-card { border-radius: 20px; padding: 1.15rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.08); transition: transform 0.15s ease; cursor: pointer; }
+    .bubble-card { border-radius: 20px; padding: 1.15rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.08); transition: transform 0.15s ease; cursor: pointer; -webkit-tap-highlight-color: transparent; }
     .bubble-blue { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); }
     .bubble-amber { background: linear-gradient(135deg, #0f172a 0%, #78350f 100%); }
     .bubble-emerald { background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%); }
     .bubble-purple { background: linear-gradient(135deg, #0f172a 0%, #581c87 100%); }
-    .bubble-rose { background: linear-gradient(135deg, #0f172a 0%, #881337 100%); }
-    .bubble-slate { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); }
-    .bubble-card:active { transform: scale(0.95); }
-    .bubble-icon-holder { margin-bottom: 0.45rem; height: 34px; display: flex; align-items: center; justify-content: center; pointer-events: none; }
-    .bubble-icon-holder svg { width: 30px; height: 30px; fill: none; stroke-width: 2; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; }
-    .bubble-label { font-size: 0.78rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; pointer-events: none; }
-    .modal-backdrop { position: fixed; inset: 0; background: rgba(3, 7, 18, 0.86); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 1.25rem; z-index: 9999; }
-    .modal-box { background: #0b1329; border: 1px solid rgba(59, 130, 246, 0.45); border-radius: 16px; width: 100%; max-width: 400px; padding: 1.6rem; position: relative; text-align: left; box-shadow: 0 20px 50px rgba(0,0,0,0.85); }
-    .modal-x { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.08); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; }
-    .modal-badge { display: inline-block; font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #60a5fa; background: rgba(59,130,246,0.15); padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; }
-    .modal-head { font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 0.45rem; }
-    .modal-body { font-size: 0.86rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 1rem; }
-    .modal-list { list-style: none; border-top: 1px solid rgba(148,163,184,0.15); padding-top: 0.85rem; margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.8rem; color: #94a3b8; }
-    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
-    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
-    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
-    .footer-legal-links { margin-top: 0.85rem; display: flex; gap: 1.1rem; }
-    .footer-legal-links a { color: #3b82f6; text-decoration: none; font-weight: 700; font-size: 0.72rem; }
-    .footer-legal-links a:hover { text-decoration: underline; }
-    @media (min-width: 1024px) {
-      .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer { max-width: 1000px; }
-      .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
-      .bubble-grid { grid-template-columns: repeat(6, 1fr); gap: 1rem; }
-    }
-  </style>
-</head>
 <body>
   <div class="partner-briefing-banner">
     <div class="banner-header-title">Coming Soon</div>
@@ -152,40 +163,40 @@
   <h2 class="section-divider-title">Explore TrypCar</h2>
   <section class="bubble-grid-container">
     <div class="bubble-grid">
-      <div class="bubble-card bubble-blue" onclick="showInfo('ride')">
+      <button type="button" class="bubble-card bubble-blue" onclick="showInfo('ride')">
         <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M5 17H3a1 1 0 0 1-1-1v-4l2.3-5.2A2 2 0 0 1 6.1 5.5h11.8a2 2 0 0 1 1.8 1.3L22 12v4a1 1 0 0 1-1 1h-2"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M9.5 17h5"/><path d="M3 12h18"/></svg></div>
         <span class="bubble-label">Ride</span>
-      </div>
-      <div class="bubble-card bubble-amber" onclick="showInfo('reserve')">
+      </button>
+      <button type="button" class="bubble-card bubble-amber" onclick="showInfo('reserve')">
         <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="15" cy="16" r="3"/><polyline points="15 14.5 15 16 16 16.5"/></svg></div>
         <span class="bubble-label">Reserve</span>
-      </div>
-      <div class="bubble-card bubble-emerald" onclick="showInfo('hubs')">
+      </button>
+      <button type="button" class="bubble-card bubble-emerald" onclick="showInfo('hubs')">
         <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg></div>
         <span class="bubble-label">Hubs</span>
-      </div>
-      <div class="bubble-card bubble-purple" onclick="showInfo('lux')">
+      </button>
+      <button type="button" class="bubble-card bubble-purple" onclick="showInfo('lux')">
         <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <span class="bubble-label">Lux</span>
-      </div>
-      <div class="bubble-card bubble-rose" onclick="showInfo('eco')">
+      </button>
+      <button type="button" class="bubble-card bubble-rose" onclick="showInfo('eco')">
         <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></div>
         <span class="bubble-label">Eco</span>
-      </div>
-      <div class="bubble-card bubble-slate" onclick="showInfo('scootz')">
+      </button>
+      <button type="button" class="bubble-card bubble-slate" onclick="showInfo('scootz')">
         <div class="bubble-icon-holder"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 18h7"/><path d="M17 15.5L14.5 6H12"/><path d="M14.5 6h2.5"/></svg></div>
         <span class="bubble-label">Scootz</span>
-      </div>
+      </button>
     </div>
   </section>
   <div class="modal-backdrop" id="infoModal" onclick="hideInfo()">
     <div class="modal-box" onclick="event.stopPropagation()">
-      <button class="modal-x" onclick="hideInfo()">&times;</button>
+      <button type="button" class="modal-x" onclick="hideInfo()">&times;</button>
       <span class="modal-badge" id="mBadge">TrypCar</span>
       <h3 class="modal-head" id="mHead">Title</h3>
       <p class="modal-body" id="mBody">Description</p>
       <ul class="modal-list" id="mList"></ul>
-      <button class="corporate-submit-btn" onclick="hideInfo()">Close</button>
+      <button type="button" class="corporate-submit-btn" onclick="hideInfo()">Close</button>
     </div>
   </div>
   <footer class="global-site-footer">
@@ -197,26 +208,5 @@
       </div>
     </div>
   </footer>
-  <script>
-    const info = {
-      ride: { b: "On-Demand Campus Transit", h: "TrypCar Ride", d: "Peer-to-peer rides exclusively for .edu-verified university students within our 5-mile campus utility zone.", l: ["• 100% campus identity verified riders & drivers", "• Predictable flat-zone student pricing", "• Live trip tracking & campus safety share"] },
-      reserve: { b: "Scheduled Pathing", h: "TrypCar Reserve", d: "Schedule rides up to 14 days ahead for early exams, recurring weekly classes, or airport runs.", l: ["• Guaranteed pickup windows with zero surge pricing", "• AI-powered matching with regular student commuters", "• Set once for your whole semester schedule"] },
-      hubs: { b: "Smart Pickup Zones", h: "TrypCar Hubs", d: "Designated, well-lit campus boarding landmarks near dorms, libraries, Greek row, and transit gates.", l: ["• Eliminates curbside traffic & address confusion", "• Rapid walk-up dispatch during peak class changes", "• Monitored, high-visibility campus locations"] },
-      lux: { b: "Elevated Comfort", h: "TrypCar Lux", d: "Late-model sedans, spacious SUVs, and top-rated student drivers for formals, game days, and group nights out.", l: ["• Seating for up to 6 verified passengers", "• Top 5% highest-rated student driver tier", "• Priority dispatch on busy campus weekends"] },
-      eco: { b: "Zero-Emission & Shared", h: "TrypCar Eco", d: "Request EV/hybrid rides or share seats along the same campus corridor to split fares and cut emissions.", l: ["• Save up to 40% on shared campus corridor lines", "• EV & hybrid vehicle preference matching", "• Track your semester carbon savings"] },
-      scootz: { b: "Micro-Mobility Network", h: "Scootz™ Electric Scooters", d: "Grab a sleek electric scooter for fast cross-campus hops between classes when four wheels aren't needed.", l: ["• 15 MPH geo-fenced campus speed compliance", "• 1-tap QR unlock directly inside TrypCar", "• Convenient docks at all TrypCar Hubs"] }
-    };
-    function showInfo(k) {
-      const x = info[k];
-      document.getElementById("mBadge").textContent = x.b;
-      document.getElementById("mHead").textContent = x.h;
-      document.getElementById("mBody").textContent = x.d;
-      document.getElementById("mList").innerHTML = x.l.map(i => "<li>" + i + "</li>").join("");
-      document.getElementById("infoModal").style.display = "flex";
-    }
-    function hideInfo() { document.getElementById("infoModal").style.display = "none"; }
-    let reg = false;
-    function toggleFormMode() {
-      reg = !reg;
-      document.getElementById("gatewayTitle").textContent = reg ? "Join TrypCar Waitlist" : "TrypCar Campus Gateway";
-      document.getElementById("submitBtn").textContent = reg ? "Request Early Access" : "Verify University Credentials";
+</body>
+</html>
