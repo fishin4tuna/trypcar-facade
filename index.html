@@ -190,6 +190,12 @@
   </style>
 </head>
 <body>
+  <style>
+    .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ffb547; margin-right: 0.5rem; vertical-align: middle; position: relative; top: -1px; box-shadow: 0 0 0 0 rgba(255,181,71,0.7); animation: statusPulse 1.8s ease-out infinite; }
+    @keyframes statusPulse { 0% { box-shadow: 0 0 0 0 rgba(255,181,71,0.7); } 70% { box-shadow: 0 0 0 8px rgba(255,181,71,0); } 100% { box-shadow: 0 0 0 0 rgba(255,181,71,0); } }
+    @media (prefers-reduced-motion: reduce) { .status-dot { animation: none; } }
+  </style>
+
   <div class="intro" id="intro" aria-hidden="true">
     <div class="beam beam-left"></div>
     <div class="beam beam-right"></div>
@@ -200,7 +206,7 @@
     <div class="intro-skip">Tap to skip</div>
   </div>
 
-  <div class="launch-banner"><strong>Coming Soon</strong>TrypCar is in development and not yet operating. Join our waitlist to be the first to know when we launch.</div>
+  <div class="launch-banner"><span class="status-dot" aria-hidden="true"></span><strong>Coming Soon!</strong>TrypCar is in development and not yet operating. Join our waitlist to be the first to know when we launch.</div>
 
   <nav class="navbar">
     <div class="nav-inner">
