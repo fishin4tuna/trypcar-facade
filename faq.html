@@ -12,19 +12,18 @@
   <meta name="theme-color" content="#050b18">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="trypcar.css">
   <style>
-    .faq-category { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; color: var(--amber); margin: 2.25rem 0 0.85rem; }
+    .faq-category { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; color: var(--blue-light); margin: 2.25rem 0 0.85rem; }
     .faq-category:first-of-type { margin-top: 0; }
     .faq-item { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s ease; }
     .faq-item.open { border-color: rgba(59,130,246,0.5); }
-    .faq-question { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; color: var(--text); font-family: inherit; font-size: 0.95rem; font-weight: 600; text-align: left; padding: 1.1rem 1.25rem; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .faq-question { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; color: var(--text); font-family: var(--sans); font-size: 0.97rem; font-weight: 600; text-align: left; padding: 1.1rem 1.25rem; cursor: pointer; -webkit-tap-highlight-color: transparent; }
     .faq-icon { flex: 0 0 22px; width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(148,163,184,0.35); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 1rem; line-height: 1; transition: transform 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--amber); border-color: var(--amber); }
+    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--blue-light); border-color: var(--blue-light); }
     .faq-drawer { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1); }
-    .faq-answer { padding: 0 1.25rem 1.25rem; color: var(--muted); font-size: 0.88rem; }
-    .faq-answer a { color: var(--blue); font-weight: 600; }
+    .faq-answer { padding: 0 1.25rem 1.25rem; color: var(--muted); font-size: 0.9rem; }
+    .faq-answer a { color: var(--blue-light); font-weight: 600; }
     .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
     .faq-list { max-width: 760px; }
   </style>
@@ -93,59 +92,3 @@
       </div>
 
       <div class="faq-category">Service Zones &amp; Scootz</div>
-
-      <div class="faq-item">
-        <button type="button" class="faq-question" aria-expanded="false">How big is each campus service zone?<span class="faq-icon" aria-hidden="true">+</span></button>
-        <div class="faq-drawer"><div class="faq-answer">TrypCar plans to serve a 5-mile zone around each campus. Keeping the zone focused helps keep pickups fast and rides centered on student life.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button type="button" class="faq-question" aria-expanded="false">How will Scootz scooters work?<span class="faq-icon" aria-hidden="true">+</span></button>
-        <div class="faq-drawer"><div class="faq-answer">Scootz&trade; electric scooters will show their battery levels right in the TrypCar app and unlock with a quick scan, making short hops between classes easy.</div></div>
-      </div>
-    </div>
-
-    <section class="section">
-      <h2 class="section-title">Still have questions?</h2>
-      <p class="section-lead">Our team is happy to help.</p>
-      <div class="cta-row">
-        <a href="contact.html" class="btn btn-primary">Contact us</a>
-        <a href="index.html#portal" class="btn btn-ghost">Reserve your account</a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="wrap global-site-footer">
-    <div class="footer-legal-text">
-      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
-      <div class="footer-legal-links">
-        <a href="terms.html">Terms of Service</a>
-        <a href="privacy.html">Privacy Policy</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    (function () {
-      var items = document.querySelectorAll(".faq-item");
-      items.forEach(function (item) {
-        var button = item.querySelector(".faq-question");
-        var drawer = item.querySelector(".faq-drawer");
-        button.addEventListener("click", function () {
-          var isOpen = item.classList.contains("open");
-          items.forEach(function (other) {
-            other.classList.remove("open");
-            other.querySelector(".faq-drawer").style.maxHeight = null;
-            other.querySelector(".faq-question").setAttribute("aria-expanded", "false");
-          });
-          if (!isOpen) {
-            item.classList.add("open");
-            drawer.style.maxHeight = drawer.scrollHeight + "px";
-            button.setAttribute("aria-expanded", "true");
-          }
-        });
-      });
-    })();
-  </script>
-</body>
-</html>
