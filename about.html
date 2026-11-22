@@ -3,104 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Our Vision & Campus Safety Framework</title>
+  <title>Our Vision | TrypCar</title>
+  <meta name="description" content="TrypCar's vision: a members-only campus mobility network of company-owned vehicles, built exclusively for verified university communities.">
+  <link rel="canonical" href="https://trypcar.com/about.html">
+  <meta property="og:title" content="Our Vision | TrypCar">
+  <meta property="og:description" content="A members-only campus mobility network of company-owned vehicles for verified university communities.">
+  <meta property="og:image" content="https://trypcar.com/trypcar-hero.webp">
+  <meta name="theme-color" content="#050b18">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="trypcar.css">
+  <script>document.documentElement.className += " js";</script>
   <style>
-    /* Global Core Style Engine */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; min-height: 100vh; display: flex; flex-direction: column; }
-    
-    .navbar, .scrolling-features, .vision-header-container, .global-site-footer { 
-      width: 100%; 
-      max-width: 500px; 
-      margin: 0 auto; 
-    }
-    
-    .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
-    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
-    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
-    .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
-    .navigation-links a.active { color: #3b82f6; }
-    
-    /* Clean Centered Vision Header Content Layout Block */
-    .vision-header-container { margin: 3.5rem auto 1rem auto; padding: 0 1.25rem; text-align: center; }
-    .section-divider-title { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; color: #ffffff; margin-bottom: 0.75rem; }
-    .vision-intro-text { font-size: 0.92rem; color: #94a3b8; line-height: 1.5; max-width: 420px; margin: 0 auto; }
-    
-    .scrolling-features { padding: 1.5rem 1.25rem 3rem 1.25rem; display: flex; flex-direction: column; gap: 2.5rem; flex: 1; }
-    .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: 0 auto; }
-    .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
-    .oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-    
-    .row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff; letter-spacing: -0.01em; }
-    .row-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.5; text-align: center; }
-    
-    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); margin-top: auto; }
-    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
-    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
-    
-    .footer-nav { display: flex; justify-content: flex-start; gap: 1.5rem; margin-top: 0.75rem; }
-    .footer-nav a { color: #3b82f6; font-weight: 600; font-size: 0.68rem; text-decoration: none; }
-    .footer-nav a:hover { color: #ffffff; }
-
-    @media (min-width: 1024px) {
-      .navbar, .scrolling-features, .vision-header-container, .global-site-footer { max-width: 1000px; }
-      .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
-    }
+    .vision-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 1.75rem 1.4rem; }
+    .vision-icon { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(59,130,246,0.14) 0%, rgba(6,14,30,0) 70%); margin-bottom: 1rem; }
+    .vision-icon svg { width: 44px; height: 44px; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .vision-card h2 { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .vision-card p { color: var(--muted); font-size: 0.9rem; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    html.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    html.js .reveal.in { opacity: 1; transform: none; }
+    @media (min-width: 900px) { .card-grid.two { grid-template-columns: repeat(2, 1fr); } }
+    @media (prefers-reduced-motion: reduce) { html.js .reveal { opacity: 1; transform: none; transition: none; } }
   </style>
 </head>
 <body>
+  <div class="launch-banner"><span class="status-dot" aria-hidden="true"></span><strong>Coming Soon!</strong>TrypCar is in development and not yet operating. <a href="index.html#portal">Join our waitlist</a> to be the first to know when we launch.</div>
+
   <nav class="navbar">
-    <div class="navigation-links">
-      <a href="./">Home</a>
-      <a href="about.html" class="active">About</a>
-      <a href="support.html">Support</a>
-      <a href="faq.html">FAQ's</a>
-      <a href="contact.html">Contact</a>
+    <div class="nav-inner">
+      <div class="navigation-links">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About</a>
+        <a href="support.html">Support</a>
+        <a href="faq.html">FAQ's</a>
+        <a href="contact.html">Contact</a>
+      </div>
     </div>
   </nav>
-  
-  <!-- Fully Populated Vision Header Block with Omitted "We are" -->
-  <div class="vision-header-container">
-    <h2 class="section-divider-title">Our Vision</h2>
-    <p class="vision-intro-text">Redefining student transit through localized tech architecture. We aim to build a friction-free, ultra-secure mobility layer tailored exclusively to modern university ecosystems.</p>
-  </div>
-  
-  <main class="scrolling-features">
-    <!-- Vision Card 1: Custom Shield with Verified Green Checkmark Layer -->
-    <div class="centered-row-card">
-      <div class="oversized-icon-box">
-        <svg viewBox="0 0 24 24">
-          <!-- Blue Outer Security Shield Base Path -->
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" stroke-width="1.8" />
-          <!-- Re-aligned Green Checkmark Path Layer Embedded into Center Node -->
-          <path d="M9 11l2 2 4-4" stroke="#22c55e" stroke-width="2.2" />
-        </svg>
+
+  <main class="wrap page">
+    <header class="page-hero">
+      <h1 class="page-title">Our Vision</h1>
+      <p class="page-lead">Redefining student transit through localized tech architecture. We aim to build a friction-free, ultra-secure mobility layer tailored exclusively to modern university ecosystems.</p>
+    </header>
+
+    <div class="card-grid two">
+      <div class="vision-card reveal">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" stroke-width="1.8"/><path d="M9 11l2 2 4-4" stroke="#22c55e" stroke-width="2.2"/></svg>
+        </div>
+        <h2>Selective Isolation Model</h2>
+        <p>TrypCar operates with an intentional charter of selective isolation. We build localized mobility frameworks designed solely for verified campus environments. This deliberate constraint allows us to maintain unparalleled safety levels, zero municipal overlap, and highly predictable usage patterns across our network.</p>
       </div>
-      <h3 class="row-title">Selective Isolation Model</h3>
-      <p class="row-text">TrypCar operates with an intentional charter of selective isolation. We build localized mobility frameworks designed solely for verified campus environments. This deliberate constraint allows us to maintain unparalleled safety levels, zero municipal overlap, and highly predictable usage patterns across our network.</p>
-    </div>
-    
-    <!-- Vision Card 2: Correct Liability Minimization Wording -->
-    <div class="centered-row-card">
-      <div class="oversized-icon-box">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <polyline points="12 6 12 12 16 14"></polyline>
-        </svg>
+      <div class="vision-card reveal" style="transition-delay: 0.12s;">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24" stroke="#22c55e" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h2>Institutional Integration</h2>
+        <p>By integrating directly with institutional parameters and validating users exclusively through academic email registries, TrypCar helps reduce risk for the schools and universities it serves. TrypCar delivers predictable, secure, and highly reliable transit assets optimized specifically for university communities.</p>
       </div>
-      <h3 class="row-title">Institutional Integration</h3>
-      <p class="row-text">By integrating directly with institutional parameters and validating users exclusively through academic email registries, this minimizes potential liability from schools and universities. TrypCar delivers predictable, secure, and highly reliable transit assets optimized specifically for university communities.</p>
     </div>
+
+    <section class="section">
+      <h2 class="section-title">What sets TrypCar apart</h2>
+      <p class="section-lead">Built from the ground up for campus life, not adapted from a city rideshare app.</p>
+      <div class="card-grid three">
+        <div class="info-card reveal">
+          <h3><svg viewBox="0 0 24 24"><path d="M5 17H3a1 1 0 0 1-1-1v-4l2.3-5.2A2 2 0 0 1 6.1 5.5h11.8a2 2 0 0 1 1.8 1.3L22 12v4a1 1 0 0 1-1 1h-2"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg>Company-owned fleet</h3>
+          <p>Every ride will happen in a TrypCar vehicle, maintained to one standard, with professionally screened TrypCar drivers.</p>
+        </div>
+        <div class="info-card reveal" style="transition-delay: 0.12s;">
+          <h3><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Members-only network</h3>
+          <p>Riders join through their university email, creating a verified, close-knit community on every campus we serve.</p>
+        </div>
+        <div class="info-card reveal" style="transition-delay: 0.24s;">
+          <h3><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Campus-first design</h3>
+          <p>Pickup hubs, scheduled rides, and a 5-mile campus zone are planned around class schedules and student life.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Be part of what's next</h2>
+      <p class="section-lead">Reserve your account to be first in line on your campus, or reach out about partnerships and investment.</p>
+      <div class="cta-row">
+        <a href="index.html#portal" class="btn btn-primary">Reserve your account</a>
+        <a href="contact.html" class="btn btn-ghost">Contact us</a>
+      </div>
+    </section>
   </main>
 
-  <footer class="global-site-footer">
+  <footer class="wrap global-site-footer">
     <div class="footer-legal-text">
       <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+      <div class="footer-legal-links">
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
     </div>
-    <nav class="footer-nav">
-      <a href="terms.html">Terms of Service</a>
-      <a href="privacy.html">Privacy Policy</a>
-    </nav>
   </footer>
+
+  <script>
+    (function () {
+      var items = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        items.forEach(function (el) { observer.observe(el); });
+      } else {
+        items.forEach(function (el) { el.classList.add("in"); });
+      }
+    })();
+  </script>
 </body>
 </html>
