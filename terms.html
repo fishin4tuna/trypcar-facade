@@ -3,107 +3,144 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Conceptual Terms of Development & Prototype Simulation Parameters</title>
-  <meta name="description" content="Official developmental terms, structural rules, and non-operational simulation parameters for the TrypCar campus mobility prototype ecosystem framework.">
+  <title>Terms of Service | TrypCar</title>
+  <meta name="description" content="Terms of Service for the TrypCar website, waitlist, and account reservations during the pre-launch stage.">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#050b18">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="trypcar.css">
   <style>
-    /* Global Core Style Engine Alignment */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.6; }
-    
-    .navbar, .legal-container, .global-site-footer {
-      width: 100%;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-    
-    .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
-    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
-    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
-    .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
-    
-    .section-divider-title { margin: 2.5rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; color: #ffffff; text-align: center; }
-    
-    .legal-container { padding: 0 1.25rem 4rem 1.25rem; }
-    .legal-meta-box { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 8px; padding: 1rem; margin-bottom: 2rem; font-size: 0.75rem; color: #94a3b8; text-align: left; }
-    .legal-meta-box strong { color: #3b82f6; }
-    
-    .legal-section { margin-bottom: 2rem; text-align: left; }
-    .legal-section h3 { font-size: 0.95rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.6rem; border-bottom: 1px solid rgba(59, 130, 246, 0.1); padding-bottom: 0.25rem; }
-    .legal-section p { font-size: 0.82rem; color: #94a3b8; margin-bottom: 0.75rem; }
-    .legal-section ul { margin-left: 1.25rem; margin-bottom: 0.75rem; }
-    .legal-section li { font-size: 0.82rem; color: #94a3b8; margin-bottom: 0.4rem; list-style-type: square; }
-    
-    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
-    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
-    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
-    .footer-nav-links { display: flex; gap: 1rem; margin-top: 1rem; }
-    .footer-nav-links a { font-size: 0.68rem; color: #3b82f6; text-decoration: none; font-weight: 700; }
-    
-    @media (min-width: 1024px) {
-      .navbar, .legal-container, .global-site-footer { max-width: 1000px; }
-    }
+    .legal-body { max-width: 760px; }
+    .legal-meta { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--blue); border-radius: 12px; padding: 1.1rem 1.25rem; margin-bottom: 2.25rem; font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+    .legal-meta strong { color: var(--soft); font-weight: 600; }
+    .legal-section { margin-bottom: 2.25rem; }
+    .legal-section h2 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; color: var(--text); margin-bottom: 0.7rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--line); }
+    .legal-section p { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.8rem; }
+    .legal-section ul { margin: 0 0 0.8rem 1.2rem; }
+    .legal-section li { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.55rem; }
+    .legal-section strong { color: var(--soft); font-weight: 600; }
+    .legal-section a { color: var(--blue); font-weight: 600; }
   </style>
 </head>
 <body>
+  <div class="launch-banner"><span class="status-dot" aria-hidden="true"></span><strong>Coming Soon!</strong>TrypCar is in development and not yet operating. <a href="index.html#portal">Join our waitlist</a> to be the first to know when we launch.</div>
+
   <nav class="navbar">
-    <div class="navigation-links">
-      <a href="./">Home</a>
-      <a href="about.html">About</a>
-      <a href="support.html">Support</a>
-      <a href="faq.html">FAQ's</a>
-      <a href="contact.html">Contact</a>
+    <div class="nav-inner">
+      <div class="navigation-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="support.html">Support</a>
+        <a href="faq.html">FAQ's</a>
+        <a href="contact.html">Contact</a>
+      </div>
     </div>
   </nav>
 
-  <h2 class="section-divider-title">Developmental Parameters</h2>
-  
-  <main class="legal-container">
-    <div class="legal-meta-box">
-      <strong>Active Operational Node Build v1.10 Master Balance</strong><br>
-      Status: <strong>Pre-Launch Beta Stage &bull; Non-Operational Software Blueprint</strong><br>
-      Classification: Technical Simulation Framework &bull; Strictly for System Evaluation Purposes
+  <main class="wrap page">
+    <header class="page-hero">
+      <h1 class="page-title">Terms of Service</h1>
+      <p class="page-lead">Please read these terms carefully before using the TrypCar website or reserving an account.</p>
+    </header>
+
+    <div class="legal-body">
+      <div class="legal-meta">
+        <strong>Last updated:</strong> November 21, 2026<br>
+        <strong>Status:</strong> Pre-launch. TrypCar is in development and not yet operating.
+      </div>
+
+      <section class="legal-section">
+        <h2>1. Agreement to These Terms</h2>
+        <p>These Terms of Service ("Terms") govern your use of trypcar.com and any forms on it (together, the "Website"), operated by TrypCar, Inc. ("TrypCar," "we," "us," or "our"). By using the Website, submitting a form, or reserving an account, you agree to these Terms. If you do not agree, please do not use the Website.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>2. Pre-Launch Status</h2>
+        <p>TrypCar is in a developmental, pre-launch stage. We do not currently offer rides, vehicle service, scooter sharing, payments, or member accounts. Images, app screens, and feature descriptions on the Website are concepts that show what we plan to build. Planned features, service areas, pricing, and launch timing may change or may not be offered at all.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>3. Eligibility</h2>
+        <p>You must be at least 18 years old to submit information through the Website or reserve an account. By using our forms, you confirm that you meet this requirement.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>4. Waitlist and Account Reservations</h2>
+        <p>Reserving an account adds you to our launch waitlist. It does not create an active account, and it does not guarantee that TrypCar will launch at your campus, that you will be accepted as a member, or that any particular feature, price, or launch date will be available. We may email you with launch updates and related news about TrypCar. You can ask us to stop at any time by emailing <a href="mailto:info@trypcar.com">info@trypcar.com</a>.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>5. Information You Submit</h2>
+        <p>The waitlist and contact forms are the only active features of the Website. Information you submit, such as your name, email address, role, and message, is delivered to us by email through a third-party form service. We use it to respond to you and to send launch updates, as described in our <a href="privacy.html">Privacy Policy</a>. You agree that the information you submit is accurate and that you have the right to share it.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>6. Acceptable Use</h2>
+        <p>You agree not to:</p>
+        <ul>
+          <li>Submit false information or impersonate another person.</li>
+          <li>Send spam, automated submissions, or harmful code through the Website.</li>
+          <li>Attempt to interfere with, disrupt, or gain unauthorized access to the Website or its systems.</li>
+          <li>Use the Website for any unlawful purpose.</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2>7. No University Affiliation</h2>
+        <p>Unless we expressly state otherwise, TrypCar, Inc. is not affiliated with, sponsored by, or endorsed by any college or university. References to universities, campuses, or university email addresses describe how we plan to verify members and do not mean any school has partnered with us.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>8. Not an Offer of Securities</h2>
+        <p>Information on the Website is for general informational purposes only. Nothing on the Website is an offer to sell, or a solicitation of an offer to buy, any securities or investment in TrypCar, Inc. Statements about our plans and future features are forward-looking, reflect our current intentions, and may change.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>9. Intellectual Property</h2>
+        <p>TrypCar, Scootz, and related names and logos are trademarks of TrypCar, Inc. The Website's content, design, layout, graphics, and code are owned by TrypCar, Inc. and are protected by copyright and other intellectual property laws. You may not copy, reproduce, or use them without our written permission.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>10. Disclaimers</h2>
+        <p>The Website is provided "as is" and "as available," without warranties of any kind, whether express or implied, including warranties of merchantability, fitness for a particular purpose, accuracy, and non-infringement. We do not guarantee that the Website will be uninterrupted, error-free, or secure.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>11. Limitation of Liability</h2>
+        <p>To the fullest extent permitted by law, TrypCar, Inc. will not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of the Website. Our total liability for any claim related to the Website will not exceed one hundred U.S. dollars ($100).</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>12. Dispute Resolution, Arbitration, and Class Action Waiver</h2>
+        <p><strong>Please read this section carefully. It affects your legal rights.</strong></p>
+        <p>Except as stated below, any dispute between you and TrypCar, Inc. arising out of or relating to these Terms or the Website will be resolved by binding individual arbitration administered by the American Arbitration Association under its Consumer Arbitration Rules, rather than in court. The Federal Arbitration Act governs this section. The arbitration may be conducted by video or phone, or in the county where you live.</p>
+        <p><strong>Class action waiver:</strong> You and TrypCar, Inc. agree that each may bring claims against the other only in an individual capacity, and not as a plaintiff or class member in any class, collective, or representative proceeding.</p>
+        <p><strong>Small claims:</strong> Either party may instead bring an individual claim in small claims court if it qualifies.</p>
+        <p><strong>Opt-out:</strong> You may opt out of this arbitration agreement by emailing <a href="mailto:info@trypcar.com">info@trypcar.com</a> within 30 days of first agreeing to these Terms, with the subject line "Arbitration Opt-Out" and your name and email address.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>13. Changes to These Terms</h2>
+        <p>We may update these Terms from time to time. When we do, we will change the "Last updated" date above. Your continued use of the Website after an update means you accept the revised Terms. If TrypCar launches its service, separate rider terms will apply to rides and memberships.</p>
+      </section>
+
+      <section class="legal-section">
+        <h2>14. Contact</h2>
+        <p>Questions about these Terms? Email TrypCar, Inc. at <a href="mailto:info@trypcar.com">info@trypcar.com</a>.</p>
+      </section>
     </div>
-
-    <section class="legal-section">
-      <h3>1. Non-Operational Prototype Status</h3>
-      <p>This layout and associated files represent the TrypCar, Inc. ("TrypCar") peer-to-peer technology interface blueprint. The website framework is entirely in a developmental, pre-commercialization stage and does not offer live logistics, rideshare matching, scooter sharing, or transit utility functions. No live commercial accounts are active on this system.</p>
-    </section>
-
-    <section class="legal-section">
-      <h3>2. Hypothetical System Infrastructure</h3>
-      <p>All graphical elements, user entry fields, portal handshakes, and institutional gateway simulations are hosted purely to demonstrate the intended front-end visual architecture. They do not connect to a live backend database registry or active campus mobility servers. No real-world financial transacting or student matching is processed through this deployment.</p>
-    </section>
-
-    <section class="legal-section">
-      <h3>3. Conceptual Use Limitations</h3>
-      <p>When live system testing begins, the application architecture is designed to enforce strict parameters, which are established conceptually within this blueprint:</p>
-      <ul>
-        <li><strong>Campus Email Simulation:</strong> System registry lines are structured to accept only official, authenticated academic domain email lines during developer user testing.</li>
-        <li><strong>Geometric Boundary Grid:</strong> The routing algorithms are configured to restrict hypothetical system pathing to a rigid 5-mile localized parameter from a central campus hub node.</li>
-        <li><strong>Total Institutional Isolation:</strong> The system prototype is entirely independent of any academic board or administrative university department, meaning the host campus bears zero liability for developmental deployments.</li>
-      </ul>
-    </section>
-
-    <section class="legal-section">
-      <h3>4. Planned Safety & Liability Standards</h3>
-      <p>All text fields referencing vehicle verification parameters, student identity tokens, comprehensive insurance affirmations, and driver background layouts represent mandatory compliance baselines that will be deployed if the network platform transitions out of the pre-launch testing stage. They do not represent live data registries or verified active status right now.</p>
-    </section>
-
-    <section class="legal-section">
-      <h3>5. Trademark & Patent Claim Notice</h3>
-      <p>The layout configuration, custom vector iconography systems, underlying identity validation frameworks, and cryptographic network token schemas are the exclusive intellectual assets of TrypCar, Inc. and are fully protected under global trademark and trade secret laws as proprietary software blueprint concepts.</p>
-    </section>
   </main>
 
-  <footer class="global-site-footer">
+  <footer class="wrap global-site-footer">
     <div class="footer-legal-text">
       <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
-    </div>
-    <div class="footer-nav-links">
-      <a href="terms.html">Terms of Service</a>
+      <div class="footer-legal-links">
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
     </div>
   </footer>
 </body>
 </html>
-
