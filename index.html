@@ -19,6 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="trypcar.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -45,17 +46,6 @@
     })();
   </script>
   <style>
-    :root { --night: #050b18; --deep: #030712; --panel: #0b1329; --line: rgba(148,163,184,0.14); --blue: #3b82f6; --blue-strong: #2563eb; --amber: #ffb547; --text: #f8fafc; --muted: #94a3b8; --soft: #cbd5e1; --sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; --serif: "Source Serif 4", Georgia, "Times New Roman", serif; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    html, body { overflow-x: hidden; max-width: 100%; }
-    @supports (overflow: clip) { html, body { overflow-x: clip; } }
-    body { background: var(--night); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; line-height: 1.6; }
-    h1, h2, h3 { font-family: var(--serif); }
-    img { max-width: 100%; height: auto; }
-    .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 1.25rem; }
-    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
-
     .intro { position: fixed; inset: 0; z-index: 10000; background: #02050d; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; animation: introOut 0.8s ease 4s forwards; }
     .intro.done { animation: none; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s; }
     html.no-intro .intro { display: none; }
@@ -74,31 +64,12 @@
     @keyframes fadeIn { to { opacity: 1; } }
     @keyframes introOut { to { opacity: 0; visibility: hidden; } }
 
-    .launch-banner { background: linear-gradient(90deg, #0b1a3d, #13285c); border-bottom: 1px solid var(--line); padding: 0.65rem 1.25rem; text-align: center; font-size: 0.74rem; color: var(--soft); }
-    .launch-banner strong { color: var(--amber); font-weight: 700; margin-right: 0.4rem; }
-    .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--amber); margin-right: 0.5rem; vertical-align: middle; position: relative; top: -1px; animation: statusPulse 1.8s ease-out infinite; }
-    @keyframes statusPulse { 0% { box-shadow: 0 0 0 0 rgba(255,181,71,0.7); } 70% { box-shadow: 0 0 0 8px rgba(255,181,71,0); } 100% { box-shadow: 0 0 0 0 rgba(255,181,71,0); } }
-    .navbar { background: var(--deep); border-bottom: 1px solid var(--line); }
-    .nav-inner { display: flex; justify-content: center; padding: 1.1rem 1.25rem; }
-    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 380px; gap: 0.5rem; }
-    .navigation-links a { color: var(--muted); font-weight: 600; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; }
-    .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
-
-    .hero { position: relative; isolation: isolate; padding: 3.5rem 1.25rem 2rem; }
+    .hero { position: relative; isolation: isolate; padding-top: 3.5rem; padding-bottom: 2rem; }
     .hero::before { content: ""; position: absolute; top: -4rem; left: 0; width: 100%; height: 120%; background: radial-gradient(ellipse at 50% 0%, rgba(255,181,71,0.14), rgba(59,130,246,0.08) 40%, transparent 70%); pointer-events: none; z-index: -1; }
     .hero-title { font-weight: 700; font-size: clamp(2.7rem, 11vw, 5.4rem); line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 1.1rem; }
     .hero-sub { font-size: 1rem; font-weight: 300; color: var(--soft); max-width: 34rem; margin-bottom: 1.75rem; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.9rem 1.35rem; border-radius: 10px; font-weight: 600; font-size: 0.92rem; text-decoration: none; border: 1px solid transparent; cursor: pointer; font-family: var(--sans); transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.15s; }
-    .btn:active { transform: scale(0.97); }
-    .btn-primary { background: var(--blue-strong); color: #ffffff; }
-    .btn-primary:hover { background: #1d4ed8; }
-    .btn-ghost { background: transparent; color: var(--text); border-color: rgba(148,163,184,0.35); }
-    .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
-    .btn-block { width: 100%; }
-    .btn:disabled { opacity: 0.55; cursor: not-allowed; }
-    .hero-media { margin-top: 0.5rem; }
-    .hero-image-asset { width: 100%; height: auto; display: block; border-radius: 14px; border: 1px solid var(--line); }
+    .hero-frame { overflow: hidden; border-radius: 14px; border: 1px solid var(--line); }
+    .hero-image-asset { width: 100%; height: auto; display: block; transform: scale(1.18); will-change: transform; }
     .hero-caption { display: block; font-size: 0.72rem; color: #64748b; margin-top: 0.6rem; font-style: italic; }
 
     .ticker { margin-top: 2.75rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--deep); overflow: hidden; padding: 0.85rem 0; }
@@ -107,15 +78,19 @@
     .ticker-item::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--amber); margin-right: 1.4rem; }
     @keyframes tickerMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    .section { padding-top: 4rem; }
-    .section-title { font-weight: 700; font-size: clamp(1.85rem, 7.5vw, 2.8rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
-    .section-lead { color: var(--muted); font-size: 0.97rem; font-weight: 300; max-width: 36rem; margin-bottom: 2rem; }
-    .fleet-points { display: grid; gap: 1rem; }
-    .fleet-point { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--amber); border-radius: 12px; padding: 1.35rem 1.25rem; }
-    .fleet-point h3 { font-weight: 600; font-size: 1.15rem; letter-spacing: -0.01em; margin-bottom: 0.35rem; }
-    .fleet-point p { color: var(--muted); font-size: 0.9rem; }
-    html.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    html.js .reveal.in { opacity: 1; transform: none; }
+    .fleet-stack { display: grid; gap: 1.25rem; padding-bottom: 1rem; }
+    .fleet-point { position: sticky; top: calc(4.6rem + var(--i) * 0.9rem); background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--amber); border-radius: 14px; padding: 1.5rem 1.35rem; min-height: 9.5rem; box-shadow: 0 -10px 30px rgba(0,0,0,0.45); }
+    .fleet-point h3 { font-weight: 600; font-size: 1.2rem; letter-spacing: -0.01em; margin-bottom: 0.4rem; }
+    .fleet-point p { color: var(--muted); font-size: 0.92rem; }
+
+    .route-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 0.9rem; margin-bottom: 2rem; }
+    .route-map { width: 100%; height: auto; display: block; }
+    .route-line { stroke-dasharray: 390; stroke-dashoffset: 390; }
+    .route-card.play .route-line { animation: drawRoute 2.6s ease-in-out 0.3s forwards; }
+    @keyframes drawRoute { to { stroke-dashoffset: 0; } }
+    .hub-pulse { transform-box: fill-box; transform-origin: center; animation: hubPulse 2s ease-out infinite; }
+    @keyframes hubPulse { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(2.4); opacity: 0; } }
+    .route-caption { font-size: 0.72rem; color: #64748b; font-style: italic; margin-top: 0.6rem; text-align: center; }
 
     .swipe-hint { font-size: 0.78rem; color: var(--muted); margin: -1rem 0 1rem; }
     .steps { position: relative; display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 1.25rem 1rem; margin: 0 -1.25rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
@@ -129,7 +104,7 @@
     .steps-dot.active { width: 22px; background: var(--amber); }
 
     .bubble-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-    .bubble-card { border-radius: 20px; padding: 1.15rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.08); transition: transform 0.15s ease, border-color 0.2s; cursor: pointer; font-family: var(--sans); color: #ffffff; width: 100%; -webkit-tap-highlight-color: transparent; }
+    .bubble-card { border-radius: 20px; padding: 1.15rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.08); transition: transform 0.15s ease, border-color 0.2s; color: #ffffff; text-decoration: none; -webkit-tap-highlight-color: transparent; }
     .bubble-card:hover { border-color: rgba(255,181,71,0.5); }
     .bubble-card:active { transform: scale(0.95); }
     .bubble-blue { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); }
@@ -138,19 +113,9 @@
     .bubble-purple { background: linear-gradient(135deg, #0f172a 0%, #581c87 100%); }
     .bubble-rose { background: linear-gradient(135deg, #0f172a 0%, #881337 100%); }
     .bubble-slate { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); }
-    .bubble-icon-holder { margin-bottom: 0.45rem; height: 34px; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    .bubble-icon-holder { margin-bottom: 0.45rem; height: 34px; display: flex; align-items: center; justify-content: center; }
     .bubble-icon-holder svg { width: 30px; height: 30px; fill: none; stroke-width: 2; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; }
-    .bubble-label { font-size: 0.8rem; font-weight: 600; pointer-events: none; }
-
-    .modal-backdrop { position: fixed; inset: 0; background: rgba(3,7,18,0.86); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 1.25rem; z-index: 9999; }
-    .modal-box { background: var(--panel); border: 1px solid rgba(59,130,246,0.45); border-radius: 16px; width: 100%; max-width: 400px; padding: 1.6rem; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.85); }
-    .modal-x { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.08); border: none; color: #ffffff; width: 30px; height: 30px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; }
-    .modal-badge { display: inline-block; font-size: 0.68rem; font-weight: 600; color: #60a5fa; background: rgba(59,130,246,0.15); padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; }
-    .modal-head { font-weight: 700; font-size: 1.45rem; letter-spacing: -0.01em; margin-bottom: 0.45rem; padding-right: 2rem; }
-    .modal-body { font-size: 0.88rem; font-weight: 300; color: var(--soft); margin-bottom: 1rem; }
-    .modal-list { list-style: none; border-top: 1px solid var(--line); padding-top: 0.85rem; margin-bottom: 0.9rem; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.82rem; color: var(--muted); }
-    .modal-note { font-size: 0.72rem; color: #64748b; font-style: italic; margin-bottom: 1.1rem; }
-    .modal-actions { display: flex; flex-direction: column; gap: 0.6rem; }
+    .bubble-label { font-size: 0.8rem; font-weight: 600; }
 
     .portal-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 2rem 1.5rem; box-shadow: 0 15px 30px rgba(0,0,0,0.5); max-width: 520px; margin: 0 auto; }
     .portal-badge { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; color: var(--blue); margin-bottom: 0.75rem; }
@@ -160,39 +125,27 @@
     .portal-note { font-size: 0.82rem; color: var(--soft); background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 0.8rem 1rem; margin-bottom: 1rem; }
     .portal-switch { margin-top: 1rem; font-size: 0.77rem; color: var(--muted); text-align: center; }
     .portal-switch button { background: none; border: none; color: var(--blue); font-family: var(--sans); font-size: 0.77rem; font-weight: 600; cursor: pointer; }
-    .field-label { display: block; font-size: 0.74rem; font-weight: 600; color: var(--muted); margin-bottom: 0.4rem; }
-    .field { width: 100%; background: var(--deep); border: 1px solid rgba(148,163,184,0.2); border-radius: 8px; padding: 0.85rem 1rem; color: #ffffff; font-size: 0.94rem; margin-bottom: 1rem; font-family: var(--sans); }
-    .field:focus { outline: none; border-color: var(--blue-strong); box-shadow: 0 0 0 3px rgba(37,99,235,0.18); }
     .field:disabled { opacity: 0.5; cursor: not-allowed; }
-    select.field { appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, #94a3b8 50%), linear-gradient(135deg, #94a3b8 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 2.5rem; }
     .consent-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-size: 0.74rem; color: var(--muted); }
     .consent-row a { color: var(--blue); font-weight: 600; text-decoration: none; }
-    .hidden-field { display: none; }
-    .form-status { display: none; margin-top: 1rem; padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.84rem; }
-    .form-status.success { display: block; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.4); color: #bbf7d0; }
-    .form-status.error { display: block; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.4); color: #fecaca; }
-
-    .global-site-footer { margin-top: 4rem; padding-top: 2rem; padding-bottom: 3rem; border-top: 1px solid var(--line); }
-    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.7; }
-    .footer-legal-text strong { color: var(--muted); font-weight: 600; }
-    .footer-legal-links { margin-top: 0.85rem; display: flex; gap: 1.1rem; }
-    .footer-legal-links a { color: var(--blue); text-decoration: none; font-weight: 600; font-size: 0.74rem; }
 
     @media (min-width: 900px) {
       .hero { padding-top: 5rem; padding-bottom: 3rem; }
-      .fleet-points { grid-template-columns: repeat(3, 1fr); }
+      .fleet-stack { grid-template-columns: repeat(3, 1fr); }
+      .fleet-point { position: static; min-height: 0; box-shadow: none; }
+      .route-card { padding: 1.5rem; }
       .steps { display: grid; grid-template-columns: repeat(4, 1fr); overflow: visible; margin: 0; padding: 0; }
       .step-card { max-width: none; }
       .steps-dots, .swipe-hint { display: none; }
       .bubble-grid { grid-template-columns: repeat(6, 1fr); gap: 1rem; }
-      .modal-actions { flex-direction: row; }
     }
     @media (prefers-reduced-motion: reduce) {
       .intro { display: none; }
       .ticker-track { animation: none; }
-      .status-dot { animation: none; }
-      html.js .reveal { opacity: 1; transform: none; transition: none; }
-      html { scroll-behavior: auto; }
+      .route-line { stroke-dashoffset: 0; }
+      .route-card.play .route-line { animation: none; }
+      .hub-pulse { animation: none; }
+      .hero-image-asset { transform: none; }
     }
   </style>
 </head>
@@ -207,7 +160,7 @@
     <div class="intro-skip">Tap to skip</div>
   </div>
 
-  <div class="launch-banner"><span class="status-dot" aria-hidden="true"></span><strong>Coming Soon!</strong>TrypCar is in development and not yet operating. Join our waitlist to be the first to know when we launch.</div>
+  <div class="launch-banner"><span class="status-dot" aria-hidden="true"></span><strong>Coming Soon!</strong>TrypCar is in development and not yet operating. <a href="#portal">Join our waitlist</a> to be the first to know when we launch.</div>
 
   <nav class="navbar">
     <div class="nav-inner">
@@ -224,14 +177,16 @@
   <header class="wrap hero">
     <h1 class="hero-title">Your campus.<br>Our fleet.</h1>
     <p class="hero-sub">TrypCar is building a members-only ride network of company-owned vehicles and professionally screened drivers, made exclusively for verified university communities.</p>
-    <div class="hero-actions">
+    <div class="cta-row">
       <a href="#portal" class="btn btn-primary">Reserve your account</a>
       <a href="#fleet" class="btn btn-ghost">Why our own fleet</a>
     </div>
   </header>
 
-  <div class="wrap hero-media">
-    <img src="trypcar-hero.webp" onerror="this.onerror=null;this.src='1792984078309.png';" alt="TrypCar concept: a white TrypCar vehicle on a university campus with the TrypCar app on a phone" class="hero-image-asset">
+  <div class="wrap">
+    <div class="hero-frame">
+      <img src="trypcar-hero.webp" onerror="this.onerror=null;this.src='1792984078309.png';" alt="TrypCar concept: a white TrypCar vehicle on a university campus with the TrypCar app on a phone" class="hero-image-asset" id="heroImage">
+    </div>
     <span class="hero-caption">Concept preview. Features shown are planned and not yet available.</span>
   </div>
 
@@ -257,16 +212,16 @@
   <section class="wrap section" id="fleet">
     <h2 class="section-title">Why our own fleet</h2>
     <p class="section-lead">Most rideshare apps rely on drivers' personal cars. TrypCar will own, maintain, and stand behind every vehicle in its network.</p>
-    <div class="fleet-points">
-      <div class="fleet-point reveal">
+    <div class="fleet-stack">
+      <div class="fleet-point" style="--i: 0;">
         <h3>One standard for every vehicle</h3>
         <p>Every ride will happen in a TrypCar-owned vehicle, maintained and inspected on a regular schedule.</p>
       </div>
-      <div class="fleet-point reveal" style="transition-delay: 0.12s;">
+      <div class="fleet-point" style="--i: 1;">
         <h3>Screened, trained drivers</h3>
         <p>TrypCar drivers will pass background checks and safety training before their first campus ride.</p>
       </div>
-      <div class="fleet-point reveal" style="transition-delay: 0.24s;">
+      <div class="fleet-point" style="--i: 2;">
         <h3>One company accountable</h3>
         <p>The car, the driver, and the ride all answer to one company, with campus safety built in from day one.</p>
       </div>
@@ -276,10 +231,52 @@
   <section class="wrap section" id="how">
     <h2 class="section-title">How it will work</h2>
     <p class="section-lead">Four simple steps from your dorm to wherever you're headed.</p>
+
+    <div class="route-card" id="routeCard">
+      <svg class="route-map" viewBox="0 0 360 220" role="img" aria-label="Illustration of a TrypCar route from a residence hall to a TrypCar Hub">
+        <rect width="360" height="220" rx="12" fill="#07122a"/>
+        <g fill="#0c1a38">
+          <rect x="52" y="12" width="86" height="36" rx="4"/>
+          <rect x="162" y="12" width="136" height="36" rx="4"/>
+          <rect x="322" y="12" width="30" height="36" rx="4"/>
+          <rect x="52" y="72" width="86" height="36" rx="4"/>
+          <rect x="322" y="72" width="30" height="36" rx="4"/>
+          <rect x="52" y="132" width="86" height="36" rx="4"/>
+          <rect x="162" y="132" width="136" height="36" rx="4"/>
+          <rect x="322" y="132" width="30" height="36" rx="4"/>
+          <rect x="52" y="192" width="86" height="20" rx="4"/>
+          <rect x="162" y="192" width="136" height="20" rx="4"/>
+        </g>
+        <rect x="162" y="72" width="136" height="36" rx="4" fill="rgba(16,185,129,0.1)"/>
+        <g stroke="rgba(148,163,184,0.16)" stroke-width="1.5">
+          <line x1="0" y1="60" x2="360" y2="60"/>
+          <line x1="0" y1="120" x2="360" y2="120"/>
+          <line x1="0" y1="180" x2="360" y2="180"/>
+          <line x1="40" y1="0" x2="40" y2="220"/>
+          <line x1="150" y1="0" x2="150" y2="220"/>
+          <line x1="310" y1="0" x2="310" y2="220"/>
+        </g>
+        <text x="95" y="94" fill="#64748b" font-size="10" font-weight="600" text-anchor="middle">Library</text>
+        <text x="230" y="94" fill="#34d399" font-size="10" font-weight="600" text-anchor="middle" opacity="0.8">Campus Quad</text>
+        <text x="230" y="154" fill="#64748b" font-size="10" font-weight="600" text-anchor="middle">Dining Hall</text>
+        <path class="route-line" d="M40 180 L40 120 L150 120 L150 60 L310 60" fill="none" stroke="#ffb547" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="40" cy="180" r="7" fill="#3b82f6" stroke="#f8fafc" stroke-width="2"/>
+        <text x="52" y="204" fill="#cbd5e1" font-size="11" font-weight="600">Residence Hall</text>
+        <circle class="hub-pulse" cx="310" cy="60" r="8" fill="none" stroke="#10b981" stroke-width="2"/>
+        <circle cx="310" cy="60" r="7" fill="#10b981" stroke="#f8fafc" stroke-width="2"/>
+        <text x="298" y="44" fill="#cbd5e1" font-size="11" font-weight="600" text-anchor="end">TrypCar Hub</text>
+        <g id="routeCar" opacity="0">
+          <circle r="6.5" fill="#f8fafc" stroke="#ffb547" stroke-width="2.5"/>
+          <animateMotion id="carMotion" dur="2.6s" begin="indefinite" fill="freeze" path="M40 180 L40 120 L150 120 L150 60 L310 60"/>
+        </g>
+      </svg>
+      <p class="route-caption">Illustration of the planned TrypCar experience.</p>
+    </div>
+
     <p class="swipe-hint">Swipe to see each step</p>
     <div class="steps" id="steps">
       <div class="step-card"><div class="step-num">01</div><h3>Verify</h3><p>Sign up with your university email to join your campus network.</p></div>
-      <div class="step-card"><div class="step-num">02</div><h3>Request or reserve</h3><p>Ride now, or schedule ahead for classes, exams, and airport runs.</p></div>
+      <div class="step-card"><div class="step-num">02</div><h3>Request or reserve</h3><p>Ride now, or schedule ahead for classes, exams, and weekend plans.</p></div>
       <div class="step-card"><div class="step-num">03</div><h3>Meet at a hub</h3><p>Walk to a well-lit TrypCar Hub or a set pickup point near you.</p></div>
       <div class="step-card"><div class="step-num">04</div><h3>Ride TrypCar</h3><p>A TrypCar vehicle and driver take you anywhere inside your campus zone.</p></div>
     </div>
@@ -290,19 +287,19 @@
       <button type="button" class="steps-dot" aria-label="Step 4"></button>
     </div>
   </section>
-
   <section class="wrap section">
     <h2 class="section-title">Explore TrypCar</h2>
     <p class="section-lead">Tap a service to see what's planned.</p>
     <div class="bubble-grid">
-      <button type="button" class="bubble-card bubble-blue" onclick="showInfo('ride')"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M5 17H3a1 1 0 0 1-1-1v-4l2.3-5.2A2 2 0 0 1 6.1 5.5h11.8a2 2 0 0 1 1.8 1.3L22 12v4a1 1 0 0 1-1 1h-2"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M9.5 17h5"/><path d="M3 12h18"/></svg></span><span class="bubble-label">Ride</span></button>
-      <button type="button" class="bubble-card bubble-amber" onclick="showInfo('reserve')"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="15" cy="16" r="3"/><polyline points="15 14.5 15 16 16 16.5"/></svg></span><span class="bubble-label">Reserve</span></button>
-      <button type="button" class="bubble-card bubble-emerald" onclick="showInfo('hubs')"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg></span><span class="bubble-label">Hubs</span></button>
-      <button type="button" class="bubble-card bubble-purple" onclick="showInfo('lux')"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="bubble-label">Lux</span></button>
-      <button type="button" class="bubble-card bubble-rose" onclick="showInfo('eco')"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span><span class="bubble-label">Eco</span></button>
-      <button type="button" class="bubble-card bubble-slate" onclick="showInfo('scootz')"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 18h7"/><path d="M17 15.5L14.5 6H12"/><path d="M14.5 6h2.5"/></svg></span><span class="bubble-label">Scootz</span></button>
+      <a href="ride.html" class="bubble-card bubble-blue"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M5 17H3a1 1 0 0 1-1-1v-4l2.3-5.2A2 2 0 0 1 6.1 5.5h11.8a2 2 0 0 1 1.8 1.3L22 12v4a1 1 0 0 1-1 1h-2"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M9.5 17h5"/><path d="M3 12h18"/></svg></span><span class="bubble-label">Ride</span></a>
+      <a href="reserve.html" class="bubble-card bubble-amber"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="15" cy="16" r="3"/><polyline points="15 14.5 15 16 16 16.5"/></svg></span><span class="bubble-label">Reserve</span></a>
+      <a href="hubs.html" class="bubble-card bubble-emerald"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg></span><span class="bubble-label">Hubs</span></a>
+      <a href="lux.html" class="bubble-card bubble-purple"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="bubble-label">Lux</span></a>
+      <a href="eco.html" class="bubble-card bubble-rose"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span><span class="bubble-label">Eco</span></a>
+      <a href="scootz.html" class="bubble-card bubble-slate"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 18h7"/><path d="M17 15.5L14.5 6H12"/><path d="M14.5 6h2.5"/></svg></span><span class="bubble-label">Scootz</span></a>
     </div>
   </section>
+
   <section class="wrap section" id="portal">
     <div class="portal-card">
       <div class="portal-badge">
@@ -355,21 +352,6 @@
     </div>
   </section>
 
-  <div class="modal-backdrop" id="infoModal" onclick="hideInfo()">
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mHead" onclick="event.stopPropagation()">
-      <button type="button" class="modal-x" onclick="hideInfo()" aria-label="Close">&times;</button>
-      <span class="modal-badge" id="mBadge">TrypCar</span>
-      <h3 class="modal-head" id="mHead">TrypCar</h3>
-      <p class="modal-body" id="mBody"></p>
-      <ul class="modal-list" id="mList"></ul>
-      <p class="modal-note">Planned feature. Not yet available.</p>
-      <div class="modal-actions">
-        <a href="index.html" class="btn btn-primary btn-block" id="mLink">Learn more</a>
-        <button type="button" class="btn btn-ghost btn-block" onclick="hideInfo()">Close</button>
-      </div>
-    </div>
-  </div>
-
   <footer class="wrap global-site-footer">
     <div class="footer-legal-text">
       <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
@@ -381,35 +363,7 @@
   </footer>
 
   <script>
-    var info = {
-      ride: { b: "On-demand campus rides", h: "TrypCar Ride", page: "ride.html", d: "Request a ride in a TrypCar-owned vehicle, driven by a professionally screened TrypCar driver, anywhere inside your 5-mile campus zone.", l: ["• Riders verified through university email", "• Simple, predictable campus pricing", "• Live trip tracking with a safety share option"] },
-      reserve: { b: "Scheduled rides", h: "TrypCar Reserve", page: "reserve.html", d: "Book rides ahead for early exams, recurring classes, or airport runs.", l: ["• Plan up to 14 days ahead", "• Recurring rides for your class schedule", "• Reminders before every pickup"] },
-      hubs: { b: "Smart pickup zones", h: "TrypCar Hubs", page: "hubs.html", d: "Designated, well-lit pickup spots near dorms, libraries, and campus gates.", l: ["• Easy to find during busy class changes", "• Less curbside confusion", "• Home bases for Scootz scooters"] },
-      lux: { b: "Premium rides", h: "TrypCar Lux", page: "lux.html", d: "Larger, upscale TrypCar vehicles for formals, game days, and group nights out.", l: ["• Room for larger groups", "• Upscale fleet vehicles", "• Bookable ahead for big events"] },
-      eco: { b: "Electric and shared", h: "TrypCar Eco", page: "eco.html", d: "Electric and hybrid fleet vehicles, plus shared rides along the same campus route to split the cost.", l: ["• Shared rides to lower the fare", "• Electric and hybrid vehicles", "• Track your carbon savings in the app"] },
-      scootz: { b: "Micro-mobility", h: "Scootz™ Electric Scooters", page: "scootz.html", d: "Quick electric scooter hops between classes when a car isn't needed.", l: ["• Campus-friendly speed limits", "• Unlock right from the TrypCar app", "• Docks at TrypCar Hubs"] }
-    };
-
-    function showInfo(key) {
-      var item = info[key];
-      if (!item) return;
-      document.getElementById("mBadge").textContent = item.b;
-      document.getElementById("mHead").textContent = item.h;
-      document.getElementById("mBody").textContent = item.d;
-      var list = document.getElementById("mList");
-      list.innerHTML = "";
-      item.l.forEach(function (line) {
-        var li = document.createElement("li");
-        li.textContent = line;
-        list.appendChild(li);
-      });
-      document.getElementById("mLink").setAttribute("href", item.page);
-      document.getElementById("infoModal").style.display = "flex";
-    }
-
-    function hideInfo() {
-      document.getElementById("infoModal").style.display = "none";
-    }
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     function setPortal(mode) {
       var create = mode === "create";
@@ -419,10 +373,6 @@
       document.getElementById("tabSignin").classList.toggle("active", !create);
       document.getElementById("portalTitle").textContent = create ? "Create your account" : "Member sign in";
     }
-
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") hideInfo();
-    });
 
     (function () {
       var intro = document.getElementById("intro");
@@ -434,19 +384,38 @@
     })();
 
     (function () {
-      var items = document.querySelectorAll(".reveal");
+      var image = document.getElementById("heroImage");
+      if (!image || reduceMotion) return;
+      var ticking = false;
+      window.addEventListener("scroll", function () {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function () {
+          var shift = Math.min(window.scrollY * 0.06, 28);
+          image.style.transform = "scale(1.18) translateY(" + shift + "px)";
+          ticking = false;
+        });
+      }, { passive: true });
+    })();
+
+    (function () {
+      var card = document.getElementById("routeCard");
+      var car = document.getElementById("routeCar");
+      var motion = document.getElementById("carMotion");
+      if (!card || !car) return;
+      function finish() { car.setAttribute("opacity", "1"); car.setAttribute("transform", "translate(310 60)"); }
+      function play() {
+        card.classList.add("play");
+        if (reduceMotion || !motion || typeof motion.beginElement !== "function") { finish(); return; }
+        setTimeout(function () { car.setAttribute("opacity", "1"); motion.beginElement(); }, 300);
+      }
       if ("IntersectionObserver" in window) {
         var observer = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("in");
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.2 });
-        items.forEach(function (el) { observer.observe(el); });
+          if (entries[0].isIntersecting) { play(); observer.disconnect(); }
+        }, { threshold: 0.4 });
+        observer.observe(card);
       } else {
-        items.forEach(function (el) { el.classList.add("in"); });
+        play();
       }
     })();
 
