@@ -297,3 +297,171 @@
         <input type="hidden" name="access_key" value="06dee726-65d3-4e8d-afcd-e14d52f99693">
         <input type="hidden" name="subject" value="New TrypCar waitlist signup">
         <input type="hidden" name="from_name" value="TrypCar Website">
+        <input type="checkbox" name="botcheck" class="hidden-field" tabindex="-1" autocomplete="off">
+        <label class="field-label" for="waitlist-email">Email address</label>
+        <input type="email" id="waitlist-email" name="email" class="field" placeholder="username@university.edu" required>
+        <label class="field-label" for="waitlist-role">I am a</label>
+        <select id="waitlist-role" name="role" class="field" required>
+          <option value="" disabled selected>Select one</option>
+          <option value="Student">Student</option>
+          <option value="Parent">Parent</option>
+          <option value="University Faculty or Staff">University Faculty or Staff</option>
+          <option value="Investor">Investor</option>
+          <option value="Other">Other</option>
+        </select>
+        <div class="consent-row">
+          <input type="checkbox" id="legalConsent" name="consent" value="Agreed to Terms and Privacy Policy" required style="accent-color: #2563eb;">
+          <label for="legalConsent">I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a></label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Request early access</button>
+        <div id="waitlist-status" class="form-status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <div class="modal-backdrop" id="infoModal" onclick="hideInfo()">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mHead" onclick="event.stopPropagation()">
+      <button type="button" class="modal-x" onclick="hideInfo()" aria-label="Close">&times;</button>
+      <span class="modal-badge" id="mBadge">TrypCar</span>
+      <h3 class="modal-head" id="mHead">TrypCar</h3>
+      <p class="modal-body" id="mBody"></p>
+      <ul class="modal-list" id="mList"></ul>
+      <p class="modal-note">Planned feature. Not yet available.</p>
+      <div class="modal-actions">
+        <a href="index.html" class="btn btn-primary btn-block" id="mLink">Learn more</a>
+        <button type="button" class="btn btn-ghost btn-block" onclick="hideInfo()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="wrap global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+      <div class="footer-legal-links">
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var info = {
+      ride: { b: "On-demand campus rides", h: "TrypCar Ride", page: "ride.html", d: "Request a ride in a TrypCar-owned vehicle, driven by a professionally screened TrypCar driver, anywhere inside your 5-mile campus zone.", l: ["• Riders verified through university email", "• Simple, predictable campus pricing", "• Live trip tracking with a safety share option"] },
+      reserve: { b: "Scheduled rides", h: "TrypCar Reserve", page: "reserve.html", d: "Book rides ahead for early exams, recurring classes, or airport runs.", l: ["• Plan up to 14 days ahead", "• Recurring rides for your class schedule", "• Reminders before every pickup"] },
+      hubs: { b: "Smart pickup zones", h: "TrypCar Hubs", page: "hubs.html", d: "Designated, well-lit pickup spots near dorms, libraries, and campus gates.", l: ["• Easy to find during busy class changes", "• Less curbside confusion", "• Home bases for Scootz scooters"] },
+      lux: { b: "Premium rides", h: "TrypCar Lux", page: "lux.html", d: "Larger, upscale TrypCar vehicles for formals, game days, and group nights out.", l: ["• Room for larger groups", "• Upscale fleet vehicles", "• Bookable ahead for big events"] },
+      eco: { b: "Electric and shared", h: "TrypCar Eco", page: "eco.html", d: "Electric and hybrid fleet vehicles, plus shared rides along the same campus route to split the cost.", l: ["• Shared rides to lower the fare", "• Electric and hybrid vehicles", "• Track your carbon savings in the app"] },
+      scootz: { b: "Micro-mobility", h: "Scootz™ Electric Scooters", page: "scootz.html", d: "Quick electric scooter hops between classes when a car isn't needed.", l: ["• Campus-friendly speed limits", "• Unlock right from the TrypCar app", "• Docks at TrypCar Hubs"] }
+    };
+
+    function showInfo(key) {
+      var item = info[key];
+      if (!item) return;
+      document.getElementById("mBadge").textContent = item.b;
+      document.getElementById("mHead").textContent = item.h;
+      document.getElementById("mBody").textContent = item.d;
+      var list = document.getElementById("mList");
+      list.innerHTML = "";
+      item.l.forEach(function (line) {
+        var li = document.createElement("li");
+        li.textContent = line;
+        list.appendChild(li);
+      });
+      document.getElementById("mLink").setAttribute("href", item.page);
+      document.getElementById("infoModal").style.display = "flex";
+    }
+
+    function hideInfo() {
+      document.getElementById("infoModal").style.display = "none";
+    }
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") hideInfo();
+    });
+
+    (function () {
+      var intro = document.getElementById("intro");
+      if (!intro) return;
+      intro.addEventListener("click", function () { intro.classList.add("done"); });
+      intro.addEventListener("animationend", function (event) {
+        if (event.target === intro) intro.style.display = "none";
+      });
+    })();
+
+    (function () {
+      var items = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+        items.forEach(function (el) { observer.observe(el); });
+      } else {
+        items.forEach(function (el) { el.classList.add("in"); });
+      }
+    })();
+
+    (function () {
+      var steps = document.getElementById("steps");
+      var dots = document.querySelectorAll(".steps-dot");
+      if (!steps) return;
+      function updateDots() {
+        var cards = steps.children;
+        var center = steps.scrollLeft + steps.clientWidth / 2;
+        var index = 0;
+        var best = Infinity;
+        for (var i = 0; i < cards.length; i++) {
+          var mid = cards[i].offsetLeft + cards[i].offsetWidth / 2;
+          var distance = Math.abs(mid - center);
+          if (distance < best) { best = distance; index = i; }
+        }
+        dots.forEach(function (dot, i) { dot.classList.toggle("active", i === index); });
+      }
+      steps.addEventListener("scroll", function () { window.requestAnimationFrame(updateDots); }, { passive: true });
+      dots.forEach(function (dot, i) {
+        dot.addEventListener("click", function () {
+          var card = steps.children[i];
+          steps.scrollTo({ left: card.offsetLeft - (steps.clientWidth - card.offsetWidth) / 2, behavior: "smooth" });
+        });
+      });
+    })();
+
+    (function () {
+      var form = document.getElementById("waitlist-form");
+      var statusBox = document.getElementById("waitlist-status");
+      var button = form.querySelector('button[type="submit"]');
+      var buttonText = button.textContent;
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        statusBox.className = "form-status";
+        statusBox.textContent = "";
+        button.disabled = true;
+        button.textContent = "Sending...";
+        fetch(form.action, { method: "POST", body: new FormData(form) })
+          .then(function (response) { return response.json(); })
+          .then(function (data) {
+            if (data.success) {
+              form.reset();
+              statusBox.textContent = "You're on the list. We'll email you as soon as TrypCar launches on your campus.";
+              statusBox.className = "form-status success";
+            } else {
+              throw new Error("Submission failed");
+            }
+          })
+          .catch(function () {
+            statusBox.textContent = "Your request could not be sent. Please email us directly at info@trypcar.com.";
+            statusBox.className = "form-status error";
+          })
+          .finally(function () {
+            button.disabled = false;
+            button.textContent = buttonText;
+          });
+      });
+    })();
+  </script>
+</body>
+</html>
