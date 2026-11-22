@@ -3,30 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Company-Owned Campus Ride Network | Launching Soon</title>
-  <meta name="description" content="TrypCar is building a campus ride network of company-owned vehicles and professionally screened drivers, made exclusively for verified university communities. Join the waitlist.">
+  <title>TrypCar | Members-Only Campus Mobility Network | Launching Soon</title>
+  <meta name="description" content="TrypCar is building a members-only campus ride network of company-owned vehicles and professionally screened drivers, made exclusively for verified university communities. Join the waitlist.">
   <meta name="keywords" content="TrypCar, Tryp Car, campus rides, university transportation, student transportation, campus mobility, Scootz">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://trypcar.com/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TrypCar">
   <meta property="og:title" content="TrypCar | Your campus. Our fleet.">
-  <meta property="og:description" content="A campus ride network of company-owned vehicles for verified university communities. Launching soon.">
+  <meta property="og:description" content="A members-only campus ride network of company-owned vehicles for verified university communities. Launching soon.">
   <meta property="og:url" content="https://trypcar.com/">
-  <meta property="og:image" content="https://trypcar.com/1792984078309.png">
+  <meta property="og:image" content="https://trypcar.com/trypcar-hero.webp">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#050b18">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "TrypCar, Inc.",
     "url": "https://trypcar.com/",
-    "logo": "https://trypcar.com/1792984078309.png",
-    "description": "A campus ride network of company-owned vehicles and professionally screened drivers for verified university communities.",
+    "logo": "https://trypcar.com/trypcar-hero.webp",
+    "description": "A members-only campus ride network of company-owned vehicles and professionally screened drivers for verified university communities.",
     "hasPart": [
       { "@type": "WebPage", "name": "About Our Vision", "url": "https://trypcar.com/about.html" },
       { "@type": "WebPage", "name": "Frequently Asked Questions", "url": "https://trypcar.com/faq.html" },
@@ -48,38 +48,42 @@
     :root { --night: #050b18; --deep: #030712; --panel: #0b1329; --line: rgba(148,163,184,0.14); --blue: #3b82f6; --blue-strong: #2563eb; --amber: #ffb547; --text: #f8fafc; --muted: #94a3b8; --soft: #cbd5e1; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background: var(--night); color: var(--text); font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.55; overflow-x: hidden; }
+    body { background: var(--night); color: var(--text); font-family: "Sora", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.6; overflow-x: hidden; }
     .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 1.25rem; }
     a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
 
-    .intro { position: fixed; inset: 0; z-index: 10000; background: #02050d; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; animation: introOut 0.7s ease 2.2s forwards; }
+    .intro { position: fixed; inset: 0; z-index: 10000; background: #02050d; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; animation: introOut 0.6s ease 2.2s forwards; }
     .intro.done { animation: none; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s; }
     html.no-intro .intro { display: none; }
     .beam { position: absolute; bottom: -20vh; width: 70vmax; height: 130vh; transform-origin: 50% 100%; background: linear-gradient(to top, rgba(255,200,120,0.6), rgba(255,200,120,0) 75%); clip-path: polygon(46% 100%, 54% 100%, 100% 0, 0 0); filter: blur(14px); opacity: 0; }
-    .beam-left { left: calc(50% - 35vmax - 18vw); animation: sweepLeft 1.7s cubic-bezier(0.2,0.7,0.2,1) 0.1s forwards; }
-    .beam-right { left: calc(50% - 35vmax + 18vw); animation: sweepRight 1.7s cubic-bezier(0.2,0.7,0.2,1) 0.1s forwards; }
-    .intro-mark { position: relative; font-weight: 900; font-stretch: 125%; font-size: clamp(2.6rem, 13vw, 6.5rem); letter-spacing: 0.04em; color: #ffffff; text-shadow: 0 0 30px rgba(255,181,71,0.55); opacity: 0; animation: markIn 1s ease-out 0.75s forwards; }
-    .intro-skip { position: absolute; bottom: 2.5rem; font-size: 0.75rem; color: rgba(248,250,252,0.45); opacity: 0; animation: fadeIn 0.5s ease 1s forwards; }
+    .beam-left { left: calc(50% - 35vmax - 18vw); animation: sweepLeft 1.4s cubic-bezier(0.2,0.7,0.2,1) 0.1s forwards; }
+    .beam-right { left: calc(50% - 35vmax + 18vw); animation: sweepRight 1.4s cubic-bezier(0.2,0.7,0.2,1) 0.1s forwards; }
+    .intro-center { position: relative; width: 100%; padding: 0 1rem; text-align: center; }
+    .intro-mark { display: inline-block; white-space: nowrap; font-weight: 800; font-size: clamp(2.4rem, 12vw, 6rem); line-height: 1; letter-spacing: 0.06em; padding-left: 0.06em; color: transparent; -webkit-text-fill-color: transparent; background-image: linear-gradient(105deg, #ffffff 0%, #ffffff 42%, #ffd98a 47%, #fffbe6 50%, #ffd98a 53%, #ffffff 58%, #ffffff 100%); background-size: 250% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 0 22px rgba(255,181,71,0.5)); opacity: 0; animation: markIn 0.8s ease-out 0.5s forwards, glint 0.7s ease-in-out 1.3s forwards; }
+    .intro-tag { margin-top: 0.9rem; white-space: nowrap; font-weight: 300; font-size: clamp(0.62rem, 2.6vw, 0.9rem); letter-spacing: 0.32em; padding-left: 0.32em; text-transform: uppercase; color: rgba(255,214,150,0.9); opacity: 0; animation: fadeUp 0.6s ease 1.1s forwards; }
+    .intro-skip { position: absolute; bottom: 2.5rem; left: 0; right: 0; text-align: center; font-size: 0.72rem; color: rgba(248,250,252,0.45); opacity: 0; animation: fadeIn 0.5s ease 0.9s forwards; }
     @keyframes sweepLeft { 0% { opacity: 0; transform: rotate(-40deg); } 35% { opacity: 1; } 100% { opacity: 0.8; transform: rotate(10deg); } }
     @keyframes sweepRight { 0% { opacity: 0; transform: rotate(40deg); } 35% { opacity: 1; } 100% { opacity: 0.8; transform: rotate(-10deg); } }
-    @keyframes markIn { 0% { opacity: 0; letter-spacing: 0.35em; filter: blur(10px); } 100% { opacity: 1; letter-spacing: 0.04em; filter: blur(0); } }
+    @keyframes markIn { 0% { opacity: 0; letter-spacing: 0.3em; padding-left: 0.3em; filter: blur(10px) drop-shadow(0 0 22px rgba(255,181,71,0.5)); } 100% { opacity: 1; letter-spacing: 0.06em; padding-left: 0.06em; filter: blur(0) drop-shadow(0 0 22px rgba(255,181,71,0.5)); } }
+    @keyframes glint { from { background-position: 100% 0; } to { background-position: 0% 0; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
     @keyframes fadeIn { to { opacity: 1; } }
     @keyframes introOut { to { opacity: 0; visibility: hidden; } }
 
-    .launch-banner { background: linear-gradient(90deg, #0b1a3d, #13285c); border-bottom: 1px solid var(--line); padding: 0.65rem 1.25rem; text-align: center; font-size: 0.74rem; font-weight: 600; color: var(--soft); }
-    .launch-banner strong { color: var(--amber); font-weight: 800; margin-right: 0.4rem; }
+    .launch-banner { background: linear-gradient(90deg, #0b1a3d, #13285c); border-bottom: 1px solid var(--line); padding: 0.65rem 1.25rem; text-align: center; font-size: 0.72rem; font-weight: 400; color: var(--soft); }
+    .launch-banner strong { color: var(--amber); font-weight: 700; margin-right: 0.4rem; }
     .navbar { background: var(--deep); border-bottom: 1px solid var(--line); }
     .nav-inner { display: flex; justify-content: center; padding: 1.1rem 1.25rem; }
     .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 380px; gap: 0.5rem; }
-    .navigation-links a { color: var(--muted); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; }
+    .navigation-links a { color: var(--muted); font-weight: 600; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; }
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
 
     .hero { position: relative; isolation: isolate; padding: 3.5rem 1.25rem 2rem; }
     .hero::before { content: ""; position: absolute; top: -4rem; left: 50%; width: 140%; height: 120%; transform: translateX(-50%); background: radial-gradient(ellipse at 50% 0%, rgba(255,181,71,0.14), rgba(59,130,246,0.08) 40%, transparent 70%); pointer-events: none; z-index: -1; }
-    .hero-title { font-weight: 900; font-stretch: 125%; font-size: clamp(2.7rem, 11vw, 5.6rem); line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 1.1rem; }
-    .hero-sub { font-size: 1.02rem; color: var(--soft); max-width: 34rem; margin-bottom: 1.75rem; }
+    .hero-title { font-weight: 800; font-size: clamp(2.5rem, 10.5vw, 5.2rem); line-height: 1.02; letter-spacing: -0.035em; margin-bottom: 1.1rem; }
+    .hero-sub { font-size: 0.98rem; font-weight: 300; color: var(--soft); max-width: 34rem; margin-bottom: 1.75rem; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.9rem 1.35rem; border-radius: 10px; font-weight: 800; font-size: 0.92rem; text-decoration: none; border: 1px solid transparent; cursor: pointer; font-family: inherit; transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.15s; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.9rem 1.35rem; border-radius: 10px; font-weight: 600; font-size: 0.9rem; text-decoration: none; border: 1px solid transparent; cursor: pointer; font-family: inherit; transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.15s; }
     .btn:active { transform: scale(0.97); }
     .btn-primary { background: var(--blue-strong); color: #ffffff; }
     .btn-primary:hover { background: #1d4ed8; }
@@ -89,31 +93,31 @@
     .btn:disabled { opacity: 0.6; cursor: wait; }
     .hero-media { margin-top: 0.5rem; }
     .hero-image-asset { width: 100%; height: auto; display: block; border-radius: 14px; border: 1px solid var(--line); }
-    .hero-caption { display: block; font-size: 0.72rem; color: #64748b; margin-top: 0.6rem; font-style: italic; }
+    .hero-caption { display: block; font-size: 0.7rem; color: #64748b; margin-top: 0.6rem; font-style: italic; }
 
     .ticker { margin-top: 2.75rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--deep); overflow: hidden; padding: 0.85rem 0; }
     .ticker-track { display: flex; width: max-content; animation: tickerMove 32s linear infinite; }
-    .ticker-item { display: flex; align-items: center; white-space: nowrap; font-weight: 700; font-stretch: 112%; font-size: 0.85rem; color: var(--soft); padding: 0 1.4rem; }
+    .ticker-item { display: flex; align-items: center; white-space: nowrap; font-weight: 600; font-size: 0.82rem; color: var(--soft); padding: 0 1.4rem; }
     .ticker-item::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--amber); margin-right: 1.4rem; }
     @keyframes tickerMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
     .section { padding-top: 4rem; }
-    .section-title { font-weight: 900; font-stretch: 120%; font-size: clamp(1.8rem, 7vw, 2.8rem); line-height: 1.05; margin-bottom: 0.75rem; }
-    .section-lead { color: var(--muted); font-size: 0.98rem; max-width: 36rem; margin-bottom: 2rem; }
+    .section-title { font-weight: 800; font-size: clamp(1.75rem, 7vw, 2.7rem); line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 0.75rem; }
+    .section-lead { color: var(--muted); font-size: 0.95rem; font-weight: 300; max-width: 36rem; margin-bottom: 2rem; }
     .fleet-points { display: grid; gap: 1rem; }
     .fleet-point { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--amber); border-radius: 12px; padding: 1.35rem 1.25rem; }
-    .fleet-point h3 { font-weight: 800; font-stretch: 110%; font-size: 1.12rem; margin-bottom: 0.35rem; }
-    .fleet-point p { color: var(--muted); font-size: 0.9rem; }
+    .fleet-point h3 { font-weight: 700; font-size: 1.05rem; letter-spacing: -0.01em; margin-bottom: 0.35rem; }
+    .fleet-point p { color: var(--muted); font-size: 0.88rem; }
     html.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
     html.js .reveal.in { opacity: 1; transform: none; }
 
-    .swipe-hint { font-size: 0.78rem; color: var(--muted); margin: -1rem 0 1rem; }
+    .swipe-hint { font-size: 0.76rem; color: var(--muted); margin: -1rem 0 1rem; }
     .steps { position: relative; display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 1.25rem 1rem; margin: 0 -1.25rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
     .steps::-webkit-scrollbar { display: none; }
     .step-card { flex: 0 0 82%; max-width: 340px; scroll-snap-align: center; background: linear-gradient(160deg, #0f1d40, #0b1329 60%); border: 1px solid var(--line); border-radius: 18px; padding: 1.6rem 1.4rem; min-height: 210px; }
-    .step-num { font-weight: 900; font-stretch: 125%; font-size: 2.6rem; line-height: 1; color: var(--amber); margin-bottom: 1rem; }
-    .step-card h3 { font-weight: 800; font-stretch: 110%; font-size: 1.2rem; margin-bottom: 0.4rem; }
-    .step-card p { color: var(--muted); font-size: 0.9rem; }
+    .step-num { font-weight: 800; font-size: 2.4rem; line-height: 1; letter-spacing: -0.03em; color: var(--amber); margin-bottom: 1rem; }
+    .step-card h3 { font-weight: 700; font-size: 1.12rem; margin-bottom: 0.4rem; }
+    .step-card p { color: var(--muted); font-size: 0.88rem; }
     .steps-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.5rem; }
     .steps-dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(148,163,184,0.35); border: none; padding: 0; cursor: pointer; transition: width 0.25s, background-color 0.25s; }
     .steps-dot.active { width: 22px; background: var(--amber); }
@@ -130,35 +134,35 @@
     .bubble-slate { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); }
     .bubble-icon-holder { margin-bottom: 0.45rem; height: 34px; display: flex; align-items: center; justify-content: center; pointer-events: none; }
     .bubble-icon-holder svg { width: 30px; height: 30px; fill: none; stroke-width: 2; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; }
-    .bubble-label { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.02em; pointer-events: none; }
+    .bubble-label { font-size: 0.78rem; font-weight: 600; pointer-events: none; }
 
     .modal-backdrop { position: fixed; inset: 0; background: rgba(3,7,18,0.86); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 1.25rem; z-index: 9999; }
     .modal-box { background: var(--panel); border: 1px solid rgba(59,130,246,0.45); border-radius: 16px; width: 100%; max-width: 400px; padding: 1.6rem; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.85); }
     .modal-x { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.08); border: none; color: #ffffff; width: 30px; height: 30px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; }
-    .modal-badge { display: inline-block; font-size: 0.66rem; font-weight: 800; color: #60a5fa; background: rgba(59,130,246,0.15); padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; }
-    .modal-head { font-weight: 900; font-stretch: 115%; font-size: 1.35rem; margin-bottom: 0.45rem; padding-right: 2rem; }
-    .modal-body { font-size: 0.88rem; color: var(--soft); margin-bottom: 1rem; }
-    .modal-list { list-style: none; border-top: 1px solid var(--line); padding-top: 0.85rem; margin-bottom: 0.9rem; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.82rem; color: var(--muted); }
-    .modal-note { font-size: 0.72rem; color: #64748b; font-style: italic; margin-bottom: 1.1rem; }
+    .modal-badge { display: inline-block; font-size: 0.66rem; font-weight: 600; color: #60a5fa; background: rgba(59,130,246,0.15); padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; }
+    .modal-head { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; margin-bottom: 0.45rem; padding-right: 2rem; }
+    .modal-body { font-size: 0.86rem; font-weight: 300; color: var(--soft); margin-bottom: 1rem; }
+    .modal-list { list-style: none; border-top: 1px solid var(--line); padding-top: 0.85rem; margin-bottom: 0.9rem; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.8rem; color: var(--muted); }
+    .modal-note { font-size: 0.7rem; color: #64748b; font-style: italic; margin-bottom: 1.1rem; }
     .modal-actions { display: flex; flex-direction: column; gap: 0.6rem; }
 
     .waitlist-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 2rem 1.5rem; box-shadow: 0 15px 30px rgba(0,0,0,0.5); max-width: 520px; margin: 0 auto; }
-    .field-label { display: block; font-size: 0.72rem; font-weight: 700; color: var(--muted); margin-bottom: 0.4rem; }
-    .field { width: 100%; background: var(--deep); border: 1px solid rgba(148,163,184,0.2); border-radius: 8px; padding: 0.85rem 1rem; color: #ffffff; font-size: 0.95rem; margin-bottom: 1rem; font-family: inherit; }
+    .field-label { display: block; font-size: 0.72rem; font-weight: 600; color: var(--muted); margin-bottom: 0.4rem; }
+    .field { width: 100%; background: var(--deep); border: 1px solid rgba(148,163,184,0.2); border-radius: 8px; padding: 0.85rem 1rem; color: #ffffff; font-size: 0.92rem; margin-bottom: 1rem; font-family: inherit; }
     .field:focus { outline: none; border-color: var(--blue-strong); box-shadow: 0 0 0 3px rgba(37,99,235,0.18); }
     select.field { appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, #94a3b8 50%), linear-gradient(135deg, #94a3b8 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 2.5rem; }
-    .consent-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-size: 0.74rem; color: var(--muted); }
-    .consent-row a { color: var(--blue); font-weight: 700; text-decoration: none; }
+    .consent-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-size: 0.72rem; color: var(--muted); }
+    .consent-row a { color: var(--blue); font-weight: 600; text-decoration: none; }
     .hidden-field { display: none; }
-    .form-status { display: none; margin-top: 1rem; padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.84rem; }
+    .form-status { display: none; margin-top: 1rem; padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.82rem; }
     .form-status.success { display: block; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.4); color: #bbf7d0; }
     .form-status.error { display: block; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.4); color: #fecaca; }
 
     .global-site-footer { margin-top: 4rem; padding-top: 2rem; padding-bottom: 3rem; border-top: 1px solid var(--line); }
-    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; }
+    .footer-legal-text { font-size: 0.66rem; color: #64748b; line-height: 1.7; }
     .footer-legal-text strong { color: var(--muted); font-weight: 600; }
     .footer-legal-links { margin-top: 0.85rem; display: flex; gap: 1.1rem; }
-    .footer-legal-links a { color: var(--blue); text-decoration: none; font-weight: 700; font-size: 0.74rem; }
+    .footer-legal-links a { color: var(--blue); text-decoration: none; font-weight: 600; font-size: 0.72rem; }
 
     @media (min-width: 900px) {
       .hero { padding-top: 5rem; padding-bottom: 3rem; }
@@ -181,7 +185,10 @@
   <div class="intro" id="intro" aria-hidden="true">
     <div class="beam beam-left"></div>
     <div class="beam beam-right"></div>
-    <div class="intro-mark">TRYPCAR</div>
+    <div class="intro-center">
+      <div class="intro-mark">TRYPCAR</div>
+      <div class="intro-tag">Members-only campus mobility</div>
+    </div>
     <div class="intro-skip">Tap to skip</div>
   </div>
 
@@ -201,7 +208,7 @@
 
   <header class="wrap hero">
     <h1 class="hero-title">Your campus.<br>Our fleet.</h1>
-    <p class="hero-sub">TrypCar is building a ride network of company-owned vehicles and professionally screened drivers, made exclusively for verified university communities.</p>
+    <p class="hero-sub">TrypCar is building a members-only ride network of company-owned vehicles and professionally screened drivers, made exclusively for verified university communities.</p>
     <div class="hero-actions">
       <a href="#waitlist" class="btn btn-primary">Join the waitlist</a>
       <a href="#fleet" class="btn btn-ghost">Why our own fleet</a>
@@ -209,7 +216,7 @@
   </header>
 
   <div class="wrap hero-media">
-    <img src="1792984078309.png" alt="TrypCar concept preview" class="hero-image-asset">
+    <img src="trypcar-hero.webp" onerror="this.onerror=null;this.src='1792984078309.png';" alt="TrypCar concept: a white TrypCar vehicle on a university campus with the TrypCar app on a phone" class="hero-image-asset">
     <span class="hero-caption">Concept preview. Features shown are planned and not yet available.</span>
   </div>
 
@@ -290,171 +297,3 @@
         <input type="hidden" name="access_key" value="06dee726-65d3-4e8d-afcd-e14d52f99693">
         <input type="hidden" name="subject" value="New TrypCar waitlist signup">
         <input type="hidden" name="from_name" value="TrypCar Website">
-        <input type="checkbox" name="botcheck" class="hidden-field" tabindex="-1" autocomplete="off">
-        <label class="field-label" for="waitlist-email">Email address</label>
-        <input type="email" id="waitlist-email" name="email" class="field" placeholder="username@university.edu" required>
-        <label class="field-label" for="waitlist-role">I am a</label>
-        <select id="waitlist-role" name="role" class="field" required>
-          <option value="" disabled selected>Select one</option>
-          <option value="Student">Student</option>
-          <option value="Parent">Parent</option>
-          <option value="University Faculty or Staff">University Faculty or Staff</option>
-          <option value="Investor">Investor</option>
-          <option value="Other">Other</option>
-        </select>
-        <div class="consent-row">
-          <input type="checkbox" id="legalConsent" name="consent" value="Agreed to Terms and Privacy Policy" required style="accent-color: #2563eb;">
-          <label for="legalConsent">I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a></label>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Request early access</button>
-        <div id="waitlist-status" class="form-status" role="status" aria-live="polite"></div>
-      </form>
-    </div>
-  </section>
-
-  <div class="modal-backdrop" id="infoModal" onclick="hideInfo()">
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mHead" onclick="event.stopPropagation()">
-      <button type="button" class="modal-x" onclick="hideInfo()" aria-label="Close">&times;</button>
-      <span class="modal-badge" id="mBadge">TrypCar</span>
-      <h3 class="modal-head" id="mHead">TrypCar</h3>
-      <p class="modal-body" id="mBody"></p>
-      <ul class="modal-list" id="mList"></ul>
-      <p class="modal-note">Planned feature. Not yet available.</p>
-      <div class="modal-actions">
-        <a href="index.html" class="btn btn-primary btn-block" id="mLink">Learn more</a>
-        <button type="button" class="btn btn-ghost btn-block" onclick="hideInfo()">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <footer class="wrap global-site-footer">
-    <div class="footer-legal-text">
-      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
-      <div class="footer-legal-links">
-        <a href="terms.html">Terms of Service</a>
-        <a href="privacy.html">Privacy Policy</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    var info = {
-      ride: { b: "On-demand campus rides", h: "TrypCar Ride", page: "ride.html", d: "Request a ride in a TrypCar-owned vehicle, driven by a professionally screened TrypCar driver, anywhere inside your 5-mile campus zone.", l: ["• Riders verified through university email", "• Simple, predictable campus pricing", "• Live trip tracking with a safety share option"] },
-      reserve: { b: "Scheduled rides", h: "TrypCar Reserve", page: "reserve.html", d: "Book rides ahead for early exams, recurring classes, or airport runs.", l: ["• Plan up to 14 days ahead", "• Recurring rides for your class schedule", "• Reminders before every pickup"] },
-      hubs: { b: "Smart pickup zones", h: "TrypCar Hubs", page: "hubs.html", d: "Designated, well-lit pickup spots near dorms, libraries, and campus gates.", l: ["• Easy to find during busy class changes", "• Less curbside confusion", "• Home bases for Scootz scooters"] },
-      lux: { b: "Premium rides", h: "TrypCar Lux", page: "lux.html", d: "Larger, upscale TrypCar vehicles for formals, game days, and group nights out.", l: ["• Room for larger groups", "• Upscale fleet vehicles", "• Bookable ahead for big events"] },
-      eco: { b: "Electric and shared", h: "TrypCar Eco", page: "eco.html", d: "Electric and hybrid fleet vehicles, plus shared rides along the same campus route to split the cost.", l: ["• Shared rides to lower the fare", "• Electric and hybrid vehicles", "• Track your carbon savings in the app"] },
-      scootz: { b: "Micro-mobility", h: "Scootz™ Electric Scooters", page: "scootz.html", d: "Quick electric scooter hops between classes when a car isn't needed.", l: ["• Campus-friendly speed limits", "• Unlock right from the TrypCar app", "• Docks at TrypCar Hubs"] }
-    };
-
-    function showInfo(key) {
-      var item = info[key];
-      if (!item) return;
-      document.getElementById("mBadge").textContent = item.b;
-      document.getElementById("mHead").textContent = item.h;
-      document.getElementById("mBody").textContent = item.d;
-      var list = document.getElementById("mList");
-      list.innerHTML = "";
-      item.l.forEach(function (line) {
-        var li = document.createElement("li");
-        li.textContent = line;
-        list.appendChild(li);
-      });
-      document.getElementById("mLink").setAttribute("href", item.page);
-      document.getElementById("infoModal").style.display = "flex";
-    }
-
-    function hideInfo() {
-      document.getElementById("infoModal").style.display = "none";
-    }
-
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") hideInfo();
-    });
-
-    (function () {
-      var intro = document.getElementById("intro");
-      if (!intro) return;
-      intro.addEventListener("click", function () { intro.classList.add("done"); });
-      intro.addEventListener("animationend", function (event) {
-        if (event.target === intro) intro.style.display = "none";
-      });
-    })();
-
-    (function () {
-      var items = document.querySelectorAll(".reveal");
-      if ("IntersectionObserver" in window) {
-        var observer = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("in");
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.2 });
-        items.forEach(function (el) { observer.observe(el); });
-      } else {
-        items.forEach(function (el) { el.classList.add("in"); });
-      }
-    })();
-
-    (function () {
-      var steps = document.getElementById("steps");
-      var dots = document.querySelectorAll(".steps-dot");
-      if (!steps) return;
-      function updateDots() {
-        var cards = steps.children;
-        var center = steps.scrollLeft + steps.clientWidth / 2;
-        var index = 0;
-        var best = Infinity;
-        for (var i = 0; i < cards.length; i++) {
-          var mid = cards[i].offsetLeft + cards[i].offsetWidth / 2;
-          var distance = Math.abs(mid - center);
-          if (distance < best) { best = distance; index = i; }
-        }
-        dots.forEach(function (dot, i) { dot.classList.toggle("active", i === index); });
-      }
-      steps.addEventListener("scroll", function () { window.requestAnimationFrame(updateDots); }, { passive: true });
-      dots.forEach(function (dot, i) {
-        dot.addEventListener("click", function () {
-          var card = steps.children[i];
-          steps.scrollTo({ left: card.offsetLeft - (steps.clientWidth - card.offsetWidth) / 2, behavior: "smooth" });
-        });
-      });
-    })();
-
-    (function () {
-      var form = document.getElementById("waitlist-form");
-      var statusBox = document.getElementById("waitlist-status");
-      var button = form.querySelector('button[type="submit"]');
-      var buttonText = button.textContent;
-      form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        statusBox.className = "form-status";
-        statusBox.textContent = "";
-        button.disabled = true;
-        button.textContent = "Sending...";
-        fetch(form.action, { method: "POST", body: new FormData(form) })
-          .then(function (response) { return response.json(); })
-          .then(function (data) {
-            if (data.success) {
-              form.reset();
-              statusBox.textContent = "You're on the list. We'll email you as soon as TrypCar launches on your campus.";
-              statusBox.className = "form-status success";
-            } else {
-              throw new Error("Submission failed");
-            }
-          })
-          .catch(function () {
-            statusBox.textContent = "Your request could not be sent. Please email us directly at info@trypcar.com.";
-            statusBox.className = "form-status error";
-          })
-          .finally(function () {
-            button.disabled = false;
-            button.textContent = buttonText;
-          });
-      });
-    })();
-  </script>
-</body>
-</html>
