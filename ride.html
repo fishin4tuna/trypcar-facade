@@ -3,29 +3,150 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Request A Ride</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.25rem; }
-    .card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 20px; width: 100%; max-width: 450px; padding: 3rem 2rem; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); text-align: center; }
-    .icon-holder { margin-bottom: 1.5rem; display: inline-flex; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(6, 14, 30, 0) 75%); padding: 1rem; border-radius: 50%; }
-    .icon-holder svg { width: 64px; height: 64px; fill: none; stroke-width: 2; stroke: #3b82f6; }
-    h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.01em; }
-    p { font-size: 0.9rem; color: #94a3b8; line-height: 1.6; margin-bottom: 2rem; }
-    .btn { display: inline-block; width: 100%; background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 0.9rem; border-radius: 6px; font-weight: 700; font-size: 0.88rem; transition: background-color 0.15s ease; letter-spacing: 0.02em; }
-    .btn:hover { background-color: #1d4ed8; }
-  </style>
+  <title>TrypCar Ride | On-Demand Campus Rides</title>
+  <meta name="description" content="TrypCar Ride: on-demand campus rides in company-owned vehicles with professionally screened drivers, for verified university communities. Planned service, launching soon.">
+  <link rel="canonical" href="https://trypcar.com/ride.html">
+  <meta property="og:title" content="TrypCar Ride | On-Demand Campus Rides">
+  <meta property="og:description" content="Campus rides in company-owned vehicles with professionally screened drivers. Launching soon.">
+  <meta property="og:image" content="https://trypcar.com/trypcar-hero.webp">
+  <meta name="theme-color" content="#050b18">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="trypcar.css">
+  <script>document.documentElement.className += " js";</script>
 </head>
-<body>
+<body style="--accent: #3b82f6; --accent-soft: #60a5fa; --accent-glow: rgba(59,130,246,0.16); --accent-line: rgba(59,130,246,0.38);">
+  <div class="launch-banner"><span class="status-dot" aria-hidden="true"></span><strong>Coming Soon!</strong>TrypCar is in development and not yet operating. <a href="index.html#portal">Join our waitlist</a> to be the first to know when we launch.</div>
 
-  <div class="card">
-    <div class="icon-holder">
-      <svg viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="navigation-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="support.html">Support</a>
+        <a href="faq.html">FAQ's</a>
+        <a href="contact.html">Contact</a>
+      </div>
     </div>
-    <h1>Campus Ride Portal</h1>
-    <p>On-demand transport services optimized for verified campus networks. Fast dispatch routines mapped securely inside localized campus infrastructure limits.</p>
-    <a href="index.html" class="btn">Return to Gateway Hub</a>
-  </div>
+  </nav>
 
+  <main class="wrap">
+    <header class="service-hero">
+      <span class="service-badge"><svg viewBox="0 0 24 24"><path d="M5 17H3a1 1 0 0 1-1-1v-4l2.3-5.2A2 2 0 0 1 6.1 5.5h11.8a2 2 0 0 1 1.8 1.3L22 12v4a1 1 0 0 1-1 1h-2"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg>TrypCar Ride</span>
+      <h1 class="page-title">Campus rides,<br>on demand.</h1>
+      <p class="page-lead">Request a ride in a TrypCar-owned vehicle, driven by a professionally screened TrypCar driver, anywhere inside your campus zone.</p>
+      <div class="cta-row" style="margin-top: 1.5rem;">
+        <a href="index.html#portal" class="btn btn-primary">Reserve your account</a>
+        <a href="#how" class="btn btn-ghost">See how it will work</a>
+      </div>
+      <span class="plan-note">Planned service. Not yet available.</span>
+    </header>
+
+    <section class="section" id="how">
+      <h2 class="section-title">How it will work</h2>
+      <p class="section-lead">From request to drop-off in four simple steps.</p>
+      <ol class="timeline">
+        <li class="reveal"><h3>Sign in</h3><p>Open the TrypCar app and sign in with your verified university email.</p></li>
+        <li class="reveal" style="transition-delay: 0.1s;"><h3>Set your pickup</h3><p>Choose your current location or the nearest TrypCar Hub, then pick where you're headed.</p></li>
+        <li class="reveal" style="transition-delay: 0.2s;"><h3>Track your ride</h3><p>See your vehicle and driver before they arrive, follow them on the map, and share your trip with a friend.</p></li>
+        <li class="reveal" style="transition-delay: 0.3s;"><h3>Arrive</h3><p>Hop out at your destination. Payment happens in the app, so there's nothing to fumble with.</p></li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Built different from rideshare</h2>
+      <p class="section-lead">Every part of TrypCar Ride is planned around one company standing behind the whole trip.</p>
+      <div class="feature-grid">
+        <div class="feature-card reveal">
+          <svg viewBox="0 0 24 24"><path d="M5 17H3a1 1 0 0 1-1-1v-4l2.3-5.2A2 2 0 0 1 6.1 5.5h11.8a2 2 0 0 1 1.8 1.3L22 12v4a1 1 0 0 1-1 1h-2"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg>
+          <h3>Company-owned vehicles</h3>
+          <p>No personal cars. Every ride will be in a TrypCar vehicle, maintained and inspected on a regular schedule.</p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.1s;">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          <h3>Screened, trained drivers</h3>
+          <p>TrypCar drivers will pass background checks, motor vehicle record reviews, and safety training before their first ride.</p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.2s;">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <h3>Members only</h3>
+          <p>Riders verify through their university email, so everyone in the network is part of your campus community.</p>
+        </div>
+        <div class="feature-card reveal">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg>
+          <h3>Live tracking and trip sharing</h3>
+          <p>Follow your ride in real time and send your trip to a friend or family member with one tap.</p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.1s;">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <h3>Simple campus pricing</h3>
+          <p>Fares are planned to be clear and upfront inside your campus zone, designed with student budgets in mind.</p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.2s;">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+          <h3>5-mile campus zone</h3>
+          <p>Rides will cover campus and the nearby places students go most, like off-campus housing and grocery stores.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Questions about Ride</h2>
+      <div class="mini-faq">
+        <details><summary>When can I start riding?</summary><p>TrypCar Ride will be available once TrypCar launches on your campus. Reserve your account now and we'll email you as soon as your campus goes live.</p></details>
+        <details><summary>How much will rides cost?</summary><p>Pricing will be announced before launch. Our goal is clear, upfront campus fares designed with student budgets in mind.</p></details>
+        <details><summary>Can I ride off campus?</summary><p>Yes, within your campus service zone. TrypCar plans to cover a 5-mile zone around each campus, including nearby housing and shopping.</p></details>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Explore more of TrypCar</h2>
+      <div class="service-chips">
+        <a href="reserve.html" class="service-chip"><span class="dot" style="background: #f59e0b;"></span>Reserve</a>
+        <a href="hubs.html" class="service-chip"><span class="dot" style="background: #10b981;"></span>Hubs</a>
+        <a href="lux.html" class="service-chip"><span class="dot" style="background: #a855f7;"></span>Lux</a>
+        <a href="eco.html" class="service-chip"><span class="dot" style="background: #f43f5e;"></span>Eco</a>
+        <a href="scootz.html" class="service-chip"><span class="dot" style="background: #94a3b8;"></span>Scootz</a>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <h2 class="section-title">Be first to ride.</h2>
+      <p class="section-lead">Reserve your TrypCar account today and get launch updates for your campus.</p>
+      <div class="cta-row">
+        <a href="index.html#portal" class="btn btn-primary">Reserve your account</a>
+        <a href="contact.html" class="btn btn-ghost">Contact us</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+      <div class="footer-legal-links">
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var items = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        items.forEach(function (el) { observer.observe(el); });
+      } else {
+        items.forEach(function (el) { el.classList.add("in"); });
+      }
+    })();
+  </script>
 </body>
 </html>
