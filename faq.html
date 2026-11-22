@@ -92,3 +92,59 @@
       </div>
 
       <div class="faq-category">Service Zones &amp; Scootz</div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-question" aria-expanded="false">How big is each campus service zone?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-drawer"><div class="faq-answer">TrypCar plans to serve a 5-mile zone around each campus. Keeping the zone focused helps keep pickups fast and rides centered on student life.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-question" aria-expanded="false">How will Scootz scooters work?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-drawer"><div class="faq-answer">Scootz&trade; electric scooters will show their battery levels right in the TrypCar app and unlock with a quick scan, making short hops between classes easy.</div></div>
+      </div>
+    </div>
+
+    <section class="section">
+      <h2 class="section-title">Still have questions?</h2>
+      <p class="section-lead">Our team is happy to help.</p>
+      <div class="cta-row">
+        <a href="contact.html" class="btn btn-primary">Contact us</a>
+        <a href="index.html#portal" class="btn btn-ghost">Reserve your account</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+      <div class="footer-legal-links">
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var items = document.querySelectorAll(".faq-item");
+      items.forEach(function (item) {
+        var button = item.querySelector(".faq-question");
+        var drawer = item.querySelector(".faq-drawer");
+        button.addEventListener("click", function () {
+          var isOpen = item.classList.contains("open");
+          items.forEach(function (other) {
+            other.classList.remove("open");
+            other.querySelector(".faq-drawer").style.maxHeight = null;
+            other.querySelector(".faq-question").setAttribute("aria-expanded", "false");
+          });
+          if (!isOpen) {
+            item.classList.add("open");
+            drawer.style.maxHeight = drawer.scrollHeight + "px";
+            button.setAttribute("aria-expanded", "true");
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
