@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Every public page. Add a <url> line here whenever a new page is published. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://trypcar.com/</loc></url>
   <url><loc>https://trypcar.com/about.html</loc></url>
@@ -11,6 +12,4 @@
   <url><loc>https://trypcar.com/faq.html</loc></url>
   <url><loc>https://trypcar.com/support.html</loc></url>
   <url><loc>https://trypcar.com/contact.html</loc></url>
-  <url><loc>https://trypcar.com/terms.html</loc></url>
-  <url><loc>https://trypcar.com/privacy.html</loc></url>
 </urlset>

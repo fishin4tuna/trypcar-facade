@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+  TrypCar website | Frequently Asked Questions
+  Part of the TrypCar master code package. See the Handover Guide for hosting,
+  editing, and transfer instructions. Shared styles live in trypcar.css.
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -9,9 +14,16 @@
   <meta property="og:title" content="TrypCar FAQ">
   <meta property="og:description" content="How TrypCar will work: safety, membership, payments, and campus service zones.">
   <meta property="og:image" content="https://trypcar.com/trypcar-hero.webp">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TrypCar">
+  <meta property="og:url" content="https://trypcar.com/faq.html">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#050b18">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="stylesheet" href="trypcar.css">
   <style>
     .faq-category { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; color: var(--blue-light); margin: 2.25rem 0 0.85rem; }
@@ -125,6 +137,8 @@
 
   <script>
     (function () {
+      // FAQ ACCORDION: opening one answer closes the others; aria-expanded
+      // tells screen readers which answer is open.
       var items = document.querySelectorAll(".faq-item");
       items.forEach(function (item) {
         var button = item.querySelector(".faq-question");

@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+  TrypCar website | Home page
+  Part of the TrypCar master code package. See the Handover Guide for hosting,
+  editing, and transfer instructions. Shared styles live in trypcar.css.
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -19,7 +24,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="stylesheet" href="trypcar.css">
+  <!-- STRUCTURED DATA: describes the organization to Google and Bing in a
+       machine-readable format (schema.org). It is invisible to visitors. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -35,6 +44,9 @@
     ]
   }
   </script>
+  <!-- INTRO CONTROL: adds the "js" class (used by animations) and makes the
+       intro animation play only once per browser session. sessionStorage is
+       cleared automatically when the visitor closes the tab. -->
   <script>
     (function () {
       var d = document.documentElement;
@@ -45,6 +57,11 @@
       } catch (e) {}
     })();
   </script>
+<!-- HOME-PAGE STYLES: the intro animation (light beams and gold glint on the
+     TRYPCAR wordmark), hero, ticker, fleet cards, route map, steps carousel,
+     service bubbles, and member portal. Styles shared by all pages are in
+     trypcar.css. The prefers-reduced-motion block at the end turns animation
+     off for visitors who have asked their device to reduce motion. -->
   <style>
     .intro { position: fixed; inset: 0; z-index: 10000; background: #02050d; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; animation: introOut 0.8s ease 4s forwards; }
     .intro.done { animation: none; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s; }
@@ -184,7 +201,7 @@
 
   <div class="wrap">
     <div class="hero-frame">
-      <img src="trypcar-hero.webp" onerror="this.onerror=null;this.src='1792984078309.png';" alt="TrypCar concept: a white TrypCar vehicle on a university campus with the TrypCar app on a phone" class="hero-image-asset" id="heroImage">
+      <img src="trypcar-hero.webp" alt="TrypCar concept: a white TrypCar vehicle on a university campus with the TrypCar app on a phone" class="hero-image-asset" id="heroImage">
     </div>
     <span class="hero-caption">Concept preview. Features shown are planned and not yet available.</span>
   </div>
@@ -312,10 +329,15 @@
 
       <div id="panelCreate">
         <p class="section-lead" style="margin-bottom: 1.25rem;">Reserve your spot now. Member accounts activate when TrypCar launches on your campus.</p>
+        <!-- WAITLIST FORM: submissions are delivered by Web3Forms (web3forms.com)
+             to the email address registered to the access_key below. A new owner
+             must create a free Web3Forms account and replace this key. The key is
+             designed to be public; it can only send email to its registered inbox. -->
         <form id="waitlist-form" action="https://api.web3forms.com/submit" method="POST">
           <input type="hidden" name="access_key" value="06dee726-65d3-4e8d-afcd-e14d52f99693">
           <input type="hidden" name="subject" value="New TrypCar account reservation">
           <input type="hidden" name="from_name" value="TrypCar Website">
+          <!-- Spam trap ("honeypot"): hidden from people; bots that tick it are rejected. -->
           <input type="checkbox" name="botcheck" class="hidden-field" tabindex="-1" autocomplete="off">
           <label class="field-label" for="waitlist-email">University email</label>
           <input type="email" id="waitlist-email" name="email" class="field" placeholder="username@university.edu" required>
@@ -361,8 +383,11 @@
   </footer>
 
   <script>
+    // Respect the visitor's "reduce motion" device setting in every animation below.
     var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    // MEMBER PORTAL TABS: switches between "Create account" and "Sign in".
+    // Sign-in stays disabled until launch.
     function setPortal(mode) {
       var create = mode === "create";
       document.getElementById("panelCreate").hidden = !create;
@@ -373,6 +398,7 @@
     }
 
     (function () {
+      // INTRO: tap anywhere to skip; removed from the page once it finishes.
       var intro = document.getElementById("intro");
       if (!intro) return;
       intro.addEventListener("click", function () { intro.classList.add("done"); });
@@ -382,6 +408,8 @@
     })();
 
     (function () {
+      // ROUTE MAP: draws the route line and moves the car marker when the map
+      // scrolls into view (IntersectionObserver), then stops watching.
       var card = document.getElementById("routeCard");
       var car = document.getElementById("routeCar");
       var motion = document.getElementById("carMotion");
@@ -392,6 +420,8 @@
         if (reduceMotion || !motion || typeof motion.beginElement !== "function") { finish(); return; }
         setTimeout(function () { car.setAttribute("opacity", "1"); motion.beginElement(); }, 300);
       }
+      // SCROLL REVEAL: fades each ".reveal" block in as it scrolls into view.
+      // Older browsers without IntersectionObserver simply show everything.
       if ("IntersectionObserver" in window) {
         var observer = new IntersectionObserver(function (entries) {
           if (entries[0].isIntersecting) { play(); observer.disconnect(); }
@@ -403,6 +433,8 @@
     })();
 
     (function () {
+      // STEPS CAROUSEL: on phones the four steps swipe sideways; the dots
+      // track the visible card and can be tapped to jump to a step.
       var steps = document.getElementById("steps");
       var dots = document.querySelectorAll(".steps-dot");
       if (!steps) return;
@@ -428,6 +460,8 @@
     })();
 
     (function () {
+      // WAITLIST SUBMIT: sends the form in the background (fetch) so the visitor
+      // stays on the page, then shows a success or fallback message.
       var form = document.getElementById("waitlist-form");
       var statusBox = document.getElementById("waitlist-status");
       var button = form.querySelector('button[type="submit"]');
