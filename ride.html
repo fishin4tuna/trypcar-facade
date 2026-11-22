@@ -85,7 +85,7 @@
         <div class="feature-card reveal" style="transition-delay: 0.2s;">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
           <h3>5-mile campus zone</h3>
-          <p>Rides will cover campus and the nearby places students go most, like off-campus housing and grocery stores.</p>
+          <p>Rides will cover campus and the nearby places your campus community goes most, like off-campus housing and grocery stores.</p>
         </div>
       </div>
     </section>
@@ -136,10 +136,7 @@
       if ("IntersectionObserver" in window) {
         var observer = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("in");
-              observer.unobserve(entry.target);
-            }
+            if (entry.isIntersecting) { entry.target.classList.add("in"); observer.unobserve(entry.target); }
           });
         }, { threshold: 0.15 });
         items.forEach(function (el) { observer.observe(el); });
