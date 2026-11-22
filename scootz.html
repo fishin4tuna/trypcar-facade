@@ -3,29 +3,147 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Scootz Micro-Mobility</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.25rem; }
-    .card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 20px; width: 100%; max-width: 450px; padding: 3rem 2rem; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); text-align: center; }
-    .icon-holder { margin-bottom: 1.5rem; display: inline-flex; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(100, 116, 139, 0.15) 0%, rgba(6, 14, 30, 0) 75%); padding: 1rem; border-radius: 50%; }
-    .icon-holder svg { width: 64px; height: 64px; fill: none; stroke-width: 2; stroke: #64748b; }
-    h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.75rem; letter-spacing: -0.01em; }
-    p { font-size: 0.9rem; color: #94a3b8; line-height: 1.6; margin-bottom: 2rem; }
-    .btn { display: inline-block; width: 100%; background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 0.9rem; border-radius: 6px; font-weight: 700; font-size: 0.88rem; transition: background-color 0.15s ease; letter-spacing: 0.02em; }
-    .btn:hover { background-color: #1d4ed8; }
-  </style>
+  <title>Scootz Electric Scooters | TrypCar</title>
+  <meta name="description" content="Scootz electric scooters by TrypCar: quick hops between classes, unlocked right from the TrypCar app. Planned service, launching soon.">
+  <link rel="canonical" href="https://trypcar.com/scootz.html">
+  <meta property="og:title" content="Scootz Electric Scooters | TrypCar">
+  <meta property="og:description" content="Quick electric scooter hops between classes. Launching soon.">
+  <meta property="og:image" content="https://trypcar.com/trypcar-hero.webp">
+  <meta name="theme-color" content="#050b18">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="trypcar.css">
+  <script>document.documentElement.className += " js";</script>
 </head>
-<body>
+<body style="--accent: #94a3b8; --accent-soft: #cbd5e1; --accent-glow: rgba(148,163,184,0.14); --accent-line: rgba(148,163,184,0.38);">
+  <div class="launch-banner"><span class="status-dot" aria-hidden="true"></span><strong>Coming Soon!</strong>TrypCar is in development and not yet operating. <a href="index.html#portal">Join our waitlist</a> to be the first to know when we launch.</div>
 
-  <div class="card">
-    <div class="icon-holder">
-      <svg viewBox="0 0 24 24"><circle cx="5" cy="18" r="2"></circle><circle cx="19" cy="18" r="2"></circle><path d="M19 16V8h-6m0 0v8m0-8L9 5H4"></path></svg>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="navigation-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="support.html">Support</a>
+        <a href="faq.html">FAQ's</a>
+        <a href="contact.html">Contact</a>
+      </div>
     </div>
-    <h1>Scootz™ Micro-Mobility</h1>
-    <p>Skip traffic queues completely. Instantly discover and deploy rapid-charging electronic scooter hardware directly across student corridors via QR network handshake tools.</p>
-    <a href="index.html" class="btn">Return to Gateway Hub</a>
-  </div>
+  </nav>
 
+  <main class="wrap">
+    <header class="service-hero">
+      <span class="service-badge"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 18h7"/><path d="M17 15.5L14.5 6H12"/></svg>Scootz&trade;</span>
+      <h1 class="page-title">Quick hops<br>between classes.</h1>
+      <p class="page-lead">Scootz&trade; electric scooters for short trips across campus when you don't need a car, unlocked right from the TrypCar app.</p>
+      <div class="cta-row" style="margin-top: 1.5rem;">
+        <a href="index.html#portal" class="btn btn-primary">Reserve your account</a>
+        <a href="#how" class="btn btn-ghost">See how it will work</a>
+      </div>
+      <span class="plan-note">Planned service. Not yet available.</span>
+    </header>
+
+    <section class="section" id="how">
+      <h2 class="section-title">How it will work</h2>
+      <p class="section-lead">From the app to the next building in four steps.</p>
+      <ol class="timeline">
+        <li class="reveal"><h3>Find a Scootz</h3><p>See nearby scooters and their battery levels in the TrypCar app.</p></li>
+        <li class="reveal" style="transition-delay: 0.1s;"><h3>Scan to unlock</h3><p>Scan the scooter's code with your phone and you're ready to go.</p></li>
+        <li class="reveal" style="transition-delay: 0.2s;"><h3>Ride</h3><p>Glide across campus at campus-friendly speeds.</p></li>
+        <li class="reveal" style="transition-delay: 0.3s;"><h3>Dock at a Hub</h3><p>End your ride at a TrypCar Hub dock, ready for the next member.</p></li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Cars and scooters, one network</h2>
+      <p class="section-lead">Scootz is planned as a natural extension of the TrypCar fleet.</p>
+      <div class="feature-grid">
+        <div class="feature-card reveal">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="18" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/><line x1="6" y1="11" x2="6" y2="13"/><line x1="10" y1="11" x2="10" y2="13"/></svg>
+          <h3>Battery levels in the app</h3>
+          <p>Know how much charge a scooter has before you walk over to it.</p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.1s;">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/></svg>
+          <h3>Scan to unlock</h3>
+          <p>One quick scan with your phone. No extra cards or keys.</p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.2s;">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <h3>Campus-friendly speeds</h3>
+          <p>Speeds are planned to follow campus rules, keeping walkways safe for everyone.</p>
+        </div>
+        <div class="feature-card reveal">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg>
+          <h3>Docks at TrypCar Hubs</h3>
+          <p>Scooters will park at Hub docks, keeping sidewalks clear and scooters easy to find.</p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.1s;">
+          <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          <h3>One app for everything</h3>
+          <p>Cars and scooters in the same app, with the same account.</p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.2s;">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <h3>Members only</h3>
+          <p>Scootz will be available only to verified TrypCar members.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Questions about Scootz</h2>
+      <div class="mini-faq">
+        <details><summary>Do I need a separate account for Scootz?</summary><p>No. Scootz is planned to work with your regular TrypCar account, in the same app you use for rides.</p></details>
+        <details><summary>Where can I ride a Scootz?</summary><p>On designated campus routes and areas, following campus and local rules. Details will be set for each campus before launch.</p></details>
+        <details><summary>Is there an age requirement?</summary><p>Yes. Like all TrypCar services, Scootz will be available only to members 18 and older. Wearing a helmet is always encouraged.</p></details>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Explore more of TrypCar</h2>
+      <div class="service-chips">
+        <a href="ride.html" class="service-chip"><span class="dot" style="background: #3b82f6;"></span>Ride</a>
+        <a href="reserve.html" class="service-chip"><span class="dot" style="background: #f59e0b;"></span>Reserve</a>
+        <a href="hubs.html" class="service-chip"><span class="dot" style="background: #10b981;"></span>Hubs</a>
+        <a href="lux.html" class="service-chip"><span class="dot" style="background: #a855f7;"></span>Lux</a>
+        <a href="eco.html" class="service-chip"><span class="dot" style="background: #f43f5e;"></span>Eco</a>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <h2 class="section-title">The fastest way to your next class.</h2>
+      <p class="section-lead">Reserve your TrypCar account today and get launch updates for your campus.</p>
+      <div class="cta-row">
+        <a href="index.html#portal" class="btn btn-primary">Reserve your account</a>
+        <a href="contact.html" class="btn btn-ghost">Contact us</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap global-site-footer">
+    <div class="footer-legal-text">
+      <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
+      <div class="footer-legal-links">
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var items = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) { entry.target.classList.add("in"); observer.unobserve(entry.target); }
+          });
+        }, { threshold: 0.15 });
+        items.forEach(function (el) { observer.observe(el); });
+      } else {
+        items.forEach(function (el) { el.classList.add("in"); });
+      }
+    })();
+  </script>
 </body>
 </html>
