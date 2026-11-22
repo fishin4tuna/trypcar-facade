@@ -3,11 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrypCar | Premium Campus Mobility Network</title>
-  <meta name="description" content="Explore the TrypCar ecosystem framework. A premium campus mobility network designed for verified university communities within a localized 5-mile utility boundary.">
-  <meta name="keywords" content="TrypCar, Tryp Car, campus mobility, university transit ride, Scootz scooter sharing, student transportation, campus rideshare">
+  <title>TrypCar | Company-Owned Campus Ride Network | Launching Soon</title>
+  <meta name="description" content="TrypCar is building a campus ride network of company-owned vehicles and professionally screened drivers, made exclusively for verified university communities. Join the waitlist.">
+  <meta name="keywords" content="TrypCar, Tryp Car, campus rides, university transportation, student transportation, campus mobility, Scootz">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://trypcar.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TrypCar">
+  <meta property="og:title" content="TrypCar | Your campus. Our fleet.">
+  <meta property="og:description" content="A campus ride network of company-owned vehicles for verified university communities. Launching soon.">
+  <meta property="og:url" content="https://trypcar.com/">
+  <meta property="og:image" content="https://trypcar.com/1792984078309.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#050b18">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -15,7 +26,7 @@
     "name": "TrypCar, Inc.",
     "url": "https://trypcar.com/",
     "logo": "https://trypcar.com/1792984078309.png",
-    "description": "Premium campus mobility and student rideshare network architecture.",
+    "description": "A campus ride network of company-owned vehicles and professionally screened drivers for verified university communities.",
     "hasPart": [
       { "@type": "WebPage", "name": "About Our Vision", "url": "https://trypcar.com/about.html" },
       { "@type": "WebPage", "name": "Frequently Asked Questions", "url": "https://trypcar.com/faq.html" },
@@ -23,180 +34,284 @@
     ]
   }
   </script>
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.className += " js";
+      try {
+        if (sessionStorage.getItem("trypIntroSeen")) { d.className += " no-intro"; }
+        else { sessionStorage.setItem("trypIntroSeen", "1"); }
+      } catch (e) {}
+    })();
+  </script>
   <style>
+    :root { --night: #050b18; --deep: #030712; --panel: #0b1329; --line: rgba(148,163,184,0.14); --blue: #3b82f6; --blue-strong: #2563eb; --amber: #ffb547; --text: #f8fafc; --muted: #94a3b8; --soft: #cbd5e1; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: #060e1e; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
-    .partner-briefing-banner { width: 100%; max-width: 500px; margin: 0 auto; background-color: #1e3a8a; border-bottom: 1px solid rgba(59, 130, 246, 0.2); padding: 0.8rem 1rem; text-align: center; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem; }
-    .banner-header-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #ffffff; }
-    .banner-text-message { font-size: 0.68rem; font-weight: 700; line-height: 1.4; letter-spacing: 0.01em; color: #ffffff; text-wrap: balance; }
-    .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer { width: 100%; max-width: 500px; margin: 0 auto; }
-    .navbar { display: flex; justify-content: center; align-items: center; padding: 1.2rem 1rem; background-color: #030712; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
-    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 360px; gap: 0.5rem; }
-    .navigation-links a { color: #94a3b8; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: color 0.2s ease; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--night); color: var(--text); font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.55; overflow-x: hidden; }
+    .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 1.25rem; }
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+    .intro { position: fixed; inset: 0; z-index: 10000; background: #02050d; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; animation: introOut 0.7s ease 2.2s forwards; }
+    .intro.done { animation: none; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s; }
+    html.no-intro .intro { display: none; }
+    .beam { position: absolute; bottom: -20vh; width: 70vmax; height: 130vh; transform-origin: 50% 100%; background: linear-gradient(to top, rgba(255,200,120,0.6), rgba(255,200,120,0) 75%); clip-path: polygon(46% 100%, 54% 100%, 100% 0, 0 0); filter: blur(14px); opacity: 0; }
+    .beam-left { left: calc(50% - 35vmax - 18vw); animation: sweepLeft 1.7s cubic-bezier(0.2,0.7,0.2,1) 0.1s forwards; }
+    .beam-right { left: calc(50% - 35vmax + 18vw); animation: sweepRight 1.7s cubic-bezier(0.2,0.7,0.2,1) 0.1s forwards; }
+    .intro-mark { position: relative; font-weight: 900; font-stretch: 125%; font-size: clamp(2.6rem, 13vw, 6.5rem); letter-spacing: 0.04em; color: #ffffff; text-shadow: 0 0 30px rgba(255,181,71,0.55); opacity: 0; animation: markIn 1s ease-out 0.75s forwards; }
+    .intro-skip { position: absolute; bottom: 2.5rem; font-size: 0.75rem; color: rgba(248,250,252,0.45); opacity: 0; animation: fadeIn 0.5s ease 1s forwards; }
+    @keyframes sweepLeft { 0% { opacity: 0; transform: rotate(-40deg); } 35% { opacity: 1; } 100% { opacity: 0.8; transform: rotate(10deg); } }
+    @keyframes sweepRight { 0% { opacity: 0; transform: rotate(40deg); } 35% { opacity: 1; } 100% { opacity: 0.8; transform: rotate(-10deg); } }
+    @keyframes markIn { 0% { opacity: 0; letter-spacing: 0.35em; filter: blur(10px); } 100% { opacity: 1; letter-spacing: 0.04em; filter: blur(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes introOut { to { opacity: 0; visibility: hidden; } }
+
+    .launch-banner { background: linear-gradient(90deg, #0b1a3d, #13285c); border-bottom: 1px solid var(--line); padding: 0.65rem 1.25rem; text-align: center; font-size: 0.74rem; font-weight: 600; color: var(--soft); }
+    .launch-banner strong { color: var(--amber); font-weight: 800; margin-right: 0.4rem; }
+    .navbar { background: var(--deep); border-bottom: 1px solid var(--line); }
+    .nav-inner { display: flex; justify-content: center; padding: 1.1rem 1.25rem; }
+    .navigation-links { display: flex; justify-content: space-between; width: 100%; max-width: 380px; gap: 0.5rem; }
+    .navigation-links a { color: var(--muted); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; }
     .navigation-links a:hover, .navigation-links a.active { color: #ffffff; }
-    .hero-container { margin-top: 0.5rem; text-align: center; }
-    .hero-image-asset { width: 100%; height: auto; display: block; object-fit: contain; }
-    .hero-caption { display: block; font-size: 0.72rem; color: #64748b; margin-top: 0.5rem; padding: 0 1.25rem; font-style: italic; }
-    .scrolling-features { padding: 2rem 1.25rem 1rem 1.25rem; display: flex; flex-direction: column; gap: 2rem; }
-    .centered-row-card { text-align: center; display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: 0 auto; }
-    .oversized-icon-box { margin-bottom: 1.25rem; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(6, 14, 30, 0) 70%); padding: 1rem; border-radius: 50%; }
-    .oversized-icon-box svg { width: 72px; height: 72px; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-    .row-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff; letter-spacing: -0.01em; }
-    .row-text { font-size: 0.88rem; color: #94a3b8; line-height: 1.4; }
-    .section-divider-title { margin: 2.5rem auto 1rem auto; padding: 0 1.25rem; font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; color: #ffffff; text-align: center; }
-    .embedded-gateway-container { margin: 1.5rem auto 0 auto; padding: 0 1.25rem; }
-    .enterprise-gateway-card { background-color: #0b1329; border: 1px solid rgba(148, 163, 184, 0.12); border-radius: 12px; width: 100%; padding: 2rem 1.75rem; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); text-align: center; }
-    .corporate-input-label { display: block; font-size: 0.68rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; text-align: left; }
-    .corporate-text-field { width: 100%; background-color: #030712; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; padding: 0.8rem 1rem; color: #ffffff; font-size: 0.9rem; letter-spacing: 0.01em; margin-bottom: 1rem; font-family: inherit; }
-    .corporate-text-field:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
-    select.corporate-text-field { appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, #94a3b8 50%), linear-gradient(135deg, #94a3b8 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 2.5rem; }
-    .corporate-submit-btn { width: 100%; background-color: #2563eb; color: #ffffff; border: none; border-radius: 6px; padding: 0.9rem; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; margin-top: 0.25rem; text-align: center; text-decoration: none; display: block; font-family: inherit; }
-    .corporate-submit-btn:hover { background-color: #1d4ed8; }
-    .corporate-submit-btn:disabled { opacity: 0.6; cursor: wait; }
-    .secondary-btn { background-color: transparent; border: 1px solid rgba(148, 163, 184, 0.3); color: #cbd5e1; }
-    .secondary-btn:hover { background-color: rgba(148, 163, 184, 0.1); }
-    .gateway-security-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.62rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
-    .gateway-title-text { color: #ffffff; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-    .gateway-subtext { font-size: 0.8rem; color: #94a3b8; margin-bottom: 1.25rem; line-height: 1.45; }
-    .hidden-field { display: none; }
-    .form-status { display: none; margin-top: 1rem; padding: 0.8rem 1rem; border-radius: 6px; font-size: 0.82rem; text-align: left; }
-    .form-status.success { display: block; background-color: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.4); color: #bbf7d0; }
-    .form-status.error { display: block; background-color: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.4); color: #fecaca; }
-    .bubble-grid-container { padding: 0 1.25rem 2rem 1.25rem; }
+
+    .hero { position: relative; isolation: isolate; padding: 3.5rem 1.25rem 2rem; }
+    .hero::before { content: ""; position: absolute; top: -4rem; left: 50%; width: 140%; height: 120%; transform: translateX(-50%); background: radial-gradient(ellipse at 50% 0%, rgba(255,181,71,0.14), rgba(59,130,246,0.08) 40%, transparent 70%); pointer-events: none; z-index: -1; }
+    .hero-title { font-weight: 900; font-stretch: 125%; font-size: clamp(2.7rem, 11vw, 5.6rem); line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 1.1rem; }
+    .hero-sub { font-size: 1.02rem; color: var(--soft); max-width: 34rem; margin-bottom: 1.75rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.9rem 1.35rem; border-radius: 10px; font-weight: 800; font-size: 0.92rem; text-decoration: none; border: 1px solid transparent; cursor: pointer; font-family: inherit; transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.15s; }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--blue-strong); color: #ffffff; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-ghost { background: transparent; color: var(--text); border-color: rgba(148,163,184,0.35); }
+    .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+    .btn-block { width: 100%; }
+    .btn:disabled { opacity: 0.6; cursor: wait; }
+    .hero-media { margin-top: 0.5rem; }
+    .hero-image-asset { width: 100%; height: auto; display: block; border-radius: 14px; border: 1px solid var(--line); }
+    .hero-caption { display: block; font-size: 0.72rem; color: #64748b; margin-top: 0.6rem; font-style: italic; }
+
+    .ticker { margin-top: 2.75rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--deep); overflow: hidden; padding: 0.85rem 0; }
+    .ticker-track { display: flex; width: max-content; animation: tickerMove 32s linear infinite; }
+    .ticker-item { display: flex; align-items: center; white-space: nowrap; font-weight: 700; font-stretch: 112%; font-size: 0.85rem; color: var(--soft); padding: 0 1.4rem; }
+    .ticker-item::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--amber); margin-right: 1.4rem; }
+    @keyframes tickerMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    .section { padding-top: 4rem; }
+    .section-title { font-weight: 900; font-stretch: 120%; font-size: clamp(1.8rem, 7vw, 2.8rem); line-height: 1.05; margin-bottom: 0.75rem; }
+    .section-lead { color: var(--muted); font-size: 0.98rem; max-width: 36rem; margin-bottom: 2rem; }
+    .fleet-points { display: grid; gap: 1rem; }
+    .fleet-point { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--amber); border-radius: 12px; padding: 1.35rem 1.25rem; }
+    .fleet-point h3 { font-weight: 800; font-stretch: 110%; font-size: 1.12rem; margin-bottom: 0.35rem; }
+    .fleet-point p { color: var(--muted); font-size: 0.9rem; }
+    html.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    html.js .reveal.in { opacity: 1; transform: none; }
+
+    .swipe-hint { font-size: 0.78rem; color: var(--muted); margin: -1rem 0 1rem; }
+    .steps { position: relative; display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 1.25rem 1rem; margin: 0 -1.25rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .steps::-webkit-scrollbar { display: none; }
+    .step-card { flex: 0 0 82%; max-width: 340px; scroll-snap-align: center; background: linear-gradient(160deg, #0f1d40, #0b1329 60%); border: 1px solid var(--line); border-radius: 18px; padding: 1.6rem 1.4rem; min-height: 210px; }
+    .step-num { font-weight: 900; font-stretch: 125%; font-size: 2.6rem; line-height: 1; color: var(--amber); margin-bottom: 1rem; }
+    .step-card h3 { font-weight: 800; font-stretch: 110%; font-size: 1.2rem; margin-bottom: 0.4rem; }
+    .step-card p { color: var(--muted); font-size: 0.9rem; }
+    .steps-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.5rem; }
+    .steps-dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(148,163,184,0.35); border: none; padding: 0; cursor: pointer; transition: width 0.25s, background-color 0.25s; }
+    .steps-dot.active { width: 22px; background: var(--amber); }
+
     .bubble-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-    .bubble-card { border-radius: 20px; padding: 1.15rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.08); transition: transform 0.15s ease; cursor: pointer; font-family: inherit; color: #ffffff; width: 100%; -webkit-tap-highlight-color: transparent; }
+    .bubble-card { border-radius: 20px; padding: 1.15rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.08); transition: transform 0.15s ease, border-color 0.2s; cursor: pointer; font-family: inherit; color: #ffffff; width: 100%; -webkit-tap-highlight-color: transparent; }
+    .bubble-card:hover { border-color: rgba(255,181,71,0.5); }
+    .bubble-card:active { transform: scale(0.95); }
     .bubble-blue { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); }
     .bubble-amber { background: linear-gradient(135deg, #0f172a 0%, #78350f 100%); }
     .bubble-emerald { background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%); }
     .bubble-purple { background: linear-gradient(135deg, #0f172a 0%, #581c87 100%); }
     .bubble-rose { background: linear-gradient(135deg, #0f172a 0%, #881337 100%); }
     .bubble-slate { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); }
-    .bubble-card:active { transform: scale(0.95); }
     .bubble-icon-holder { margin-bottom: 0.45rem; height: 34px; display: flex; align-items: center; justify-content: center; pointer-events: none; }
     .bubble-icon-holder svg { width: 30px; height: 30px; fill: none; stroke-width: 2; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; }
-    .bubble-label { font-size: 0.78rem; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; pointer-events: none; }
-    .modal-backdrop { position: fixed; inset: 0; background: rgba(3, 7, 18, 0.86); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 1.25rem; z-index: 9999; }
-    .modal-box { background: #0b1329; border: 1px solid rgba(59, 130, 246, 0.45); border-radius: 16px; width: 100%; max-width: 400px; padding: 1.6rem; position: relative; text-align: left; box-shadow: 0 20px 50px rgba(0,0,0,0.85); }
-    .modal-x { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.08); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; }
-    .modal-badge { display: inline-block; font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #60a5fa; background: rgba(59,130,246,0.15); padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; }
-    .modal-head { font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 0.45rem; padding-right: 2rem; }
-    .modal-body { font-size: 0.86rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 1rem; }
-    .modal-list { list-style: none; border-top: 1px solid rgba(148,163,184,0.15); padding-top: 0.85rem; margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.8rem; color: #94a3b8; }
+    .bubble-label { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.02em; pointer-events: none; }
+
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(3,7,18,0.86); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 1.25rem; z-index: 9999; }
+    .modal-box { background: var(--panel); border: 1px solid rgba(59,130,246,0.45); border-radius: 16px; width: 100%; max-width: 400px; padding: 1.6rem; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.85); }
+    .modal-x { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.08); border: none; color: #ffffff; width: 30px; height: 30px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; }
+    .modal-badge { display: inline-block; font-size: 0.66rem; font-weight: 800; color: #60a5fa; background: rgba(59,130,246,0.15); padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; }
+    .modal-head { font-weight: 900; font-stretch: 115%; font-size: 1.35rem; margin-bottom: 0.45rem; padding-right: 2rem; }
+    .modal-body { font-size: 0.88rem; color: var(--soft); margin-bottom: 1rem; }
+    .modal-list { list-style: none; border-top: 1px solid var(--line); padding-top: 0.85rem; margin-bottom: 0.9rem; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.82rem; color: var(--muted); }
+    .modal-note { font-size: 0.72rem; color: #64748b; font-style: italic; margin-bottom: 1.1rem; }
     .modal-actions { display: flex; flex-direction: column; gap: 0.6rem; }
-    .global-site-footer { padding: 2rem 1.25rem 3rem 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.04); }
-    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; letter-spacing: 0.01em; }
-    .footer-legal-text strong { color: #94a3b8; font-weight: 600; }
+
+    .waitlist-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 2rem 1.5rem; box-shadow: 0 15px 30px rgba(0,0,0,0.5); max-width: 520px; margin: 0 auto; }
+    .field-label { display: block; font-size: 0.72rem; font-weight: 700; color: var(--muted); margin-bottom: 0.4rem; }
+    .field { width: 100%; background: var(--deep); border: 1px solid rgba(148,163,184,0.2); border-radius: 8px; padding: 0.85rem 1rem; color: #ffffff; font-size: 0.95rem; margin-bottom: 1rem; font-family: inherit; }
+    .field:focus { outline: none; border-color: var(--blue-strong); box-shadow: 0 0 0 3px rgba(37,99,235,0.18); }
+    select.field { appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, #94a3b8 50%), linear-gradient(135deg, #94a3b8 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 2.5rem; }
+    .consent-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; font-size: 0.74rem; color: var(--muted); }
+    .consent-row a { color: var(--blue); font-weight: 700; text-decoration: none; }
+    .hidden-field { display: none; }
+    .form-status { display: none; margin-top: 1rem; padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.84rem; }
+    .form-status.success { display: block; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.4); color: #bbf7d0; }
+    .form-status.error { display: block; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.4); color: #fecaca; }
+
+    .global-site-footer { margin-top: 4rem; padding-top: 2rem; padding-bottom: 3rem; border-top: 1px solid var(--line); }
+    .footer-legal-text { font-size: 0.68rem; color: #64748b; line-height: 1.6; }
+    .footer-legal-text strong { color: var(--muted); font-weight: 600; }
     .footer-legal-links { margin-top: 0.85rem; display: flex; gap: 1.1rem; }
-    .footer-legal-links a { color: #3b82f6; text-decoration: none; font-weight: 700; font-size: 0.72rem; }
-    .footer-legal-links a:hover { text-decoration: underline; }
-    @media (min-width: 1024px) {
-      .navbar, .hero-container, .scrolling-features, .embedded-gateway-container, .section-divider-title, .bubble-grid-container, .global-site-footer { max-width: 1000px; }
-      .scrolling-features { flex-direction: row; justify-content: center; gap: 3rem; }
+    .footer-legal-links a { color: var(--blue); text-decoration: none; font-weight: 700; font-size: 0.74rem; }
+
+    @media (min-width: 900px) {
+      .hero { padding-top: 5rem; padding-bottom: 3rem; }
+      .fleet-points { grid-template-columns: repeat(3, 1fr); }
+      .steps { display: grid; grid-template-columns: repeat(4, 1fr); overflow: visible; margin: 0; padding: 0; }
+      .step-card { max-width: none; }
+      .steps-dots, .swipe-hint { display: none; }
       .bubble-grid { grid-template-columns: repeat(6, 1fr); gap: 1rem; }
       .modal-actions { flex-direction: row; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .intro { display: none; }
+      .ticker-track { animation: none; }
+      html.js .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
     }
   </style>
 </head>
 <body>
-  <div class="partner-briefing-banner">
-    <div class="banner-header-title">Coming Soon</div>
-    <div class="banner-text-message">TrypCar is in development and not yet operating. Join our waitlist to be the first to know when we launch.</div>
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="beam beam-left"></div>
+    <div class="beam beam-right"></div>
+    <div class="intro-mark">TRYPCAR</div>
+    <div class="intro-skip">Tap to skip</div>
   </div>
+
+  <div class="launch-banner"><strong>Coming Soon</strong>TrypCar is in development and not yet operating. Join our waitlist to be the first to know when we launch.</div>
+
   <nav class="navbar">
-    <div class="navigation-links">
-      <a href="index.html" class="active">Home</a>
-      <a href="about.html">About</a>
-      <a href="support.html">Support</a>
-      <a href="faq.html">FAQ's</a>
-      <a href="contact.html">Contact</a>
+    <div class="nav-inner">
+      <div class="navigation-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="support.html">Support</a>
+        <a href="faq.html">FAQ's</a>
+        <a href="contact.html">Contact</a>
+      </div>
     </div>
   </nav>
-  <div class="hero-container">
-    <img src="1792984078309.png" alt="TrypCar Premium Mobility" class="hero-image-asset">
+
+  <header class="wrap hero">
+    <h1 class="hero-title">Your campus.<br>Our fleet.</h1>
+    <p class="hero-sub">TrypCar is building a ride network of company-owned vehicles and professionally screened drivers, made exclusively for verified university communities.</p>
+    <div class="hero-actions">
+      <a href="#waitlist" class="btn btn-primary">Join the waitlist</a>
+      <a href="#fleet" class="btn btn-ghost">Why our own fleet</a>
+    </div>
+  </header>
+
+  <div class="wrap hero-media">
+    <img src="1792984078309.png" alt="TrypCar concept preview" class="hero-image-asset">
     <span class="hero-caption">Concept preview. Features shown are planned and not yet available.</span>
   </div>
-  <main class="scrolling-features">
-    <div class="centered-row-card">
-      <div class="oversized-icon-box">
-        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#3b82f6" /><path d="M9 11l2 2 4-4" stroke="#22c55e" stroke-width="2.5" /></svg>
-      </div>
-      <h3 class="row-title">Verified Students</h3>
-      <p class="row-text">Every single rider and driver will be completely campus identity verified for total peace of mind.</p>
+
+  <div class="ticker" aria-label="TrypCar highlights">
+    <div class="ticker-track">
+      <span class="ticker-item">Company-owned fleet</span>
+      <span class="ticker-item">Screened, trained drivers</span>
+      <span class="ticker-item">Verified campus riders</span>
+      <span class="ticker-item">Scheduled rides</span>
+      <span class="ticker-item">Campus pickup hubs</span>
+      <span class="ticker-item">Scootz electric scooters</span>
+      <span class="ticker-item">Launching soon</span>
+      <span class="ticker-item" aria-hidden="true">Company-owned fleet</span>
+      <span class="ticker-item" aria-hidden="true">Screened, trained drivers</span>
+      <span class="ticker-item" aria-hidden="true">Verified campus riders</span>
+      <span class="ticker-item" aria-hidden="true">Scheduled rides</span>
+      <span class="ticker-item" aria-hidden="true">Campus pickup hubs</span>
+      <span class="ticker-item" aria-hidden="true">Scootz electric scooters</span>
+      <span class="ticker-item" aria-hidden="true">Launching soon</span>
     </div>
-    <div class="centered-row-card">
-      <div class="oversized-icon-box">
-        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#3b82f6"/></svg>
+  </div>
+
+  <section class="wrap section" id="fleet">
+    <h2 class="section-title">Why our own fleet</h2>
+    <p class="section-lead">Most rideshare apps rely on drivers' personal cars. TrypCar will own, maintain, and stand behind every vehicle in its network.</p>
+    <div class="fleet-points">
+      <div class="fleet-point reveal">
+        <h3>One standard for every vehicle</h3>
+        <p>Every ride will happen in a TrypCar-owned vehicle, maintained and inspected on a regular schedule.</p>
       </div>
-      <h3 class="row-title">Smart Matching</h3>
-      <p class="row-text">AI-powered scheduling algorithms will instantly build your optimal pathing lines upon activation.</p>
+      <div class="fleet-point reveal" style="transition-delay: 0.12s;">
+        <h3>Screened, trained drivers</h3>
+        <p>TrypCar drivers will pass background checks and safety training before their first campus ride.</p>
+      </div>
+      <div class="fleet-point reveal" style="transition-delay: 0.24s;">
+        <h3>One company accountable</h3>
+        <p>The car, the driver, and the ride all answer to one company, with campus safety built in from day one.</p>
+      </div>
     </div>
-  </main>
-  <section class="embedded-gateway-container" id="waitlist">
-    <div class="enterprise-gateway-card">
-      <div class="gateway-security-badge">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-        Early Access
-      </div>
-      <div class="gateway-title-text">Join the TrypCar Waitlist</div>
-      <p class="gateway-subtext">Be first in line when TrypCar launches on your campus.</p>
+  </section>
+
+  <section class="wrap section" id="how">
+    <h2 class="section-title">How it will work</h2>
+    <p class="section-lead">Four simple steps from your dorm to wherever you're headed.</p>
+    <p class="swipe-hint">Swipe to see each step</p>
+    <div class="steps" id="steps">
+      <div class="step-card"><div class="step-num">01</div><h3>Verify</h3><p>Sign up with your university email to join your campus network.</p></div>
+      <div class="step-card"><div class="step-num">02</div><h3>Request or reserve</h3><p>Ride now, or schedule ahead for classes, exams, and airport runs.</p></div>
+      <div class="step-card"><div class="step-num">03</div><h3>Meet at a hub</h3><p>Walk to a well-lit TrypCar Hub or a set pickup point near you.</p></div>
+      <div class="step-card"><div class="step-num">04</div><h3>Ride TrypCar</h3><p>A TrypCar vehicle and driver take you anywhere inside your campus zone.</p></div>
+    </div>
+    <div class="steps-dots">
+      <button type="button" class="steps-dot active" aria-label="Step 1"></button>
+      <button type="button" class="steps-dot" aria-label="Step 2"></button>
+      <button type="button" class="steps-dot" aria-label="Step 3"></button>
+      <button type="button" class="steps-dot" aria-label="Step 4"></button>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 class="section-title">Explore TrypCar</h2>
+    <p class="section-lead">Tap a service to see what's planned.</p>
+    <div class="bubble-grid">
+      <button type="button" class="bubble-card bubble-blue" onclick="showInfo('ride')"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M5 17H3a1 1 0 0 1-1-1v-4l2.3-5.2A2 2 0 0 1 6.1 5.5h11.8a2 2 0 0 1 1.8 1.3L22 12v4a1 1 0 0 1-1 1h-2"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M9.5 17h5"/><path d="M3 12h18"/></svg></span><span class="bubble-label">Ride</span></button>
+      <button type="button" class="bubble-card bubble-amber" onclick="showInfo('reserve')"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="15" cy="16" r="3"/><polyline points="15 14.5 15 16 16 16.5"/></svg></span><span class="bubble-label">Reserve</span></button>
+      <button type="button" class="bubble-card bubble-emerald" onclick="showInfo('hubs')"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg></span><span class="bubble-label">Hubs</span></button>
+      <button type="button" class="bubble-card bubble-purple" onclick="showInfo('lux')"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="bubble-label">Lux</span></button>
+      <button type="button" class="bubble-card bubble-rose" onclick="showInfo('eco')"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span><span class="bubble-label">Eco</span></button>
+      <button type="button" class="bubble-card bubble-slate" onclick="showInfo('scootz')"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 18h7"/><path d="M17 15.5L14.5 6H12"/><path d="M14.5 6h2.5"/></svg></span><span class="bubble-label">Scootz</span></button>
+    </div>
+  </section>
+
+  <section class="wrap section" id="waitlist">
+    <div class="waitlist-card">
+      <h2 class="section-title">Join the waitlist</h2>
+      <p class="section-lead" style="margin-bottom: 1.5rem;">Be first in line when TrypCar launches on your campus.</p>
       <form id="waitlist-form" action="https://api.web3forms.com/submit" method="POST">
         <input type="hidden" name="access_key" value="06dee726-65d3-4e8d-afcd-e14d52f99693">
         <input type="hidden" name="subject" value="New TrypCar waitlist signup">
         <input type="hidden" name="from_name" value="TrypCar Website">
         <input type="checkbox" name="botcheck" class="hidden-field" tabindex="-1" autocomplete="off">
-        <div>
-          <label class="corporate-input-label" for="waitlist-email">Email Address</label>
-          <input type="email" id="waitlist-email" name="email" class="corporate-text-field" placeholder="username@university.edu" required>
+        <label class="field-label" for="waitlist-email">Email address</label>
+        <input type="email" id="waitlist-email" name="email" class="field" placeholder="username@university.edu" required>
+        <label class="field-label" for="waitlist-role">I am a</label>
+        <select id="waitlist-role" name="role" class="field" required>
+          <option value="" disabled selected>Select one</option>
+          <option value="Student">Student</option>
+          <option value="Parent">Parent</option>
+          <option value="University Faculty or Staff">University Faculty or Staff</option>
+          <option value="Investor">Investor</option>
+          <option value="Other">Other</option>
+        </select>
+        <div class="consent-row">
+          <input type="checkbox" id="legalConsent" name="consent" value="Agreed to Terms and Privacy Policy" required style="accent-color: #2563eb;">
+          <label for="legalConsent">I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a></label>
         </div>
-        <div>
-          <label class="corporate-input-label" for="waitlist-role">I Am A</label>
-          <select id="waitlist-role" name="role" class="corporate-text-field" required>
-            <option value="" disabled selected>Select one</option>
-            <option value="Student">Student</option>
-            <option value="Parent">Parent</option>
-            <option value="University Faculty or Staff">University Faculty or Staff</option>
-            <option value="Investor">Investor</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;text-align:left;">
-          <input type="checkbox" id="legalConsent" name="consent" value="Agreed to Terms and Privacy Policy" required style="accent-color:#2563eb;">
-          <label for="legalConsent" style="font-size:0.72rem;color:#94a3b8;">I agree to the <a href="terms.html" style="color:#3b82f6;text-decoration:none;font-weight:700;">Terms of Service</a> and <a href="privacy.html" style="color:#3b82f6;text-decoration:none;font-weight:700;">Privacy Policy</a></label>
-        </div>
-        <button type="submit" class="corporate-submit-btn">Request Early Access</button>
+        <button type="submit" class="btn btn-primary btn-block">Request early access</button>
         <div id="waitlist-status" class="form-status" role="status" aria-live="polite"></div>
       </form>
     </div>
   </section>
-  <h2 class="section-divider-title">Explore TrypCar</h2>
-  <section class="bubble-grid-container">
-    <div class="bubble-grid">
-      <button type="button" class="bubble-card bubble-blue" onclick="showInfo('ride')">
-        <span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M5 17H3a1 1 0 0 1-1-1v-4l2.3-5.2A2 2 0 0 1 6.1 5.5h11.8a2 2 0 0 1 1.8 1.3L22 12v4a1 1 0 0 1-1 1h-2"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M9.5 17h5"/><path d="M3 12h18"/></svg></span>
-        <span class="bubble-label">Ride</span>
-      </button>
-      <button type="button" class="bubble-card bubble-amber" onclick="showInfo('reserve')">
-        <span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="15" cy="16" r="3"/><polyline points="15 14.5 15 16 16 16.5"/></svg></span>
-        <span class="bubble-label">Reserve</span>
-      </button>
-      <button type="button" class="bubble-card bubble-emerald" onclick="showInfo('hubs')">
-        <span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg></span>
-        <span class="bubble-label">Hubs</span>
-      </button>
-      <button type="button" class="bubble-card bubble-purple" onclick="showInfo('lux')">
-        <span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
-        <span class="bubble-label">Lux</span>
-      </button>
-      <button type="button" class="bubble-card bubble-rose" onclick="showInfo('eco')">
-        <span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>
-        <span class="bubble-label">Eco</span>
-      </button>
-      <button type="button" class="bubble-card bubble-slate" onclick="showInfo('scootz')">
-        <span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 18h7"/><path d="M17 15.5L14.5 6H12"/><path d="M14.5 6h2.5"/></svg></span>
-        <span class="bubble-label">Scootz</span>
-      </button>
-    </div>
-  </section>
+
   <div class="modal-backdrop" id="infoModal" onclick="hideInfo()">
     <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mHead" onclick="event.stopPropagation()">
       <button type="button" class="modal-x" onclick="hideInfo()" aria-label="Close">&times;</button>
@@ -204,13 +319,15 @@
       <h3 class="modal-head" id="mHead">TrypCar</h3>
       <p class="modal-body" id="mBody"></p>
       <ul class="modal-list" id="mList"></ul>
+      <p class="modal-note">Planned feature. Not yet available.</p>
       <div class="modal-actions">
-        <a href="index.html" class="corporate-submit-btn" id="mLink">Learn More</a>
-        <button type="button" class="corporate-submit-btn secondary-btn" onclick="hideInfo()">Close</button>
+        <a href="index.html" class="btn btn-primary btn-block" id="mLink">Learn more</a>
+        <button type="button" class="btn btn-ghost btn-block" onclick="hideInfo()">Close</button>
       </div>
     </div>
   </div>
-  <footer class="global-site-footer">
+
+  <footer class="wrap global-site-footer">
     <div class="footer-legal-text">
       <strong>&copy; 2026 TrypCar, Inc. All rights reserved.</strong> TrypCar&reg;, Scootz&trade;, the TrypCar bubble matrix grid format layout configuration, and all associated software user interface designs are fully protected under registered trademarks.
       <div class="footer-legal-links">
@@ -219,14 +336,15 @@
       </div>
     </div>
   </footer>
+
   <script>
     var info = {
-      ride: { b: "On-Demand Campus Transit", h: "TrypCar Ride", page: "ride.html", d: "Peer-to-peer rides exclusively for .edu-verified university students within our 5-mile campus utility zone.", l: ["• 100% campus identity verified riders & drivers", "• Predictable flat-zone student pricing", "• Live trip tracking & campus safety share"] },
-      reserve: { b: "Scheduled Pathing", h: "TrypCar Reserve", page: "reserve.html", d: "Schedule rides up to 14 days ahead for early exams, recurring weekly classes, or airport runs.", l: ["• Guaranteed pickup windows with zero surge pricing", "• AI-powered matching with regular student commuters", "• Set once for your whole semester schedule"] },
-      hubs: { b: "Smart Pickup Zones", h: "TrypCar Hubs", page: "hubs.html", d: "Designated, well-lit campus boarding landmarks near dorms, libraries, Greek row, and transit gates.", l: ["• Eliminates curbside traffic & address confusion", "• Rapid walk-up dispatch during peak class changes", "• Monitored, high-visibility campus locations"] },
-      lux: { b: "Elevated Comfort", h: "TrypCar Lux", page: "lux.html", d: "Late-model sedans, spacious SUVs, and top-rated student drivers for formals, game days, and group nights out.", l: ["• Seating for up to 6 verified passengers", "• Top 5% highest-rated student driver tier", "• Priority dispatch on busy campus weekends"] },
-      eco: { b: "Zero-Emission & Shared", h: "TrypCar Eco", page: "eco.html", d: "Request EV/hybrid rides or share seats along the same campus corridor to split fares and cut emissions.", l: ["• Save up to 40% on shared campus corridor lines", "• EV & hybrid vehicle preference matching", "• Track your semester carbon savings"] },
-      scootz: { b: "Micro-Mobility Network", h: "Scootz™ Electric Scooters", page: "scootz.html", d: "Grab a sleek electric scooter for fast cross-campus hops between classes when four wheels aren't needed.", l: ["• 15 MPH geo-fenced campus speed compliance", "• 1-tap QR unlock directly inside TrypCar", "• Convenient docks at all TrypCar Hubs"] }
+      ride: { b: "On-demand campus rides", h: "TrypCar Ride", page: "ride.html", d: "Request a ride in a TrypCar-owned vehicle, driven by a professionally screened TrypCar driver, anywhere inside your 5-mile campus zone.", l: ["• Riders verified through university email", "• Simple, predictable campus pricing", "• Live trip tracking with a safety share option"] },
+      reserve: { b: "Scheduled rides", h: "TrypCar Reserve", page: "reserve.html", d: "Book rides ahead for early exams, recurring classes, or airport runs.", l: ["• Plan up to 14 days ahead", "• Recurring rides for your class schedule", "• Reminders before every pickup"] },
+      hubs: { b: "Smart pickup zones", h: "TrypCar Hubs", page: "hubs.html", d: "Designated, well-lit pickup spots near dorms, libraries, and campus gates.", l: ["• Easy to find during busy class changes", "• Less curbside confusion", "• Home bases for Scootz scooters"] },
+      lux: { b: "Premium rides", h: "TrypCar Lux", page: "lux.html", d: "Larger, upscale TrypCar vehicles for formals, game days, and group nights out.", l: ["• Room for larger groups", "• Upscale fleet vehicles", "• Bookable ahead for big events"] },
+      eco: { b: "Electric and shared", h: "TrypCar Eco", page: "eco.html", d: "Electric and hybrid fleet vehicles, plus shared rides along the same campus route to split the cost.", l: ["• Shared rides to lower the fare", "• Electric and hybrid vehicles", "• Track your carbon savings in the app"] },
+      scootz: { b: "Micro-mobility", h: "Scootz™ Electric Scooters", page: "scootz.html", d: "Quick electric scooter hops between classes when a car isn't needed.", l: ["• Campus-friendly speed limits", "• Unlock right from the TrypCar app", "• Docks at TrypCar Hubs"] }
     };
 
     function showInfo(key) {
@@ -255,18 +373,67 @@
     });
 
     (function () {
+      var intro = document.getElementById("intro");
+      if (!intro) return;
+      intro.addEventListener("click", function () { intro.classList.add("done"); });
+      intro.addEventListener("animationend", function (event) {
+        if (event.target === intro) intro.style.display = "none";
+      });
+    })();
+
+    (function () {
+      var items = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+        items.forEach(function (el) { observer.observe(el); });
+      } else {
+        items.forEach(function (el) { el.classList.add("in"); });
+      }
+    })();
+
+    (function () {
+      var steps = document.getElementById("steps");
+      var dots = document.querySelectorAll(".steps-dot");
+      if (!steps) return;
+      function updateDots() {
+        var cards = steps.children;
+        var center = steps.scrollLeft + steps.clientWidth / 2;
+        var index = 0;
+        var best = Infinity;
+        for (var i = 0; i < cards.length; i++) {
+          var mid = cards[i].offsetLeft + cards[i].offsetWidth / 2;
+          var distance = Math.abs(mid - center);
+          if (distance < best) { best = distance; index = i; }
+        }
+        dots.forEach(function (dot, i) { dot.classList.toggle("active", i === index); });
+      }
+      steps.addEventListener("scroll", function () { window.requestAnimationFrame(updateDots); }, { passive: true });
+      dots.forEach(function (dot, i) {
+        dot.addEventListener("click", function () {
+          var card = steps.children[i];
+          steps.scrollTo({ left: card.offsetLeft - (steps.clientWidth - card.offsetWidth) / 2, behavior: "smooth" });
+        });
+      });
+    })();
+
+    (function () {
       var form = document.getElementById("waitlist-form");
       var statusBox = document.getElementById("waitlist-status");
       var button = form.querySelector('button[type="submit"]');
       var buttonText = button.textContent;
-
       form.addEventListener("submit", function (event) {
         event.preventDefault();
         statusBox.className = "form-status";
         statusBox.textContent = "";
         button.disabled = true;
         button.textContent = "Sending...";
-
         fetch(form.action, { method: "POST", body: new FormData(form) })
           .then(function (response) { return response.json(); })
           .then(function (data) {
