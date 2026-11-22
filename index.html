@@ -69,7 +69,7 @@
     .hero-title { font-weight: 700; font-size: clamp(2.7rem, 11vw, 5.4rem); line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 1.1rem; }
     .hero-sub { font-size: 1rem; font-weight: 300; color: var(--soft); max-width: 34rem; margin-bottom: 1.75rem; }
     .hero-frame { overflow: hidden; border-radius: 14px; border: 1px solid var(--line); }
-    .hero-image-asset { width: 100%; height: auto; display: block; transform: scale(1.18); will-change: transform; }
+    .hero-image-asset { width: 100%; height: auto; display: block; }
     .hero-caption { display: block; font-size: 0.72rem; color: #64748b; margin-top: 0.6rem; font-style: italic; }
 
     .ticker { margin-top: 2.75rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--deep); overflow: hidden; padding: 0.85rem 0; }
@@ -145,7 +145,6 @@
       .route-line { stroke-dashoffset: 0; }
       .route-card.play .route-line { animation: none; }
       .hub-pulse { animation: none; }
-      .hero-image-asset { transform: none; }
     }
   </style>
 </head>
@@ -295,11 +294,10 @@
       <a href="reserve.html" class="bubble-card bubble-amber"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="15" cy="16" r="3"/><polyline points="15 14.5 15 16 16 16.5"/></svg></span><span class="bubble-label">Reserve</span></a>
       <a href="hubs.html" class="bubble-card bubble-emerald"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.5"/></svg></span><span class="bubble-label">Hubs</span></a>
       <a href="lux.html" class="bubble-card bubble-purple"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="bubble-label">Lux</span></a>
-      <a href="eco.html" class="bubble-card bubble-rose"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span><span class="bubble-label">Eco</span></a>
+      <a href="eco.html" class="bubble-card bubble-rose"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.850-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span><span class="bubble-label">Eco</span></a>
       <a href="scootz.html" class="bubble-card bubble-slate"><span class="bubble-icon-holder"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 18h7"/><path d="M17 15.5L14.5 6H12"/><path d="M14.5 6h2.5"/></svg></span><span class="bubble-label">Scootz</span></a>
     </div>
   </section>
-
   <section class="wrap section" id="portal">
     <div class="portal-card">
       <div class="portal-badge">
@@ -381,21 +379,6 @@
       intro.addEventListener("animationend", function (event) {
         if (event.target === intro) intro.style.display = "none";
       });
-    })();
-
-    (function () {
-      var image = document.getElementById("heroImage");
-      if (!image || reduceMotion) return;
-      var ticking = false;
-      window.addEventListener("scroll", function () {
-        if (ticking) return;
-        ticking = true;
-        window.requestAnimationFrame(function () {
-          var shift = Math.min(window.scrollY * 0.06, 28);
-          image.style.transform = "scale(1.18) translateY(" + shift + "px)";
-          ticking = false;
-        });
-      }, { passive: true });
     })();
 
     (function () {
