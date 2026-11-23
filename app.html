@@ -200,10 +200,12 @@
     .star.on svg { fill: var(--sky); transform: scale(1.06); }
 
     .carhero { position: relative; margin: 10px 0 4px; border-radius: 18px; background: radial-gradient(ellipse at 50% 85%, rgba(59,130,246,0.28), transparent 60%), linear-gradient(180deg, #0f1f45, #0a1530); border: 1px solid var(--line2); overflow: hidden; }
-    .carhero svg { display: block; width: 100%; height: auto; margin-top: 22px; margin-bottom: -4px; }
-    .carhero.compact svg { width: 62%; margin: 4px 0 -2px auto; }
-    .carhero.compact .cap { top: 50%; transform: translateY(-50%); max-width: 40%; }
-    .carhero .cap { position: absolute; left: 12px; top: 10px; font-size: 0.72rem; font-weight: 700; color: var(--ice); }
+    .carhero img { display: block; width: 100%; height: auto; aspect-ratio: 848 / 420; object-fit: cover; }
+    .carhero .cap { z-index: 1; position: static; display: block; padding: 10px 12px; }
+    .carhero.compact { display: grid; grid-template-columns: 1fr 1.25fr; align-items: center; }
+    .carhero.compact img { grid-column: 2; grid-row: 1; aspect-ratio: 848 / 420; }
+    .carhero.compact .cap { position: static; grid-column: 1; grid-row: 1; padding: 12px; }
+    .carhero .cap { font-size: 0.72rem; font-weight: 700; color: var(--ice); }
     .carhero .cap span { display: block; font-weight: 500; color: var(--muted); }
     /* PAGES */
     .page { padding: 20px 18px 28px; }
@@ -660,31 +662,8 @@
     { id: "lux", n: "Lux", tag: "Premium", d: "Executive vehicle, extra legroom", price: 14, eta: 5, color: "#1f2937" }
   ];
   function vehSvg(color) { return '<svg class="veh" viewBox="0 0 54 38"><ellipse cx="27" cy="32" rx="22" ry="3.5" fill="#000" opacity="0.35"/><path d="M6 25c0-4 2-6 5-7l5-7c1-1.5 2.5-2 4-2h14c1.5 0 3 .5 4 2l5 7c3 1 5 3 5 7v3H6z" fill="' + color + '"/><path d="M17 11h20l4 7H13z" fill="#1e293b"/><circle cx="15" cy="28" r="4" fill="#0f172a"/><circle cx="39" cy="28" r="4" fill="#0f172a"/><rect x="8" y="21" width="5" height="2" rx="1" fill="#93c5fd"/><rect x="41" y="21" width="5" height="2" rx="1" fill="#fecaca"/></svg>'; }
-  // Branded TrypCar side view (sleek electric sedan with door logo and tagline)
-  function carSide(kind) {
-    var dark = kind === "lux";
-    var body = dark ? ["#2b3445", "#0f1520"] : ["#ffffff", "#dfe6ef"], logo = dark ? "trypcar-logo.png" : "trypcar-logo-dark.png", tag = dark ? "#cbd5e1" : "#334155";
-    var id = "g" + Math.random().toString(36).slice(2, 7);
-    return '<svg viewBox="0 0 360 150" role="img" aria-label="' + (dark ? "Black" : "White") + ' TrypCar electric sedan with TrypCar logo on the door">' +
-      '<defs><linearGradient id="' + id + 'b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + body[0] + '"/><stop offset="1" stop-color="' + body[1] + '"/></linearGradient>' +
-      '<linearGradient id="' + id + 'g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e293b"/><stop offset="0.55" stop-color="#0b1220"/><stop offset="1" stop-color="#334155"/></linearGradient>' +
-      '<radialGradient id="' + id + 'r"><stop offset="0" stop-color="#cbd5e1"/><stop offset="0.6" stop-color="#64748b"/><stop offset="1" stop-color="#1e293b"/></radialGradient></defs>' +
-      '<ellipse cx="180" cy="128" rx="150" ry="9" fill="#000" opacity="0.45"/>' +
-      '<path d="M30 112 C24 104 24 92 30 84 L46 74 C60 70 80 66 98 64 L134 44 C150 36 176 32 204 34 C226 36 244 46 262 60 L300 68 C318 72 330 78 336 88 C340 96 338 106 332 112 Z" fill="url(#' + id + 'b)"/>' +
-      '<path d="M108 64 L138 46 C152 39 176 36 200 38 C220 40 236 48 250 62 Z" fill="url(#' + id + 'g)"/>' +
-      '<path d="M180 38 L178 64" stroke="' + body[1] + '" stroke-width="2" opacity="0.5"/>' +
-      '<path d="M140 50 C170 42 210 42 236 54" stroke="#94a3b8" stroke-width="1.5" fill="none" opacity="0.45"/>' +
-      '<path d="M44 96 L326 96" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>' +
-      '<path d="M120 68 L120 104 M244 68 L246 104" stroke="#94a3b8" stroke-width="1" opacity="0.6"/>' +
-      '<path d="M318 76 C326 78 332 82 334 86 L318 84 Z" fill="#dbeafe"/><path d="M332 86 L346 84" stroke="#bfdbfe" stroke-width="6" stroke-linecap="round" opacity="0.18"/>' +
-      '<path d="M30 84 L40 80 L40 90 L28 92 Z" fill="#ef4444"/>' +
-      '<image href="' + logo + '" x="136" y="70" width="96" height="11.5" preserveAspectRatio="xMidYMid meet"/>' +
-      '<text x="184" y="91" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="6.2" font-weight="700" letter-spacing="1.2" fill="' + tag + '">SMART RIDES. TRUSTED SAFETY.</text>' +
-      '<g transform="translate(92 110)"><circle r="21" fill="#0b1220"/><circle r="14" fill="url(#' + id + 'r)"/><circle r="4" fill="#0f172a"/><path d="M0-13V-5M12.4-4L5-1.5M7.6 10.5L3 4M-7.6 10.5L-3 4M-12.4-4L-5-1.5" stroke="#0f172a" stroke-width="2.4"/></g>' +
-      '<g transform="translate(276 110)"><circle r="21" fill="#0b1220"/><circle r="14" fill="url(#' + id + 'r)"/><circle r="4" fill="#0f172a"/><path d="M0-13V-5M12.4-4L5-1.5M7.6 10.5L3 4M-7.6 10.5L-3 4M-12.4-4L-5-1.5" stroke="#0f172a" stroke-width="2.4"/></g>' +
-      '</svg>';
-  }
-  function carHero(caption, sub, compact) { return '<div class="carhero' + (compact ? ' compact' : '') + '"><span class="cap">' + caption + '<span>' + sub + '</span></span>' + carSide(trip.svc) + '</div>'; }
+  // Branded TrypCar photo card (the white TrypCar from the promo image)
+  function carHero(caption, sub, compact) { return '<div class="carhero' + (compact ? ' compact' : '') + '"><img src="trypcar-car.webp" alt="White TrypCar electric sedan with the TrypCar logo on the door"><span class="cap">' + caption + '<span>' + sub + '</span></span></div>'; }
   var PIN = '<svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>';
 
   function home() {
