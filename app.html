@@ -77,14 +77,14 @@
     .ob-foot { margin-top: auto; padding-top: 20px; }
 
     /* MAP: real CSS 3D world (buildings rise off the ground) */
-    .stage { position: relative; flex: 1; min-height: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 115%, #0c2150, #040a18 68%); perspective: 900px; perspective-origin: 50% 20%; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
+    .stage { position: relative; flex: 1; min-height: 0; overflow: hidden; background: linear-gradient(180deg, #1a1236 0%, #3a2558 22%, #6b3f62 34%, #1b2238 52%, #0b1326 100%); perspective: 900px; perspective-origin: 50% 20%; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
     .stage.grabbing { cursor: grabbing; }
     .world { position: absolute; left: 50%; top: 50%; width: 460px; height: 600px; margin: -300px 0 0 -230px; transform-style: preserve-3d; --tilt: 52deg; --rz: -14deg; --zoom: 1; transform: rotateX(var(--tilt)) rotateZ(var(--rz)) scale(var(--zoom)); transition: transform 0.9s cubic-bezier(.2,.7,.2,1); }
     .world.drag { transition: none; }
     .ground { position: absolute; inset: 0; }
     .ground svg { width: 100%; height: 100%; display: block; overflow: visible; }
-    .road { stroke: #142a55; stroke-width: 16; stroke-linecap: round; }
-    .road-line { stroke: rgba(191,219,254,0.22); stroke-width: 1.2; stroke-dasharray: 7 9; }
+    .road { stroke: #1b2436; stroke-width: 16; stroke-linecap: round; }
+    .road-line { stroke: rgba(253,224,138,0.35); stroke-width: 1.2; stroke-dasharray: 7 9; }
     .curb { fill: #0a1630; }
     .route-glow { fill: none; stroke: #3b82f6; stroke-width: 14; stroke-linecap: round; stroke-linejoin: round; opacity: 0.35; }
     .route-line { fill: none; stroke: #60a5fa; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
@@ -100,6 +100,32 @@
     .box .ew { top: 0; height: 100%; width: var(--h); transform-origin: 0 0; transform: rotateY(-90deg); background: repeating-linear-gradient(90deg, var(--wall) 0 3px, transparent 3px 8px), repeating-linear-gradient(180deg, var(--wall) 0 3px, var(--win) 3px 6px), var(--wall); filter: brightness(0.78); }
     .box .n { top: 0; } .box .s { top: 100%; } .box .w { left: 0; } .box .e { left: 100%; }
     .bld { cursor: pointer; }
+    .lawn { position: absolute; border-radius: 7px; background: radial-gradient(circle at 30% 25%, #2d7a4c, #1a5236 75%); box-shadow: inset 0 0 0 1.5px rgba(134,239,172,0.16); }
+    .walkway { position: absolute; background: #8d97a8; opacity: 0.55; border-radius: 1px; }
+    .path-x { position: absolute; background: rgba(203,213,225,0.38); }
+    .fountain { position: absolute; width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle, #7dd3fc 0 35%, #38bdf8 36% 58%, #cbd5e1 60% 72%, #94a3b8 73%); transform: translateZ(1.5px); box-shadow: 0 0 10px rgba(125,211,252,0.6); }
+    .spray { width: 6px; height: 14px; background: radial-gradient(ellipse at 50% 100%, rgba(224,242,254,0.95), rgba(125,211,252,0.15) 70%, transparent); border-radius: 50% 50% 40% 40%; animation: spray 1.2s ease-in-out infinite alternate; }
+    @keyframes spray { to { height: 17px; opacity: 0.75; } }
+    .bench { position: absolute; width: 6px; height: 2px; background: #a16207; transform: translateZ(1.5px); }
+    .patio { position: absolute; border-radius: 3px; background: repeating-linear-gradient(45deg, #9ca3af 0 3px, #a8b0bc 3px 6px); opacity: 0.75; }
+    .umb { position: absolute; width: 10px; height: 10px; border-radius: 50%; transform: translateZ(7px); box-shadow: 0 0 0 0.5px rgba(0,0,0,0.3); }
+    .ctable { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #e5e7eb; transform: translateZ(3px); }
+    .strlights { position: absolute; height: 2px; background: repeating-linear-gradient(90deg, #fde68a 0 1.5px, transparent 1.5px 5px); transform: translateZ(9px); filter: drop-shadow(0 0 2px #fde68a); }
+    .court { position: absolute; border-radius: 2px; }
+    .court.hoops { background: linear-gradient(90deg, transparent 49%, rgba(255,255,255,0.8) 49% 51%, transparent 51%), radial-gradient(circle, transparent 4px, rgba(255,255,255,0.8) 4px 5px, transparent 5px), #b45309; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.8); }
+    .pool { position: absolute; border-radius: 3px; background: repeating-linear-gradient(90deg, #38bdf8 0 6px, #0ea5e9 6px 7px), #38bdf8; box-shadow: inset 0 0 0 2px #e2e8f0, 0 0 10px rgba(56,189,248,0.5); }
+    .lake { position: absolute; border-radius: 46% 54% 52% 48% / 55% 45% 55% 45%; background: radial-gradient(ellipse at 40% 35%, #3b82c4, #1e4f8a 60%, #173f6e); box-shadow: inset 0 0 0 2px #8b7b5a, inset 0 0 0 4px rgba(139,123,90,0.4), 0 0 12px rgba(59,130,196,0.35); overflow: hidden; }
+    .lake::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(170deg, transparent 0 6px, rgba(224,242,254,0.22) 6px 7px, transparent 7px 14px); background-size: 100% 28px; animation: ripple 4s linear infinite; }
+    @keyframes ripple { to { background-position: 0 28px; } }
+    .bridge { position: absolute; width: 16px; height: 5px; border-radius: 1px; background: repeating-linear-gradient(90deg, #92400e 0 2px, #b45309 2px 4px); transform: translateZ(2.5px); box-shadow: 0 0 0 0.6px #451a03; }
+    .duck { position: absolute; width: 3px; height: 2px; border-radius: 50%; background: #f8fafc; transform: translateZ(0.8px); }
+    .clock { width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle, #1e293b 0 0.6px, transparent 0.7px), linear-gradient(#1e293b, #1e293b) 4.2px 1.6px/0.7px 3px no-repeat, linear-gradient(#1e293b, #1e293b) 4.4px 4.1px/2.6px 0.7px no-repeat, #fef9c3; box-shadow: 0 0 0 1px #b45309, 0 0 8px rgba(254,249,195,0.8); }
+    .flag { width: 14px; height: 30px; }
+    .flag i { position: absolute; left: 0; bottom: 0; width: 1.3px; height: 30px; background: #cbd5e1; }
+    .flag b { position: absolute; left: 1.3px; top: 0; width: 11px; height: 7px; background: linear-gradient(#1d4ed8 0 50%, #f8fafc 50%); transform-origin: left center; animation: wave 1.4s ease-in-out infinite alternate; }
+    @keyframes wave { to { transform: skewY(6deg) scaleX(0.9); } }
+    .bld.sel .rf { background: #2563eb !important; }
+    .bld.sel .lawn { box-shadow: inset 0 0 0 2px #93c5fd, 0 0 20px rgba(59,130,246,0.6); }
     .bld.sel .top { background: linear-gradient(135deg, #3b82f6, #1d4ed8); box-shadow: 0 0 0 2px #93c5fd, 0 0 28px rgba(59,130,246,0.9); }
     .bld.sel .ns, .bld.sel .ew { --wall: #1e40af; }
     .grass { position: absolute; border-radius: 6px; background: radial-gradient(circle at 30% 30%, #1f6f52, #0f3f30); box-shadow: inset 0 0 0 1px rgba(110,231,183,0.25); }
@@ -122,7 +148,7 @@
     .map-ui { position: absolute; inset: 0; pointer-events: none; }
     .stage::before { content: ""; position: absolute; inset: -40%; background-image: radial-gradient(1.2px 1.2px at 12% 18%, #dbeafe, transparent 60%), radial-gradient(1px 1px at 68% 8%, #fff, transparent 60%), radial-gradient(1.4px 1.4px at 38% 42%, #bfdbfe, transparent 60%), radial-gradient(1px 1px at 84% 34%, #fff, transparent 60%), radial-gradient(1px 1px at 52% 72%, #93c5fd, transparent 60%), radial-gradient(1.2px 1.2px at 22% 82%, #fff, transparent 60%); background-size: 180px 180px; opacity: 0.55; animation: stars 90s linear infinite; pointer-events: none; }
     @keyframes stars { to { transform: translate(180px, 90px); } }
-    .sidewalk { stroke: #1e3563; stroke-width: 30; stroke-linecap: square; }
+    .sidewalk { stroke: #4a5568; stroke-width: 30; stroke-linecap: square; }
     .xwalk { stroke: rgba(226,232,240,0.42); stroke-width: 5; stroke-dasharray: 1.6 1.6; }
     .bb { position: absolute; transform-origin: 0 0; transform: translateZ(var(--z, 0px)) rotateZ(calc(-1 * var(--rz))) rotateX(calc(-1 * var(--tilt))) translate(-50%, -100%); pointer-events: none; }
     .lamp { width: 7px; height: 17px; }
@@ -145,6 +171,16 @@
     .stad-ring { position: absolute; border-radius: 30px; border-style: solid; border-color: #22427f; box-shadow: inset 0 0 0 1px rgba(147,197,253,0.3), 0 0 0 1px rgba(5,11,24,0.5); background-clip: padding-box; }
     .stad-field { position: absolute; border-radius: 4px; background: linear-gradient(90deg, #1d4ed8 0 9%, transparent 9% 91%, #1d4ed8 91%), repeating-linear-gradient(90deg, rgba(255,255,255,0.6) 0 1px, transparent 1px 9.2px), repeating-linear-gradient(90deg, #15803d 0 9.2px, #16a34a 9.2px 18.4px); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.75); }
     .stad-field::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.8); }
+    .legbtn { position: absolute; left: 14px; top: 62px; pointer-events: auto; display: inline-flex; align-items: center; gap: 6px; padding: 7px 11px; border-radius: 999px; background: rgba(5,11,24,0.82); border: 1px solid var(--line2); font-size: 0.74rem; font-weight: 700; color: var(--soft); }
+    .legbtn svg { width: 14px; height: 14px; stroke: var(--sky); fill: none; stroke-width: 2.2; stroke-linecap: round; }
+    .legend { position: absolute; left: 14px; top: 100px; width: 214px; max-height: calc(100% - 120px); overflow-y: auto; pointer-events: auto; padding: 12px 12px 8px; border-radius: 16px; background: rgba(5,11,24,0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--line2); box-shadow: 0 14px 34px rgba(0,0,0,0.5); display: none; }
+    .legend.open { display: block; }
+    .legend h4 { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 2px 0 6px; }
+    .legend h4 + .lg { margin-top: 0; }
+    .lg { display: flex; align-items: center; gap: 9px; padding: 4px 0; font-size: 0.78rem; color: var(--soft); }
+    .lg i { flex: none; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
+    .lg .sw { width: 14px; height: 14px; border-radius: 4px; }
+    .legend .sep { height: 1px; background: var(--line); margin: 8px 0; }
     .explore { position: absolute; right: 14px; bottom: 88px; pointer-events: auto; width: 38px; height: 38px; border-radius: 12px; background: rgba(5,11,24,0.85); border: 1px solid var(--line2); display: flex; align-items: center; justify-content: center; }
     .explore svg { width: 18px; height: 18px; stroke: var(--sky); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
     .topbar { position: absolute; top: 12px; left: 14px; right: 14px; display: flex; justify-content: space-between; align-items: center; }
@@ -323,7 +359,7 @@
         <div class="ground"><svg viewBox="0 0 460 600" aria-hidden="true">
           <defs><radialGradient id="lampglow"><stop offset="0" stop-color="#fde68a" stop-opacity="0.45"/><stop offset="1" stop-color="#fde68a" stop-opacity="0"/></radialGradient>
           <radialGradient id="stadglow"><stop offset="0" stop-color="#bfdbfe" stop-opacity="0.35"/><stop offset="1" stop-color="#bfdbfe" stop-opacity="0"/></radialGradient></defs>
-          <rect x="-200" y="-200" width="860" height="1000" fill="#071330"/>
+          <rect x="-200" y="-200" width="860" height="1000" fill="#173424"/>
           <g id="walks"></g><g id="roads"></g><g id="glows"></g>
           <path class="route-glow" id="rglow" d=""/><path class="route-line" id="rline" d=""/><path class="route-flow" id="rflow" d=""/>
           <g id="hubs"></g>
@@ -336,6 +372,28 @@
       <div class="map-ui">
         <div class="topbar"><div class="hello" id="hello">Good evening<small>Campus zone is active</small></div><span class="pill"><span class="dot"></span><span>8 TrypCars nearby</span></span></div>
         <div class="hint" id="hint">Drag to look around · Swipe panel down</div>
+        <button class="legbtn" type="button" id="legbtn" aria-expanded="false" aria-controls="legend"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Legend</button>
+        <div class="legend" id="legend" role="dialog" aria-label="Map legend">
+          <h4>On the map</h4>
+          <div class="lg"><i><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" fill="#3b82f6" stroke="#fff" stroke-width="2"/></svg></i>You are here</div>
+          <div class="lg"><i><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5" fill="#10b981" stroke="#fff" stroke-width="2"/></svg></i>TrypCar Hub: pickups, well lit</div>
+          <div class="lg"><i><svg width="18" height="12" viewBox="0 0 18 12"><rect x="1" y="2" width="16" height="8" rx="3" fill="#f8fafc"/><rect x="7" y="3.5" width="5" height="5" rx="1" fill="#0f172a"/><rect x="15.5" y="3" width="1.5" height="6" fill="#bfdbfe"/></svg></i>TrypCar on the road</div>
+          <div class="lg"><i><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 8h12" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/></svg></i>Your route</div>
+          <div class="lg"><i><svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 1v10" stroke="#f8fafc" stroke-width="1.5"/><circle cx="8" cy="12" r="3" fill="#2563eb" stroke="#fff" stroke-width="1.5"/></svg></i>Drop-off point</div>
+          <div class="lg"><i><svg width="14" height="16" viewBox="0 0 12 15"><circle cx="3" cy="13" r="1.6" fill="none" stroke="#e2e8f0" stroke-width="0.9"/><circle cx="10" cy="13" r="1.6" fill="none" stroke="#e2e8f0" stroke-width="0.9"/><path d="M3 13h7M9.5 13L8 4.5h-1.5" stroke="#94a3b8" stroke-width="0.9" fill="none"/><rect x="4.6" y="4" width="3.2" height="4.6" rx="1.2" fill="#3b82f6"/><circle cx="6.2" cy="2.4" r="1.6" fill="#e0ac69"/></svg></i>Scootz rider</div>
+          <div class="lg"><i><svg width="10" height="18" viewBox="0 0 7 17"><rect x="3" y="3" width="1.3" height="14" fill="#7c8db0"/><rect x="0" y="0" width="7" height="3" rx="1.5" fill="#fef3c7"/></svg></i>Streetlight</div>
+          <div class="lg"><i><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 8h12" stroke="rgba(226,232,240,0.8)" stroke-width="4" stroke-dasharray="1.6 1.6"/></svg></i>Crosswalk</div>
+          <div class="sep"></div>
+          <h4>Campus</h4>
+          <div class="lg"><i><span class="sw" style="background:#16a34a"></span></i>Lawns, parks, and fields</div>
+          <div class="lg"><i><span class="sw" style="background:#2563eb;border-radius:50%"></span></i>Campus Lake</div>
+          <div class="lg"><i><span class="sw" style="background:#8a3b2c"></span></i>Brick halls and dorms</div>
+          <div class="lg"><i><span class="sw" style="background:#bdb6a6"></span></i>Academic buildings</div>
+          <div class="lg"><i><span class="sw" style="background:#1f4f8f"></span></i>Modern glass buildings</div>
+          <div class="lg"><i><span class="sw" style="background:#2563eb;box-shadow:0 0 8px #3b82f6"></span></i>Your destination</div>
+          <div class="sep"></div>
+          <div class="lg" style="font-size:0.72rem;color:var(--muted)">Tap any building to ride there. Drag to look around.</div>
+        </div>
         <button class="explore" type="button" id="explore" aria-label="Bigger map"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
         <button class="recenter" type="button" id="recenter" aria-label="Reset map view"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></button>
       </div>
@@ -503,70 +561,193 @@
     cross: '<path d="M12 5v14M5 12h14"/>', flask: '<path d="M9 3h6M10 3v6L5 19h14L14 9V3"/>', tree: '<path d="M12 3l6 9H6zM12 12v8"/>', home: '<path d="M4 11l8-7 8 7v9H4z"/>',
     fork: '<path d="M7 3v8M10 3v8M7 11a3 3 0 0 0 3 0M8.5 11v10M16 3c-2 2-2 6 0 8v10"/>', people: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20a6 6 0 0 1 12 0M15 20a4 4 0 0 1 7-2"/>', park: '<path d="M5 20V4h8a4 4 0 0 1 0 8H5"/>'
   };
-  // Campus layout: one entry per city block (column, row). Heights in pixels.
-  var blocks = [
-    { c: 0, r: 0, n: "Arena", kind: "dome", i: "star", lbl: 1 },
-    { c: 1, r: 0, n: "Stadium", kind: "stadium", i: "ball", lbl: 1 },
-    { c: 3, r: 0, n: "Health Center", h: 30, i: "cross", roof: "#1d3a6e", lbl: 1 },
-    { c: 0, r: 1, n: "Science Hall", h: 40, i: "flask", lbl: 1 },
-    { c: 1, r: 1, n: "Library", h: 72, i: "book", fp: [8, 8, 56, 56], roof: "#21407a", lbl: 1 },
-    { c: 2, r: 1, n: "Campus Quad", kind: "park", i: "tree", lbl: 1, hub: 1 },
-    { c: 3, r: 1, n: "Arts Center", h: 32, i: "star", fp: [0, 10, 72, 52], lbl: 0 },
-    { c: 0, r: 2, n: "Bookstore", h: 16, i: "bag", lbl: 1 },
-    { c: 1, r: 2, n: "Dining Hall", h: 20, i: "fork", fp: [0, 8, 72, 56], lbl: 1 },
-    { c: 2, r: 2, n: "Gym & Rec", h: 26, i: "gym", roof: "#1b3a72", lbl: 1 },
-    { c: 3, r: 2, n: "Coffee House", h: 12, i: "cup", fp: [16, 16, 40, 40], warm: 1, lbl: 1 },
-    { c: 0, r: 3, n: "Lecture Hall", h: 28, i: "book", lbl: 0 },
-    { c: 1, r: 3, n: "Student Union", h: 34, i: "people", lbl: 1 },
-    { c: 2, r: 3, n: "Admin", h: 46, i: "home", fp: [10, 6, 52, 60], lbl: 0 },
-    { c: 3, r: 3, n: "Residence Hall", h: 60, i: "home", fp: [12, 4, 48, 64], warm: 1, lbl: 0 },
-    { c: 0, r: 4, n: "Residence Hall", h: 52, i: "home", fp: [4, 12, 64, 48], warm: 1, lbl: 0 },
-    { c: 1, r: 4, n: "Residences", h: 44, i: "home", fp: [8, 8, 56, 56], warm: 1, lbl: 1 },
-    { c: 2, r: 4, n: "Apartments", h: 56, i: "home", fp: [6, 6, 60, 60], warm: 1, lbl: 0 },
-    { c: 3, r: 4, n: "Parking", h: 16, i: "park", roof: "#18305e", lbl: 0 }
-  ];
-  var bEls = {};
+  // ---------- Campus building kit ----------
+  var M = {
+    brick: { wall: "#8a3b2c", win: "rgba(253,224,150,0.78)", roof: "#3a404d" },
+    stone: { wall: "#bdb6a6", win: "rgba(253,224,150,0.7)", roof: "#4b5563" },
+    white: { wall: "#dfe3ea", win: "rgba(56,189,248,0.55)", roof: "#94a3b8" },
+    glass: { wall: "#1f4f8f", win: "rgba(165,210,255,0.9)", roof: "#334155" },
+    violet: { wall: "#4c2a85", win: "rgba(216,180,254,0.85)", roof: "#312e81" },
+    concrete: { wall: "#5b6577", win: "rgba(15,23,42,0.85)", roof: "#475569" }
+  };
   function box(x, y, w, d, h, o) {
     var b = div("box" + (o && o.cls ? " " + o.cls : ""), "left:" + x + "px;top:" + y + "px;width:" + w + "px;height:" + d + "px;--h:" + h + "px;--wall:" + (o && o.wall || "#0f2350") + ";--win:" + (o && o.win || "rgba(147,197,253,0.55)") + ";--roof:" + (o && o.roof || "#1a3466"), o && o.parent);
     ["n ns", "s ns", "w ew", "e ew"].forEach(function (f) { div("f " + f, "", b); });
     div("f top", "transform:translateZ(" + h + "px)", b);
     return b;
   }
+  function bldg(el, x, y, w, d, h, mat) { var m = M[mat]; return box(x, y, w, d, h, { parent: el, cls: "wb", wall: m.wall, win: m.win, roof: m.roof }); }
+  function plane(parent, css, bg, cls) { var e = document.createElement("div"); e.className = "f " + (cls || ""); e.style.cssText = "position:absolute;transform-origin:0 0;backface-visibility:visible;" + css + ";background:" + bg; parent.appendChild(e); return e; }
+  var SHINGLE = "repeating-linear-gradient(0deg, rgba(0,0,0,0.22) 0 1px, transparent 1px 4px), ";
+  function gable(b, w, d, h, rh, color, wall) {
+    var th = Math.atan2(rh, d / 2) * 180 / Math.PI, L = Math.hypot(d / 2, rh);
+    plane(b, "left:0;top:0;width:" + w + "px;height:" + L + "px;transform:translateZ(" + h + "px) rotateX(" + th + "deg)", SHINGLE + color, "rf");
+    plane(b, "left:0;top:" + d + "px;width:" + w + "px;height:" + L + "px;transform:translateZ(" + h + "px) rotateX(" + (180 - th) + "deg)", SHINGLE + color, "rf");
+    [0, w].forEach(function (x) { plane(b, "left:" + x + "px;top:0;width:" + rh + "px;height:" + d + "px;transform:translateZ(" + h + "px) rotateY(-90deg);clip-path:polygon(0 0,100% 50%,0 100%)", wall); });
+  }
+  function barrel(b, w, d, h, rh, color, N) {
+    N = N || 8; var pts = [];
+    for (var i = 0; i <= N; i++) { var f = Math.PI * i / N; pts.push([d / 2 - (d / 2) * Math.cos(f), rh * Math.sin(f)]); }
+    for (var j = 0; j < N; j++) { var p0 = pts[j], p1 = pts[j + 1], L = Math.hypot(p1[0] - p0[0], p1[1] - p0[1]) + 0.6, an = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]) * 180 / Math.PI;
+      plane(b, "left:0;top:" + p0[0] + "px;width:" + w + "px;height:" + L + "px;transform:translateZ(" + (h + p0[1]) + "px) rotateX(" + an + "deg)", "linear-gradient(90deg, rgba(255,255,255,0.08), rgba(0,0,0,0.12)), " + color, "rf"); }
+    [0, w].forEach(function (x) { plane(b, "left:" + x + "px;top:0;width:" + rh + "px;height:" + d + "px;transform:translateZ(" + h + "px) rotateY(-90deg);clip-path:ellipse(100% 50% at 0 50%)", "repeating-linear-gradient(0deg, rgba(165,210,255,0.6) 0 2px, #1f4f8f 2px 5px)"); });
+  }
+  function hipped(b, w, d, h, layers, color) {
+    for (var i = 0; i < layers; i++) { var k2 = (i + 1) / (layers + 1), iw = w * (1 - k2), id = d * (1 - k2);
+      plane(b, "left:" + (w - iw) / 2 + "px;top:" + (d - id) / 2 + "px;width:" + iw + "px;height:" + id + "px;border-radius:1px;transform:translateZ(" + (h + i * 3 + 2) + "px);box-shadow:0 0 0 1px rgba(0,0,0,0.15)", color, "rf"); }
+  }
+  function dome(parent, cx, cy, R0, z0, rh, hue, light) {
+    for (var i = 0; i < 7; i++) { var a2 = (i / 7) * Math.PI / 2, r = R0 * Math.cos(a2), z = z0 + rh * Math.sin(a2); div("dome", "left:" + (cx - r) + "px;top:" + (cy - r) + "px;width:" + 2 * r + "px;height:" + 2 * r + "px;transform:translateZ(" + z + "px);background:hsl(" + hue + ",35%," + (light + i * 5) + "%)", parent); }
+  }
+  var LEAF = [["#1d7a4a", "#2fa865"], ["#256b3d", "#3c9a58"], ["#1b6e55", "#34a37a"], ["#3f7a2a", "#69a83a"]];
+  function tree(parent, x, y, s, k3) {
+    var c = LEAF[k3 % LEAF.length], t = div("tree", "left:" + (x - s / 2) + "px;top:" + (y - s / 2) + "px;width:" + s + "px;height:" + s + "px", parent);
+    var lf = "position:absolute;inset:0;border-radius:50%;box-shadow:inset -2px -2px 0 rgba(0,0,0,0.25);";
+    div("", lf + "background:#4a3323;inset:35%;transform:translateZ(3px)", t);
+    div("", lf + "background:" + c[0] + ";transform:translateZ(" + (s * 0.6) + "px)", t);
+    div("", lf + "background:" + c[1] + ";transform:translateZ(" + (s * 0.95) + "px) scale(0.62)", t);
+    return t;
+  }
+  function autoTrees(el, foot, seed, skipDoor) {
+    var pts = [], P = [6, 18, 30, 42, 54, 66];
+    P.forEach(function (v) { pts.push([v, 6], [v, 66], [6, v], [66, v]); });
+    var n = 0;
+    pts.forEach(function (p, i) {
+      if ((i + seed) % 3 === 0) return;
+      if (skipDoor && Math.abs(p[0] - 36) < 8 && p[1] > 50) return;
+      for (var f = 0; f < foot.length; f++) { var q = foot[f]; if (p[0] > q[0] - 6 && p[0] < q[0] + q[2] + 6 && p[1] > q[1] - 6 && p[1] < q[1] + q[3] + 6) return; }
+      tree(el, p[0], p[1], 9 + ((i * 7 + seed) % 5), i + seed); n++;
+    });
+  }
+  function lot(el, foot, path) {
+    div("lawn", "inset:0", el);
+    if (path) { var f0 = foot[0]; div("walkway", "left:" + (f0[0] + f0[2] / 2 - 2.5) + "px;top:" + (f0[1] + f0[3]) + "px;width:5px;height:" + (72 - f0[1] - f0[3]) + "px", el); }
+  }
+  function umbrella(parent, x, y, c) { div("umb", "left:" + (x - 5) + "px;top:" + (y - 5) + "px;background:conic-gradient(" + c + " 0 12.5%, #f8fafc 0 25%, " + c + " 0 37.5%, #f8fafc 0 50%, " + c + " 0 62.5%, #f8fafc 0 75%, " + c + " 0 87.5%, #f8fafc 0)", parent); }
+  function court(parent, x, y, w, d, kind) { div("court " + kind, "left:" + x + "px;top:" + y + "px;width:" + w + "px;height:" + d + "px", parent); }
+
+  // Campus layout: one entry per city block (column, row)
+  var blocks = [
+    { c: 0, r: 0, n: "Arena", kind: "dome", i: "star", lbl: 1 },
+    { c: 1, r: 0, n: "Stadium", kind: "stadium", i: "ball", lbl: 1 },
+    { c: 3, r: 0, n: "Health Center", kind: "health", i: "cross", lbl: 1 },
+    { c: 0, r: 1, n: "Science Hall", kind: "science", i: "flask", lbl: 1 },
+    { c: 1, r: 1, n: "Library", kind: "library", i: "book", lbl: 1 },
+    { c: 2, r: 1, n: "Campus Quad", kind: "park", i: "tree", lbl: 1, hub: 1 },
+    { c: 3, r: 1, n: "Arts Center", kind: "arts", i: "star", lbl: 0 },
+    { c: 0, r: 2, n: "Bookstore", kind: "bookstore", i: "bag", lbl: 1 },
+    { c: 1, r: 2, n: "Dining Hall", kind: "dining", i: "fork", lbl: 1 },
+    { c: 2, r: 2, n: "Gym & Rec", kind: "gym", i: "gym", lbl: 1 },
+    { c: 3, r: 2, n: "Coffee House", kind: "coffee", i: "cup", lbl: 1 },
+    { c: 0, r: 3, n: "Lecture Hall", kind: "lecture", i: "book", lbl: 0 },
+    { c: 1, r: 3, n: "Student Union", kind: "union", i: "people", lbl: 1 },
+    { c: 2, r: 3, n: "Admin", kind: "admin", i: "home", lbl: 0 },
+    { c: 3, r: 3, n: "Residence Hall", kind: "resA", i: "home", lbl: 1 },
+    { c: 0, r: 4, n: "Campus Lake", kind: "lake", i: "tree", lbl: 1 },
+    { c: 1, r: 4, n: "Residences", kind: "resB", i: "home", lbl: 1 },
+    { c: 2, r: 4, n: "Apartments", kind: "apts", i: "home", lbl: 0 },
+    { c: 3, r: 4, n: "Parking", kind: "parking", i: "park", lbl: 0 }
+  ];
   function label(x, y, z, text, icon, extra) {
     var l = div("lbl" + (extra ? " " + extra : ""), "left:" + x + "px;top:" + y + "px;--z:" + z + "px", world);
     l.innerHTML = '<svg viewBox="0 0 24 24">' + ICON[icon] + "</svg>" + text;
     return l;
   }
+  var ducks = [];
   blocks.forEach(function (k) {
-    var bx = cols[k.c] + 14, by = rowsY[k.r] + 14, W = 72, top = 0, el;
+    var bx = cols[k.c] + 14, by = rowsY[k.r] + 14, W = 72, top = 0, el, b2;
     if (k.kind === "stadium") {
       // Spans two blocks: a bowl of rising seating tiers around a striped football field
       var SW = 172, SH = 72;
       el = div("box bld", "left:" + bx + "px;top:" + by + "px;width:" + SW + "px;height:" + SH + "px");
-      div("", "position:absolute;inset:-4px;border-radius:14px;background:#0b1a3a", el);
+      div("", "position:absolute;inset:-4px;border-radius:14px;background:#26303f", el);
       div("stad-field", "left:30px;top:15px;width:112px;height:42px", el);
       for (var t = 0; t < 4; t++) { var g = 24 - t * 6; div("stad-ring", "left:" + g + "px;top:" + (g - 15) + "px;right:" + g + "px;bottom:" + (g - 15) + "px;border-width:" + 7 + "px;border-color:hsl(220," + (50 + t * 6) + "%," + (26 + t * 6) + "%);transform:translateZ(" + (3 + t * 6) + "px)", el); }
-      [[30, 36], [142, 36]].forEach(function (p) { var gp = div("bb post", "left:" + (bx + p[0]) + "px;top:" + (by + p[1]) + "px;--z:1px", world); });
+      [[30, 36], [142, 36]].forEach(function (p) { div("bb post", "left:" + (bx + p[0]) + "px;top:" + (by + p[1]) + "px;--z:1px", world); });
       [[bx - 2, by - 2], [bx + SW + 2, by - 2], [bx - 2, by + SH + 2], [bx + SW + 2, by + SH + 2]].forEach(function (p) {
         div("bb tower", "left:" + p[0] + "px;top:" + p[1] + "px", world).innerHTML = "<i></i><b></b>";
         sv("circle", { cx: p[0], cy: p[1], r: 40, fill: "url(#stadglow)" }, glowsG);
       });
       k.cxOverride = bx + SW / 2; top = 30;
-    } else if (k.kind === "dome") {
-      el = div("box bld", "left:" + bx + "px;top:" + by + "px;width:" + W + "px;height:" + W + "px");
-      box(4, 4, 64, 64, 10, { parent: el, roof: "#1a3466" });
-      for (var i = 0; i < 7; i++) { var a = (i / 7) * Math.PI / 2, r = 30 * Math.cos(a), z = 10 + 26 * Math.sin(a); div("dome", "left:" + (36 - r) + "px;top:" + (36 - r) + "px;width:" + 2 * r + "px;height:" + 2 * r + "px;transform:translateZ(" + z + "px);background:hsl(218," + (55 + i * 4) + "%," + (22 + i * 5) + "%)", el); }
-      top = 38;
-    } else if (k.kind === "park") {
-      el = div("box bld", "left:" + bx + "px;top:" + by + "px;width:" + W + "px;height:" + W + "px");
-      div("grass", "inset:0", el); div("path-x", "left:0;right:0;top:34px;height:4px", el); div("path-x", "top:0;bottom:0;left:34px;width:4px", el);
-      [[10, 10], [52, 12], [14, 50], [50, 52], [24, 22], [46, 40]].forEach(function (t, j) { var tr = div("tree", "left:" + t[0] + "px;top:" + t[1] + "px", el); var lf = "position:absolute;inset:0;border-radius:50%;box-shadow:inset -2px -2px 0 rgba(0,0,0,0.25);"; div("", lf + "background:#178a5a;transform:translateZ(7px)", tr); div("", lf + "background:#2bb673;transform:translateZ(12px) scale(0.65)", tr); });
-      top = 14;
     } else {
-      var fp = k.fp || [0, 0, 72, 72];
-      el = box(bx + fp[0], by + fp[1], fp[2], fp[3], k.h, { cls: "bld", roof: k.roof, win: k.warm ? "rgba(253,224,150,0.55)" : null });
-      top = k.h;
-      if (k.n === "Library") { box(14, 14, 28, 28, 12, { parent: el, roof: "#2a4d8f" }).style.transform = "translateZ(" + k.h + "px)"; top = k.h + 12; }
+      el = div("box bld", "left:" + bx + "px;top:" + by + "px;width:72px;height:72px");
+      var K = k.kind;
+      if (K === "dome") {
+        lot(el, [[6, 6, 60, 60]]); bldg(el, 8, 8, 56, 56, 10, "stone"); dome(el, 36, 36, 27, 10, 22, 215, 30); autoTrees(el, [[8, 8, 56, 56]], 1); top = 34;
+      } else if (K === "health") {
+        var f = [[10, 10, 52, 40]]; lot(el, f, 1); b2 = bldg(el, 10, 10, 52, 40, 22, "white");
+        plane(b2, "left:22px;top:16px;width:8px;height:8px;transform:translateZ(22.3px)", "linear-gradient(#ef4444,#ef4444) center/8px 2.6px no-repeat, linear-gradient(#ef4444,#ef4444) center/2.6px 8px no-repeat, #f8fafc");
+        autoTrees(el, f, 2, 1); top = 24;
+      } else if (K === "science") {
+        f = [[8, 10, 56, 42]]; lot(el, f, 1); b2 = bldg(el, 8, 10, 56, 42, 30, "stone");
+        dome(b2, 42, 21, 8, 30, 8, 210, 60);
+        [0, 1, 2].forEach(function (i) { plane(b2, "left:" + (6 + i * 9) + "px;top:24px;width:7px;height:12px;transform:translateZ(31px) rotateX(-18deg)", "repeating-linear-gradient(90deg, #1e3a8a 0 2px, #60a5fa 2px 2.6px), #1e3a8a"); });
+        autoTrees(el, f, 3, 1); top = 40;
+      } else if (K === "library") {
+        f = [[6, 12, 60, 40]]; lot(el, f, 1); b2 = bldg(el, 6, 12, 60, 40, 24, "stone"); gable(b2, 60, 40, 24, 10, "#475569", "#bdb6a6");
+        var tw = bldg(el, 29, 20, 14, 14, 50, "stone"); hipped(tw, 14, 14, 50, 4, "#334155");
+        [0, 1, 2, 3, 4, 5].forEach(function (i) { box(9 + i * 10, 53, 3, 3, 16, { parent: el, wall: "#e7e2d6", win: "#e7e2d6", roof: "#e7e2d6" }); });
+        div("bb clock", "left:" + (bx + 36) + "px;top:" + (by + 34) + "px;--z:40px", world);
+        autoTrees(el, [[6, 12, 60, 46]], 4); top = 62;
+      } else if (K === "park") {
+        lot(el, []); div("path-x", "left:0;right:0;top:34px;height:4px", el); div("path-x", "top:0;bottom:0;left:34px;width:4px", el);
+        div("path-x", "left:-8px;top:34px;width:88px;height:3px;transform:rotate(45deg)", el); div("path-x", "left:-8px;top:34px;width:88px;height:3px;transform:rotate(-45deg)", el);
+        div("fountain", "left:26px;top:26px", el); div("bb spray", "left:" + (bx + 36) + "px;top:" + (by + 36) + "px;--z:2px", world);
+        [[12, 12], [60, 12], [12, 60], [60, 60], [24, 6], [48, 66], [6, 48], [66, 24]].forEach(function (p, i) { tree(el, p[0], p[1], 11 + (i % 3) * 2, i); });
+        [[22, 30], [50, 30], [22, 44], [50, 44]].forEach(function (p) { div("bench", "left:" + p[0] + "px;top:" + p[1] + "px", el); });
+        top = 16;
+      } else if (K === "arts") {
+        f = [[8, 8, 34, 50], [40, 24, 26, 34]]; lot(el, f); bldg(el, 8, 8, 34, 50, 34, "violet"); bldg(el, 40, 24, 26, 34, 20, "glass"); autoTrees(el, f, 5); top = 36;
+      } else if (K === "bookstore") {
+        f = [[14, 18, 44, 30]]; lot(el, f, 1); b2 = bldg(el, 14, 18, 44, 30, 14, "brick"); gable(b2, 44, 30, 14, 8, "#3a404d", "#8a3b2c");
+        plane(b2, "left:4px;top:30px;width:36px;height:7px;transform:translateZ(10px) rotateX(-35deg)", "repeating-linear-gradient(90deg, #dc2626 0 4px, #f8fafc 4px 8px)");
+        autoTrees(el, f, 6, 1); top = 24;
+      } else if (K === "dining") {
+        f = [[6, 8, 60, 34]]; lot(el, f); b2 = bldg(el, 6, 8, 60, 34, 16, "brick"); gable(b2, 60, 34, 16, 9, "#3a404d", "#8a3b2c");
+        div("patio", "left:10px;top:46px;width:52px;height:20px", el);
+        [[18, 52], [32, 58], [46, 52], [58, 60]].forEach(function (p, i) { umbrella(el, p[0], p[1], ["#2563eb", "#ef4444", "#2563eb", "#f59e0b"][i]); });
+        autoTrees(el, [[6, 8, 60, 60]], 7); top = 28;
+      } else if (K === "gym") {
+        f = [[4, 4, 64, 34]]; lot(el, f); b2 = bldg(el, 4, 4, 64, 34, 12, "glass"); barrel(b2, 64, 34, 12, 12, "#64748b");
+        court(el, 6, 44, 30, 22, "hoops"); div("pool", "left:40px;top:44px;width:28px;height:22px", el);
+        top = 28;
+      } else if (K === "coffee") {
+        f = [[18, 14, 36, 26]]; lot(el, f); b2 = bldg(el, 18, 14, 36, 26, 11, "brick"); gable(b2, 36, 26, 11, 7, "#14532d", "#8a3b2c");
+        plane(b2, "left:3px;top:26px;width:30px;height:6px;transform:translateZ(8px) rotateX(-35deg)", "repeating-linear-gradient(90deg, #15803d 0 4px, #f8fafc 4px 8px)");
+        div("patio", "left:14px;top:46px;width:44px;height:18px", el);
+        [[22, 55], [36, 55], [50, 55]].forEach(function (p) { div("ctable", "left:" + (p[0] - 3) + "px;top:" + (p[1] - 3) + "px", el); });
+        div("strlights", "left:14px;top:45px;width:44px", el);
+        autoTrees(el, [[14, 14, 44, 50]], 8); top = 22;
+      } else if (K === "lecture") {
+        f = [[8, 10, 56, 38]]; lot(el, f, 1); b2 = bldg(el, 8, 10, 56, 38, 22, "brick"); gable(b2, 56, 38, 22, 10, "#3a404d", "#8a3b2c"); autoTrees(el, f, 9, 1); top = 36;
+      } else if (K === "union") {
+        f = [[6, 6, 40, 40], [44, 16, 22, 30]]; lot(el, f); bldg(el, 6, 6, 40, 40, 28, "glass"); bldg(el, 44, 16, 22, 30, 16, "white");
+        div("patio", "left:8px;top:50px;width:56px;height:16px", el); umbrella(el, 20, 58, "#2563eb"); umbrella(el, 40, 58, "#2563eb"); top = 30;
+      } else if (K === "admin") {
+        f = [[10, 10, 52, 40]]; lot(el, f, 1); b2 = bldg(el, 10, 10, 52, 40, 30, "stone"); hipped(b2, 52, 40, 30, 4, "#475569");
+        div("bb flag", "left:" + (bx + 36) + "px;top:" + (by + 62) + "px", world).innerHTML = "<i></i><b></b>";
+        autoTrees(el, f, 10, 1); top = 44;
+      } else if (K === "resA") {
+        f = [[6, 4, 28, 64], [34, 36, 32, 30]]; lot(el, f); b2 = bldg(el, 6, 4, 28, 64, 52, "brick"); b2.style.setProperty("--win", "rgba(253,224,150,0.85)");
+        var b3 = bldg(el, 34, 36, 32, 30, 36, "brick"); gable(b3, 32, 30, 36, 8, "#3a404d", "#8a3b2c"); autoTrees(el, f, 11); top = 56;
+      } else if (K === "lake") {
+        lot(el, []); div("lake", "left:6px;top:8px;width:60px;height:54px", el); div("bridge", "left:28px;top:30px", el);
+        [[8, 6], [64, 10], [6, 64], [62, 64], [36, 4], [66, 40]].forEach(function (p, i) { tree(el, p[0], p[1], 10 + (i % 3) * 2, i + 3); });
+        [0, 1, 2].forEach(function (i) { ducks.push({ el: div("duck", "", el), a: i * 2.1, r: 12 + i * 5 }); });
+        top = 12;
+      } else if (K === "resB") {
+        f = [[4, 6, 28, 50], [40, 14, 28, 50]]; lot(el, f); bldg(el, 4, 6, 28, 50, 44, "brick"); bldg(el, 40, 14, 28, 50, 38, "brick");
+        tree(el, 36, 62, 12, 2); tree(el, 20, 64, 10, 1); top = 48;
+      } else if (K === "apts") {
+        f = [[10, 8, 52, 52]]; lot(el, f); b2 = bldg(el, 10, 8, 52, 52, 58, "white");
+        plane(b2, "left:6px;top:6px;width:40px;height:40px;border-radius:4px;transform:translateZ(58.3px)", "radial-gradient(circle at 30% 30%, #2f8f57, #1d5a3a)");
+        [[16, 16], [32, 26], [22, 34]].forEach(function (p, i) { tree(b2, p[0], p[1], 7, i).style.transform = "translateZ(58px)"; });
+        autoTrees(el, f, 12); top = 62;
+      } else if (K === "parking") {
+        f = [[6, 6, 60, 60]]; lot(el, f); b2 = bldg(el, 6, 6, 60, 60, 16, "concrete");
+        [["#ef4444", 8, 8], ["#f8fafc", 20, 8], ["#1d4ed8", 44, 8], ["#facc15", 8, 40], ["#f8fafc", 32, 40], ["#94a3b8", 44, 40]].forEach(function (c) { box(c[1], c[2], 8, 13, 4, { parent: b2, wall: c[0], win: c[0], roof: c[0] }).style.transform = "translateZ(16px)"; });
+        top = 20;
+      }
     }
     k.el = el; k.top = top + 6; k.cx = k.cxOverride || bx + 36; k.cy = by + 36;
     if (k.lbl) k.lab = label(k.cx, k.cy, k.top, k.n, k.i, k.hub ? "hub" : "");
@@ -588,7 +769,8 @@
     { n: "Health Center", s: "Campus clinic", b: [3, 0], t: 7 },
     { n: "Bookstore", s: "Books, gear, and supplies", b: [0, 2], t: 4 },
     { n: "Science Hall", s: "Labs and lecture rooms", b: [0, 1], t: 5 },
-    { n: "Campus Quad Hub", s: "TrypCar Hub, well lit", b: [2, 1], t: 6 }
+    { n: "Campus Quad Hub", s: "TrypCar Hub, well lit", b: [2, 1], t: 6 },
+    { n: "Campus Lake", s: "Walking trail and footbridge", b: [0, 4], t: 2 }
   ];
   places.forEach(function (p, i) {
     var st = stop(p.b[0], p.b[1]); p.x = st.x; p.y = st.y;
@@ -718,7 +900,7 @@
   }
 
   // Windows that switch on and off around campus
-  var winBoxes = [].slice.call(city.querySelectorAll(".box.bld"));
+  var winBoxes = [].slice.call(city.querySelectorAll(".box.wb"));
   setInterval(function () {
     if (document.hidden || !winBoxes.length) return;
     var b2 = winBoxes[Math.floor(Math.random() * winBoxes.length)];
@@ -751,6 +933,9 @@
     if (b && !trip.locked) { trip.place = places[+b.getAttribute("data-place")]; options(); $("hint").classList.add("gone"); }
   });
   $("recenter").addEventListener("click", function (e) { e.stopPropagation(); wake(); cam.tilt = 52; cam.rz = -14; cam.zoom = cam.base; applyCam(); });
+  $("legbtn").addEventListener("click", function (e) { e.stopPropagation(); wake(); var o = $("legend").classList.toggle("open"); this.setAttribute("aria-expanded", o); });
+  $("legend").addEventListener("pointerdown", function (e) { e.stopPropagation(); });
+  $("legend").addEventListener("click", function (e) { e.stopPropagation(); });
   $("explore").addEventListener("click", function (e) { e.stopPropagation(); sheet.classList.toggle("min"); refit(); });
 
   // One animation loop runs the whole living campus
@@ -760,6 +945,7 @@
     if (!document.hidden) {
       walkers.forEach(function (m) { stepMover(m, dt); });
       riders.forEach(function (m) { stepMover(m, dt); });
+      ducks.forEach(function (d2) { d2.a += dt * 0.25; d2.el.style.left = (36 + d2.r * Math.cos(d2.a)) + "px"; d2.el.style.top = (35 + d2.r * 0.75 * Math.sin(d2.a)) + "px"; });
       // Cinematic flyover after a few seconds without touching the screen
       if (!drag && now - lastInput > 7000) {
         if (!cine) { cine = true; cineStart = now; cineFrom = { rz: cam.rz, tilt: cam.tilt, zoom: cam.zoom }; world.classList.add("drag"); }
