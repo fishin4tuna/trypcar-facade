@@ -76,29 +76,60 @@
     .role[aria-pressed="true"] { border-color: var(--blue); background: var(--raise); }
     .ob-foot { margin-top: auto; padding-top: 20px; }
 
-    /* MAP (3D tilted plane) */
-    .stage { position: relative; flex: 1; min-height: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 120%, #0a1a3d, #040a18 70%); }
-    .plane { position: absolute; left: 50%; top: 46%; width: 460px; height: 600px; margin: -300px 0 0 -230px; transform: perspective(820px) rotateX(46deg) scale(1.06); transform-origin: 50% 50%; transition: transform 0.9s cubic-bezier(.2,.7,.2,1); }
-    .plane.close { transform: perspective(820px) rotateX(50deg) scale(1.28); }
-    .plane svg { width: 100%; height: 100%; display: block; overflow: visible; }
-    .road { stroke: #13254a; stroke-width: 16; stroke-linecap: round; }
-    .road-line { stroke: rgba(148,163,184,0.18); stroke-width: 1.2; stroke-dasharray: 6 8; }
-    .bld-top { fill: #102449; }
-    .bld-side { fill: #0a1834; }
-    .bld-top.green { fill: rgba(16,185,129,0.22); }
-    .route-glow { fill: none; stroke: var(--blue); stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; opacity: 0.25; filter: blur(4px); }
-    .route-line { fill: none; stroke: url(#rg); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
-    .route-flow { fill: none; stroke: #e0ecff; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 2 14; animation: flow 1s linear infinite; opacity: 0.9; }
+    /* MAP: real CSS 3D world (buildings rise off the ground) */
+    .stage { position: relative; flex: 1; min-height: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 115%, #0c2150, #040a18 68%); perspective: 900px; perspective-origin: 50% 20%; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
+    .stage.grabbing { cursor: grabbing; }
+    .world { position: absolute; left: 50%; top: 50%; width: 460px; height: 600px; margin: -300px 0 0 -230px; transform-style: preserve-3d; --tilt: 52deg; --rz: -14deg; --zoom: 1; transform: rotateX(var(--tilt)) rotateZ(var(--rz)) scale(var(--zoom)); transition: transform 0.9s cubic-bezier(.2,.7,.2,1); }
+    .world.drag { transition: none; }
+    .ground { position: absolute; inset: 0; }
+    .ground svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    .road { stroke: #142a55; stroke-width: 16; stroke-linecap: round; }
+    .road-line { stroke: rgba(191,219,254,0.22); stroke-width: 1.2; stroke-dasharray: 7 9; }
+    .curb { fill: #0a1630; }
+    .route-glow { fill: none; stroke: #3b82f6; stroke-width: 14; stroke-linecap: round; stroke-linejoin: round; opacity: 0.35; }
+    .route-line { fill: none; stroke: #60a5fa; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+    .route-flow { fill: none; stroke: #eff6ff; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 2 14; animation: flow 0.9s linear infinite; }
     @keyframes flow { to { stroke-dashoffset: -16; } }
     .pulse { transform-box: fill-box; transform-origin: center; animation: pulse 2.4s ease-out infinite; }
-    @keyframes pulse { from { transform: scale(0.5); opacity: 0.8; } to { transform: scale(2.6); opacity: 0; } }
+    @keyframes pulse { from { transform: scale(0.5); opacity: 0.85; } to { transform: scale(2.8); opacity: 0; } }
+    .box, .box * { position: absolute; }
+    .box { transform-style: preserve-3d; }
+    .box .f { backface-visibility: visible; }
+    .box .top { inset: 0; border-radius: 3px; background: var(--roof, #1a3466); box-shadow: inset 0 0 0 1px rgba(147,197,253,0.18), inset 0 0 0 5px rgba(5,11,24,0.25); }
+    .box .ns { left: 0; width: 100%; height: var(--h); transform-origin: 0 0; transform: rotateX(90deg); background: repeating-linear-gradient(180deg, var(--wall) 0 3px, transparent 3px 8px), repeating-linear-gradient(90deg, var(--wall) 0 3px, var(--win) 3px 6px), var(--wall); }
+    .box .ew { top: 0; height: 100%; width: var(--h); transform-origin: 0 0; transform: rotateY(-90deg); background: repeating-linear-gradient(90deg, var(--wall) 0 3px, transparent 3px 8px), repeating-linear-gradient(180deg, var(--wall) 0 3px, var(--win) 3px 6px), var(--wall); filter: brightness(0.78); }
+    .box .n { top: 0; } .box .s { top: 100%; } .box .w { left: 0; } .box .e { left: 100%; }
+    .bld { cursor: pointer; }
+    .bld.sel .top { background: linear-gradient(135deg, #3b82f6, #1d4ed8); box-shadow: 0 0 0 2px #93c5fd, 0 0 28px rgba(59,130,246,0.9); }
+    .bld.sel .ns, .bld.sel .ew { --wall: #1e40af; }
+    .grass { position: absolute; border-radius: 6px; background: radial-gradient(circle at 30% 30%, #1f6f52, #0f3f30); box-shadow: inset 0 0 0 1px rgba(110,231,183,0.25); }
+    .path-x { position: absolute; background: rgba(226,232,240,0.18); }
+    .tree, .tree i { position: absolute; border-radius: 50%; }
+    .tree { width: 12px; height: 12px; transform-style: preserve-3d; }
+    .tree i { inset: 0; background: #1c8f62; box-shadow: inset -2px -2px 0 rgba(0,0,0,0.25); }
+    .field { position: absolute; border-radius: 50%; background: repeating-linear-gradient(90deg, #1a7f4f 0 6px, #188049 6px 12px); box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35); }
+    .tier { position: absolute; border-radius: 50%; border: 6px solid #22427f; box-shadow: inset 0 0 0 1px rgba(147,197,253,0.25); }
+    .dome { position: absolute; border-radius: 50%; }
+    .lbl { position: absolute; transform-origin: 0 0; transform: translateZ(var(--z)) rotateZ(calc(-1 * var(--rz))) rotateX(calc(-1 * var(--tilt))) translate(-50%, -100%); pointer-events: none; display: flex; align-items: center; gap: 4px; padding: 3px 7px 3px 4px; border-radius: 999px; background: rgba(5,11,24,0.82); border: 1px solid rgba(147,197,253,0.35); font-size: 9px; font-weight: 700; color: #e2e8f0; white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.45); }
+    .lbl svg { width: 12px; height: 12px; padding: 2px; border-radius: 50%; background: #2563eb; stroke: #fff; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+    .lbl.hub svg { background: #10b981; }
+    .lbl.sel { background: #2563eb; border-color: #bfdbfe; }
+    .dpin { position: absolute; transform-origin: 0 0; transform: translateZ(2px) rotateZ(calc(-1 * var(--rz))) rotateX(calc(-1 * var(--tilt))) translate(-50%, -100%); pointer-events: none; display: none; flex-direction: column; align-items: center; }
+    .dpin.on { display: flex; }
+    .dpin b { padding: 4px 9px; border-radius: 999px; background: #f8fafc; color: #0b1a3a; font-size: 10px; font-weight: 800; box-shadow: 0 6px 16px rgba(0,0,0,0.5); }
+    .dpin i { width: 2px; height: 18px; background: #f8fafc; }
+    .dpin u { width: 10px; height: 10px; border-radius: 50%; background: #2563eb; border: 2px solid #fff; margin-top: -2px; }
     .map-ui { position: absolute; inset: 0; pointer-events: none; }
     .topbar { position: absolute; top: 12px; left: 14px; right: 14px; display: flex; justify-content: space-between; align-items: center; }
-    .hello { font-size: 1.05rem; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
+    .hello { font-size: 1.05rem; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.7); }
     .hello small { display: block; font-size: 0.76rem; font-weight: 500; color: var(--soft); }
     .pill { pointer-events: auto; display: inline-flex; align-items: center; gap: 7px; padding: 8px 12px; border-radius: 999px; background: rgba(5,11,24,0.78); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--line2); font-size: 0.76rem; font-weight: 600; }
     .pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 8px var(--mint); }
-    .vignette { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(3,8,20,0.85) 0%, transparent 22%, transparent 70%, rgba(3,8,20,0.95) 100%); pointer-events: none; }
+    .hint { position: absolute; left: 50%; bottom: 40px; transform: translateX(-50%); padding: 6px 12px; border-radius: 999px; background: rgba(5,11,24,0.7); border: 1px solid var(--line); font-size: 0.72rem; color: var(--soft); white-space: nowrap; transition: opacity 0.5s; }
+    .hint.gone { opacity: 0; }
+    .recenter { position: absolute; right: 14px; bottom: 40px; pointer-events: auto; width: 38px; height: 38px; border-radius: 12px; background: rgba(5,11,24,0.85); border: 1px solid var(--line2); display: flex; align-items: center; justify-content: center; }
+    .recenter svg { width: 18px; height: 18px; stroke: var(--sky); fill: none; stroke-width: 2.2; stroke-linecap: round; }
+    .vignette { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(3,8,20,0.9) 0%, transparent 20%, transparent 72%, rgba(3,8,20,0.95) 100%); pointer-events: none; }
 
     /* SHEET */
     .sheet { flex: none; position: relative; z-index: 5; margin-top: -30px; background: rgba(8,18,39,0.96); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid var(--line2); border-radius: 26px 26px 0 0; padding: 10px 18px 16px; box-shadow: 0 -16px 40px rgba(0,0,0,0.5); max-height: 64%; overflow-y: auto; }
@@ -121,7 +152,7 @@
     .dest .pin svg { width: 18px; height: 18px; stroke: var(--sky); fill: none; stroke-width: 2; }
     .dest strong { display: block; font-size: 0.95rem; }
     .dest span { font-size: 0.76rem; color: var(--muted); }
-    .opts { display: grid; gap: 8px; margin: 12px 0 14px; }
+    .opts { display: grid; gap: 6px; margin: 10px 0 12px; }
     .opt { display: grid; grid-template-columns: 54px 1fr auto; align-items: center; gap: 12px; padding: 10px 12px 10px 8px; border-radius: 16px; border: 1.5px solid transparent; background: var(--panel); text-align: left; transition: border-color 0.15s, background 0.15s; }
     .opt[aria-checked="true"] { border-color: var(--blue); background: var(--raise); box-shadow: 0 0 0 4px rgba(59,130,246,0.12); }
     .veh { width: 54px; height: 38px; }
@@ -130,7 +161,7 @@
     .opt small { font-size: 0.74rem; color: var(--muted); }
     .fare { text-align: right; font-weight: 800; }
     .fare small { display: block; font-weight: 500; font-size: 0.68rem; }
-    .row2 { display: flex; gap: 10px; }
+    .row2 { display: flex; gap: 10px; position: sticky; bottom: -16px; margin: 0 -18px -16px; padding: 10px 18px 16px; background: linear-gradient(180deg, rgba(8,18,39,0), rgba(8,18,39,0.98) 30%); }
     .row2 > * { flex: 1; }
     .sched { display: flex; align-items: center; justify-content: center; gap: 6px; flex: 0 0 56px !important; border-radius: 16px; border: 1px solid var(--line2); }
     .sched svg { width: 22px; height: 22px; stroke: var(--soft); fill: none; stroke-width: 2; }
@@ -168,6 +199,12 @@
     .star svg { width: 100%; height: 100%; fill: rgba(148,163,184,0.22); transition: fill 0.15s, transform 0.15s; }
     .star.on svg { fill: var(--sky); transform: scale(1.06); }
 
+    .carhero { position: relative; margin: 10px 0 4px; border-radius: 18px; background: radial-gradient(ellipse at 50% 85%, rgba(59,130,246,0.28), transparent 60%), linear-gradient(180deg, #0f1f45, #0a1530); border: 1px solid var(--line2); overflow: hidden; }
+    .carhero svg { display: block; width: 100%; height: auto; margin-top: 22px; margin-bottom: -4px; }
+    .carhero.compact svg { width: 62%; margin: 4px 0 -2px auto; }
+    .carhero.compact .cap { top: 50%; transform: translateY(-50%); max-width: 40%; }
+    .carhero .cap { position: absolute; left: 12px; top: 10px; font-size: 0.72rem; font-weight: 700; color: var(--ice); }
+    .carhero .cap span { display: block; font-weight: 500; color: var(--muted); }
     /* PAGES */
     .page { padding: 20px 18px 28px; }
     .page h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
@@ -235,6 +272,7 @@
     .modal .box { width: 100%; background: var(--deep); border-radius: 26px 26px 0 0; border-top: 1px solid var(--line2); padding: 12px 18px calc(18px + var(--safe-bottom)); max-height: 85%; overflow-y: auto; }
 
     @media (prefers-reduced-motion: reduce) {
+      .world { transition: none; }
       .pulse, .route-flow, .radar i, .member::after, .scanner .laser { animation: none; }
       .plane, .btn, .switch, .switch::after, .toast, .opt { transition: none; }
     }
@@ -249,36 +287,23 @@
 
   <!-- RIDE -->
   <section class="screen fill" id="s-ride" aria-label="Ride">
-    <div class="stage">
-      <div class="plane" id="plane">
-        <svg viewBox="0 0 460 600" id="map" aria-hidden="true">
-          <defs>
-            <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#93c5fd"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
-            <radialGradient id="meglow"><stop offset="0" stop-color="#3b82f6" stop-opacity="0.55"/><stop offset="1" stop-color="#3b82f6" stop-opacity="0"/></radialGradient>
-          </defs>
+    <div class="stage" id="stage">
+      <div class="world" id="world">
+        <div class="ground"><svg viewBox="0 0 460 600" aria-hidden="true">
+          <rect x="-200" y="-200" width="860" height="1000" fill="#071330"/>
           <g id="roads"></g>
-          <g id="blds"></g>
-          <g id="labels"></g>
-          <path class="route-glow" id="rglow" d=""/>
-          <path class="route-line" id="rline" d=""/>
-          <path class="route-flow" id="rflow" d=""/>
+          <path class="route-glow" id="rglow" d=""/><path class="route-line" id="rline" d=""/><path class="route-flow" id="rflow" d=""/>
           <g id="hubs"></g>
-          <g id="dpin" opacity="0"><circle r="16" fill="#2563eb" opacity="0.25"/><circle r="9" fill="#f8fafc" stroke="#2563eb" stroke-width="4"/></g>
-          <g id="mepin"><circle r="26" fill="url(#meglow)"/><circle class="pulse" r="10" fill="none" stroke="#60a5fa" stroke-width="2"/><circle r="9" fill="#3b82f6" stroke="#fff" stroke-width="3"/></g>
-          <g id="carpin" opacity="0">
-            <g id="carrot">
-              <ellipse rx="13" ry="7" fill="#000" opacity="0.35" transform="translate(2 3)"/>
-              <rect x="-14" y="-7.5" width="28" height="15" rx="6" fill="#f8fafc"/>
-              <rect x="-4" y="-6" width="9" height="12" rx="2.5" fill="#1e293b"/>
-              <rect x="7" y="-6" width="4" height="12" rx="1.5" fill="#1e293b"/>
-              <rect x="-13" y="-1.2" width="2.5" height="2.4" rx="1" fill="#3b82f6"/>
-            </g>
-          </g>
-        </svg>
+          <g id="mepin"><circle r="22" fill="#3b82f6" opacity="0.18"/><circle class="pulse" r="10" fill="none" stroke="#93c5fd" stroke-width="2"/><circle r="8.5" fill="#3b82f6" stroke="#fff" stroke-width="3"/></g>
+        </svg></div>
+        <div id="city" style="position:absolute;inset:0;transform-style:preserve-3d"></div>
+        <div class="dpin" id="dpin"><b id="dpin-t">Drop-off</b><i></i><u></u></div>
       </div>
       <div class="vignette"></div>
       <div class="map-ui">
-        <div class="topbar"><div class="hello" id="hello">Good evening<small>Campus zone is active</small></div><span class="pill"><span class="dot"></span><span id="carsnear">8 TrypCars nearby</span></span></div>
+        <div class="topbar"><div class="hello" id="hello">Good evening<small>Campus zone is active</small></div><span class="pill"><span class="dot"></span><span>8 TrypCars nearby</span></span></div>
+        <div class="hint" id="hint">Drag to look around. Tap a building to go there.</div>
+        <button class="recenter" type="button" id="recenter" aria-label="Reset map view"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></button>
       </div>
     </div>
     <div class="sheet" id="sheet"></div>
@@ -359,7 +384,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var NS = "http://www.w3.org/2000/svg";
   var user = { name: "", email: "", role: "" };
-  var credit = 50, rides = [], timers = [], raf = 0;
+  var credit = 50, rides = [], timers = [], raf = 0, trip = { place: null, svc: "ride", locked: false };
 
   function later(fn, ms) { timers.push(setTimeout(fn, RM ? Math.min(ms, 350) : ms)); }
   function clearAll() { timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(raf); }
@@ -421,68 +446,249 @@
   }
   $("restart").onclick = function () { clearAll(); scz.active = false; show("s-ob"); obWelcome(); };
 
-  // ---------------- 3D campus map ----------------
-  var G = 100, cols = [30, 130, 230, 330, 430], rowsY = [40, 140, 240, 340, 440, 540];
-  var roads = $("roads"), blds = $("blds"), labels = $("labels");
-  function el(tag, attrs, parent) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); (parent || roads).appendChild(e); return e; }
-  cols.forEach(function (x) { el("line", { x1: x, y1: 0, x2: x, y2: 600, "class": "road" }); el("line", { x1: x, y1: 0, x2: x, y2: 600, "class": "road-line" }); });
-  rowsY.forEach(function (y) { el("line", { x1: 0, y1: y, x2: 460, y2: y, "class": "road" }); el("line", { x1: 0, y1: y, x2: 460, y2: y, "class": "road-line" }); });
-  var names = { "1,0": "Stadium", "1,1": "Library", "2,1": "Campus Quad", "1,2": "Dining Hall", "2,2": "Rec Center", "0,3": "Science Hall", "2,3": "Student Union", "1,4": "Residence Halls", "3,1": "Arts Center" };
-  for (var c = 0; c < 4; c++) for (var r = 0; r < 5; r++) {
-    var x = cols[c] + 12, y = rowsY[r] + 12, w = 76, h = 76, ht = 6 + ((c * 7 + r * 5) % 4) * 4;
-    var green = names[c + "," + r] === "Campus Quad";
-    if (!green) el("rect", { x: x, y: y + ht, width: w, height: h, rx: 7, "class": "bld-side" }, blds);
-    el("rect", { x: x, y: green ? y : y - 0, width: w, height: h, rx: 7, "class": "bld-top" + (green ? " green" : "") }, blds);
-    if (names[c + "," + r]) { var t = el("text", { x: x + w / 2, y: y + h / 2 + 4, "text-anchor": "middle", fill: green ? "#6ee7b7" : "#7c8db0", "font-size": "11", "font-weight": "700", "font-family": "Plus Jakarta Sans, sans-serif" }, labels); t.textContent = names[c + "," + r]; }
+  // ---------------- 3D campus map (CSS 3D: real walls, rooftops and billboard labels) ----------------
+  var cols = [30, 130, 230, 330, 430], rowsY = [40, 140, 240, 340, 440, 540];
+  var world = $("world"), city = $("city"), roadsG = $("roads");
+  function sv(tag, attrs, parent) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
+  function div(cls, css, parent) { var e = document.createElement("div"); if (cls) e.className = cls; if (css) e.style.cssText = css; (parent || city).appendChild(e); return e; }
+  cols.forEach(function (x) { sv("line", { x1: x, y1: -40, x2: x, y2: 640, "class": "road" }, roadsG); sv("line", { x1: x, y1: -40, x2: x, y2: 640, "class": "road-line" }, roadsG); });
+  rowsY.forEach(function (y) { sv("line", { x1: -40, y1: y, x2: 500, y2: y, "class": "road" }, roadsG); sv("line", { x1: -40, y1: y, x2: 500, y2: y, "class": "road-line" }, roadsG); });
+
+  var ICON = {
+    book: '<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/>', gym: '<path d="M4 9v6M8 7v10M16 7v10M20 9v6M8 12h8"/>', ball: '<ellipse cx="12" cy="12" rx="9" ry="6"/><path d="M8 12h8M10 10v4M14 10v4"/>',
+    cup: '<path d="M5 8h11v6a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 10h2a2 2 0 0 1 0 4h-2"/>', star: '<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>', bag: '<path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"/>',
+    cross: '<path d="M12 5v14M5 12h14"/>', flask: '<path d="M9 3h6M10 3v6L5 19h14L14 9V3"/>', tree: '<path d="M12 3l6 9H6zM12 12v8"/>', home: '<path d="M4 11l8-7 8 7v9H4z"/>',
+    fork: '<path d="M7 3v8M10 3v8M7 11a3 3 0 0 0 3 0M8.5 11v10M16 3c-2 2-2 6 0 8v10"/>', people: '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20a6 6 0 0 1 12 0M15 20a4 4 0 0 1 7-2"/>', park: '<path d="M5 20V4h8a4 4 0 0 1 0 8H5"/>'
+  };
+  // Campus layout: one entry per city block (column, row). Heights in pixels.
+  var blocks = [
+    { c: 0, r: 0, n: "Parking Garage", h: 22, i: "park", roof: "#18305e", lbl: 0 },
+    { c: 1, r: 0, n: "Stadium", kind: "stadium", i: "ball", lbl: 1 },
+    { c: 2, r: 0, n: "Arena", kind: "dome", i: "star", lbl: 1 },
+    { c: 3, r: 0, n: "Health Center", h: 30, i: "cross", roof: "#1d3a6e", lbl: 1 },
+    { c: 0, r: 1, n: "Science Hall", h: 40, i: "flask", lbl: 1 },
+    { c: 1, r: 1, n: "Library", h: 72, i: "book", fp: [8, 8, 56, 56], roof: "#21407a", lbl: 1 },
+    { c: 2, r: 1, n: "Campus Quad", kind: "park", i: "tree", lbl: 1, hub: 1 },
+    { c: 3, r: 1, n: "Arts Center", h: 32, i: "star", fp: [0, 10, 72, 52], lbl: 0 },
+    { c: 0, r: 2, n: "Bookstore", h: 16, i: "bag", lbl: 1 },
+    { c: 1, r: 2, n: "Dining Hall", h: 20, i: "fork", fp: [0, 8, 72, 56], lbl: 1 },
+    { c: 2, r: 2, n: "Gym & Rec", h: 26, i: "gym", roof: "#1b3a72", lbl: 1 },
+    { c: 3, r: 2, n: "Coffee House", h: 12, i: "cup", fp: [16, 16, 40, 40], warm: 1, lbl: 1 },
+    { c: 0, r: 3, n: "Lecture Hall", h: 28, i: "book", lbl: 0 },
+    { c: 1, r: 3, n: "Student Union", h: 34, i: "people", lbl: 1 },
+    { c: 2, r: 3, n: "Admin", h: 46, i: "home", fp: [10, 6, 52, 60], lbl: 0 },
+    { c: 3, r: 3, n: "Residence Hall", h: 60, i: "home", fp: [12, 4, 48, 64], warm: 1, lbl: 0 },
+    { c: 0, r: 4, n: "Residence Hall", h: 52, i: "home", fp: [4, 12, 64, 48], warm: 1, lbl: 0 },
+    { c: 1, r: 4, n: "Residences", h: 44, i: "home", fp: [8, 8, 56, 56], warm: 1, lbl: 1 },
+    { c: 2, r: 4, n: "Apartments", h: 56, i: "home", fp: [6, 6, 60, 60], warm: 1, lbl: 0 },
+    { c: 3, r: 4, n: "Parking", h: 16, i: "park", roof: "#18305e", lbl: 0 }
+  ];
+  var bEls = {};
+  function box(x, y, w, d, h, o) {
+    var b = div("box" + (o && o.cls ? " " + o.cls : ""), "left:" + x + "px;top:" + y + "px;width:" + w + "px;height:" + d + "px;--h:" + h + "px;--wall:" + (o && o.wall || "#0f2350") + ";--win:" + (o && o.win || "rgba(147,197,253,0.55)") + ";--roof:" + (o && o.roof || "#1a3466"), o && o.parent);
+    ["n ns", "s ns", "w ew", "e ew"].forEach(function (f) { div("f " + f, "", b); });
+    div("f top", "transform:translateZ(" + h + "px)", b);
+    return b;
   }
-  var hubs = [[230, 140], [130, 340], [330, 440]];
-  hubs.forEach(function (h) {
-    el("circle", { cx: h[0], cy: h[1], r: 9, fill: "none", stroke: "#10b981", "stroke-width": 2, "class": "pulse" }, $("hubs"));
-    el("circle", { cx: h[0], cy: h[1], r: 7, fill: "#10b981", stroke: "#f8fafc", "stroke-width": 2.5 }, $("hubs"));
+  function label(x, y, z, text, icon, extra) {
+    var l = div("lbl" + (extra ? " " + extra : ""), "left:" + x + "px;top:" + y + "px;--z:" + z + "px", world);
+    l.innerHTML = '<svg viewBox="0 0 24 24">' + ICON[icon] + "</svg>" + text;
+    return l;
+  }
+  blocks.forEach(function (k) {
+    var bx = cols[k.c] + 14, by = rowsY[k.r] + 14, W = 72, top = 0, el;
+    if (k.kind === "stadium") {
+      el = div("box bld", "left:" + bx + "px;top:" + by + "px;width:" + W + "px;height:" + W + "px");
+      div("field", "left:14px;top:20px;width:44px;height:32px", el);
+      [0, 1, 2].forEach(function (i) { var g = 10 - i * 6; div("tier", "left:" + g + "px;top:" + (g + 4) + "px;right:" + g + "px;bottom:" + (g + 4) + "px;transform:translateZ(" + (5 + i * 6) + "px)", el); });
+      top = 22;
+    } else if (k.kind === "dome") {
+      el = div("box bld", "left:" + bx + "px;top:" + by + "px;width:" + W + "px;height:" + W + "px");
+      box(4, 4, 64, 64, 10, { parent: el, roof: "#1a3466" });
+      for (var i = 0; i < 7; i++) { var a = (i / 7) * Math.PI / 2, r = 30 * Math.cos(a), z = 10 + 26 * Math.sin(a); div("dome", "left:" + (36 - r) + "px;top:" + (36 - r) + "px;width:" + 2 * r + "px;height:" + 2 * r + "px;transform:translateZ(" + z + "px);background:hsl(218," + (55 + i * 4) + "%," + (22 + i * 5) + "%)", el); }
+      top = 38;
+    } else if (k.kind === "park") {
+      el = div("box bld", "left:" + bx + "px;top:" + by + "px;width:" + W + "px;height:" + W + "px");
+      div("grass", "inset:0", el); div("path-x", "left:0;right:0;top:34px;height:4px", el); div("path-x", "top:0;bottom:0;left:34px;width:4px", el);
+      [[10, 10], [52, 12], [14, 50], [50, 52], [24, 22], [46, 40]].forEach(function (t, j) { var tr = div("tree", "left:" + t[0] + "px;top:" + t[1] + "px", el); var lf = "position:absolute;inset:0;border-radius:50%;box-shadow:inset -2px -2px 0 rgba(0,0,0,0.25);"; div("", lf + "background:#178a5a;transform:translateZ(7px)", tr); div("", lf + "background:#2bb673;transform:translateZ(12px) scale(0.65)", tr); });
+      top = 14;
+    } else {
+      var fp = k.fp || [0, 0, 72, 72];
+      el = box(bx + fp[0], by + fp[1], fp[2], fp[3], k.h, { cls: "bld", roof: k.roof, win: k.warm ? "rgba(253,224,150,0.55)" : null });
+      top = k.h;
+      if (k.n === "Library") { box(14, 14, 28, 28, 12, { parent: el, roof: "#2a4d8f" }).style.transform = "translateZ(" + k.h + "px)"; top = k.h + 12; }
+    }
+    k.el = el; k.top = top + 6; k.cx = bx + 36; k.cy = by + 36;
+    if (k.lbl) k.lab = label(k.cx, k.cy, k.top, k.n, k.i, k.hub ? "hub" : "");
   });
+  var hubs = [[230, 140], [130, 340], [330, 440]];
+  hubs.forEach(function (h) { sv("circle", { cx: h[0], cy: h[1], r: 9, fill: "none", stroke: "#10b981", "stroke-width": 2, "class": "pulse" }, $("hubs")); sv("circle", { cx: h[0], cy: h[1], r: 7, fill: "#10b981", stroke: "#f8fafc", "stroke-width": 2.5 }, $("hubs")); });
+
   var ME = { x: 130, y: 440 };
   $("mepin").setAttribute("transform", "translate(" + ME.x + " " + ME.y + ")");
+  function stop(c, r) { return { x: cols[c + 1], y: rowsY[r + 1] }; }
   var places = [
-    { n: "Library", s: "Study floors open late", x: 230, y: 240, t: 4 },
-    { n: "Rec Center", s: "Gym and pool", x: 330, y: 240, t: 5 },
-    { n: "Stadium", s: "Game day drop-off zone", x: 230, y: 40, t: 8 },
-    { n: "Student Union", s: "Food court and events", x: 330, y: 340, t: 3 },
-    { n: "Science Hall", s: "Labs and lecture halls", x: 30, y: 340, t: 3 },
-    { n: "Campus Quad Hub", s: "TrypCar Hub, well lit", x: 230, y: 140, t: 6 }
+    { n: "Library", s: "Study floors open late", b: [1, 1], t: 4 },
+    { n: "Gym & Rec", s: "Weights, pool, and courts", b: [2, 2], t: 5 },
+    { n: "Stadium", s: "Game day drop-off zone", b: [1, 0], t: 8 },
+    { n: "Coffee House", s: "Coffee and study tables", b: [3, 2], t: 6 },
+    { n: "Arena", s: "Basketball and concerts", b: [2, 0], t: 8 },
+    { n: "Student Union", s: "Food court and events", b: [1, 3], t: 3 },
+    { n: "Dining Hall", s: "All-you-care-to-eat dining", b: [1, 2], t: 3 },
+    { n: "Health Center", s: "Campus clinic", b: [3, 0], t: 7 },
+    { n: "Bookstore", s: "Books, gear, and supplies", b: [0, 2], t: 4 },
+    { n: "Science Hall", s: "Labs and lecture rooms", b: [0, 1], t: 5 },
+    { n: "Campus Quad Hub", s: "TrypCar Hub, well lit", b: [2, 1], t: 6 }
   ];
+  places.forEach(function (p, i) {
+    var st = stop(p.b[0], p.b[1]); p.x = st.x; p.y = st.y;
+    blocks.forEach(function (k) { if (k.c === p.b[0] && k.r === p.b[1]) { p.block = k; k.place = i; k.el.setAttribute("data-place", i); } });
+  });
+
   function pathFrom(a, b) { return [a, { x: a.x, y: b.y }, b]; }
-  function d(pts) { return pts.map(function (p, i) { return (i ? "L" : "M") + p.x + " " + p.y; }).join(" "); }
-  function setRoute(pts) { var s = pts ? d(pts) : ""; ["rglow", "rline", "rflow"].forEach(function (id) { $(id).setAttribute("d", s); }); }
+  function dstr(pts) { return pts.map(function (p, i) { return (i ? "L" : "M") + p.x + " " + p.y; }).join(" "); }
+  function setRoute(pts) { var s2 = pts ? dstr(pts) : ""; ["rglow", "rline", "rflow"].forEach(function (id) { $(id).setAttribute("d", s2); }); }
+  function select(p) {
+    blocks.forEach(function (k) { k.el.classList.toggle("sel", k === (p && p.block)); if (k.lab) k.lab.classList.toggle("sel", k === (p && p.block)); });
+  }
+  function showDest(p) { var d = $("dpin"); d.style.left = p.x + "px"; d.style.top = p.y + "px"; $("dpin-t").textContent = "Drop-off"; d.classList.add("on"); select(p); }
+  function meVisible(v) { $("mepin").setAttribute("opacity", v ? "1" : "0"); }
+
+  // Vehicles: real 3D boxes
+  // TrypCar sedan: sleek white electric sedan in CSS 3D (body, glass cabin, wheels, lights, blue stripe)
+  function makeCar() {
+    var w = div("", "position:absolute;left:0;top:0;transform-style:preserve-3d;", world);
+    function f(css, bg) { var e = document.createElement("div"); e.style.cssText = "position:absolute;backface-visibility:visible;transform-origin:0 0;" + css + ";background:" + bg; w.appendChild(e); return e; }
+    // soft ground shadow
+    f("left:-17px;top:-9px;width:34px;height:18px;border-radius:50%", "radial-gradient(closest-side, rgba(0,0,0,0.55), rgba(0,0,0,0))");
+    // wheels
+    [[-9, -7.4], [9, -7.4], [-9, 7.4], [9, 7.4]].forEach(function (p) {
+      var wh = document.createElement("div");
+      wh.style.cssText = "position:absolute;left:" + (p[0] - 3.6) + "px;top:" + (p[1] - 3.6) + "px;width:7.2px;height:7.2px;border-radius:50%;background:radial-gradient(circle, #94a3b8 0 28%, #0b1220 30%);transform-origin:50% 50%;transform:translateZ(3.6px) rotateX(90deg)";
+      w.appendChild(wh);
+    });
+    var side = "linear-gradient(180deg, #e2e8f0 0 20%, #2563eb 20% 34%, #f8fafc 34% 100%)";
+    // lower body: sides, nose, tail, hood/trunk top
+    f("left:-15px;top:7px;width:30px;height:5px;transform:translateZ(2px) rotateX(90deg)", side);
+    f("left:-15px;top:-7px;width:30px;height:5px;transform:translateZ(2px) rotateX(90deg)", side);
+    f("left:15px;top:-7px;width:5px;height:14px;transform:translateZ(2px) rotateY(-90deg)", "linear-gradient(90deg, #cbd5e1 0 55%, #eff6ff 55% 75%, #cbd5e1 75%)");
+    f("left:-15px;top:-7px;width:5px;height:14px;transform:translateZ(2px) rotateY(-90deg)", "linear-gradient(90deg, #cbd5e1 0 55%, #ef4444 55% 72%, #cbd5e1 72%)");
+    f("left:-15px;top:-7px;width:30px;height:14px;border-radius:5px 7px 7px 5px;transform:translateZ(7px)", "linear-gradient(90deg, #e9eef5, #ffffff 40%, #f1f5f9)");
+    // headlight glow
+    f("left:14px;top:-6px;width:3px;height:12px;border-radius:2px;transform:translateZ(6px)", "#dbeafe;box-shadow:0 0 10px 2px rgba(147,197,253,0.9)");
+    f("left:-15.5px;top:-6px;width:2px;height:12px;transform:translateZ(6px)", "#f87171;box-shadow:0 0 8px 1px rgba(248,113,113,0.8)");
+    // glass cabin: stacked layers give a curved, panoramic glass roof
+    var glass = "linear-gradient(180deg, #1e293b, #0b1220)";
+    f("left:-8px;top:6px;width:14px;height:2.5px;transform:translateZ(7px) rotateX(90deg)", glass);
+    f("left:-8px;top:-6px;width:14px;height:2.5px;transform:translateZ(7px) rotateX(90deg)", glass);
+    f("left:6px;top:-6px;width:2.5px;height:12px;transform:translateZ(7px) rotateY(-90deg)", "#334155");
+    f("left:-8px;top:-6px;width:2.5px;height:12px;transform:translateZ(7px) rotateY(-90deg)", "#0b1220");
+    f("left:-8px;top:-6px;width:14px;height:12px;border-radius:4px 6px 6px 4px;transform:translateZ(9.5px)", "#0b1220");
+    f("left:-6.5px;top:-5.2px;width:11px;height:10.4px;border-radius:4px 6px 6px 4px;transform:translateZ(10.8px)", "linear-gradient(120deg, #0b1220 0 38%, #475569 50%, #0b1220 64%)");
+    // TrypCar blue roof badge
+    f("left:-2px;top:-1.5px;width:3px;height:3px;border-radius:50%;transform:translateZ(11px)", "#3b82f6;box-shadow:0 0 6px #60a5fa");
+    return w;
+  }
+  function place(el, x, y, ang) { el.style.transform = "translate3d(" + x + "px," + y + "px,0) rotateZ(" + ang + "deg)"; }
+  var myCar = makeCar(); myCar.style.display = "none";
+
+  // Ambient TrypCars looping around campus roads
+  var loops = [
+    [{ x: 30, y: 40 }, { x: 430, y: 40 }, { x: 430, y: 240 }, { x: 30, y: 240 }],
+    [{ x: 230, y: 140 }, { x: 230, y: 540 }, { x: 430, y: 540 }, { x: 430, y: 140 }],
+    [{ x: 30, y: 340 }, { x: 330, y: 340 }, { x: 330, y: 540 }, { x: 30, y: 540 }]
+  ];
+  var amb = loops.map(function (L, i) { return { L: L, el: makeCar(), off: i * 0.33, len: 0 }; });
+  amb.forEach(function (a2) { var t = 0; for (var i = 0; i < a2.L.length; i++) { var p = a2.L[i], q = a2.L[(i + 1) % a2.L.length]; t += Math.abs(q.x - p.x) + Math.abs(q.y - p.y); } a2.len = t; });
+  function ambTick(now) {
+    amb.forEach(function (a2) {
+      var dist = ((now / 1000) * 28 + a2.off * a2.len) % a2.len;
+      for (var i = 0; i < a2.L.length; i++) {
+        var p = a2.L[i], q = a2.L[(i + 1) % a2.L.length], seg = Math.abs(q.x - p.x) + Math.abs(q.y - p.y);
+        if (dist <= seg) { var f = dist / seg; place(a2.el, p.x + (q.x - p.x) * f, p.y + (q.y - p.y) * f, Math.atan2(q.y - p.y, q.x - p.x) * 180 / Math.PI); break; }
+        dist -= seg;
+      }
+    });
+    if (!RM) requestAnimationFrame(ambTick);
+  }
+  requestAnimationFrame(ambTick);
 
   function moveCar(pts, ms, onT, done) {
-    var car = $("carpin"), rot = $("carrot"); car.setAttribute("opacity", "1");
+    myCar.style.display = "";
     var segs = [], total = 0;
     for (var i = 0; i < pts.length - 1; i++) { var L = Math.hypot(pts[i + 1].x - pts[i].x, pts[i + 1].y - pts[i].y); segs.push(L); total += L; }
-    var start = performance.now();
+    var start = performance.now(), lastAng = 0;
     function frame(now) {
       var t = RM ? 1 : Math.min((now - start) / ms, 1), e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2, dist = e * total, k = 0;
       while (k < segs.length - 1 && dist > segs[k]) { dist -= segs[k]; k++; }
       var a = pts[k], b = pts[k + 1] || pts[k], f = segs[k] ? dist / segs[k] : 1;
-      car.setAttribute("transform", "translate(" + (a.x + (b.x - a.x) * f) + " " + (a.y + (b.y - a.y) * f) + ")");
-      rot.setAttribute("transform", "rotate(" + (Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI) + ")");
+      if (segs[k]) lastAng = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+      place(myCar, a.x + (b.x - a.x) * f, a.y + (b.y - a.y) * f, lastAng);
       if (onT) onT(t);
       if (t < 1) raf = requestAnimationFrame(frame); else if (done) done();
     }
     raf = requestAnimationFrame(frame);
   }
 
+  // Camera: drag to orbit, tap a building to choose it
+  var cam = { tilt: 52, rz: -14, zoom: 1 };
+  function applyCam() { world.style.setProperty("--tilt", cam.tilt + "deg"); world.style.setProperty("--rz", cam.rz + "deg"); world.style.setProperty("--zoom", cam.zoom); }
+  function setClose(on) { cam.zoom = on ? 1.3 : 1; applyCam(); }
+  function resetMap() { setRoute(null); myCar.style.display = "none"; $("dpin").classList.remove("on"); select(null); cam.tilt = 52; cam.rz = -14; cam.zoom = 1; applyCam(); }
+  var stage = $("stage"), drag = null, moved = false;
+  stage.addEventListener("pointerdown", function (e) { drag = { x: e.clientX, y: e.clientY, rz: cam.rz, tilt: cam.tilt }; moved = false; });
+  window.addEventListener("pointermove", function (e) {
+    if (!drag) return;
+    var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!moved && Math.hypot(dx, dy) > 6) { moved = true; world.classList.add("drag"); stage.classList.add("grabbing"); $("hint").classList.add("gone"); }
+    if (moved) { cam.rz = Math.max(-60, Math.min(45, drag.rz + dx * 0.3)); cam.tilt = Math.max(30, Math.min(64, drag.tilt - dy * 0.2)); applyCam(); }
+  });
+  window.addEventListener("pointerup", function () { if (!drag) return; drag = null; world.classList.remove("drag"); stage.classList.remove("grabbing"); });
+  stage.addEventListener("click", function (e) {
+    if (moved) { moved = false; return; }
+    var b = e.target.closest("[data-place]");
+    if (b && !trip.locked) { trip.place = places[+b.getAttribute("data-place")]; options(); $("hint").classList.add("gone"); }
+  });
+  $("recenter").addEventListener("click", function (e) { e.stopPropagation(); cam.tilt = 52; cam.rz = -14; applyCam(); });
+  setTimeout(function () { $("hint").classList.add("gone"); }, 6000);
+
   // ---------------- Ride flow ----------------
-  var sheet = $("sheet"), trip = { place: null, svc: "ride" };
+  var sheet = $("sheet");
   var services = [
     { id: "ride", n: "Ride", tag: "4 seats", d: "TrypCar sedan", price: 6.5, eta: 2, color: "#f8fafc" },
     { id: "eco", n: "Eco", tag: "Shared", d: "Split with members going your way", price: 4.75, eta: 4, color: "#a7f3d0" },
     { id: "lux", n: "Lux", tag: "Premium", d: "Executive vehicle, extra legroom", price: 14, eta: 5, color: "#1f2937" }
   ];
   function vehSvg(color) { return '<svg class="veh" viewBox="0 0 54 38"><ellipse cx="27" cy="32" rx="22" ry="3.5" fill="#000" opacity="0.35"/><path d="M6 25c0-4 2-6 5-7l5-7c1-1.5 2.5-2 4-2h14c1.5 0 3 .5 4 2l5 7c3 1 5 3 5 7v3H6z" fill="' + color + '"/><path d="M17 11h20l4 7H13z" fill="#1e293b"/><circle cx="15" cy="28" r="4" fill="#0f172a"/><circle cx="39" cy="28" r="4" fill="#0f172a"/><rect x="8" y="21" width="5" height="2" rx="1" fill="#93c5fd"/><rect x="41" y="21" width="5" height="2" rx="1" fill="#fecaca"/></svg>'; }
+  // Branded TrypCar side view (sleek electric sedan with door logo and tagline)
+  function carSide(kind) {
+    var dark = kind === "lux";
+    var body = dark ? ["#2b3445", "#0f1520"] : ["#ffffff", "#dfe6ef"], logo = dark ? "trypcar-logo.png" : "trypcar-logo-dark.png", tag = dark ? "#cbd5e1" : "#334155";
+    var id = "g" + Math.random().toString(36).slice(2, 7);
+    return '<svg viewBox="0 0 360 150" role="img" aria-label="' + (dark ? "Black" : "White") + ' TrypCar electric sedan with TrypCar logo on the door">' +
+      '<defs><linearGradient id="' + id + 'b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + body[0] + '"/><stop offset="1" stop-color="' + body[1] + '"/></linearGradient>' +
+      '<linearGradient id="' + id + 'g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e293b"/><stop offset="0.55" stop-color="#0b1220"/><stop offset="1" stop-color="#334155"/></linearGradient>' +
+      '<radialGradient id="' + id + 'r"><stop offset="0" stop-color="#cbd5e1"/><stop offset="0.6" stop-color="#64748b"/><stop offset="1" stop-color="#1e293b"/></radialGradient></defs>' +
+      '<ellipse cx="180" cy="128" rx="150" ry="9" fill="#000" opacity="0.45"/>' +
+      '<path d="M30 112 C24 104 24 92 30 84 L46 74 C60 70 80 66 98 64 L134 44 C150 36 176 32 204 34 C226 36 244 46 262 60 L300 68 C318 72 330 78 336 88 C340 96 338 106 332 112 Z" fill="url(#' + id + 'b)"/>' +
+      '<path d="M108 64 L138 46 C152 39 176 36 200 38 C220 40 236 48 250 62 Z" fill="url(#' + id + 'g)"/>' +
+      '<path d="M180 38 L178 64" stroke="' + body[1] + '" stroke-width="2" opacity="0.5"/>' +
+      '<path d="M140 50 C170 42 210 42 236 54" stroke="#94a3b8" stroke-width="1.5" fill="none" opacity="0.45"/>' +
+      '<path d="M44 96 L326 96" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>' +
+      '<path d="M120 68 L120 104 M244 68 L246 104" stroke="#94a3b8" stroke-width="1" opacity="0.6"/>' +
+      '<path d="M318 76 C326 78 332 82 334 86 L318 84 Z" fill="#dbeafe"/><path d="M332 86 L346 84" stroke="#bfdbfe" stroke-width="6" stroke-linecap="round" opacity="0.18"/>' +
+      '<path d="M30 84 L40 80 L40 90 L28 92 Z" fill="#ef4444"/>' +
+      '<image href="' + logo + '" x="136" y="70" width="96" height="11.5" preserveAspectRatio="xMidYMid meet"/>' +
+      '<text x="184" y="91" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="6.2" font-weight="700" letter-spacing="1.2" fill="' + tag + '">SMART RIDES. TRUSTED SAFETY.</text>' +
+      '<g transform="translate(92 110)"><circle r="21" fill="#0b1220"/><circle r="14" fill="url(#' + id + 'r)"/><circle r="4" fill="#0f172a"/><path d="M0-13V-5M12.4-4L5-1.5M7.6 10.5L3 4M-7.6 10.5L-3 4M-12.4-4L-5-1.5" stroke="#0f172a" stroke-width="2.4"/></g>' +
+      '<g transform="translate(276 110)"><circle r="21" fill="#0b1220"/><circle r="14" fill="url(#' + id + 'r)"/><circle r="4" fill="#0f172a"/><path d="M0-13V-5M12.4-4L5-1.5M7.6 10.5L3 4M-7.6 10.5L-3 4M-12.4-4L-5-1.5" stroke="#0f172a" stroke-width="2.4"/></g>' +
+      '</svg>';
+  }
+  function carHero(caption, sub, compact) { return '<div class="carhero' + (compact ? ' compact' : '') + '"><span class="cap">' + caption + '<span>' + sub + '</span></span>' + carSide(trip.svc) + '</div>'; }
   var PIN = '<svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>';
 
   function home() {
-    clearAll(); setRoute(null); $("carpin").setAttribute("opacity", "0"); $("dpin").setAttribute("opacity", "0"); $("plane").classList.remove("close");
+    clearAll(); trip.locked = false; resetMap();
     sheet.innerHTML = '<div class="grab"></div><h2>Where to?</h2>' +
       '<button class="search" type="button" data-a="pick"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>Search campus</button>' +
       '<div class="quick">' + places.slice(0, 4).map(function (p, i) { return '<button class="qchip" type="button" data-p="' + i + '"><strong>' + p.n + '</strong><span>' + p.t + ' min ride</span></button>'; }).join("") + '</div>' +
@@ -494,9 +700,8 @@
     sheet.innerHTML = html + "</div>";
   }
   function options() {
-    var p = trip.place; setRoute(pathFrom(ME, p));
-    $("dpin").setAttribute("transform", "translate(" + p.x + " " + p.y + ")"); $("dpin").setAttribute("opacity", "1");
-    var html = '<div class="grab"></div><button class="back" type="button" data-a="pick">&#8592; ' + p.n + '</button><h2>Choose your ride</h2><div class="opts" role="radiogroup">';
+    var p = trip.place; setRoute(pathFrom(ME, p)); showDest(p);
+    var html = '<div class="grab"></div><button class="back" type="button" data-a="pick">&#8592; ' + p.n + '</button><h2>Choose your ride</h2>' + carHero(svc().n + (trip.svc === "lux" ? " · Executive sedan" : " · TrypCar electric sedan"), "Every ride is a company-owned TrypCar", true) + '<div class="opts" role="radiogroup">';
     services.forEach(function (s) {
       html += '<button class="opt" type="button" role="radio" data-s="' + s.id + '" aria-checked="' + (s.id === trip.svc) + '">' + vehSvg(s.color) +
         '<span><strong>' + s.n + ' <em>' + s.tag + '</em></strong><small>' + s.d + ' · ' + s.eta + ' min away</small></span><span class="fare">$' + s.price.toFixed(2) + '<small>sample fare</small></span></button>';
@@ -506,6 +711,7 @@
   }
   function svc() { return services.filter(function (s) { return s.id === trip.svc; })[0]; }
   function matching() {
+    trip.locked = true;
     sheet.innerHTML = '<div class="grab"></div><div class="match"><div class="radar"><i></i><i></i><i></i><b></b></div><h2>Finding your driver</h2><p class="muted" style="font-size:0.85rem;margin-top:4px">Matching you with the closest TrypCar ' + svc().n + ' (demo)</p></div><button class="btn btn-line" type="button" data-a="cancel" style="margin-top:14px">Cancel</button>';
     later(arriving, 2200);
   }
@@ -520,15 +726,15 @@
   }
   function arriving() {
     var start = { x: 330, y: 240 };
-    sheet.innerHTML = '<div class="grab"></div><div class="statusrow"><h2>Alex is on the way</h2><span class="eta" id="eta">2 min</span></div><div class="bar"><i id="pbar"></i></div><p class="muted" style="font-size:0.8rem">Meet at your pickup point. Your parent contact gets a text at pickup (demo).</p>' + driverCard() + tripActions();
-    $("plane").classList.add("close");
+    sheet.innerHTML = '<div class="grab"></div><div class="statusrow"><h2>Alex is on the way</h2><span class="eta" id="eta">2 min</span></div><div class="bar"><i id="pbar"></i></div><p class="muted" style="font-size:0.8rem">Meet at your pickup point. Your parent contact gets a text at pickup (demo).</p>' + carHero("Look for this car", (trip.svc === "lux" ? "Black" : "White") + " TrypCar · Plate TRP 204") + driverCard() + tripActions();
+    setClose(true);
     var pts = [start, { x: 330, y: 440 }, ME];
     moveCar(pts, 5200, function (t) { var b = $("pbar"); if (b) b.style.width = (t * 100) + "%"; var e = $("eta"); if (e) e.textContent = t < 0.55 ? "2 min" : (t < 1 ? "1 min" : "Here"); }, function () { later(onTrip, 700); });
   }
   function onTrip() {
     var p = trip.place;
     sheet.innerHTML = '<div class="grab"></div><div class="statusrow"><h2>Heading to ' + p.n + '</h2><span class="eta" id="eta2">' + p.t + ' min</span></div><div class="bar"><i id="pbar2"></i></div><p class="muted" style="font-size:0.8rem">Trip shared with your parent contact (demo).</p>' + driverCard() + tripActions();
-    $("mepin").setAttribute("opacity", "0");
+    meVisible(false);
     moveCar(pathFrom(ME, p), 6500, function (t) { var b = $("pbar2"); if (b) b.style.width = (t * 100) + "%"; var e = $("eta2"); if (e) e.textContent = t < 1 ? Math.max(1, Math.ceil(p.t * (1 - t))) + " min" : "Arrived"; }, function () { later(arrived, 600); });
   }
   function arrived() {
@@ -536,7 +742,7 @@
     credit = Math.max(0, credit - s.price); $("credit").textContent = "$" + credit.toFixed(2);
     rides.unshift({ p: p.n, s: s.n, amt: s.price, when: new Date() });
     logRide();
-    $("mepin").setAttribute("opacity", "1");
+    meVisible(true);
     var st = ""; for (var i = 1; i <= 5; i++) st += '<button class="star" type="button" data-star="' + i + '" aria-label="' + i + ' stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/></svg></button>';
     sheet.innerHTML = '<div class="grab"></div><h2>You made it to ' + p.n + '</h2><div class="receipt"><div><span>' + s.n + ' (sample fare)</span><span>$' + s.price.toFixed(2) + '</span></div><div><span>Paid with ride credit (demo)</span><span>&minus;$' + used.toFixed(2) + '</span></div><div><span>Surge pricing</span><span>$0.00, never</span></div><div class="tot"><span>Charged to you</span><span>$0.00</span></div></div>' +
       '<p class="muted" style="text-align:center;font-size:0.85rem">Rate your ride with Alex</p><div class="stars">' + st + '</div><button class="btn btn-go" type="button" data-a="home">Done</button>';
