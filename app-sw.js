@@ -1,5 +1,5 @@
 // TrypCar app service worker: caches the app so it opens instantly and works offline.
-var CACHE = "trypcar-app-v10";
+var CACHE = "trypcar-app-v11";
 var FILES = ["app.html", "app.webmanifest", "app-icon-192.png", "app-icon-512.png", "trypcar-logo.png", "trypcar-car.webp"];
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(FILES); }));
