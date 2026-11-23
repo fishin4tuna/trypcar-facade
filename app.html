@@ -120,6 +120,33 @@
     .dpin i { width: 2px; height: 18px; background: #f8fafc; }
     .dpin u { width: 10px; height: 10px; border-radius: 50%; background: #2563eb; border: 2px solid #fff; margin-top: -2px; }
     .map-ui { position: absolute; inset: 0; pointer-events: none; }
+    .stage::before { content: ""; position: absolute; inset: -40%; background-image: radial-gradient(1.2px 1.2px at 12% 18%, #dbeafe, transparent 60%), radial-gradient(1px 1px at 68% 8%, #fff, transparent 60%), radial-gradient(1.4px 1.4px at 38% 42%, #bfdbfe, transparent 60%), radial-gradient(1px 1px at 84% 34%, #fff, transparent 60%), radial-gradient(1px 1px at 52% 72%, #93c5fd, transparent 60%), radial-gradient(1.2px 1.2px at 22% 82%, #fff, transparent 60%); background-size: 180px 180px; opacity: 0.55; animation: stars 90s linear infinite; pointer-events: none; }
+    @keyframes stars { to { transform: translate(180px, 90px); } }
+    .sidewalk { stroke: #1e3563; stroke-width: 30; stroke-linecap: square; }
+    .xwalk { stroke: rgba(226,232,240,0.42); stroke-width: 5; stroke-dasharray: 1.6 1.6; }
+    .bb { position: absolute; transform-origin: 0 0; transform: translateZ(var(--z, 0px)) rotateZ(calc(-1 * var(--rz))) rotateX(calc(-1 * var(--tilt))) translate(-50%, -100%); pointer-events: none; }
+    .lamp { width: 7px; height: 17px; }
+    .lamp i { position: absolute; left: 3px; bottom: 0; width: 1.3px; height: 14px; background: #7c8db0; }
+    .lamp b { position: absolute; left: 0; top: 0; width: 7px; height: 3px; border-radius: 2px; background: #fef3c7; box-shadow: 0 0 6px 2px rgba(253,224,138,0.8); }
+    .tower { width: 12px; height: 54px; }
+    .tower i { position: absolute; left: 5px; bottom: 0; width: 2px; height: 46px; background: linear-gradient(#94a3b8, #475569); }
+    .tower b { position: absolute; left: 0; top: 0; width: 12px; height: 8px; border-radius: 2px; background: repeating-linear-gradient(90deg, #fff 0 2px, #e0f2fe 2px 4px); box-shadow: 0 0 8px 2px rgba(224,242,254,0.85); }
+    .post { width: 8px; height: 12px; border: 1.4px solid #facc15; border-top: none; }
+    .walker { width: 9px; height: 18px; }
+    .walker svg { width: 100%; height: 100%; display: block; overflow: visible; animation: bob 0.5s ease-in-out infinite alternate; }
+    .walker .l1, .walker .l2 { transform-box: fill-box; transform-origin: top center; animation: leg 0.5s ease-in-out infinite alternate; }
+    .walker .l2 { animation-direction: alternate-reverse; }
+    @keyframes leg { from { transform: rotate(18deg); } to { transform: rotate(-18deg); } }
+    @keyframes bob { to { transform: translateY(-0.6px); } }
+    .rider { width: 15px; height: 19px; }
+    .rider svg { width: 100%; height: 100%; }
+    .box.flk { --win: rgba(253,224,150,0.85) !important; }
+    .box.dim { --win: rgba(147,197,253,0.2) !important; }
+    .stad-ring { position: absolute; border-radius: 30px; border-style: solid; border-color: #22427f; box-shadow: inset 0 0 0 1px rgba(147,197,253,0.3), 0 0 0 1px rgba(5,11,24,0.5); background-clip: padding-box; }
+    .stad-field { position: absolute; border-radius: 4px; background: linear-gradient(90deg, #1d4ed8 0 9%, transparent 9% 91%, #1d4ed8 91%), repeating-linear-gradient(90deg, rgba(255,255,255,0.6) 0 1px, transparent 1px 9.2px), repeating-linear-gradient(90deg, #15803d 0 9.2px, #16a34a 9.2px 18.4px); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.75); }
+    .stad-field::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.8); }
+    .explore { position: absolute; right: 14px; bottom: 88px; pointer-events: auto; width: 38px; height: 38px; border-radius: 12px; background: rgba(5,11,24,0.85); border: 1px solid var(--line2); display: flex; align-items: center; justify-content: center; }
+    .explore svg { width: 18px; height: 18px; stroke: var(--sky); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
     .topbar { position: absolute; top: 12px; left: 14px; right: 14px; display: flex; justify-content: space-between; align-items: center; }
     .hello { font-size: 1.05rem; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.7); }
     .hello small { display: block; font-size: 0.76rem; font-weight: 500; color: var(--soft); }
@@ -132,8 +159,10 @@
     .vignette { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(3,8,20,0.9) 0%, transparent 20%, transparent 72%, rgba(3,8,20,0.95) 100%); pointer-events: none; }
 
     /* SHEET */
-    .sheet { flex: none; position: relative; z-index: 5; margin-top: -30px; background: rgba(8,18,39,0.96); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid var(--line2); border-radius: 26px 26px 0 0; padding: 10px 18px 16px; box-shadow: 0 -16px 40px rgba(0,0,0,0.5); max-height: 64%; overflow-y: auto; }
-    .grab { width: 38px; height: 4px; border-radius: 4px; background: var(--line2); margin: 0 auto 12px; }
+    .sheet { flex: none; position: relative; z-index: 5; margin-top: -30px; background: rgba(8,18,39,0.96); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid var(--line2); border-radius: 26px 26px 0 0; padding: 10px 18px 16px; box-shadow: 0 -16px 40px rgba(0,0,0,0.5); max-height: 64%; overflow-y: auto; transition: max-height 0.35s ease; }
+    .sheet.min { max-height: 70px; overflow: hidden; }
+    .grab { width: 90px; height: 22px; margin: -8px auto 6px; position: relative; cursor: pointer; touch-action: none; }
+    .grab::before { content: ""; position: absolute; left: 26px; right: 26px; top: 9px; height: 4px; border-radius: 4px; background: var(--line2); }
     .sheet h2 { font-size: 1.28rem; font-weight: 800; letter-spacing: -0.015em; }
     .search { display: flex; align-items: center; gap: 10px; width: 100%; padding: 14px 16px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line2); font-size: 1rem; font-weight: 600; color: var(--soft); text-align: left; margin: 10px 0 12px; }
     .search svg { width: 20px; height: 20px; stroke: var(--sky); fill: none; stroke-width: 2.2; stroke-linecap: round; }
@@ -292,8 +321,10 @@
     <div class="stage" id="stage">
       <div class="world" id="world">
         <div class="ground"><svg viewBox="0 0 460 600" aria-hidden="true">
+          <defs><radialGradient id="lampglow"><stop offset="0" stop-color="#fde68a" stop-opacity="0.45"/><stop offset="1" stop-color="#fde68a" stop-opacity="0"/></radialGradient>
+          <radialGradient id="stadglow"><stop offset="0" stop-color="#bfdbfe" stop-opacity="0.35"/><stop offset="1" stop-color="#bfdbfe" stop-opacity="0"/></radialGradient></defs>
           <rect x="-200" y="-200" width="860" height="1000" fill="#071330"/>
-          <g id="roads"></g>
+          <g id="walks"></g><g id="roads"></g><g id="glows"></g>
           <path class="route-glow" id="rglow" d=""/><path class="route-line" id="rline" d=""/><path class="route-flow" id="rflow" d=""/>
           <g id="hubs"></g>
           <g id="mepin"><circle r="22" fill="#3b82f6" opacity="0.18"/><circle class="pulse" r="10" fill="none" stroke="#93c5fd" stroke-width="2"/><circle r="8.5" fill="#3b82f6" stroke="#fff" stroke-width="3"/></g>
@@ -304,7 +335,8 @@
       <div class="vignette"></div>
       <div class="map-ui">
         <div class="topbar"><div class="hello" id="hello">Good evening<small>Campus zone is active</small></div><span class="pill"><span class="dot"></span><span>8 TrypCars nearby</span></span></div>
-        <div class="hint" id="hint">Drag to look around. Tap a building to go there.</div>
+        <div class="hint" id="hint">Drag to look around · Swipe panel down</div>
+        <button class="explore" type="button" id="explore" aria-label="Bigger map"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
         <button class="recenter" type="button" id="recenter" aria-label="Reset map view"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></button>
       </div>
     </div>
@@ -453,7 +485,16 @@
   var world = $("world"), city = $("city"), roadsG = $("roads");
   function sv(tag, attrs, parent) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
   function div(cls, css, parent) { var e = document.createElement("div"); if (cls) e.className = cls; if (css) e.style.cssText = css; (parent || city).appendChild(e); return e; }
-  cols.forEach(function (x) { sv("line", { x1: x, y1: -40, x2: x, y2: 640, "class": "road" }, roadsG); sv("line", { x1: x, y1: -40, x2: x, y2: 640, "class": "road-line" }, roadsG); });
+  var walksG = $("walks"), glowsG = $("glows");
+  function colSegs(x) { return x === 230 ? [[-40, 40], [140, 640]] : [[-40, 640]]; }
+  cols.forEach(function (x) { colSegs(x).forEach(function (g) {
+    sv("line", { x1: x, y1: g[0], x2: x, y2: g[1], "class": "sidewalk" }, walksG);
+    sv("line", { x1: x, y1: g[0], x2: x, y2: g[1], "class": "road" }, roadsG); sv("line", { x1: x, y1: g[0], x2: x, y2: g[1], "class": "road-line" }, roadsG); }); });
+  rowsY.forEach(function (y) { sv("line", { x1: -40, y1: y, x2: 500, y2: y, "class": "sidewalk" }, walksG); });
+  cols.forEach(function (x) { rowsY.forEach(function (y) {
+    if (x === 230 && (y === 40 || y === 140)) return;
+    [[x - 8, y - 13, x + 8, y - 13], [x - 8, y + 13, x + 8, y + 13], [x - 13, y - 8, x - 13, y + 8], [x + 13, y - 8, x + 13, y + 8]].forEach(function (c) { sv("line", { x1: c[0], y1: c[1], x2: c[2], y2: c[3], "class": "xwalk" }, roadsG); });
+  }); });
   rowsY.forEach(function (y) { sv("line", { x1: -40, y1: y, x2: 500, y2: y, "class": "road" }, roadsG); sv("line", { x1: -40, y1: y, x2: 500, y2: y, "class": "road-line" }, roadsG); });
 
   var ICON = {
@@ -464,9 +505,8 @@
   };
   // Campus layout: one entry per city block (column, row). Heights in pixels.
   var blocks = [
-    { c: 0, r: 0, n: "Parking Garage", h: 22, i: "park", roof: "#18305e", lbl: 0 },
+    { c: 0, r: 0, n: "Arena", kind: "dome", i: "star", lbl: 1 },
     { c: 1, r: 0, n: "Stadium", kind: "stadium", i: "ball", lbl: 1 },
-    { c: 2, r: 0, n: "Arena", kind: "dome", i: "star", lbl: 1 },
     { c: 3, r: 0, n: "Health Center", h: 30, i: "cross", roof: "#1d3a6e", lbl: 1 },
     { c: 0, r: 1, n: "Science Hall", h: 40, i: "flask", lbl: 1 },
     { c: 1, r: 1, n: "Library", h: 72, i: "book", fp: [8, 8, 56, 56], roof: "#21407a", lbl: 1 },
@@ -500,10 +540,18 @@
   blocks.forEach(function (k) {
     var bx = cols[k.c] + 14, by = rowsY[k.r] + 14, W = 72, top = 0, el;
     if (k.kind === "stadium") {
-      el = div("box bld", "left:" + bx + "px;top:" + by + "px;width:" + W + "px;height:" + W + "px");
-      div("field", "left:14px;top:20px;width:44px;height:32px", el);
-      [0, 1, 2].forEach(function (i) { var g = 10 - i * 6; div("tier", "left:" + g + "px;top:" + (g + 4) + "px;right:" + g + "px;bottom:" + (g + 4) + "px;transform:translateZ(" + (5 + i * 6) + "px)", el); });
-      top = 22;
+      // Spans two blocks: a bowl of rising seating tiers around a striped football field
+      var SW = 172, SH = 72;
+      el = div("box bld", "left:" + bx + "px;top:" + by + "px;width:" + SW + "px;height:" + SH + "px");
+      div("", "position:absolute;inset:-4px;border-radius:14px;background:#0b1a3a", el);
+      div("stad-field", "left:30px;top:15px;width:112px;height:42px", el);
+      for (var t = 0; t < 4; t++) { var g = 24 - t * 6; div("stad-ring", "left:" + g + "px;top:" + (g - 15) + "px;right:" + g + "px;bottom:" + (g - 15) + "px;border-width:" + 7 + "px;border-color:hsl(220," + (50 + t * 6) + "%," + (26 + t * 6) + "%);transform:translateZ(" + (3 + t * 6) + "px)", el); }
+      [[30, 36], [142, 36]].forEach(function (p) { var gp = div("bb post", "left:" + (bx + p[0]) + "px;top:" + (by + p[1]) + "px;--z:1px", world); });
+      [[bx - 2, by - 2], [bx + SW + 2, by - 2], [bx - 2, by + SH + 2], [bx + SW + 2, by + SH + 2]].forEach(function (p) {
+        div("bb tower", "left:" + p[0] + "px;top:" + p[1] + "px", world).innerHTML = "<i></i><b></b>";
+        sv("circle", { cx: p[0], cy: p[1], r: 40, fill: "url(#stadglow)" }, glowsG);
+      });
+      k.cxOverride = bx + SW / 2; top = 30;
     } else if (k.kind === "dome") {
       el = div("box bld", "left:" + bx + "px;top:" + by + "px;width:" + W + "px;height:" + W + "px");
       box(4, 4, 64, 64, 10, { parent: el, roof: "#1a3466" });
@@ -520,7 +568,7 @@
       top = k.h;
       if (k.n === "Library") { box(14, 14, 28, 28, 12, { parent: el, roof: "#2a4d8f" }).style.transform = "translateZ(" + k.h + "px)"; top = k.h + 12; }
     }
-    k.el = el; k.top = top + 6; k.cx = bx + 36; k.cy = by + 36;
+    k.el = el; k.top = top + 6; k.cx = k.cxOverride || bx + 36; k.cy = by + 36;
     if (k.lbl) k.lab = label(k.cx, k.cy, k.top, k.n, k.i, k.hub ? "hub" : "");
   });
   var hubs = [[230, 140], [130, 340], [330, 440]];
@@ -534,7 +582,7 @@
     { n: "Gym & Rec", s: "Weights, pool, and courts", b: [2, 2], t: 5 },
     { n: "Stadium", s: "Game day drop-off zone", b: [1, 0], t: 8 },
     { n: "Coffee House", s: "Coffee and study tables", b: [3, 2], t: 6 },
-    { n: "Arena", s: "Basketball and concerts", b: [2, 0], t: 8 },
+    { n: "Arena", s: "Basketball and concerts", b: [0, 0], t: 8 },
     { n: "Student Union", s: "Food court and events", b: [1, 3], t: 3 },
     { n: "Dining Hall", s: "All-you-care-to-eat dining", b: [1, 2], t: 3 },
     { n: "Health Center", s: "Campus clinic", b: [3, 0], t: 7 },
@@ -632,13 +680,64 @@
     raf = requestAnimationFrame(frame);
   }
 
+  // Streetlights at intersection corners (skipped inside the stadium)
+  cols.forEach(function (x) { rowsY.forEach(function (y, j) {
+    var lx = x + 15, ly = y + 15;
+    if (lx > 140 && lx < 320 && ly > 50 && ly < 130) return;
+    if ((cols.indexOf(x) + j) % 2) return;
+    div("bb lamp", "left:" + lx + "px;top:" + ly + "px", world).innerHTML = "<i></i><b></b>";
+    sv("circle", { cx: lx, cy: ly, r: 18, fill: "url(#lampglow)" }, glowsG);
+  }); });
+
+  // People walking on the sidewalks, and Scootz riders
+  var SKIN = ["#f1c27d", "#e0ac69", "#c68642", "#8d5524", "#ffdbac"], SHIRT = ["#ef4444", "#3b82f6", "#f8fafc", "#a855f7", "#22c55e", "#f59e0b", "#ec4899", "#14b8a6"];
+  function person(i) {
+    var bag = i % 3 === 0 ? '<rect x="0.6" y="3.6" width="1.4" height="3.4" rx="0.6" fill="#1e293b"/>' : "";
+    return '<svg viewBox="0 0 7 14">' + bag + '<rect class="l1" x="2" y="8.6" width="1.3" height="5" rx="0.6" fill="#1e293b"/><rect class="l2" x="3.8" y="8.6" width="1.3" height="5" rx="0.6" fill="#334155"/><rect x="1.6" y="3.8" width="3.8" height="5.4" rx="1.4" fill="' + SHIRT[i % SHIRT.length] + '"/><circle cx="3.5" cy="2" r="1.7" fill="' + SKIN[i % SKIN.length] + '"/></svg>';
+  }
+  var lanes = [];
+  cols.forEach(function (x) { [-11, 11].forEach(function (o) { lanes.push(x === 230 ? { ax: "y", f: x + o, a: 150, b: 560 } : { ax: "y", f: x + o, a: 20, b: 560 }); }); });
+  rowsY.forEach(function (y) { [-11, 11].forEach(function (o) { if (y + o > 30 && y + o < 140) return; lanes.push({ ax: "x", f: y + o, a: 15, b: 445 }); }); });
+  var walkers = [];
+  for (var wi = 0; wi < 20; wi++) {
+    var ln = lanes[(wi * 7) % lanes.length], el2 = div("bb walker", "", world);
+    el2.innerHTML = person(wi);
+    walkers.push({ el: el2, ln: ln, p: ln.a + ((wi * 97) % (ln.b - ln.a)), v: (wi % 2 ? 1 : -1) * (7 + (wi % 5) * 1.6) });
+  }
+  var riders = [0, 1, 2].map(function (i) {
+    var ln = lanes[(i * 5 + 3) % lanes.length], el3 = div("bb rider", "", world);
+    el3.innerHTML = '<svg viewBox="0 0 12 15"><circle cx="3" cy="13" r="1.6" fill="none" stroke="#e2e8f0" stroke-width="0.9"/><circle cx="10" cy="13" r="1.6" fill="none" stroke="#e2e8f0" stroke-width="0.9"/><path d="M3 13h7M9.5 13L8 4.5h-1.5" stroke="#94a3b8" stroke-width="0.9" fill="none"/><rect x="4.6" y="4" width="3.2" height="4.6" rx="1.2" fill="#3b82f6"/><rect x="5" y="8.2" width="1.2" height="4.2" fill="#1e293b"/><circle cx="6.2" cy="2.4" r="1.6" fill="#e0ac69"/></svg>';
+    return { el: el3, ln: ln, p: ln.a + i * 120, v: (i % 2 ? -1 : 1) * 30 };
+  });
+  function stepMover(m, dt) {
+    m.p += m.v * dt;
+    if (m.p > m.ln.b) { m.p = m.ln.b; m.v = -Math.abs(m.v); }
+    if (m.p < m.ln.a) { m.p = m.ln.a; m.v = Math.abs(m.v); }
+    var x = m.ln.ax === "y" ? m.ln.f : m.p, y = m.ln.ax === "y" ? m.p : m.ln.f;
+    m.el.style.left = x + "px"; m.el.style.top = y + "px";
+  }
+
+  // Windows that switch on and off around campus
+  var winBoxes = [].slice.call(city.querySelectorAll(".box.bld"));
+  setInterval(function () {
+    if (document.hidden || !winBoxes.length) return;
+    var b2 = winBoxes[Math.floor(Math.random() * winBoxes.length)];
+    if (b2.classList.contains("flk")) { b2.classList.remove("flk"); b2.classList.add("dim"); }
+    else if (b2.classList.contains("dim")) b2.classList.remove("dim");
+    else b2.classList.add("flk");
+  }, 700);
+
   // Camera: drag to orbit, tap a building to choose it
-  var cam = { tilt: 52, rz: -14, zoom: 1 };
+  var cam = { tilt: 52, rz: -14, zoom: 1, base: 1 }, lastInput = performance.now(), cine = false;
   function applyCam() { world.style.setProperty("--tilt", cam.tilt + "deg"); world.style.setProperty("--rz", cam.rz + "deg"); world.style.setProperty("--zoom", cam.zoom); }
-  function setClose(on) { cam.zoom = on ? 1.3 : 1; applyCam(); }
-  function resetMap() { setRoute(null); myCar.style.display = "none"; $("dpin").classList.remove("on"); select(null); cam.tilt = 52; cam.rz = -14; cam.zoom = 1; applyCam(); }
+  var closeOn = false;
+  function baseZoom() { return (closeOn ? 1.3 : 1) * (sheet && sheet.classList.contains("min") ? 1.22 : 1); }
+  function setClose(on) { closeOn = on; cam.base = cam.zoom = baseZoom(); applyCam(); }
+  function refit() { wake(); cam.base = cam.zoom = baseZoom(); applyCam(); }
+  function resetMap() { setRoute(null); myCar.style.display = "none"; $("dpin").classList.remove("on"); select(null); cam.tilt = 52; cam.rz = -14; closeOn = false; cam.base = cam.zoom = baseZoom(); applyCam(); }
+  function wake() { lastInput = performance.now(); if (cine) { cine = false; world.classList.remove("drag"); } }
   var stage = $("stage"), drag = null, moved = false;
-  stage.addEventListener("pointerdown", function (e) { drag = { x: e.clientX, y: e.clientY, rz: cam.rz, tilt: cam.tilt }; moved = false; });
+  stage.addEventListener("pointerdown", function (e) { wake(); drag = { x: e.clientX, y: e.clientY, rz: cam.rz, tilt: cam.tilt }; moved = false; });
   window.addEventListener("pointermove", function (e) {
     if (!drag) return;
     var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
@@ -651,11 +750,40 @@
     var b = e.target.closest("[data-place]");
     if (b && !trip.locked) { trip.place = places[+b.getAttribute("data-place")]; options(); $("hint").classList.add("gone"); }
   });
-  $("recenter").addEventListener("click", function (e) { e.stopPropagation(); cam.tilt = 52; cam.rz = -14; applyCam(); });
+  $("recenter").addEventListener("click", function (e) { e.stopPropagation(); wake(); cam.tilt = 52; cam.rz = -14; cam.zoom = cam.base; applyCam(); });
+  $("explore").addEventListener("click", function (e) { e.stopPropagation(); sheet.classList.toggle("min"); refit(); });
+
+  // One animation loop runs the whole living campus
+  var lastT = performance.now(), cineStart = 0, cineFrom = null;
+  function life(now) {
+    var dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
+    if (!document.hidden) {
+      walkers.forEach(function (m) { stepMover(m, dt); });
+      riders.forEach(function (m) { stepMover(m, dt); });
+      // Cinematic flyover after a few seconds without touching the screen
+      if (!drag && now - lastInput > 7000) {
+        if (!cine) { cine = true; cineStart = now; cineFrom = { rz: cam.rz, tilt: cam.tilt, zoom: cam.zoom }; world.classList.add("drag"); }
+        var tt = (now - cineStart) / 1000, ease = Math.min(1, tt / 3);
+        var trz = -14 + 26 * Math.sin(tt * 0.11), ttl = 50 + 6 * Math.sin(tt * 0.07), tz = cam.base * (1.04 + 0.1 * Math.sin(tt * 0.05));
+        cam.rz = cineFrom.rz + (trz - cineFrom.rz) * ease; cam.tilt = cineFrom.tilt + (ttl - cineFrom.tilt) * ease; cam.zoom = cineFrom.zoom + (tz - cineFrom.zoom) * ease;
+        applyCam();
+      }
+    }
+    if (!RM) requestAnimationFrame(life);
+  }
+  if (!RM) requestAnimationFrame(life); else { walkers.concat(riders).forEach(function (m) { stepMover(m, 0); }); }
   setTimeout(function () { $("hint").classList.add("gone"); }, 6000);
 
   // ---------------- Ride flow ----------------
   var sheet = $("sheet");
+  var gy = null;
+  sheet.addEventListener("pointerdown", function (e) { if (e.target.closest(".grab")) { gy = e.clientY; wake(); } });
+  sheet.addEventListener("pointerup", function (e) {
+    if (gy === null) return;
+    var dy = e.clientY - gy; gy = null;
+    if (dy > 25) sheet.classList.add("min"); else if (dy < -25) sheet.classList.remove("min"); else sheet.classList.toggle("min");
+    refit();
+  });
   var services = [
     { id: "ride", n: "Ride", tag: "4 seats", d: "TrypCar sedan", price: 6.5, eta: 2, color: "#f8fafc" },
     { id: "eco", n: "Eco", tag: "Shared", d: "Split with members going your way", price: 4.75, eta: 4, color: "#a7f3d0" },
@@ -679,6 +807,7 @@
     sheet.innerHTML = html + "</div>";
   }
   function options() {
+    if (sheet.classList.contains("min")) { sheet.classList.remove("min"); refit(); }
     var p = trip.place; setRoute(pathFrom(ME, p)); showDest(p);
     var html = '<div class="grab"></div><button class="back" type="button" data-a="pick">&#8592; ' + p.n + '</button><h2>Choose your ride</h2>' + carHero(svc().n + (trip.svc === "lux" ? " · Executive sedan" : " · TrypCar electric sedan"), "Every ride is a company-owned TrypCar", true) + '<div class="opts" role="radiogroup">';
     services.forEach(function (s) {
@@ -690,6 +819,7 @@
   }
   function svc() { return services.filter(function (s) { return s.id === trip.svc; })[0]; }
   function matching() {
+    if (sheet.classList.contains("min")) { sheet.classList.remove("min"); refit(); }
     trip.locked = true;
     sheet.innerHTML = '<div class="grab"></div><div class="match"><div class="radar"><i></i><i></i><i></i><b></b></div><h2>Finding your driver</h2><p class="muted" style="font-size:0.85rem;margin-top:4px">Matching you with the closest TrypCar ' + svc().n + ' (demo)</p></div><button class="btn btn-line" type="button" data-a="cancel" style="margin-top:14px">Cancel</button>';
     later(arriving, 2200);
@@ -717,6 +847,7 @@
     moveCar(pathFrom(ME, p), 6500, function (t) { var b = $("pbar2"); if (b) b.style.width = (t * 100) + "%"; var e = $("eta2"); if (e) e.textContent = t < 1 ? Math.max(1, Math.ceil(p.t * (1 - t))) + " min" : "Arrived"; }, function () { later(arrived, 600); });
   }
   function arrived() {
+    if (sheet.classList.contains("min")) { sheet.classList.remove("min"); refit(); }
     var s = svc(), p = trip.place, used = Math.min(credit, s.price);
     credit = Math.max(0, credit - s.price); $("credit").textContent = "$" + credit.toFixed(2);
     rides.unshift({ p: p.n, s: s.n, amt: s.price, when: new Date() });
