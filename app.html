@@ -196,7 +196,8 @@
     @keyframes leg { from { transform: rotate(18deg); } to { transform: rotate(-18deg); } }
     @keyframes bob { to { transform: translateY(-0.6px); } }
     .rider { width: 15px; height: 19px; }
-    .rider svg { width: 100%; height: 100%; }
+    .rider svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; transform-origin: 50% 100%; will-change: transform; }
+    .rider .hide { display: none; }
     .box.flk { --win: rgba(253,224,150,0.85) !important; }
     .box.dim { --win: rgba(147,197,253,0.2) !important; }
     .stad-ring { position: absolute; border-radius: 30px; }
@@ -1060,8 +1061,17 @@
   }
   var riders = [0, 1].map(function (i) {
     var ln = lanes[(i * 5 + 3) % lanes.length], el3 = div("bb rider", "", world);
-    el3.innerHTML = '<svg viewBox="0 0 12 15"><circle cx="3" cy="13" r="1.6" fill="none" stroke="#e2e8f0" stroke-width="0.9"/><circle cx="10" cy="13" r="1.6" fill="none" stroke="#e2e8f0" stroke-width="0.9"/><path d="M3 13h7M9.5 13L8 4.5h-1.5" stroke="#94a3b8" stroke-width="0.9" fill="none"/><rect x="4.6" y="4" width="3.2" height="4.6" rx="1.2" fill="#3b82f6"/><rect x="5" y="8.2" width="1.2" height="4.2" fill="#1e293b"/><circle cx="6.2" cy="2.4" r="1.6" fill="#e0ac69"/></svg>';
-    return { el: el3, ln: ln, p: ln.a + i * 120, v: (i % 2 ? -1 : 1) * 30 };
+    // Three views of the same rider: from the side, from the front (coming toward you) and from behind (riding away)
+    var side = '<svg class="rs" viewBox="0 0 12 15"><circle cx="3" cy="13" r="1.6" fill="none" stroke="#e2e8f0" stroke-width="0.9"/><circle cx="10" cy="13" r="1.6" fill="none" stroke="#e2e8f0" stroke-width="0.9"/><path d="M3 13h7M9.5 13L8 4.5h-1.5" stroke="#94a3b8" stroke-width="0.9" fill="none"/><rect x="4.6" y="4" width="3.2" height="4.6" rx="1.2" fill="#3b82f6"/><rect x="5" y="8.2" width="1.2" height="4.2" fill="#1e293b"/><path d="M6.9 5.6L8.3 4.7" stroke="#e0ac69" stroke-width="0.8" stroke-linecap="round"/><circle cx="6.2" cy="2.4" r="1.6" fill="#e0ac69"/></svg>';
+    var bars = '<path d="M6 12.6V5.2M3.2 5.2h5.6" stroke="#94a3b8" stroke-width="0.8" stroke-linecap="round" fill="none"/>';
+    var wheel = '<ellipse cx="6" cy="13.5" rx="0.9" ry="1.4" fill="#1e293b" stroke="#e2e8f0" stroke-width="0.6"/>';
+    var body = '<rect x="4.6" y="8.4" width="1.2" height="4" fill="#1e293b"/><rect x="6.2" y="8.4" width="1.2" height="4" fill="#1e293b"/><rect x="4.2" y="3.8" width="3.6" height="5" rx="1.3" fill="#3b82f6"/>';
+    var arms = '<path d="M4.4 5L3.4 5.3M7.6 5L8.6 5.3" stroke="#e0ac69" stroke-width="0.8" stroke-linecap="round"/>';
+    var front = '<svg class="rf hide" viewBox="0 0 12 15">' + body + bars + arms + wheel + '<circle cx="6" cy="2.2" r="1.65" fill="#3b2314"/><circle cx="6" cy="2.55" r="1.35" fill="#e0ac69"/></svg>';
+    var back = '<svg class="rb hide" viewBox="0 0 12 15">' + bars + wheel + body + arms + '<circle cx="6" cy="2.3" r="1.65" fill="#3b2314"/></svg>';
+    el3.innerHTML = side + front + back;
+    var cruise = 20 - i * 3;
+    return { el: el3, vs: { side: el3.querySelector(".rs"), front: el3.querySelector(".rf"), back: el3.querySelector(".rb") }, view: "side", ln: ln, p: ln.a + i * 120, v: i % 2 ? -1 : 1, cruise: cruise, spd: cruise, turn: 0, face: 1, ph: i * 2.1 };
   });
   function stepMover(m, dt) {
     m.p += m.v * dt;
@@ -1069,6 +1079,38 @@
     if (m.p < m.ln.a) { m.p = m.ln.a; m.v = Math.abs(m.v); }
     var x = m.ln.ax === "y" ? m.ln.f : m.p, y = m.ln.ax === "y" ? m.p : m.ln.f;
     m.el.style.left = x + "px"; m.el.style.top = y + "px";
+  }
+  // Scootz riders glide: they ease to a stop at the end of a path, turn around, and always face where they are heading
+  function stepRider(m, dt, now) {
+    if (m.turn > 0) {
+      m.spd = 0; m.turn -= dt;
+      if (m.turn <= 0) { m.turn = 0; m.v = -m.v; }
+    } else {
+      var left = m.v > 0 ? m.ln.b - m.p : m.p - m.ln.a;
+      var target = Math.min(m.cruise, 3 + left * 0.8);
+      m.spd += (target - m.spd) * Math.min(1, dt * 1.6);
+      m.p += m.v * m.spd * dt;
+      if (m.p >= m.ln.b) m.p = m.ln.b;
+      if (m.p <= m.ln.a) m.p = m.ln.a;
+      if (dt && left < 0.8) m.turn = 0.8;
+    }
+    var x = m.ln.ax === "y" ? m.ln.f : m.p, y = m.ln.ax === "y" ? m.p : m.ln.f;
+    m.el.style.left = x + "px"; m.el.style.top = y + "px";
+    // Which way the scooter points on screen, given how the camera is turned
+    var hd = m.turn > 0 ? -m.v : m.v, wx = m.ln.ax === "x" ? hd : 0, wy = m.ln.ax === "y" ? hd : 0;
+    var r = (cam ? cam.rz : -14) * Math.PI / 180, t = (cam ? cam.tilt : 52) * Math.PI / 180;
+    var sx = wx * Math.cos(r) - wy * Math.sin(r), sy = (wx * Math.sin(r) + wy * Math.cos(r)) * Math.cos(t);
+    // Side view when crossing the screen; front or back view when coming toward you or riding away
+    var len = Math.hypot(sx, sy) || 1, across = Math.abs(sx) / len;
+    var view = m.view === "side" ? (across < 0.42 ? "fb" : "side") : (across > 0.58 ? "side" : "fb");
+    var show = view === "side" ? "side" : (sy > 0 ? "front" : "back");
+    if (show !== m.shown) { ["side", "front", "back"].forEach(function (k) { m.vs[k].classList.toggle("hide", k !== show); }); m.shown = show; }
+    m.view = view;
+    var goal = sx >= 0 ? 1 : -1;
+    m.face += (goal - m.face) * (dt ? Math.min(1, dt * (m.turn > 0 ? 3 : 8)) : 1);
+    var hum = m.spd > 1 ? Math.sin((now || 0) / 1000 * 18 + m.ph) * 0.25 : 0;
+    var lean = view === "side" ? 0 : Math.sin((now || 0) / 1000 * 1.3 + m.ph) * 2.5 * Math.min(1, m.spd / 10);
+    m.vs[show].style.transform = "translateY(" + hum.toFixed(2) + "px) " + (show === "side" ? "scaleX(" + m.face.toFixed(3) + ")" : "rotate(" + lean.toFixed(2) + "deg)");
   }
 
   // Windows that switch on and off around campus
@@ -1116,7 +1158,7 @@
     var dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
     if (!document.hidden) {
       walkers.forEach(function (m) { stepMover(m, dt); });
-      riders.forEach(function (m) { stepMover(m, dt); });
+      riders.forEach(function (m) { stepRider(m, dt, now); });
       ducks.forEach(function (d2) { d2.a += dt * 0.25; d2.el.style.left = (36 + d2.r * Math.cos(d2.a)) + "px"; d2.el.style.top = (35 + d2.r * 0.75 * Math.sin(d2.a)) + "px"; });
       // Cinematic flyover after a few seconds without touching the screen
       if (!drag && now - lastInput > 7000) {
@@ -1129,7 +1171,7 @@
     }
     if (!RM) requestAnimationFrame(life);
   }
-  if (!RM) requestAnimationFrame(life); else { walkers.concat(riders).forEach(function (m) { stepMover(m, 0); }); }
+  if (!RM) requestAnimationFrame(life); else { walkers.forEach(function (m) { stepMover(m, 0); }); riders.forEach(function (m) { stepRider(m, 0, 0); }); }
   setTimeout(function () { $("hint").classList.add("gone"); }, 6000);
 
   // ---------------- Ride flow ----------------
