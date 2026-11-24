@@ -90,11 +90,13 @@
     .flatblk { position: absolute; }
     .flatblk[data-place] { cursor: pointer; }
     .ground svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; overflow: visible; }
-    /* Chrome-safe mode (Android): the flat ground is painted once into this single picture instead */
+    /* Chrome-safe mode (Android): the flat ground is painted once into one picture, and the lake gets its own small canvas */
     #gcan { position: absolute; left: -110px; top: -100px; width: 680px; height: 800px; display: none; }
     .ground.safe #gcan { display: block; }
     .ground.safe .groundfill, .ground.safe #walks, .ground.safe #roads, .ground.safe #glows { display: none; }
-    .ground.safe .flatblk > :not(.lake):not(.bridge):not(.duck) { opacity: 0; }
+    .ground.safe .flatblk > :not(.lakecan) { opacity: 0; }
+    .ground.safe .lake, .ground.safe .bridge, .ground.safe .duck { display: none; }
+    .lakecan { position: absolute; left: 0; top: 0; width: 72px; height: 72px; pointer-events: none; }
     .road { stroke: #1b2436; stroke-width: 16; stroke-linecap: round; }
     .road-line { stroke: rgba(253,224,138,0.35); stroke-width: 1.2; stroke-dasharray: 7 9; }
     .curb { fill: #0a1630; }
@@ -1113,9 +1115,44 @@
   // ---------------- Chrome-safe ground (Android browsers other than Firefox) ----------------
   // Paints all the still, flat ground (grass, lawns, roads, sidewalks, crosswalks, patios, courts, lots and
   // streetlight glow) once into a single picture, so the phone never has to redraw it while the camera moves.
-  // The lake, ducks, route, hubs and everything 3D stay live on top.
+  // The lake gets its own small canvas (ripples, glints, ducks, lily pads, reeds, footbridge), redrawn about 30 times a second.
+  // The route, hubs and everything 3D stay live on top.
   // Add ?safe=1 or ?safe=0 to the address to force it on or off for testing.
   var SAFE = (function () { var q = /[?&]safe=([01])/.exec(location.search); if (q) return q[1] === "1"; var ua = navigator.userAgent; return /Android/i.test(ua) && !/Firefox/i.test(ua); })(), safeDone = false;
+  var lakeCtx = null, lakePath = null, lakeLast = 0, LQ = 3;
+  var RIP = [[24, 21, 9, 0], [24, 21, 9, -1.8], [48, 46, 10, -0.9], [48, 46, 10, -2.7], [28, 51, 7, -2.2], [54, 22, 6, -3.1]];
+  var GLINT = [[42, 17, 5, 0.7, 0.5, 0], [20, 40, 3.5, 0.6, 0.4, -2.5], [52, 31, 3, 0.5, 0.35, -1.2]];
+  var PADS = [[13, 45, 2.5, "#3f8f4a"], [16.8, 48.6, 1.8, "#4ea85a"], [12.4, 49.6, 1.4, "#3f8f4a"], [13.6, 44.4, 0.8, "#f9a8d4"], [57, 17, 2, "#4ea85a"], [59.6, 20.4, 1.4, "#3f8f4a"]];
+  var REEDS = [[8, 27, 6.4, 23.8], [8.6, 27.4, 8.8, 23.6], [9.4, 27.2, 11, 24.2], [61, 52, 62.8, 49.4], [60.4, 51.6, 60.8, 48.2], [59.6, 51.8, 58.2, 49], [34, 63.5, 33.2, 66.5], [35, 63.4, 35.6, 66.6]];
+  function drawLake(now) {
+    var c = lakeCtx, t = now / 1000, g;
+    if (!lakePath) lakePath = new Path2D(LAKE_D);
+    c.setTransform(LQ, 0, 0, LQ, 0, 0); c.clearRect(0, 0, 72, 72); c.globalAlpha = 1; c.lineJoin = "round"; c.lineCap = "round";
+    // sandy bank and water
+    c.strokeStyle = "#6f5f41"; c.lineWidth = 5.6; c.stroke(lakePath);
+    c.strokeStyle = "#c9b07e"; c.lineWidth = 3.8; c.stroke(lakePath);
+    g = c.createRadialGradient(31.7, 28.8, 0, 31.7, 28.8, 40); g.addColorStop(0, "#3f8fd0"); g.addColorStop(0.55, "#1f5a96"); g.addColorStop(1, "#163f6c");
+    c.fillStyle = g; c.fill(lakePath);
+    c.save(); c.clip(lakePath);
+    // shallow edge, spreading ripples and glints of light
+    c.globalAlpha = 0.35; c.strokeStyle = "#6fb3e3"; c.lineWidth = 5; c.stroke(lakePath);
+    c.strokeStyle = "#e0f2fe";
+    RIP.forEach(function (r) { var p = ((t - r[3]) / 3.6) % 1, e = 1 - (1 - p) * (1 - p), s = 0.15 + 0.85 * e; c.globalAlpha = 0.75 * (1 - e); c.lineWidth = 0.6 * s; c.beginPath(); c.arc(r[0], r[1], r[2] * s, 0, 7); c.stroke(); });
+    c.fillStyle = "#e0f2fe";
+    GLINT.forEach(function (q) { var ph = ((t - q[5]) / 5) % 2, k = ph < 1 ? ph : 2 - ph, ez = (1 - Math.cos(Math.PI * k)) / 2; c.globalAlpha = q[4] + (0.12 - q[4]) * ez; c.beginPath(); c.ellipse(q[0], q[1], q[2], q[3], 0, 0, 7); c.fill(); });
+    c.restore(); c.globalAlpha = 1;
+    c.strokeStyle = "rgba(224,242,254,0.35)"; c.lineWidth = 0.6; c.stroke(lakePath);
+    // lily pads, a flower, and reeds along the bank
+    PADS.forEach(function (q) { c.fillStyle = q[3]; c.beginPath(); c.arc(q[0], q[1], q[2], 0, 7); c.fill(); });
+    c.strokeStyle = "#2f6b3a"; c.lineWidth = 0.7;
+    REEDS.forEach(function (q) { c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(q[2], q[3]); c.stroke(); });
+    // wooden footbridge
+    for (var i = 0; i < 22; i += 4) { c.fillStyle = "#92400e"; c.fillRect(26 + i, 31, 2, 5); c.fillStyle = "#b45309"; c.fillRect(28 + i, 31, 2, 5); }
+    c.strokeStyle = "#451a03"; c.lineWidth = 0.6; c.strokeRect(26, 31, 22, 5);
+    // ducks
+    c.fillStyle = "#f8fafc";
+    ducks.forEach(function (d2) { c.beginPath(); c.ellipse(37.5 + d2.r * Math.cos(d2.a), 36 + d2.r * 0.75 * Math.sin(d2.a), 1.5, 1, 0, 0, 7); c.fill(); });
+  }
   function rr(c, x, y, w, h, r) { r = Math.max(0, Math.min(r, w / 2, h / 2)); c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
   function safeGround() {
     if (!SAFE || safeDone) return;
@@ -1130,7 +1167,7 @@
       var bx = fb.offsetLeft, by = fb.offsetTop, town = fb.classList.contains("townblk");
       [].forEach.call(fb.children, function (el) {
         var k = el.classList, x = bx + el.offsetLeft, y = by + el.offsetTop, w = el.offsetWidth, h = el.offsetHeight, g, i2, sx;
-        if (k.contains("lake") || k.contains("bridge") || k.contains("duck")) return;
+        if (k.contains("lake") || k.contains("bridge") || k.contains("duck") || k.contains("lakecan")) return;
         c.save();
         var rot = /rotate\((-?[\d.]+)deg\)/.exec(el.style.transform || "");
         if (rot) { c.translate(x + w / 2, y + h / 2); c.rotate(+rot[1] * Math.PI / 180); x = -w / 2; y = -h / 2; }
@@ -1203,6 +1240,15 @@
       gg.addColorStop(0, lamp ? "rgba(253,230,138,0.45)" : "rgba(191,219,254,0.35)"); gg.addColorStop(1, lamp ? "rgba(253,230,138,0)" : "rgba(191,219,254,0)");
       c.fillStyle = gg; c.beginPath(); c.arc(gx, gy, r, 0, 7); c.fill();
     });
+    // The lake gets its own small canvas, so its ripples never make Chrome redraw the big ground picture
+    var lb = document.querySelector("#flat .lake");
+    if (lb) {
+      try {
+        var lc = document.createElement("canvas"); lc.className = "lakecan"; lc.width = 72 * LQ; lc.height = 72 * LQ;
+        lb.parentNode.appendChild(lc); lakeCtx = lc.getContext("2d");
+        if (lakeCtx) drawLake(performance.now());
+      } catch (err2) { lakeCtx = null; }
+    }
     document.querySelector(".ground").classList.add("safe");
   }
 
@@ -1322,6 +1368,8 @@
       walkers.forEach(function (m) { stepMover(m, dt); });
       riders.forEach(function (m) { stepRider(m, dt, now); });
       ducks.forEach(function (d2) { d2.a += dt * 0.25; d2.el.style.left = (36 + d2.r * Math.cos(d2.a)) + "px"; d2.el.style.top = (35 + d2.r * 0.75 * Math.sin(d2.a)) + "px"; });
+      // In Chrome-safe mode, the lake canvas is redrawn about 30 times a second
+      if (lakeCtx && now - lakeLast > 33) { lakeLast = now; drawLake(now); }
       // Cinematic flyover after a few seconds without touching the screen
       if (!drag && now - lastInput > 7000) {
         if (!cine) { cine = true; cineStart = now; cineFrom = { rz: cam.rz, tilt: cam.tilt, zoom: cam.zoom }; world.classList.add("drag"); }
