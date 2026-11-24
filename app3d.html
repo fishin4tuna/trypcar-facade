@@ -684,7 +684,7 @@
 
   // ---------------- Ground, sidewalks and roads ----------------
   var cols = [30, 130, 230, 330, 430], rowsY = [40, 140, 240, 340, 440, 540];
-  var ground = new THREE.Mesh(new THREE.PlaneGeometry(2600, 2600), mat("#27563a", { r: 0.95 }));
+  var ground = new THREE.Mesh(new THREE.PlaneGeometry(9000, 9000), mat("#2a5a37", { r: 0.95 }));
   ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
   function strip(x1, z1, x2, z2, wid, h, hex, o) {
     var horiz = z1 === z2, len = Math.abs(horiz ? x2 - x1 : z2 - z1);
@@ -699,11 +699,16 @@
   [[-70, -60, -70, 640], [530, -60, 530, 640], [-70, -60, 530, -60], [-70, 640, 530, 640]].forEach(function (r) { SEGS.push(r); });
   SEGS.forEach(function (s) { strip(s[0], s[1], s[2], s[3], 30, 0.6, "#8a93a3", { r: 0.9 }); });
   SEGS.forEach(function (s) { strip(s[0], s[1], s[2], s[3], 16, 0.7, "#23272f", { r: 0.95 }); });
+  // Country roads: the street grid keeps going past the edge of town and fades into the haze
+  var REACH = 1350, EXT = [];
+  cols.concat([-70, 530]).forEach(function (x) { EXT.push([x, -60, x, -60 - REACH]); EXT.push([x, 640, x, 640 + REACH]); });
+  rowsY.concat([-60, 640]).forEach(function (y) { EXT.push([-70, y, -70 - REACH, y]); EXT.push([530, y, 530 + REACH, y]); });
+  EXT.forEach(function (s) { strip(s[0], s[1], s[2], s[3], 14, 0.7, "#262a31", { r: 0.95 }); });
   // Lane dashes and crosswalks, drawn as many small pieces in one go
   var XS = [-70].concat(cols, [530]), YS = [-60].concat(rowsY, [640]);
   function nearCross(v, list) { for (var i = 0; i < list.length; i++) if (Math.abs(v - list[i]) < 14) return true; return false; }
   var dashes = [], dummy = new THREE.Object3D();
-  SEGS.forEach(function (s) {
+  SEGS.concat(EXT).forEach(function (s) {
     var horiz = s[1] === s[3], a = Math.min(horiz ? s[0] : s[1], horiz ? s[2] : s[3]), b = Math.max(horiz ? s[0] : s[1], horiz ? s[2] : s[3]);
     for (var v = a + 4; v < b - 4; v += 16) { if (nearCross(v + 3.5, horiz ? XS : YS)) continue; dashes.push(horiz ? [v + 3.5 - OX, s[1] - OZ, 7, 1.2] : [s[0] - OX, v + 3.5 - OZ, 1.2, 7]); }
   });
@@ -725,7 +730,7 @@
   function block(c, r, town, w) {
     var G = new THREE.Group(); G.position.set(bxOf(c) - OX, 0, byOf(r) - OZ); scene.add(G);
     G.userData.w = w || 72; BLOCKS[c + "," + r] = G;
-    var lawn = slab(G, town ? "#2f6b45" : "#3d8a52", 0, 0, w || 72, 72, LAWN, 0, { r: 0.95 }); lawn.castShadow = false;
+    var lawn = slab(G, town ? "#2f6b45" : "#3d8a52", 0, 0, w || 72, 72, LAWN, 0, { r: 0.95 }); lawn.castShadow = false; lawn.userData.lawn = true;
     return G;
   }
   // Arena
@@ -854,7 +859,7 @@
       ripples.push({ m: r, ph: i * 0.9 });
     });
   })();
-  // Residence Hall: stone with slate roofs and a tower
+  // Residence Hall: stone with ivy-colored roofs and a tower
   (function () { var G = block(3, 3); bldg(G, "gstone", 6, 6, 26, 60, 34); gable(G, "#2f3540", 6, 6, 26, 60, 34, 14, true); bldg(G, "gstone", 32, 38, 34, 26, 26); gable(G, "#2f3540", 32, 38, 34, 26, 26, 13); bldg(G, "gstone", 26, 30, 12, 12, 50); slab(G, "#a39b8d", 25.5, 29.5, 13, 13, 3, LAWN + 50); autoTrees(G, [[6, 6, 26, 60], [32, 38, 34, 26]], 11); })();
   // Chapel: stone, stained glass that glows at night, a bell tower with a spire and cross
   (function () {
@@ -906,6 +911,104 @@
       var key = "shop" + c[3]; if (!STY[key]) STY[key] = { wall: c[0], glass: "#2b3448", lit: "#ffd38a", roof: "#57534e" };
       bldg(G, key, c[2], 10, 20, 24, 12 + c[3] * 2); var aw = slab(G, c[1], c[2] + 2, 34, 16, 4, 0.4, LAWN + 8); aw.rotation.x = 0.5;
     });
+  })();
+
+  // ---------------- Countryside beyond town: woods, meadows, a winding creek, homes and rolling hills ----------------
+  (function () {
+    var seed = 20261124;
+    function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+    var ALL = SEGS.concat(EXT);
+    function nearRoad(x, z, m) {
+      for (var i = 0; i < ALL.length; i++) {
+        var s = ALL[i], wx1 = s[0] - OX, wz1 = s[1] - OZ, wx2 = s[2] - OX, wz2 = s[3] - OZ;
+        if (wz1 === wz2) { if (Math.abs(z - wz1) < m && x > Math.min(wx1, wx2) - m && x < Math.max(wx1, wx2) + m) return true; }
+        else if (Math.abs(x - wx1) < m && z > Math.min(wz1, wz2) - m && z < Math.max(wz1, wz2) + m) return true;
+      }
+      return false;
+    }
+    function inTown(x, z, pad) { return x > -305 - pad && x < 305 + pad && z > -365 - pad && z < 345 + pad; }
+    // The creek winds north to south through the countryside east of campus
+    var curve = new THREE.CatmullRomCurve3([[640, -1600], [560, -1000], [690, -520], [585, -60], [705, 420], [600, 900], [690, 1400], [620, 1900]].map(function (p) { return new THREE.Vector3(p[0], 0, p[1]); }));
+    var CP = curve.getSpacedPoints(260);
+    function nearCreek(x, z, m) { for (var i = 0; i < CP.length; i += 2) { var dx = CP[i].x - x, dz = CP[i].z - z; if (dx * dx + dz * dz < m * m) return true; } return false; }
+    function ribbon(width, y, material) {
+      var pos = [], uv = [], idx = [], acc = 0;
+      for (var i = 0; i < CP.length; i++) {
+        var p = CP[i], q = CP[Math.min(i + 1, CP.length - 1)], o = CP[Math.max(i - 1, 0)], tx = q.x - o.x, tz = q.z - o.z, l = Math.hypot(tx, tz) || 1, nx = -tz / l, nz = tx / l;
+        if (i) acc += p.distanceTo(CP[i - 1]);
+        var wob = width * (0.85 + 0.15 * Math.sin(i * 0.37));
+        pos.push(p.x + nx * wob / 2, y, p.z + nz * wob / 2, p.x - nx * wob / 2, y, p.z - nz * wob / 2);
+        uv.push(0, acc / 40, 1, acc / 40);
+        if (i) { var a = (i - 1) * 2; idx.push(a, a + 2, a + 1, a + 1, a + 2, a + 3); }
+      }
+      var g = new THREE.BufferGeometry();
+      g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(idx); g.computeVertexNormals();
+      var m = new THREE.Mesh(g, material); m.receiveShadow = true; scene.add(m); return m;
+    }
+    ribbon(54, 0.06, mat("#6b6a45", { r: 0.95 })); ribbon(42, 0.1, mat("#a8935f", { r: 0.95 })); ribbon(32, 0.16, waterMat);
+    // Stone bridges where the country roads cross the creek
+    EXT.forEach(function (s) {
+      if (s[1] !== s[3] || s[0] !== 530) return;
+      var z = s[1] - OZ, best = null, bd = 1e9;
+      CP.forEach(function (p) { var d = Math.abs(p.z - z); if (d < bd) { bd = d; best = p; } });
+      if (!best || bd > 8) return;
+      slab(scene, "#9aa3b0", best.x - 30, z - 10, 60, 20, 1.2, 0.2, { r: 0.8 });
+      slab(scene, "#7c8594", best.x - 30, z - 10.6, 60, 1, 2.4, 1.4); slab(scene, "#7c8594", best.x - 30, z + 9.6, 60, 1, 2.4, 1.4);
+    });
+    // Meadows: soft patches of lighter and golden grass
+    var MC = ["#3f7a45", "#4f8a43", "#6b8f4a", "#7d9450", "#356d40"];
+    var mg = new THREE.CircleGeometry(1, 28); mg.rotateX(-Math.PI / 2);
+    var meads = new THREE.InstancedMesh(mg, new THREE.MeshStandardMaterial({ roughness: 0.95 }), 34), mi = 0;
+    for (var k = 0; k < 400 && mi < 34; k++) {
+      var ang = rnd() * Math.PI * 2, rad = 420 + rnd() * 1250, x = Math.cos(ang) * rad, z = Math.sin(ang) * rad * 1.1;
+      if (inTown(x, z, 60)) continue;
+      dummy.position.set(x, 0.03 + mi * 0.002, z); dummy.rotation.set(0, rnd() * 3, 0); dummy.scale.set(70 + rnd() * 150, 1, 40 + rnd() * 90); dummy.updateMatrix();
+      meads.setMatrixAt(mi, dummy.matrix); meads.setColorAt(mi, col(MC[mi % MC.length])); mi++;
+    }
+    meads.count = mi; meads.receiveShadow = true; scene.add(meads);
+    // Woods: irregular clusters of trees, kept off the roads, the creek and the town
+    for (var c = 0; c < 70; c++) {
+      var ca = rnd() * Math.PI * 2, cr = 380 + rnd() * 1300, cx = Math.cos(ca) * cr, cz = Math.sin(ca) * cr * 1.1, spread = 35 + rnd() * 95, n = 8 + Math.floor(rnd() * 26);
+      for (var t = 0; t < n; t++) {
+        var a2 = rnd() * Math.PI * 2, r2 = Math.sqrt(rnd()) * spread, tx = cx + Math.cos(a2) * r2, tz = cz + Math.sin(a2) * r2;
+        if (inTown(tx, tz, 20) || nearRoad(tx, tz, 14) || nearCreek(tx, tz, 26)) continue;
+        TREES.push([tx, 0, tz, 10 + rnd() * 8, c + t]);
+      }
+    }
+    // Homes along the country roads, facing the street, with lights in the windows at night
+    var homes = [];
+    EXT.forEach(function (s) {
+      var horiz = s[1] === s[3], dir = horiz ? Math.sign(s[2] - s[0]) : Math.sign(s[3] - s[1]);
+      for (var d = 50; d < 720; d += 44) {
+        [-1, 1].forEach(function (side) {
+          if (rnd() > 0.5 - d / 2400) return;
+          var off = 27 + rnd() * 6, x = horiz ? s[0] - OX + dir * d : s[0] - OX + side * off, z = horiz ? s[1] - OZ + side * off : s[1] - OZ + dir * d;
+          if (inTown(x, z, 30) || nearCreek(x, z, 40) || nearRoad(x, z, 20)) return;
+          homes.push([x, z, horiz ? 0 : Math.PI / 2, Math.floor(rnd() * 6), Math.floor(rnd() * 5)]);
+          if (rnd() < 0.7) TREES.push([x + (rnd() - 0.5) * 30, 0, z + (rnd() - 0.5) * 30, 9 + rnd() * 5, d]);
+        });
+      }
+    });
+    if (!STY.home) STY.home = { wall: "#f4f1ea", glass: "#2b3448", lit: "#ffd38a", roof: "#3d3a37" };
+    var bg = new THREE.BoxGeometry(22, 11, 16), uv = bg.attributes.uv;
+    for (var f = 0; f < 6; f++) { if (f === 2 || f === 3) continue; var fw = f < 2 ? 16 : 22; for (var q = 0; q < 4; q++) { var ii = f * 4 + q; uv.setXY(ii, uv.getX(ii) * fw / 32, uv.getY(ii) * 11 / 36); } }
+    var wm = wallMat("home"), rm = mat("#57534e", { r: 0.9 });
+    var bodies = new THREE.InstancedMesh(bg, [wm, wm, rm, rm, wm, wm], homes.length);
+    var rs = new THREE.Shape(); rs.moveTo(-9, 0); rs.lineTo(9, 0); rs.lineTo(0, 6.5); rs.lineTo(-9, 0);
+    var rg = new THREE.ExtrudeGeometry(rs, { depth: 24, bevelEnabled: false }); rg.translate(0, 0, -12); rg.rotateY(Math.PI / 2);
+    var roofs = new THREE.InstancedMesh(rg, new THREE.MeshStandardMaterial({ roughness: 0.75 }), homes.length);
+    homes.forEach(function (hm, i) {
+      dummy.rotation.set(0, hm[2], 0); dummy.scale.set(1, 1, 1);
+      dummy.position.set(hm[0], 5.5, hm[1]); dummy.updateMatrix(); bodies.setMatrixAt(i, dummy.matrix); bodies.setColorAt(i, col(SIDING[hm[3]]));
+      dummy.position.set(hm[0], 11, hm[1]); dummy.updateMatrix(); roofs.setMatrixAt(i, dummy.matrix); roofs.setColorAt(i, col(ROOFS[hm[4]]));
+    });
+    bodies.castShadow = roofs.castShadow = true; bodies.receiveShadow = roofs.receiveShadow = true; scene.add(bodies, roofs);
+    // Rolling hills on the horizon, softened by the haze
+    var hg = new THREE.SphereGeometry(1, 18, 10), hmat = new THREE.MeshStandardMaterial({ color: col("#2f5f3b"), roughness: 1, flatShading: true });
+    for (var hI = 0; hI < 16; hI++) {
+      var ha = hI / 16 * Math.PI * 2 + rnd() * 0.3, hr = 1900 + rnd() * 900, hill = new THREE.Mesh(hg, hmat), w = 320 + rnd() * 380;
+      hill.scale.set(w, 70 + rnd() * 110, w * (0.6 + rnd() * 0.5)); hill.position.set(Math.cos(ha) * hr, -20, Math.sin(ha) * hr); hill.rotation.y = rnd() * 3; scene.add(hill);
+    }
   })();
 
   // ---------------- Trees (all drawn together for speed) ----------------
@@ -1006,7 +1109,7 @@
   var sc = sun.shadow.camera; sc.left = -470; sc.right = 470; sc.top = 470; sc.bottom = -470; sc.near = 10; sc.far = 2600;
   sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.6; scene.add(sun, sun.target);
   var moon = new THREE.DirectionalLight(col("#9db8ff"), 0); moon.position.set(-300, 600, 250); scene.add(moon);
-  scene.fog = new THREE.Fog(0x000000, 1300, 3800);
+  scene.fog = new THREE.Fog(0x000000, 1250, 3600);
 
   function sstep(a, b, x) { var t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
   function mixC(a, b, t) { return new THREE.Color(a).lerp(new THREE.Color(b), t); }
@@ -1036,7 +1139,6 @@
     cubeCam.renderTarget = target; cubeCam.update(renderer, scene);
     ENVMATS.forEach(function (m) { m.envMap = target.texture; });
   }
-
   // ---------------- Destinations ----------------
   var ME = { x: 130, y: 440 };
   function stop(c, r) { return r > 4 ? { x: cols[c + 1], y: 640 } : { x: cols[c + 1], y: rowsY[r + 1] }; }
@@ -1055,12 +1157,20 @@
     { n: "Campus Lake", s: "Walking trail and footbridge", b: [2, 3], t: 4, h: 16, main: 1 },
     { n: "Chapel", s: "Historic stone chapel", b: [0, 4], t: 2, h: 64 },
     { n: "Pizza Place", s: "Founding Partner · student deals", b: [1, 5], t: 5, h: 22, main: 1, cls: "partner", tag: " · Partner" },
-    { n: "Gas & Go", s: "Founding Partner · snacks and fuel", b: [2, 5], t: 6, h: 24, main: 1, cls: "partner", tag: " · Partner" }
+    { n: "Gas & Go", s: "Founding Partner · snacks and fuel", b: [2, 5], t: 6, h: 24, main: 1, cls: "partner", tag: " · Partner" },
+    { n: "Founders Hall", s: "Admissions and the president's office", b: [0, 3], t: 3, h: 48 },
+    { n: "Arts Center", s: "Theater, galleries, and studios", b: [3, 1], t: 6, h: 42 },
+    { n: "Residence Hall", s: "First-year housing", b: [3, 3], t: 4, h: 58 },
+    { n: "Residences", s: "Upper-class dorms", b: [1, 4], t: 2, h: 52 },
+    { n: "Apartments", s: "Graduate and family housing", b: [2, 4], t: 3, h: 66 },
+    { n: "Parking Garage", s: "Visitor and commuter parking", b: [3, 4], t: 4, h: 24 },
+    { n: "Main St Shops", s: "Shops and services off campus", b: [3, 5], t: 7, h: 24 },
+    { n: "Ball Field", s: "Intramural softball", b: [-1, 2], t: 6, h: 12 }
   ];
-  var pickables = [];
+  var pickables = Object.keys(BLOCKS).map(function (k) { return BLOCKS[k]; });
   places.forEach(function (p, i) {
     var st = stop(p.b[0], p.b[1]); p.x = st.x; p.y = st.y;
-    var G = BLOCKS[p.b[0] + "," + p.b[1]]; p.g = G; G.userData.place = i; pickables.push(G);
+    var G = BLOCKS[p.b[0] + "," + p.b[1]]; p.g = G; G.userData.place = i;
     p.lx = G.position.x + G.userData.w / 2; p.lz = G.position.z + 36;
   });
 
@@ -1071,31 +1181,57 @@
     var L = { el: el, x: x, y: y, z: z, main: !!main, on: true }; LB.push(L); return L;
   }
   places.forEach(function (p) { p.lab = addLabel(p.n + (p.tag || ""), p.lx, p.h, p.lz, p.cls, p.main); });
-  [["Founders Hall", 80, 390, 48], ["Arts Center", 380, 190, 42], ["Apartments", 280, 490, 66], ["Residence Hall", 380, 390, 58]].forEach(function (l) { addLabel(l[0], l[1] - OX, l[3], l[2] - OZ, "", 0); });
-  var pinLab = addLabel("Drop-off", 0, 18, 0, "pin", 1); pinLab.on = false;
+  var pinLab = addLabel("Drop-off", 0, 18, 0, "pin", 1); pinLab.on = false; pinLab.must = true;
   var v3 = new THREE.Vector3();
+  // Name tags stay clear of the top bar and the map buttons, never pile on top of each other,
+  // fade near the edges, and your destination's tag is always kept on screen
   function updateLabels() {
-    var w = canvas.clientWidth, h = canvas.clientHeight;
-    LB.forEach(function (L) {
-      var sel = L.el.classList.contains("sel");
-      if (!L.on || (!L.main && !sel && camDist > 470)) { L.el.style.display = "none"; return; }
+    var w = canvas.clientWidth, h = canvas.clientHeight, TOP = 118, placed = [];
+    LB.forEach(function (L) { L.sel = L.must || L.el.classList.contains("sel"); L.pr = L.must ? 0 : L.sel ? 1 : L.main ? 2 : 3; });
+    LB.slice().sort(function (a, b) { return a.pr - b.pr; }).forEach(function (L) {
+      var keep = L.must || L.sel;
+      if (!L.on || (!L.main && !keep && camDist > 470)) { L.el.style.display = "none"; return; }
       v3.set(L.x, L.y, L.z).project(camera);
-      if (v3.z > 1 || Math.abs(v3.x) > 1.1 || Math.abs(v3.y) > 1.1) { L.el.style.display = "none"; return; }
-      L.el.style.display = "";
-      L.el.style.transform = "translate(" + ((v3.x * 0.5 + 0.5) * w).toFixed(1) + "px," + ((-v3.y * 0.5 + 0.5) * h).toFixed(1) + "px) translate(-50%,-100%)";
+      if (v3.z > 1) { L.el.style.display = "none"; return; }
+      var x = (v3.x * 0.5 + 0.5) * w, y = (-v3.y * 0.5 + 0.5) * h;
+      if (L.el.style.display === "none") L.el.style.display = "";
+      var lw = L.lw || (L.lw = L.el.offsetWidth) || 90, half = lw / 2;
+      if (keep) { x = clamp(x, half + 8, w - half - 8); y = clamp(y, TOP, h - 8); if (x > w - 60 - half && y > h - 180) x = w - 64 - half; }
+      else if (y < TOP || y > h - 6 || x < half * 0.3 || x > w - half * 0.3 || (x + half > w - 60 && y > h - 180)) { L.el.style.display = "none"; return; }
+      var box = [x - half - 3, y - 27, x + half + 3, y + 1];
+      if (!keep) for (var i = 0; i < placed.length; i++) { var p = placed[i]; if (box[0] < p[2] && box[2] > p[0] && box[1] < p[3] && box[3] > p[1]) { L.el.style.display = "none"; return; } }
+      placed.push(box);
+      var edge = Math.min(x - half, w - x - half, y - TOP + 30, h - y);
+      L.el.style.opacity = keep ? "1" : String(clamp(edge / 36, 0.35, 1).toFixed(2));
+      L.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) translate(-50%,-100%)";
     });
   }
 
   // ---------------- Destination highlight, drop-off pin and route ----------------
-  var selFrame = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(1, 1, 1)), new THREE.LineBasicMaterial({ color: col("#93c5fd") }));
-  selFrame.visible = false; scene.add(selFrame);
+  // The building you choose lights up in TrypCar blue
+  var hl = { g: null, mats: [] };
+  function hiMat(m) { var c = m.clone(); c.emissive = col("#2563eb"); c.emissiveMap = null; c.emissiveIntensity = 0.55; hl.mats.push(c); return c; }
+  function highlight(G) {
+    if (hl.g) {
+      hl.g.traverse(function (o) { if (o.userData.orig) { o.material = o.userData.orig; o.userData.orig = null; } });
+      hl.mats.forEach(function (m) { m.dispose(); }); hl.mats = []; hl.g = null;
+    }
+    if (!G) return;
+    G.traverse(function (o) {
+      if (!o.isMesh || o.userData.lawn) return;
+      var m = o.material, first = Array.isArray(m) ? m[0] : m;
+      if (!first || !first.isMeshStandardMaterial || first.transparent || first === waterMat || first === poolMat) return;
+      o.userData.orig = m; o.material = Array.isArray(m) ? m.map(hiMat) : hiMat(m);
+    });
+    hl.g = G;
+  }
   var selGlow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: GLOWT, color: col("#3b82f6"), transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending, depthWrite: false }));
   selGlow.rotation.x = -Math.PI / 2; selGlow.visible = false; scene.add(selGlow);
   function select(p) {
     places.forEach(function (q) { q.lab.el.classList.toggle("sel", q === p); });
-    if (!p) { selFrame.visible = selGlow.visible = false; return; }
+    highlight(p ? p.g : null);
+    if (!p) { selGlow.visible = false; return; }
     var w = p.g.userData.w;
-    selFrame.scale.set(w + 4, 2.4, 76); selFrame.position.set(p.lx, LAWN + 1.2, p.lz); selFrame.visible = true;
     selGlow.scale.set(w + 60, 130, 1); selGlow.position.set(p.lx, LAWN + 0.4, p.lz); selGlow.visible = true;
   }
   var pin = new THREE.Group();
@@ -1138,6 +1274,7 @@
     return pts[0];
   }
   function meVisible(v) { meMark.disc.visible = meMark.ring.visible = v; }
+
   // ---------------- Your TrypCar ----------------
   var myCar = makeCar(); myCar.visible = false;
   function laneOpen(pts, o) {
@@ -1213,16 +1350,21 @@
   canvas.addEventListener("wheel", function (e) { e.preventDefault(); userDist = clamp(userDist * (1 + e.deltaY * 0.001), 140, 1400); wake(); }, { passive: false });
   // Tapping a building chooses it as your destination
   var ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+  var tapFx = new THREE.Mesh(new THREE.RingGeometry(0.8, 1, 40), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }));
+  tapFx.rotation.x = -Math.PI / 2; tapFx.userData.t = -9; scene.add(tapFx);
   function tapAt(cx, cy) {
     if (trip.locked) return;
     var r = canvas.getBoundingClientRect(); ndc.set((cx - r.left) / r.width * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
     ray.setFromCamera(ndc, camera);
     var hits = ray.intersectObjects(pickables, true);
+    if (!hits.length) return;
+    tapFx.position.set(hits[0].point.x, hits[0].point.y + 0.4, hits[0].point.z); tapFx.userData.t = T;
     for (var i = 0; i < hits.length; i++) {
       var o = hits[i].object;
-      while (o && (o.userData.place == null)) o = o.parent;
-      if (o) { trip.place = places[o.userData.place]; options(); $("hint").classList.add("gone"); return; }
+      while (o && o.parent && o.parent !== scene) o = o.parent;
+      if (o && o.userData.place != null) { trip.place = places[o.userData.place]; options(); $("hint").classList.add("gone"); return; }
     }
+    toast("That's a neighborhood street. Tap a campus building or a partner business to ride there.");
   }
   function resize() {
     var w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return;
@@ -1256,6 +1398,8 @@
     pulses.forEach(function (r, i) { var p = ((T + i * 0.6) / 2.4) % 1; r.scale.setScalar(6 + p * 14); r.material.opacity = 0.8 * (1 - p); });
     if (routePts && flowDots.length) flowDots.forEach(function (d, i) { var q = along(routePts, ((T * 45) + i * routeLen / flowDots.length) % routeLen); d.position.set(q.x, 1.2, q.z); });
     if (pin.visible) pin.children[1].position.y = 13 + Math.sin(T * 3) * 0.8;
+    hl.mats.forEach(function (m) { m.emissiveIntensity = 0.4 + 0.25 * Math.sin(T * 3); });
+    var ft = T - tapFx.userData.t; if (ft >= 0 && ft < 0.6) { tapFx.scale.setScalar(3 + ft * 40); tapFx.material.opacity = 0.9 * (1 - ft / 0.6); } else tapFx.material.opacity = 0;
     if (!follow && now - lastInput > 7000) orb.az += dt * 0.035;
     updateCamera(dt);
     if (envDirty || now - lastEnv > 5000) { envDirty = false; lastEnv = now; updateEnv(); }
@@ -1329,7 +1473,7 @@
     if (reloadOn && credit < 10) { credit += 50; addAct({ k: "topup", amt: 50, auto: 1 }); setTimeout(function () { toast("Parent plan added $50 of ride credit (demo)"); }, 1800); }
     setCredit();
     return used;
-}
+                        }
   // ---------- Ride sheet screens ----------
   function placeIndex(n) { for (var i = 0; i < places.length; i++) if (places[i].n === n) return i; return -1; }
   function quickPlaces() {
