@@ -122,7 +122,6 @@
     @keyframes spray { to { height: 17px; opacity: 0.75; } }
     .bench { position: absolute; width: 6px; height: 2px; background: #a16207; transform: translateZ(1.5px); }
     .patio { position: absolute; border-radius: 3px; background: repeating-linear-gradient(45deg, #9ca3af 0 3px, #a8b0bc 3px 6px); opacity: 0.75; }
-    .umb { position: absolute; width: 10px; height: 10px; border-radius: 50%; transform: translateZ(7px); box-shadow: 0 0 0 0.5px rgba(0,0,0,0.3); }
     .ctable { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #e5e7eb; transform: translateZ(3px); }
     .strlights { position: absolute; height: 2px; background: repeating-linear-gradient(90deg, #fde68a 0 1.5px, transparent 1.5px 5px); transform: translateZ(9px); filter: drop-shadow(0 0 2px #fde68a); }
     .court { position: absolute; border-radius: 2px; }
@@ -717,8 +716,12 @@
     div("lawn", "inset:0", el.flat);
     if (path) { var f0 = foot[0]; div("walkway", "left:" + (f0[0] + f0[2] / 2 - 2.5) + "px;top:" + (f0[1] + f0[3]) + "px;width:5px;height:" + (72 - f0[1] - f0[3]) + "px", el.flat); }
   }
-  function umbrella(parent, x, y, c) { div("umb", "left:" + (x - 5) + "px;top:" + (y - 5) + "px;background:conic-gradient(" + c + " 0 12.5%, #f8fafc 0 25%, " + c + " 0 37.5%, #f8fafc 0 50%, " + c + " 0 62.5%, #f8fafc 0 75%, " + c + " 0 87.5%, #f8fafc 0)", parent); }
   function court(parent, x, y, w, d, kind) { div("court " + kind, "left:" + x + "px;top:" + y + "px;width:" + w + "px;height:" + d + "px", parent); }
+  // Grand front steps of pale stone running the length of a building's entrance, like a classic campus hall.
+  // (x, y) is the left end of the building's front edge; n steps descend toward the street, each lower step wider and deeper.
+  function grandSteps(el, x, y, w, n, depth, rise) {
+    for (var i = 0; i < n; i++) { var o = n - 1 - i; box(x - o, y, w + 2 * o, depth * (n - i), rise * (i + 1), { parent: el, wall: "#c9c2b3", win: "#c9c2b3", roof: "#ebe6da" }); }
+  }
   // Campus Lake: an irregular natural shoreline with a sandy bank, shallow edge, spreading ripples, glints, lily pads and reeds
   var LAKE_D = "M15 9C25 3 40 6 50 8C61 10 68 20 65 30C63 38 69 46 63 55C57 64 44 67 33 64C24 62 17 66 10 59C4 53 6 44 7 37C8 29 3 21 8 14C10 11 12 10 15 9Z";
   var LAKE_SVG = '<svg viewBox="0 0 72 72" aria-hidden="true"><defs>' +
@@ -825,16 +828,19 @@
         plane(b2, "left:22px;top:16px;width:8px;height:8px;transform:translateZ(22.3px)", "linear-gradient(#ef4444,#ef4444) center/8px 2.6px no-repeat, linear-gradient(#ef4444,#ef4444) center/2.6px 8px no-repeat, #f8fafc");
         autoTrees(el, f, 2, 1); top = 24;
       } else if (K === "science") {
-        // Collegiate Gothic: stone hall with a steep slate roof and a crenellated corner tower
+        // Collegiate Gothic: stone hall with a steep slate roof, a crenellated corner tower and front steps
         f = [[8, 16, 56, 32], [6, 8, 16, 16]]; lot(el, f, 1); b2 = gstone(el, 8, 16, 56, 32, 22); b2.classList.add("ivy"); gable(b2, 56, 32, 22, 16, "#2f3540", STONE.wall);
         var st2 = gtower(el, 6, 8, 16, 44, false); pinnacles(st2, 16, 47);
+        grandSteps(el, 22, 48, 28, 3, 2, 1.3);
         autoTrees(el, f, 3, 1); top = 50;
       } else if (K === "library") {
+        // Stone library with a spired tower, a row of columns, and grand steps across the whole front
         f = [[6, 12, 60, 40]]; lot(el, f, 1); b2 = gstone(el, 6, 12, 60, 40, 24); b2.classList.add("ivy"); gable(b2, 60, 40, 24, 16, "#2f3540", STONE.wall);
         var tw = gtower(el, 29, 20, 14, 52, true);
         [0, 1, 2, 3, 4, 5].forEach(function (i) { box(9 + i * 10, 53, 3, 3, 16, { parent: el, wall: "#e7e2d6", win: "#e7e2d6", roof: "#e7e2d6" }); });
+        grandSteps(el, 8, 56, 56, 3, 2.5, 1.3);
         div("bb clock", "left:" + (bx + 36) + "px;top:" + (by + 34) + "px;--z:40px", world);
-        autoTrees(el, [[6, 12, 60, 46]], 4); top = 62;
+        autoTrees(el, [[6, 12, 60, 52]], 4); top = 62;
       } else if (K === "park") {
         lot(el, []); div("path-x", "left:0;right:0;top:34px;height:4px", fl); div("path-x", "top:0;bottom:0;left:34px;width:4px", fl);
         div("path-x", "left:-8px;top:34px;width:88px;height:3px;transform:rotate(45deg)", fl); div("path-x", "left:-8px;top:34px;width:88px;height:3px;transform:rotate(-45deg)", fl);
@@ -849,11 +855,12 @@
         plane(b2, "left:4px;top:30px;width:36px;height:7px;transform:translateZ(10px) rotateX(-35deg)", "repeating-linear-gradient(90deg, #dc2626 0 4px, #f8fafc 4px 8px)");
         autoTrees(el, f, 6, 1); top = 24;
       } else if (K === "dining") {
+        // Georgian dining hall with dormers, chimneys, a cupola, grand front steps and a stone plaza
         f = [[6, 8, 60, 34]]; lot(el, f); b2 = geo(el, 6, 8, 60, 34, 16); gable(b2, 60, 34, 16, 12, GEO.roof, GEO.wall);
         [8, 22, 38, 52].forEach(function (x) { if (x !== 22 && x !== 38) dormer(b2, x - 3, 22, 19); });
         chimney(b2, 3, 15, 16, 14); chimney(b2, 54, 15, 16, 14); cupola(el, 32, 21, 27, 165, 34);
         div("patio", "left:10px;top:46px;width:52px;height:20px", fl);
-        [[18, 52], [32, 58], [46, 52], [58, 60]].forEach(function (p, i) { umbrella(el, p[0], p[1], ["#2563eb", "#ef4444", "#2563eb", "#f59e0b"][i]); });
+        grandSteps(el, 14, 42, 44, 4, 2.2, 1.2);
         autoTrees(el, [[6, 8, 60, 60]], 7); top = 28;
       } else if (K === "gym") {
         f = [[4, 4, 64, 34]]; lot(el, f); b2 = bldg(el, 4, 4, 64, 34, 12, "glass"); barrel(b2, 64, 34, 12, 12, "#64748b");
@@ -869,11 +876,14 @@
       } else if (K === "lecture") {
         f = [[8, 10, 56, 38]]; lot(el, f, 1); b2 = bldg(el, 8, 10, 56, 38, 22, "brick"); gable(b2, 56, 38, 22, 10, "#3a404d", "#8a3b2c"); autoTrees(el, f, 9, 1); top = 36;
       } else if (K === "union") {
+        // Student Union with a green roof terrace, a modern glass wing, grand front steps and a stone plaza
         f = [[6, 6, 40, 40], [44, 16, 22, 30]]; lot(el, f);
         b2 = box(6, 6, 40, 40, 28, { parent: el, cls: "wb", wall: "#c9a77c", win: "rgba(253,224,150,0.85)", roof: "#6b5a48" });
         plane(b2, "left:6px;top:6px;width:28px;height:28px;border-radius:3px;transform:translateZ(28.3px)", "radial-gradient(circle at 30% 30%, #2f8f57, #1d5a3a)");
         box(44, 16, 22, 30, 18, { parent: el, cls: "wb", wall: "#0f766e", win: "rgba(153,246,228,0.85)", roof: "#134e4a" });
-        div("patio", "left:8px;top:50px;width:56px;height:16px", fl); umbrella(el, 18, 58, "#f97316"); umbrella(el, 34, 58, "#16a34a"); umbrella(el, 50, 58, "#f97316"); top = 30;
+        div("patio", "left:8px;top:50px;width:56px;height:16px", fl);
+        grandSteps(el, 10, 46, 32, 3, 2, 1.3);
+        top = 30;
       } else if (K === "admin") {
         f = [[10, 10, 52, 40]]; lot(el, f, 1); b2 = bldg(el, 10, 10, 52, 40, 30, "stone"); hipped(b2, 52, 40, 30, 4, "#475569");
         div("bb flag", "left:" + (bx + 36) + "px;top:" + (by + 62) + "px", world).innerHTML = "<i></i><b></b>";
@@ -884,13 +894,13 @@
         var b3 = gstone(el, 32, 38, 34, 26, 26); gable(b3, 34, 26, 26, 13, "#2f3540", STONE.wall);
         var rt = gtower(el, 26, 30, 12, 50, false); pinnacles(rt, 12, 53); autoTrees(el, f, 11); top = 56;
       } else if (K === "founders") {
-        // Neoclassical hall: columned portico with a triangular pediment and wide front steps
+        // Neoclassical hall: columned portico with a triangular pediment and grand steps across the front
         f = [[8, 6, 56, 34]]; lot(el, f); b2 = geo(el, 8, 6, 56, 34, 26); hipped(b2, 56, 34, 26, 3, GEO.roof);
         chimney(b2, 4, 4, 28, 10); chimney(b2, 49, 4, 28, 10); cupola(el, 32, 19, 35, 165, 34);
-        div("steps", "left:14px;top:52px;width:44px;height:8px", fl);
         [0, 1, 2, 3, 4, 5].forEach(function (i) { box(15 + i * 8, 44, 2.6, 2.6, 20, { parent: el, wall: "#f1ede4", win: "#f1ede4", roof: "#f1ede4" }); });
         var port = box(12, 40, 48, 10, 3, { parent: el, wall: "#e7e2d6", win: "#e7e2d6", roof: "#e7e2d6" }); port.style.transform = "translateZ(20px)";
         gable(port, 48, 10, 3, 5, "#d6d0c2", "#efeadf");
+        grandSteps(el, 12, 50, 48, 4, 2.4, 1.3);
         autoTrees(el, [[8, 6, 56, 56]], 9); top = 40;
       } else if (K === "chapel") {
         // Old stone chapel: steep roof, bell tower with spire and cross, glowing stained glass
