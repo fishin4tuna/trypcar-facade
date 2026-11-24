@@ -332,7 +332,7 @@
     .member::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.14) 48%, transparent 60%); transform: translateX(-60%); animation: sheen 5s ease-in-out infinite; }
     @keyframes sheen { 0%, 60% { transform: translateX(-70%); } 100% { transform: translateX(70%); } }
     .member img { width: 128px; }
-    .member .tier { position: absolute; top: 18px; right: 18px; font-size: 0.7rem; font-weight: 700; padding: 5px 9px; border-radius: 999px; background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.25); }
+    .member .mtier { position: absolute; top: 18px; right: 18px; font-size: 0.7rem; font-weight: 700; padding: 5px 9px; border-radius: 999px; background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.25); }
     .member .who { margin-top: auto; }
     .member .who strong { display: block; font-size: 1.2rem; letter-spacing: 0.02em; }
     .member .who span { font-size: 0.76rem; color: var(--ice); }
@@ -351,7 +351,7 @@
     .hist:first-child { border-top: none; }
     .hist .pin { width: 36px; height: 36px; border-radius: 11px; background: var(--raise); display: flex; align-items: center; justify-content: center; flex: none; }
     .hist .pin svg { width: 18px; height: 18px; stroke: var(--sky); fill: none; stroke-width: 2; }
-    .hist div { flex: 1; }
+    .hist div { flex: 1; min-width: 0; }
     .hist strong { display: block; font-size: 0.9rem; }
     .hist span { font-size: 0.74rem; color: var(--muted); }
     .status { font-size: 0.85rem; margin-top: 10px; line-height: 1.45; }
@@ -385,17 +385,50 @@
     .toast.show { opacity: 1; transform: none; }
     .modal { position: absolute; inset: 0; z-index: 35; display: none; align-items: flex-end; background: rgba(1,4,11,0.6); }
     .modal.open { display: flex; }
-    .modal .box { width: 100%; background: var(--deep); border-radius: 26px 26px 0 0; border-top: 1px solid var(--line2); padding: 12px 18px calc(18px + var(--safe-bottom)); max-height: 85%; overflow-y: auto; }
+    .modal .mbox { width: 100%; background: var(--deep); border-radius: 26px 26px 0 0; border-top: 1px solid var(--line2); padding: 12px 18px calc(18px + var(--safe-bottom)); max-height: 85%; overflow-y: auto; }
+
+    /* APP POLISH: splash screen, search, credit chips, profile, chat */
+    .splash { position: absolute; inset: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; background: radial-gradient(ellipse at 50% 40%, #0b1a3a, #030814 70%); transition: opacity 0.5s ease, visibility 0.5s; }
+    .splash img { width: 190px; max-width: 60%; animation: splashIn 0.9s ease-out both; }
+    .splash i { width: 120px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, transparent, #3b82f6, #e0f2fe, #3b82f6, transparent); box-shadow: 0 0 12px #3b82f6; transform-origin: left center; animation: splashBar 1s ease-out 0.2s both; }
+    .splash.gone { opacity: 0; visibility: hidden; }
+    @keyframes splashIn { from { opacity: 0; transform: scale(1.08); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+    @keyframes splashBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    .findin { margin: 10px 0 2px; }
+    .nextsched { width: 100%; text-align: left; }
+    .chips { display: flex; gap: 8px; margin-top: 12px; }
+    .chip { flex: 1; padding: 10px 0; border-radius: 12px; border: 1px solid var(--line2); background: rgba(255,255,255,0.03); font-weight: 700; font-size: 0.86rem; color: var(--ice); transition: transform 0.12s; }
+    .chip:active { transform: scale(0.96); }
+    .tx b.plus { color: var(--mint); }
+    #txlist .tx:first-child { border-top: none; }
+    .profile { display: flex; align-items: center; gap: 12px; }
+    .profile p { overflow-wrap: anywhere; }
+    .ava.sm { width: 46px; height: 46px; font-size: 1rem; flex: none; }
+    .hist .btn-sm { flex: none; padding: 8px 12px; font-size: 0.8rem; }
+    .mtitle { font-size: 1.25rem; font-weight: 800; }
+    .msub { font-size: 0.85rem; margin: 6px 0 14px; }
+    .chathead { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .chathead strong { display: block; }
+    .chathead span { font-size: 0.74rem; color: var(--muted); }
+    .chat { display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; padding: 4px 0 10px; }
+    .msg { max-width: 82%; padding: 9px 12px; border-radius: 14px 14px 14px 4px; background: var(--panel); border: 1px solid var(--line); font-size: 0.86rem; line-height: 1.4; align-self: flex-start; }
+    .msg.me { align-self: flex-end; background: var(--blue2); border-color: transparent; border-radius: 14px 14px 4px 14px; }
+    .qrep { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 10px; scrollbar-width: none; }
+    .qrep::-webkit-scrollbar { display: none; }
+    .qrep .chip { flex: none; padding: 8px 12px; font-size: 0.76rem; font-weight: 600; }
+    .chatin { display: flex; gap: 8px; margin-bottom: 10px; }
+    .chatin .input { padding: 12px 14px; }
 
     @media (prefers-reduced-motion: reduce) {
       .world { transition: none; }
-      .pulse, .route-flow, .radar i, .member::after, .scanner .laser, .ripple, .glint { animation: none; }
+      .pulse, .route-flow, .radar i, .member::after, .scanner .laser, .ripple, .glint, .splash img, .splash i { animation: none; }
       .plane, .btn, .switch, .switch::after, .toast, .opt { transition: none; }
     }
   </style>
 </head>
 <body>
 <div class="device">
+  <div class="splash" id="splash" aria-hidden="true"><img src="trypcar-logo.png" alt=""><i></i></div>
   <div class="demo" role="note">Demo mode. TrypCar is launching soon. No real rides are dispatched and no payment is taken.</div>
 
   <!-- ONBOARDING -->
@@ -423,7 +456,7 @@
       </div>
       <div class="vignette"></div>
       <div class="map-ui">
-        <div class="topbar"><div class="hello" id="hello">Good evening<small>Campus zone is active</small></div><span class="pill"><span class="dot"></span><span>8 TrypCars nearby</span></span></div>
+        <div class="topbar"><div class="hello" id="hello">Good evening<small>Campus zone is active</small></div><button class="pill" type="button" id="nearby"><span class="dot"></span><span>8 TrypCars nearby</span></button></div>
         <div class="hint" id="hint">Drag to look around · Swipe panel down</div>
         <button class="legbtn" type="button" id="legbtn" aria-expanded="false" aria-controls="legend"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Legend</button>
         <div class="legend" id="legend" role="dialog" aria-label="Map legend">
@@ -469,18 +502,16 @@
       <p class="lead">Your TrypCar membership, ride credit, and parent plan.</p>
       <div class="member" id="mcard">
         <img src="trypcar-logo.png" alt="TrypCar">
-        <span class="tier">Founding Member</span>
+        <span class="mtier">Founding Member</span>
         <div class="who"><strong id="m-name">Member</strong><span id="m-meta">Verified campus member</span></div>
         <span class="demo-stamp">DEMO CARD</span>
       </div>
       <div class="card">
-        <div class="bal"><div><h3>Ride credit</h3><p>Loaded by a parent plan (demo)</p></div><b id="credit">$50.00</b></div>
+        <div class="bal"><div><h3>Ride credit</h3><p>Used automatically for rides and Scootz (demo)</p></div><b id="credit">$50.00</b></div>
+        <div class="chips" id="addcredit"><button class="chip" type="button" data-add="10">+ $10</button><button class="chip" type="button" data-add="25">+ $25</button><button class="chip" type="button" data-add="50">+ $50</button></div>
       </div>
-      <div class="card">
-        <h3>Parent plan</h3>
-        <p>At launch, parents will be able to load monthly ride credit and get a text when their student is picked up and dropped off.</p>
-      </div>
-      <div class="card" id="txs"><h3 style="margin-bottom:6px">Recent activity</h3><p id="tx-empty">Your demo rides will show here.</p></div>
+      <div class="card"><div class="switch-row"><div><h3>Parent plan auto-reload</h3><p>When ride credit drops below $10, a parent plan adds $50 automatically (demo). At launch, parents will also get a text at pickup and drop-off.</p></div><button class="switch" type="button" role="switch" aria-checked="false" aria-label="Parent plan auto-reload" id="reload"></button></div></div>
+      <div class="card"><h3 style="margin-bottom:6px">Recent activity</h3><div id="txlist"></div></div>
     </div>
   </section>
 
@@ -488,7 +519,11 @@
   <section class="screen" id="s-account" aria-label="Account">
     <div class="page">
       <h1>Account</h1>
-      <p class="lead">Reserve your real membership. Accounts activate when TrypCar launches on your campus.</p>
+      <p class="lead">Your demo profile, rides, and settings. Reserve your real membership below; accounts activate when TrypCar launches on your campus.</p>
+      <div class="card profile"><div class="ava sm" id="p-ava">A</div><div style="flex:1;min-width:0"><h3 id="p-name">Alex</h3><p id="p-meta">Student · Demo account</p></div><button class="btn btn-line btn-sm" type="button" id="editprof">Edit</button></div>
+      <div class="card"><h3 style="margin-bottom:6px">Scheduled rides</h3><div id="schedlist"></div></div>
+      <div class="card"><h3 style="margin-bottom:6px">Ride history</h3><div id="hist"></div></div>
+      <div class="card"><div class="switch-row"><div><h3>Share trips with a parent</h3><p>Sends pickup and drop-off texts to a contact you choose (at launch).</p></div><button class="switch" type="button" role="switch" aria-checked="true" aria-label="Share trips with a parent" id="share"></button></div></div>
       <div class="card">
         <h3>Join the member waitlist</h3>
         <!-- REAL SIGN-UP: delivered by Web3Forms with the same access_key as the website forms. -->
@@ -508,15 +543,13 @@
           <div class="status" id="join-status" role="status" aria-live="polite"></div>
         </form>
       </div>
-      <div class="card"><div class="switch-row"><div><h3>Share trips with a parent</h3><p>Sends pickup and drop-off texts to a contact you choose (at launch).</p></div><button class="switch" type="button" role="switch" aria-checked="true" aria-label="Share trips with a parent" id="share"></button></div></div>
-      <div class="card"><h3 style="margin-bottom:6px">Ride history</h3><div id="hist"><p class="muted" style="font-size:0.84rem">No demo rides yet. Take one from the Ride tab.</p></div></div>
       <div class="card"><h3>Business near campus?</h3><p style="margin-bottom:12px">Partner offers will appear in the app as local businesses join as Founding Partners.</p><a class="btn btn-line btn-sm" href="partners.html" style="text-decoration:none;display:inline-flex">Become a Founding Partner</a></div>
-      <div class="card"><h3>About this demo</h3><p>TrypCar is in development and not yet operating. Rides, drivers, vehicles, scooters, fares, credits and schedules in this app are simulated to show how the service is planned to work. No vehicle is dispatched and no payment information is collected.</p><p style="margin-top:10px"><a href="index.html" style="color:var(--sky);font-weight:600;text-decoration:none">trypcar.com</a> &nbsp; <a href="terms.html" style="color:var(--sky);font-weight:600;text-decoration:none">Terms</a> &nbsp; <a href="privacy.html" style="color:var(--sky);font-weight:600;text-decoration:none">Privacy</a></p></div>
+      <div class="card"><h3>About this demo</h3><p>TrypCar is in development and not yet operating. Rides, drivers, vehicles, scooters, fares, credits and schedules in this app are simulated to show how the service is planned to work. No vehicle is dispatched and no payment information is collected. Your demo profile and rides are saved only on this device.</p><p style="margin-top:10px"><a href="index.html" style="color:var(--sky);font-weight:600;text-decoration:none">trypcar.com</a> &nbsp; <a href="terms.html" style="color:var(--sky);font-weight:600;text-decoration:none">Terms</a> &nbsp; <a href="privacy.html" style="color:var(--sky);font-weight:600;text-decoration:none">Privacy</a></p></div>
       <button class="btn btn-line" type="button" id="restart">Restart the demo</button>
     </div>
   </section>
 
-  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Details"><div class="box" id="modal-box"></div></div>
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Details"><div class="mbox" id="modal-box"></div></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <nav class="tabs off" id="tabs" aria-label="App sections">
@@ -532,24 +565,39 @@
   var RM = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var $ = function (id) { return document.getElementById(id); };
   var NS = "http://www.w3.org/2000/svg";
-  var user = { name: "", email: "", role: "" };
-  var credit = 50, rides = [], timers = [], raf = 0, trip = { place: null, svc: "ride", locked: false };
+  var user = { name: "", email: "", role: "", ok: false };
+  var credit = 50, acts = [], sched = [], shareOn = true, reloadOn = false, lastRide = null, timers = [], raf = 0, trip = { place: null, svc: "ride", locked: false };
+  // The demo member, credit, activity, scheduled rides and settings are saved on this device only
+  var STORE = "trypcar-demo-v1";
+  function save() { try { localStorage.setItem(STORE, JSON.stringify({ user: user, credit: credit, acts: acts, sched: sched, share: shareOn, reload: reloadOn })); } catch (e) {} }
+  function load() { try { return JSON.parse(localStorage.getItem(STORE) || "null"); } catch (e) { return null; } }
 
   function later(fn, ms) { timers.push(setTimeout(fn, RM ? Math.min(ms, 350) : ms)); }
   function clearAll() { timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(raf); }
-  function toast(m) { var t = $("toast"); t.textContent = m; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(function () { t.classList.remove("show"); }, 2500); }
+  function toast(m) { var t = $("toast"); t.textContent = m; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(function () { t.classList.remove("show"); }, 2600); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function greet() { var h = new Date().getHours(); return h < 12 ? "Good morning" : (h < 17 ? "Good afternoon" : "Good evening"); }
 
-  // ---------------- Tabs ----------------
+  // ---------------- Tabs and back-button navigation ----------------
+  // The phone's back button closes pop-ups, returns to the map from other tabs, and backs out of destination screens.
   var tabs = { ride: "s-ride", scootz: "s-scootz", wallet: "s-wallet", account: "s-account" };
+  var curTab = "s-ob", tabPushed = false, sheetPushed = false, modalPushed = false, skipPop = false;
+  function pushNav() { try { history.pushState({ trypcar: 1 }, ""); } catch (e) {} }
+  function popNav() { skipPop = true; try { history.back(); } catch (e) { skipPop = false; } }
   function show(name) {
+    curTab = name;
     ["s-ob", "s-ride", "s-scootz", "s-wallet", "s-account"].forEach(function (id) { $(id).classList.toggle("active", id === (tabs[name] || name)); });
     $("tabs").classList.toggle("off", name === "s-ob");
     document.querySelectorAll(".tab").forEach(function (t) { t.setAttribute("aria-selected", t.dataset.tab === name ? "true" : "false"); });
     if (name === "scootz" && !scz.active) scootzHome();
   }
-  $("tabs").addEventListener("click", function (e) { var b = e.target.closest(".tab"); if (b) show(b.dataset.tab); });
+  function goTab(name) {
+    if (name === curTab) return;
+    if (name !== "ride" && curTab === "ride" && !tabPushed) { pushNav(); tabPushed = true; }
+    if (name === "ride" && tabPushed) { tabPushed = false; popNav(); }
+    show(name);
+  }
+  $("tabs").addEventListener("click", function (e) { var b = e.target.closest(".tab"); if (b) goTab(b.dataset.tab); });
 
   // ---------------- Onboarding (demo verification) ----------------
   var ob = $("s-ob");
@@ -557,17 +605,20 @@
     ob.innerHTML = '<div class="ob"><img class="ob-logo" src="trypcar-logo.png" alt="TrypCar"><div class="ob-hero"><h1>Your campus.<br>Our fleet.</h1><p class="lead">Company-owned cars, screened drivers, and a members-only network for your campus.</p>' +
       '<button class="btn btn-go" type="button" id="ob-start">Get started</button><button class="btn btn-line" type="button" id="ob-skip">Skip to the demo</button></div></div>';
     $("ob-start").onclick = obEmail;
-    $("ob-skip").onclick = function () { user.name = "Alex"; finishOb(); };
+    $("ob-skip").onclick = function () { user.name = "Alex"; user.role = "Student"; finishOb(); };
   }
   function dots(n) { var s = '<div class="steps-dots">'; for (var i = 1; i <= 3; i++) s += '<i class="' + (i <= n ? "on" : "") + '"></i>'; return s + "</div>"; }
   function obEmail() {
     ob.innerHTML = '<div class="ob">' + dots(1) + '<h2>Verify your campus</h2><p class="muted">Members join with a university email. This demo doesn\'t send any email.</p>' +
       '<label class="label" for="ob-name">First name</label><input class="input" id="ob-name" autocomplete="given-name" placeholder="Your first name">' +
       '<label class="label" for="ob-email">University email</label><input class="input" id="ob-email" type="email" placeholder="username@university.edu">' +
+      '<p class="status err" id="ob-err" role="status"></p>' +
       '<div class="ob-foot"><button class="btn btn-go" type="button" id="ob-next">Send code</button></div></div>';
     $("ob-next").onclick = function () {
+      var em = ($("ob-email").value || "").trim();
+      if (em && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { $("ob-err").textContent = "Please enter a valid email, or leave it blank for the demo."; return; }
       user.name = ($("ob-name").value || "").trim().split(" ")[0] || "Alex";
-      user.email = ($("ob-email").value || "").trim();
+      user.email = em;
       obCode();
     };
   }
@@ -588,12 +639,19 @@
     $("ob-done").onclick = finishOb;
   }
   function finishOb() {
-    $("hello").innerHTML = greet() + ", " + esc(user.name || "Alex") + "<small>Campus zone is active</small>";
-    $("m-name").textContent = (user.name || "Alex").toUpperCase();
-    $("m-meta").textContent = "Verified " + (user.role || "Student").toLowerCase() + " · Member since 2026";
-    show("ride"); home(); safeGround();
+    user.name = user.name || "Alex"; user.role = user.role || "Student"; user.ok = true; save();
+    applyUser(); show("ride"); home(); safeGround();
   }
-  $("restart").onclick = function () { clearAll(); scz.active = false; show("s-ob"); obWelcome(); };
+  // Shows the member's name and role everywhere it appears
+  function applyUser() {
+    var nm = user.name || "Alex", role = user.role || "Student";
+    $("hello").innerHTML = greet() + ", " + esc(nm) + "<small>Campus zone is active</small>";
+    $("m-name").textContent = nm.toUpperCase();
+    $("m-meta").textContent = "Verified " + role.toLowerCase() + " · Member since 2026";
+    $("p-ava").textContent = nm.charAt(0).toUpperCase();
+    $("p-name").textContent = nm;
+    $("p-meta").textContent = role + (user.email ? " · " + user.email : "") + " · Demo account";
+  }
 
   // ---------------- 3D campus map (CSS 3D: real walls, rooftops and billboard labels) ----------------
   var cols = [30, 130, 230, 330, 430], rowsY = [40, 140, 240, 340, 440, 540];
@@ -1369,6 +1427,8 @@
   $("legend").addEventListener("pointerdown", function (e) { e.stopPropagation(); });
   $("legend").addEventListener("click", function (e) { e.stopPropagation(); });
   $("explore").addEventListener("click", function (e) { e.stopPropagation(); sheet.classList.toggle("min"); refit(); });
+  $("nearby").addEventListener("pointerdown", function (e) { e.stopPropagation(); });
+  $("nearby").addEventListener("click", function (e) { e.stopPropagation(); toast("8 TrypCars nearby · the closest is about 2 minutes away (demo)"); });
 
   // One animation loop runs the whole living campus
   var lastT = performance.now(), cineStart = 0, cineFrom = null;
@@ -1395,7 +1455,7 @@
   setTimeout(function () { $("hint").classList.add("gone"); }, 6000);
 
   // ---------------- Ride flow ----------------
-  var sheet = $("sheet");
+  var sheet = $("sheet"), curSheet = "home", chat = [];
   var gy = null;
   sheet.addEventListener("pointerdown", function (e) { if (e.target.closest(".grab")) { gy = e.clientY; wake(); } });
   sheet.addEventListener("pointerup", function (e) {
@@ -1413,34 +1473,104 @@
   // Branded TrypCar photo card (the white TrypCar from the promo image)
   function carHero(caption, sub, compact) { return '<div class="carhero' + (compact ? ' compact' : '') + '"><img src="trypcar-car.webp" alt="White TrypCar electric sedan with the TrypCar logo on the door"><span class="cap">' + caption + '<span>' + sub + '</span></span></div>'; }
   var PIN = '<svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>';
+  var CLOCK = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+  var SEARCH = '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>';
+  var SHARE = '<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
+  var SHIELD = '<svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/></svg>';
+  var MSG = '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+  var PHONE = '<svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>';
+  var XMARK = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 
-  function home() {
-    clearAll(); trip.locked = false; resetMap();
-    sheet.innerHTML = '<div class="grab"></div><h2>Where to?</h2>' +
-      '<button class="search" type="button" data-a="pick"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>Search campus</button>' +
-      '<div class="quick">' + places.slice(0, 4).map(function (p, i) { return '<button class="qchip" type="button" data-p="' + i + '"><strong>' + p.n + '</strong><span>' + p.t + ' min ride</span></button>'; }).join("") + '</div>' +
-      '<div class="promise"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span><b>The TrypCar promise:</b> screened employee drivers, company cars, and no surge pricing, ever.</span></div>';
+  // ---------- Saved activity, credit and scheduled rides ----------
+  function setCredit() { $("credit").textContent = "$" + credit.toFixed(2); save(); }
+  function fmtWhen(iso) {
+    var d = new Date(iso), now = new Date(), t = d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    return (d.toDateString() === now.toDateString() ? "Today" : d.toLocaleDateString([], { month: "short", day: "numeric" })) + ", " + t;
   }
-  function pick() {
-    var html = '<div class="grab"></div><button class="back" type="button" data-a="home">&#8592; Back</button><h2>Choose a destination</h2><div class="dests">';
-    places.forEach(function (p, i) { html += '<button class="dest" type="button" data-p="' + i + '"><span class="pin">' + PIN + '</span><span><strong>' + p.n + '</strong><span>' + p.s + '</span></span></button>'; });
-    sheet.innerHTML = html + "</div>";
+  function addAct(a) { a.when = new Date().toISOString(); acts.unshift(a); if (acts.length > 40) acts.length = 40; save(); renderActs(); return a; }
+  function renderActs() {
+    var tx = $("txlist"), hist = $("hist");
+    tx.innerHTML = acts.length ? acts.map(function (a) {
+      var plus = a.k === "topup", title = plus ? (a.auto ? "Parent plan auto-reload" : "Ride credit added") : (a.s + " to " + a.p);
+      return '<div class="tx"><div>' + esc(title) + '<span>' + fmtWhen(a.when) + ' · demo</span></div><b' + (plus ? ' class="plus"' : '') + '>' + (plus ? "+" : "&minus;") + "$" + a.amt.toFixed(2) + '</b></div>';
+    }).join("") : '<p class="muted" style="font-size:0.84rem">Your demo rides and credit will show here.</p>';
+    var trips = acts.filter(function (a) { return a.k !== "topup"; });
+    hist.innerHTML = trips.length ? trips.map(function (a) {
+      return '<div class="hist"><span class="pin">' + PIN + '</span><div><strong>' + esc(a.p) + '</strong><span>' + esc(a.s) + (a.k === "ride" ? " with Alex M." : "") + ' · ' + fmtWhen(a.when) + (a.rating ? ' · &#9733; ' + a.rating : '') + '</span></div><span class="muted" style="font-size:0.8rem">$' + a.amt.toFixed(2) + '</span></div>';
+    }).join("") : '<p class="muted" style="font-size:0.84rem">No demo rides yet. Take one from the Ride tab.</p>';
+  }
+  var DAYN = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  function fmtTime(hm) { var p = String(hm || "07:45").split(":"), h = +p[0]; return ((h % 12) || 12) + ":" + (p[1] || "00") + (h < 12 ? " AM" : " PM"); }
+  function schedText(s) { return (s.days.length ? s.days.map(function (i) { return DAYN[i]; }).join(", ") : "One time") + " at " + fmtTime(s.time); }
+  function renderSched() {
+    $("schedlist").innerHTML = sched.length ? sched.map(function (s, i) {
+      return '<div class="hist"><span class="pin">' + CLOCK + '</span><div><strong>' + esc(s.p) + '</strong><span>' + esc(s.svc || "Ride") + ' · ' + schedText(s) + '</span></div><button class="btn btn-line btn-sm" type="button" data-unsched="' + i + '">Cancel</button></div>';
+    }).join("") : '<p class="muted" style="font-size:0.84rem">No scheduled rides. Choose a destination, then tap the clock next to "Request" to plan one.</p>';
+  }
+  $("schedlist").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-unsched]"); if (!b) return;
+    sched.splice(+b.dataset.unsched, 1); save(); renderSched(); toast("Scheduled ride canceled");
+    if (curSheet === "home") home();
+  });
+  // Uses ride credit first; with auto-reload on, a parent plan tops it up when it drops below $10
+  function chargeRide(amt) {
+    var used = Math.min(credit, amt);
+    credit = Math.round((credit - used) * 100) / 100;
+    if (reloadOn && credit < 10) { credit += 50; addAct({ k: "topup", amt: 50, auto: 1 }); setTimeout(function () { toast("Parent plan added $50 of ride credit (demo)"); }, 1800); }
+    setCredit();
+    return used;
+  }
+
+  // ---------- Ride sheet screens ----------
+  function placeIndex(n) { for (var i = 0; i < places.length; i++) if (places[i].n === n) return i; return -1; }
+  function quickPlaces() {
+    var out = [], seen = {};
+    acts.forEach(function (a) { if (a.k !== "ride" || out.length >= 4) return; var i = placeIndex(a.p); if (i >= 0 && !seen[i]) { seen[i] = 1; out.push({ i: i, r: 1 }); } });
+    for (var i = 0; out.length < 4 && i < places.length; i++) if (!seen[i]) { seen[i] = 1; out.push({ i: i, r: 0 }); }
+    return out;
+  }
+  function sheetIn() { if (!sheetPushed) { pushNav(); sheetPushed = true; } }
+  function home() {
+    clearAll(); trip.locked = false; resetMap(); curSheet = "home";
+    if (sheetPushed) { sheetPushed = false; popNav(); }
+    var nx = sched[0];
+    sheet.innerHTML = '<div class="grab"></div><h2>Where to?</h2>' +
+      '<button class="search" type="button" data-a="pick">' + SEARCH + 'Search campus</button>' +
+      '<div class="quick">' + quickPlaces().map(function (o) { var p = places[o.i]; return '<button class="qchip" type="button" data-p="' + o.i + '"><strong>' + p.n + '</strong><span>' + (o.r ? "Recent · " : "") + p.t + ' min ride</span></button>'; }).join("") + '</div>' +
+      (nx ? '<button class="promise nextsched" type="button" data-a="acct">' + CLOCK + '<span><b>Scheduled:</b> ' + esc(nx.p) + ', ' + schedText(nx) + '</span></button>' : "") +
+      '<div class="promise">' + '<svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>' + '<span><b>The TrypCar promise:</b> screened employee drivers, company cars, and no surge pricing, ever.</span></div>';
+  }
+  function pick(focus) {
+    if (sheet.classList.contains("min")) { sheet.classList.remove("min"); refit(); }
+    sheetIn(); curSheet = "pick";
+    sheet.innerHTML = '<div class="grab"></div><button class="back" type="button" data-a="home">&#8592; Back</button><h2>Choose a destination</h2><input class="input findin" id="find" type="search" placeholder="Search campus places" autocomplete="off" aria-label="Search campus places"><div class="dests" id="dests"></div>';
+    drawDests("");
+    var f = $("find"); f.addEventListener("input", function () { drawDests(f.value); });
+    if (focus) setTimeout(function () { try { f.focus(); } catch (e) {} }, 80);
+  }
+  function drawDests(q) {
+    var box = $("dests"); if (!box) return;
+    q = (q || "").trim().toLowerCase();
+    var html = "";
+    places.forEach(function (p, i) { if (q && (p.n + " " + p.s).toLowerCase().indexOf(q) < 0) return; html += '<button class="dest" type="button" data-p="' + i + '"><span class="pin">' + PIN + '</span><span><strong>' + p.n + '</strong><span>' + p.s + ' · ' + p.t + ' min</span></span></button>'; });
+    box.innerHTML = html || '<p class="muted" style="font-size:0.85rem;padding:10px 4px">No campus places match "' + esc(q) + '".</p>';
   }
   function options() {
     if (sheet.classList.contains("min")) { sheet.classList.remove("min"); refit(); }
+    sheetIn(); curSheet = "options";
     var p = trip.place; setRoute(pathFrom(ME, p)); showDest(p);
     var html = '<div class="grab"></div><button class="back" type="button" data-a="pick">&#8592; ' + p.n + '</button><h2>Choose your ride</h2>' + carHero(svc().n + (trip.svc === "lux" ? " · Executive sedan" : " · TrypCar electric sedan"), "Every ride is a company-owned TrypCar", true) + '<div class="opts" role="radiogroup">';
     services.forEach(function (s) {
       html += '<button class="opt" type="button" role="radio" data-s="' + s.id + '" aria-checked="' + (s.id === trip.svc) + '">' + vehSvg(s.color) +
         '<span><strong>' + s.n + ' <em>' + s.tag + '</em></strong><small>' + s.d + ' · ' + s.eta + ' min away</small></span><span class="fare">$' + s.price.toFixed(2) + '<small>sample fare</small></span></button>';
     });
-    html += '</div><div class="row2"><button class="btn btn-go" type="button" data-a="request">Request ' + svc().n + '</button><button class="sched" type="button" data-a="schedule" aria-label="Schedule for later"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></button></div>';
+    html += '</div><div class="row2"><button class="btn btn-go" type="button" data-a="request">Request ' + svc().n + '</button><button class="sched" type="button" data-a="schedule" aria-label="Schedule for later">' + CLOCK + '</button></div>';
     sheet.innerHTML = html;
   }
   function svc() { return services.filter(function (s) { return s.id === trip.svc; })[0]; }
   function matching() {
     if (sheet.classList.contains("min")) { sheet.classList.remove("min"); refit(); }
-    trip.locked = true;
+    trip.locked = true; curSheet = "trip"; chat = [];
     sheet.innerHTML = '<div class="grab"></div><div class="match"><div class="radar"><i></i><i></i><i></i><b></b></div><h2>Finding your driver</h2><p class="muted" style="font-size:0.85rem;margin-top:4px">Matching you with the closest TrypCar ' + svc().n + ' (demo)</p></div><button class="btn btn-line" type="button" data-a="cancel" style="margin-top:14px">Cancel</button>';
     later(arriving, 2200);
   }
@@ -1449,76 +1579,138 @@
     return '<div class="driver"><div class="ava">AM<span class="ok"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span></div><div><strong>Alex M. <span class="rate" style="display:inline">&#9733; 4.97</span></strong><span>TrypCar employee driver · Screened and trained</span><span>' + car + '</span></div><div class="plate"><b>TRP 204</b><span>Demo</span></div></div>';
   }
   function tripActions() {
-    return '<div class="actions"><button class="act shield" type="button" data-a="safety"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/></svg>Safety</button>' +
-      '<button class="act" type="button" data-a="share"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Share trip</button>' +
-      '<button class="act" type="button" data-a="msg"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Message</button></div>';
+    return '<div class="actions"><button class="act shield" type="button" data-a="safety">' + SHIELD + 'Safety</button>' +
+      '<button class="act" type="button" data-a="share">' + SHARE + 'Share trip</button>' +
+      '<button class="act" type="button" data-a="msg">' + MSG + 'Message</button></div>';
   }
   function arriving() {
     var start = { x: 330, y: 240 };
-    sheet.innerHTML = '<div class="grab"></div><div class="statusrow"><h2>Alex is on the way</h2><span class="eta" id="eta">2 min</span></div><div class="bar"><i id="pbar"></i></div><p class="muted" style="font-size:0.8rem">Meet at your pickup point. Your parent contact gets a text at pickup (demo).</p>' + carHero("Look for this car", (trip.svc === "lux" ? "Black" : "White") + " TrypCar · Plate TRP 204") + driverCard() + tripActions();
+    sheet.innerHTML = '<div class="grab"></div><div class="statusrow"><h2>Alex is on the way</h2><span class="eta" id="eta">2 min</span></div><div class="bar"><i id="pbar"></i></div><p class="muted" style="font-size:0.8rem">Meet at your pickup point. ' + (shareOn ? "Your parent contact gets a text at pickup (demo)." : "Trip sharing is off.") + '</p>' + carHero("Look for this car", (trip.svc === "lux" ? "Black" : "White") + " TrypCar · Plate TRP 204") + driverCard() + tripActions() +
+      '<button class="btn btn-line" type="button" data-a="cancelride" style="margin-top:12px">Cancel ride</button>';
     setClose(true);
     var pts = [start, { x: 330, y: 440 }, ME];
     moveCar(pts, 5200, function (t) { var b = $("pbar"); if (b) b.style.width = (t * 100) + "%"; var e = $("eta"); if (e) e.textContent = t < 0.55 ? "2 min" : (t < 1 ? "1 min" : "Here"); }, function () { later(onTrip, 700); });
   }
   function onTrip() {
     var p = trip.place;
-    sheet.innerHTML = '<div class="grab"></div><div class="statusrow"><h2>Heading to ' + p.n + '</h2><span class="eta" id="eta2">' + p.t + ' min</span></div><div class="bar"><i id="pbar2"></i></div><p class="muted" style="font-size:0.8rem">Trip shared with your parent contact (demo).</p>' + driverCard() + tripActions();
+    sheet.innerHTML = '<div class="grab"></div><div class="statusrow"><h2>Heading to ' + p.n + '</h2><span class="eta" id="eta2">' + p.t + ' min</span></div><div class="bar"><i id="pbar2"></i></div><p class="muted" style="font-size:0.8rem">' + (shareOn ? "Trip shared with your parent contact (demo)." : "Trip sharing is off.") + '</p>' + driverCard() + tripActions();
     meVisible(false);
     moveCar(pathFrom(ME, p), 6500, function (t) { var b = $("pbar2"); if (b) b.style.width = (t * 100) + "%"; var e = $("eta2"); if (e) e.textContent = t < 1 ? Math.max(1, Math.ceil(p.t * (1 - t))) + " min" : "Arrived"; }, function () { later(arrived, 600); });
   }
   function arrived() {
     if (sheet.classList.contains("min")) { sheet.classList.remove("min"); refit(); }
-    var s = svc(), p = trip.place, used = Math.min(credit, s.price);
-    credit = Math.max(0, credit - s.price); $("credit").textContent = "$" + credit.toFixed(2);
-    rides.unshift({ p: p.n, s: s.n, amt: s.price, when: new Date() });
-    logRide();
+    var s = svc(), p = trip.place, used = chargeRide(s.price), due = Math.max(0, Math.round((s.price - used) * 100) / 100);
+    lastRide = addAct({ k: "ride", p: p.n, s: s.n, amt: s.price });
     meVisible(true);
     var st = ""; for (var i = 1; i <= 5; i++) st += '<button class="star" type="button" data-star="' + i + '" aria-label="' + i + ' stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/></svg></button>';
-    sheet.innerHTML = '<div class="grab"></div><h2>You made it to ' + p.n + '</h2><div class="receipt"><div><span>' + s.n + ' (sample fare)</span><span>$' + s.price.toFixed(2) + '</span></div><div><span>Paid with ride credit (demo)</span><span>&minus;$' + used.toFixed(2) + '</span></div><div><span>Surge pricing</span><span>$0.00, never</span></div><div class="tot"><span>Charged to you</span><span>$0.00</span></div></div>' +
+    sheet.innerHTML = '<div class="grab"></div><h2>You made it to ' + p.n + '</h2><div class="receipt"><div><span>' + s.n + ' (sample fare)</span><span>$' + s.price.toFixed(2) + '</span></div><div><span>Paid with ride credit (demo)</span><span>&minus;$' + used.toFixed(2) + '</span></div><div><span>Surge pricing</span><span>$0.00, never</span></div><div><span>Ride credit left</span><span>$' + credit.toFixed(2) + '</span></div><div class="tot"><span>' + (due > 0 ? "Due (demo, not charged)" : "Charged to you") + '</span><span>$' + due.toFixed(2) + '</span></div></div>' +
       '<p class="muted" style="text-align:center;font-size:0.85rem">Rate your ride with Alex</p><div class="stars">' + st + '</div><button class="btn btn-go" type="button" data-a="home">Done</button>';
   }
-  function logRide() {
-    var r = rides[0], time = r.when.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-    var te = $("tx-empty"); if (te) te.remove();
-    $("txs").insertAdjacentHTML("beforeend", '<div class="tx"><div>' + r.s + ' to ' + r.p + '<span>Today, ' + time + ' · demo</span></div><b>&minus;$' + r.amt.toFixed(2) + '</b></div>');
-    var h = $("hist"); if (rides.length === 1) h.innerHTML = "";
-    h.insertAdjacentHTML("afterbegin", '<div class="hist"><span class="pin">' + PIN + '</span><div><strong>' + r.p + '</strong><span>' + r.s + ' with Alex M. · Today, ' + time + '</span></div><span class="muted" style="font-size:0.8rem">Demo</span></div>');
-  }
 
-  function modal(html) { $("modal-box").innerHTML = '<div class="grab"></div>' + html; $("modal").classList.add("open"); }
-  $("modal").addEventListener("click", function (e) { if (e.target === this || e.target.closest("[data-close]")) this.classList.remove("open"); });
+  // ---------- Pop-up panels ----------
+  function modal(html) { $("modal-box").innerHTML = '<div class="grab"></div>' + html; $("modal").classList.add("open"); if (!modalPushed) { pushNav(); modalPushed = true; } }
+  function closeModal() { $("modal").classList.remove("open"); if (modalPushed) { modalPushed = false; popNav(); } }
+  $("modal").addEventListener("click", function (e) { if (e.target === this || e.target.closest("[data-close]") || e.target.closest(".grab")) closeModal(); });
 
   function safety() {
-    modal('<h2 style="font-size:1.25rem;font-weight:800">Safety toolkit</h2><p class="muted" style="font-size:0.85rem;margin:6px 0 14px">Planned for every TrypCar ride.</p>' +
+    modal('<h2 class="mtitle">Safety toolkit</h2><p class="muted msub">Planned for every TrypCar ride.</p>' +
       '<div class="card"><h3>Verified driver</h3><p>Every driver is a TrypCar employee with a background check and safety training.</p></div>' +
-      '<div class="card"><h3>Live trip sharing</h3><p>Parents or friends follow your ride in real time, with pickup and drop-off texts.</p></div>' +
+      '<div class="card"><h3>Trip sharing is ' + (shareOn ? "on" : "off") + '</h3><p>' + (shareOn ? "Your parent contact gets a text at pickup and drop-off (demo). You can change this in Account." : "Turn it on anytime in Account.") + '</p></div>' +
       '<div class="card"><h3>One-tap emergency help</h3><p>The live app will connect you to emergency services and TrypCar\'s safety team. In an emergency now, call 911 directly.</p></div>' +
-      '<button class="btn btn-line" type="button" data-close>Close</button>');
+      '<div class="actions" style="margin-bottom:6px"><button class="act shield" type="button" id="sf-share">' + SHARE + 'Share trip</button><button class="act" type="button" id="sf-team">' + PHONE + 'Safety team</button><button class="act" type="button" data-close>' + XMARK + 'Close</button></div>');
+    $("sf-share").onclick = shareTrip;
+    $("sf-team").onclick = function () { toast("In the live app, this connects you to TrypCar's 24/7 safety team (demo)."); };
   }
   function schedule() {
     var days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map(function (d, i) { return '<button type="button" class="role" style="padding:10px 0;text-align:center" aria-pressed="' + (i < 5 && i % 2 === 0) + '">' + d + '</button>'; }).join("");
-    modal('<h2 style="font-size:1.25rem;font-weight:800">Schedule a ride</h2><p class="muted" style="font-size:0.85rem;margin:6px 0 10px">To ' + trip.place.n + ', up to 14 days ahead or every week.</p>' +
+    modal('<h2 class="mtitle">Schedule a ride</h2><p class="muted msub">To ' + trip.place.n + ' with TrypCar ' + svc().n + '. Pick a time, and the days it repeats (or none for a one-time ride).</p>' +
       '<label class="label" for="sc-time">Pickup time</label><input class="input" id="sc-time" type="time" value="07:45"><label class="label">Repeat on</label>' +
-      '<div id="sc-days" style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">' + days + '</div><button class="btn btn-go" type="button" id="sc-save" style="margin-top:16px">Schedule ride</button>');
+      '<div id="sc-days" style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">' + days + '</div><button class="btn btn-go" type="button" id="sc-save" style="margin-top:16px">Schedule ride</button><button class="btn btn-line" type="button" data-close>Cancel</button>');
     $("sc-days").onclick = function (e) { var b = e.target.closest("button"); if (b) b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") !== "true"); };
-    $("sc-save").onclick = function () { $("modal").classList.remove("open"); toast("Scheduled (demo). Real scheduling opens at launch."); };
+    $("sc-save").onclick = function () {
+      var ds = [];
+      [].forEach.call($("sc-days").children, function (b, i) { if (b.getAttribute("aria-pressed") === "true") ds.push(i); });
+      var s = { p: trip.place.n, time: $("sc-time").value || "07:45", days: ds, svc: svc().n };
+      sched.push(s); save(); renderSched(); closeModal();
+      toast("Scheduled: " + s.p + ", " + schedText(s) + " (demo)");
+    };
+  }
+  // Opens the phone's own share menu, or copies the trip details if sharing isn't available
+  function shareTrip() {
+    var p = trip.place, txt = "I'm taking a TrypCar demo ride" + (p ? " to " + p.n : "") + " with Alex M. (white TrypCar, plate TRP 204).", url = location.href.split("?")[0].split("#")[0];
+    if (navigator.share) { navigator.share({ title: "My TrypCar trip", text: txt, url: url }).catch(function () {}); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(txt + " " + url).then(function () { toast("Trip details copied. Paste them into a text to share."); }, function () { toast("Sharing isn't available on this device."); }); return; }
+    toast("Sharing isn't available on this device.");
+  }
+  // Demo chat with the driver, with quick replies and automatic answers
+  function openChat() {
+    if (!chat.length) chat.push({ me: 0, t: "Hi " + (user.name || "there") + ", this is Alex with TrypCar. I'll meet you at the pickup point." });
+    modal('<div class="chathead"><div class="ava sm">AM</div><div><strong>Alex M.</strong><span>TrypCar driver · demo chat</span></div></div><div class="chat" id="chat"></div>' +
+      '<div class="qrep" id="qrep">' + ["I'm at the pickup point", "Running 2 minutes late", "Thank you!"].map(function (q) { return '<button type="button" class="chip" data-q="' + q + '">' + q + '</button>'; }).join("") + '</div>' +
+      '<div class="chatin"><input class="input" id="chattxt" placeholder="Message Alex" autocomplete="off" aria-label="Message Alex"><button class="btn btn-go btn-sm" type="button" id="chatsend">Send</button></div><button class="btn btn-line" type="button" data-close>Close</button>');
+    drawChat();
+    function send(t) { t = (t || "").trim(); if (!t) return; chat.push({ me: 1, t: t }); drawChat(); setTimeout(function () { chat.push({ me: 0, t: replyTo(t) }); drawChat(); }, 1100); }
+    $("qrep").onclick = function (e) { var b = e.target.closest("[data-q]"); if (b) send(b.dataset.q); };
+    $("chatsend").onclick = function () { var i = $("chattxt"); send(i.value); i.value = ""; };
+    $("chattxt").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); $("chatsend").click(); } });
+  }
+  function replyTo(t) {
+    t = t.toLowerCase();
+    if (/late|minute|wait|sec/.test(t)) return "No problem, take your time. I'll wait right at the hub.";
+    if (/here|pickup|outside|at the/.test(t)) return "Great, I see you. Pulling up now in the white TrypCar, plate TRP 204.";
+    if (/thank/.test(t)) return "Anytime! Enjoy your ride.";
+    return "Got it, thanks for letting me know!";
+  }
+  function drawChat() { var c = $("chat"); if (!c) return; c.innerHTML = chat.map(function (m) { return '<div class="msg' + (m.me ? " me" : "") + '">' + esc(m.t) + '</div>'; }).join(""); c.scrollTop = c.scrollHeight; }
+  function editProfile() {
+    var roles = ["Student", "Faculty or staff", "Parent"];
+    modal('<h2 class="mtitle">Your profile</h2><p class="muted msub">Saved only on this device (demo).</p>' +
+      '<label class="label" for="pf-name">First name</label><input class="input" id="pf-name" value="' + esc(user.name) + '" autocomplete="given-name">' +
+      '<label class="label" for="pf-email">University email</label><input class="input" id="pf-email" type="email" value="' + esc(user.email) + '" placeholder="username@university.edu">' +
+      '<label class="label" for="pf-role">I use TrypCar as</label><select class="input" id="pf-role">' + roles.map(function (r) { return '<option' + (r === user.role ? " selected" : "") + '>' + r + '</option>'; }).join("") + '</select>' +
+      '<p class="status err" id="pf-err" role="status"></p><button class="btn btn-go" type="button" id="pf-save" style="margin-top:12px">Save</button><button class="btn btn-line" type="button" data-close>Cancel</button>');
+    $("pf-save").onclick = function () {
+      var em = ($("pf-email").value || "").trim();
+      if (em && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { $("pf-err").textContent = "Please enter a valid email, or leave it blank."; return; }
+      user.name = ($("pf-name").value || "").trim().split(" ")[0] || user.name || "Alex";
+      user.email = em; user.role = $("pf-role").value; save(); applyUser(); closeModal(); toast("Profile saved");
+    };
   }
 
   sheet.addEventListener("click", function (e) {
     var p = e.target.closest("[data-p]"), s = e.target.closest("[data-s]"), a = e.target.closest("[data-a]"), st = e.target.closest("[data-star]");
     if (p) { trip.place = places[+p.dataset.p]; options(); return; }
     if (s) { trip.svc = s.dataset.s; options(); return; }
-    if (st) { var n = +st.dataset.star; document.querySelectorAll(".star").forEach(function (x, i) { x.classList.toggle("on", i < n); }); toast(n >= 4 ? "Thanks! Alex appreciates it." : "Thanks for the feedback."); return; }
+    if (st) {
+      var n = +st.dataset.star;
+      document.querySelectorAll(".star").forEach(function (x, i) { x.classList.toggle("on", i < n); });
+      if (lastRide) { lastRide.rating = n; save(); renderActs(); }
+      toast(n >= 4 ? "Thanks! Alex appreciates it." : "Thanks for the feedback. Our team reviews every rating.");
+      return;
+    }
     if (!a) return;
     var act = a.dataset.a;
     if (act === "home") home();
-    else if (act === "pick") pick();
+    else if (act === "pick") pick(curSheet === "home");
     else if (act === "request") matching();
     else if (act === "cancel") { home(); toast("Demo ride canceled"); }
+    else if (act === "cancelride") { home(); toast("Ride canceled before pickup. No charge (demo)."); }
     else if (act === "schedule") schedule();
     else if (act === "safety") safety();
-    else if (act === "share") toast("Trip link sent to your parent contact (demo)");
-    else if (act === "msg") toast("In-app messaging opens at launch");
+    else if (act === "share") shareTrip();
+    else if (act === "msg") openChat();
+    else if (act === "acct") goTab("account");
+  });
+
+  // The phone's back button
+  window.addEventListener("popstate", function () {
+    if (skipPop) { skipPop = false; return; }
+    if ($("modal").classList.contains("open")) { modalPushed = false; $("modal").classList.remove("open"); return; }
+    if (tabPushed) { tabPushed = false; show("ride"); return; }
+    if (sheetPushed) {
+      if (trip.locked) { pushNav(); toast("Your demo ride is in progress"); return; }
+      sheetPushed = false; home();
+    }
   });
 
   // ---------------- Scootz ----------------
@@ -1528,7 +1720,7 @@
     box.innerHTML = '<h1>Scootz</h1><p class="lead">Electric scooters for the shortest trips, unlocked right from the app.</p>' +
       '<div class="card" style="display:flex;gap:14px;align-items:center"><svg viewBox="0 0 60 60" width="60" height="60" aria-hidden="true"><circle cx="30" cy="30" r="29" fill="#13244a"/><path d="M18 40h18M38 40l-5-20h-5" stroke="#93c5fd" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="16" cy="40" r="5" fill="none" stroke="#f8fafc" stroke-width="3"/><circle cx="42" cy="40" r="5" fill="none" stroke="#f8fafc" stroke-width="3"/></svg><div><h3>Scootz #214</h3><p>Battery 86% · Campus Quad Hub · 2 min walk</p></div></div>' +
       '<div class="stats"><div class="stat"><b>$1</b><span>to unlock</span></div><div class="stat"><b>$0.25</b><span>per minute</span></div><div class="stat"><b>15 mph</b><span>campus speed</span></div></div>' +
-      '<button class="btn btn-go" type="button" id="z-scan">Scan to unlock (demo)</button><p class="muted" style="font-size:0.75rem;text-align:center;margin-top:12px">Sample pricing. Helmets encouraged. Members 18+.</p>';
+      '<button class="btn btn-go" type="button" id="z-scan">Scan to unlock (demo)</button><p class="muted" style="font-size:0.75rem;text-align:center;margin-top:12px">Paid from your ride credit ($' + credit.toFixed(2) + '). Sample pricing. Helmets encouraged. Members 18+.</p>';
     $("z-scan").onclick = scanning;
   }
   function scanning() {
@@ -1552,15 +1744,28 @@
     }, RM ? 1000 : 500);
     $("z-end").onclick = function () {
       clearInterval(scz.iv); scz.active = false;
-      var mins = Math.max(1, Math.ceil(scz.secs / 60)), cost = 1 + 0.25 * mins;
-      rides.unshift({ p: "Campus Quad Hub", s: "Scootz", amt: cost, when: new Date() }); logRide();
-      $("scootz").innerHTML = '<h1>Ride complete</h1><p class="lead">Scootz #214 is docked at Campus Quad Hub (demo).</p><div class="receipt"><div><span>Unlock</span><span>$1.00</span></div><div><span>' + mins + ' min at $0.25</span><span>$' + (0.25 * mins).toFixed(2) + '</span></div><div class="tot"><span>Charged to you (demo)</span><span>$0.00</span></div></div><button class="btn btn-go" type="button" id="z-again">Done</button>';
+      var mins = Math.max(1, Math.ceil(scz.secs / 60)), cost = 1 + 0.25 * mins, used = chargeRide(cost), due = Math.max(0, Math.round((cost - used) * 100) / 100);
+      addAct({ k: "scootz", p: "Campus Quad Hub", s: "Scootz", amt: cost });
+      $("scootz").innerHTML = '<h1>Ride complete</h1><p class="lead">Scootz #214 is docked at Campus Quad Hub (demo).</p><div class="receipt"><div><span>Unlock</span><span>$1.00</span></div><div><span>' + mins + ' min at $0.25</span><span>$' + (0.25 * mins).toFixed(2) + '</span></div><div><span>Paid with ride credit (demo)</span><span>&minus;$' + used.toFixed(2) + '</span></div><div><span>Ride credit left</span><span>$' + credit.toFixed(2) + '</span></div><div class="tot"><span>' + (due > 0 ? "Due (demo, not charged)" : "Charged to you") + '</span><span>$' + due.toFixed(2) + '</span></div></div><button class="btn btn-go" type="button" id="z-again">Done</button>';
       $("z-again").onclick = scootzHome;
     };
   }
 
-  // ---------------- Account ----------------
-  $("share").onclick = function () { var on = this.getAttribute("aria-checked") !== "true"; this.setAttribute("aria-checked", on); toast(on ? "Trip sharing on (demo)" : "Trip sharing off"); };
+  // ---------------- Wallet and Account ----------------
+  function setSwitch(id, on) { $(id).setAttribute("aria-checked", on ? "true" : "false"); }
+  $("addcredit").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-add]"); if (!b) return;
+    var n = +b.dataset.add; credit = Math.round((credit + n) * 100) / 100;
+    addAct({ k: "topup", amt: n }); setCredit();
+    toast("$" + n + " added to your ride credit (demo, no payment taken)");
+  });
+  $("reload").onclick = function () {
+    reloadOn = !reloadOn; setSwitch("reload", reloadOn); save();
+    toast(reloadOn ? "Auto-reload on: adds $50 when credit drops below $10 (demo)" : "Auto-reload off");
+    if (reloadOn && credit < 10) { credit += 50; addAct({ k: "topup", amt: 50, auto: 1 }); setCredit(); }
+  };
+  $("share").onclick = function () { shareOn = !shareOn; setSwitch("share", shareOn); save(); toast(shareOn ? "Trip sharing on (demo)" : "Trip sharing off"); };
+  $("editprof").onclick = editProfile;
   var form = $("join"), stBox = $("join-status");
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -1572,8 +1777,33 @@
       .catch(function () { stBox.textContent = "Your sign-up could not be sent. Please email info@trypcar.com."; stBox.className = "status err"; })
       .finally(function () { btn.disabled = false; btn.textContent = lab; });
   });
+  // Restart the demo: clears everything saved on this device and starts over at the welcome screen
+  $("restart").onclick = function () {
+    clearAll(); clearInterval(scz.iv); scz.active = false;
+    try { localStorage.removeItem(STORE); } catch (e) {}
+    user = { name: "", email: "", role: "", ok: false }; credit = 50; acts = []; sched = []; shareOn = true; reloadOn = false; lastRide = null; chat = [];
+    tabPushed = sheetPushed = modalPushed = false;
+    setCredit(); renderActs(); renderSched(); setSwitch("share", true); setSwitch("reload", false);
+    show("s-ob"); obWelcome();
+  };
 
-  obWelcome();
+  // ---------------- Start-up ----------------
+  // Returning members skip the welcome steps and land on the map; new visitors see the welcome screen.
+  (function boot() {
+    var st = load();
+    if (st && st.user && st.user.ok) {
+      user = st.user; credit = typeof st.credit === "number" ? st.credit : 50; acts = st.acts || []; sched = st.sched || [];
+      shareOn = st.share !== false; reloadOn = !!st.reload;
+    }
+    $("credit").textContent = "$" + credit.toFixed(2);
+    renderActs(); renderSched(); setSwitch("share", shareOn); setSwitch("reload", reloadOn);
+    if (user.ok) { applyUser(); show("ride"); home(); safeGround(); }
+    else obWelcome();
+    setTimeout(function () {
+      $("splash").classList.add("gone");
+      if (user.ok) toast("Welcome back, " + (user.name || "Alex"));
+    }, RM ? 150 : 1300);
+  })();
   if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("app-sw.js").catch(function () {});
 })();
 </script>
