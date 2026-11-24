@@ -90,7 +90,7 @@
     .flatblk { position: absolute; }
     .flatblk[data-place] { cursor: pointer; }
     .ground svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; overflow: visible; }
-    /* Chrome-safe mode (Android): the flat ground is painted once into one picture, and the lake gets its own small canvas */
+    /* Steady ground mode (on for every browser): the flat ground is painted once into one picture, and the lake gets its own small canvas */
     #gcan { position: absolute; left: -110px; top: -100px; width: 680px; height: 800px; display: none; }
     .ground.safe #gcan { display: block; }
     .ground.safe .groundfill, .ground.safe #walks, .ground.safe #roads, .ground.safe #glows { display: none; }
@@ -1112,13 +1112,13 @@
     sv("circle", { cx: lx, cy: ly, r: 18, fill: "url(#lampglow)" }, glowsG);
   }); });
 
-  // ---------------- Chrome-safe ground (Android browsers other than Firefox) ----------------
+  // ---------------- Steady ground mode (on for every browser) ----------------
   // Paints all the still, flat ground (grass, lawns, roads, sidewalks, crosswalks, patios, courts, lots and
   // streetlight glow) once into a single picture, so the phone never has to redraw it while the camera moves.
   // The lake gets its own small canvas (ripples, glints, ducks, lily pads, reeds, footbridge), redrawn about 30 times a second.
   // The route, hubs and everything 3D stay live on top.
-  // Add ?safe=1 or ?safe=0 to the address to force it on or off for testing.
-  var SAFE = (function () { var q = /[?&]safe=([01])/.exec(location.search); if (q) return q[1] === "1"; var ua = navigator.userAgent; return /Android/i.test(ua) && !/Firefox/i.test(ua); })(), safeDone = false;
+  // Add ?safe=0 to the address to turn it off for testing.
+  var SAFE = !/[?&]safe=0/.test(location.search), safeDone = false;
   var lakeCtx = null, lakePath = null, lakeLast = 0, LQ = 3;
   var RIP = [[24, 21, 9, 0], [24, 21, 9, -1.8], [48, 46, 10, -0.9], [48, 46, 10, -2.7], [28, 51, 7, -2.2], [54, 22, 6, -3.1]];
   var GLINT = [[42, 17, 5, 0.7, 0.5, 0], [20, 40, 3.5, 0.6, 0.4, -2.5], [52, 31, 3, 0.5, 0.35, -1.2]];
@@ -1240,7 +1240,7 @@
       gg.addColorStop(0, lamp ? "rgba(253,230,138,0.45)" : "rgba(191,219,254,0.35)"); gg.addColorStop(1, lamp ? "rgba(253,230,138,0)" : "rgba(191,219,254,0)");
       c.fillStyle = gg; c.beginPath(); c.arc(gx, gy, r, 0, 7); c.fill();
     });
-    // The lake gets its own small canvas, so its ripples never make Chrome redraw the big ground picture
+    // The lake gets its own small canvas, so its ripples never make the phone redraw the big ground picture
     var lb = document.querySelector("#flat .lake");
     if (lb) {
       try {
@@ -1368,7 +1368,7 @@
       walkers.forEach(function (m) { stepMover(m, dt); });
       riders.forEach(function (m) { stepRider(m, dt, now); });
       ducks.forEach(function (d2) { d2.a += dt * 0.25; d2.el.style.left = (36 + d2.r * Math.cos(d2.a)) + "px"; d2.el.style.top = (35 + d2.r * 0.75 * Math.sin(d2.a)) + "px"; });
-      // In Chrome-safe mode, the lake canvas is redrawn about 30 times a second
+      // In steady ground mode, the lake canvas is redrawn about 30 times a second
       if (lakeCtx && now - lakeLast > 33) { lakeLast = now; drawLake(now); }
       // Cinematic flyover after a few seconds without touching the screen
       if (!drag && now - lastInput > 7000) {
