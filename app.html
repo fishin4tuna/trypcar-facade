@@ -90,6 +90,11 @@
     .flatblk { position: absolute; }
     .flatblk[data-place] { cursor: pointer; }
     .ground svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+    /* Chrome-safe mode (Android): the flat ground is painted once into this single picture instead */
+    #gcan { position: absolute; left: -110px; top: -100px; width: 680px; height: 800px; display: none; }
+    .ground.safe #gcan { display: block; }
+    .ground.safe .groundfill, .ground.safe #walks, .ground.safe #roads, .ground.safe #glows { display: none; }
+    .ground.safe .flatblk > :not(.lake):not(.bridge):not(.duck) { opacity: 0; }
     .road { stroke: #1b2436; stroke-width: 16; stroke-linecap: round; }
     .road-line { stroke: rgba(253,224,138,0.35); stroke-width: 1.2; stroke-dasharray: 7 9; }
     .curb { fill: #0a1630; }
@@ -121,8 +126,13 @@
     .court { position: absolute; border-radius: 2px; }
     .court.hoops { background: linear-gradient(90deg, transparent 49%, rgba(255,255,255,0.8) 49% 51%, transparent 51%), radial-gradient(circle, transparent 4px, rgba(255,255,255,0.8) 4px 5px, transparent 5px), #b45309; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.8); }
     .pool { position: absolute; border-radius: 3px; background: repeating-linear-gradient(90deg, #38bdf8 0 6px, #0ea5e9 6px 7px), #38bdf8; box-shadow: inset 0 0 0 2px #e2e8f0, 0 0 10px rgba(56,189,248,0.5); }
-    .lake { position: absolute; border-radius: 46% 54% 52% 48% / 55% 45% 55% 45%; background: repeating-linear-gradient(170deg, transparent 0 6px, rgba(224,242,254,0.2) 6px 7px, transparent 7px 14px) 0 0 / 100% 28px, radial-gradient(ellipse at 40% 35%, #3b82c4, #1e4f8a 60%, #173f6e); border: 2px solid #8b7b5a; animation: ripple 4s linear infinite; }
-    @keyframes ripple { to { background-position: 0 28px, 0 0; } }
+    /* Campus Lake: natural shoreline, sandy bank, spreading ripples and glints of light */
+    .lake { position: absolute; }
+    .lake svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .ripple { opacity: 0.4; transform-box: fill-box; transform-origin: center; animation: lakering 3.6s ease-out infinite; }
+    @keyframes lakering { 0% { transform: scale(0.15); opacity: 0.75; } 100% { transform: scale(1); opacity: 0; } }
+    .glint { animation: glint 5s ease-in-out infinite alternate; }
+    @keyframes glint { to { opacity: 0.12; } }
     .bridge { position: absolute; width: 16px; height: 5px; border-radius: 1px; background: repeating-linear-gradient(90deg, #92400e 0 2px, #b45309 2px 4px); transform: translateZ(2.5px); box-shadow: 0 0 0 0.6px #451a03; }
     .duck { position: absolute; width: 3px; height: 2px; border-radius: 50%; background: #f8fafc; transform: translateZ(0.8px); }
     .clock { width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle, #1e293b 0 0.6px, transparent 0.7px), linear-gradient(#1e293b, #1e293b) 4.2px 1.6px/0.7px 3px no-repeat, linear-gradient(#1e293b, #1e293b) 4.4px 4.1px/2.6px 0.7px no-repeat, #fef9c3; box-shadow: 0 0 0 1px #b45309, 0 0 8px rgba(254,249,195,0.8); }
@@ -378,7 +388,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .world { transition: none; }
-      .pulse, .route-flow, .radar i, .member::after, .scanner .laser { animation: none; }
+      .pulse, .route-flow, .radar i, .member::after, .scanner .laser, .ripple, .glint { animation: none; }
       .plane, .btn, .switch, .switch::after, .toast, .opt { transition: none; }
     }
   </style>
@@ -396,6 +406,7 @@
       <div class="world" id="world">
         <div class="ground">
           <div class="groundfill"></div>
+          <canvas id="gcan" aria-hidden="true"></canvas>
           <div id="flat"></div>
           <svg viewBox="0 0 460 600" aria-hidden="true">
             <defs><radialGradient id="lampglow"><stop offset="0" stop-color="#fde68a" stop-opacity="0.45"/><stop offset="1" stop-color="#fde68a" stop-opacity="0"/></radialGradient>
@@ -579,7 +590,7 @@
     $("hello").innerHTML = greet() + ", " + esc(user.name || "Alex") + "<small>Campus zone is active</small>";
     $("m-name").textContent = (user.name || "Alex").toUpperCase();
     $("m-meta").textContent = "Verified " + (user.role || "Student").toLowerCase() + " · Member since 2026";
-    show("ride"); home();
+    show("ride"); home(); safeGround();
   }
   $("restart").onclick = function () { clearAll(); scz.active = false; show("s-ob"); obWelcome(); };
 
@@ -706,6 +717,27 @@
   }
   function umbrella(parent, x, y, c) { div("umb", "left:" + (x - 5) + "px;top:" + (y - 5) + "px;background:conic-gradient(" + c + " 0 12.5%, #f8fafc 0 25%, " + c + " 0 37.5%, #f8fafc 0 50%, " + c + " 0 62.5%, #f8fafc 0 75%, " + c + " 0 87.5%, #f8fafc 0)", parent); }
   function court(parent, x, y, w, d, kind) { div("court " + kind, "left:" + x + "px;top:" + y + "px;width:" + w + "px;height:" + d + "px", parent); }
+  // Campus Lake: an irregular natural shoreline with a sandy bank, shallow edge, spreading ripples, glints, lily pads and reeds
+  var LAKE_D = "M15 9C25 3 40 6 50 8C61 10 68 20 65 30C63 38 69 46 63 55C57 64 44 67 33 64C24 62 17 66 10 59C4 53 6 44 7 37C8 29 3 21 8 14C10 11 12 10 15 9Z";
+  var LAKE_SVG = '<svg viewBox="0 0 72 72" aria-hidden="true"><defs>' +
+    '<radialGradient id="lakeWater" cx="44%" cy="40%" r="62%"><stop offset="0" stop-color="#3f8fd0"/><stop offset="0.55" stop-color="#1f5a96"/><stop offset="1" stop-color="#163f6c"/></radialGradient>' +
+    '<clipPath id="lakeClip"><path d="' + LAKE_D + '"/></clipPath></defs>' +
+    '<path d="' + LAKE_D + '" fill="none" stroke="#6f5f41" stroke-width="5.6" stroke-linejoin="round"/>' +
+    '<path d="' + LAKE_D + '" fill="none" stroke="#c9b07e" stroke-width="3.8" stroke-linejoin="round"/>' +
+    '<path d="' + LAKE_D + '" fill="url(#lakeWater)"/>' +
+    '<g clip-path="url(#lakeClip)">' +
+      '<path d="' + LAKE_D + '" fill="none" stroke="#6fb3e3" stroke-width="5" opacity="0.35"/>' +
+      '<g fill="none" stroke="#e0f2fe" stroke-width="0.6">' +
+        '<circle class="ripple" cx="24" cy="21" r="9"/><circle class="ripple" cx="24" cy="21" r="9" style="animation-delay:-1.8s"/>' +
+        '<circle class="ripple" cx="48" cy="46" r="10" style="animation-delay:-0.9s"/><circle class="ripple" cx="48" cy="46" r="10" style="animation-delay:-2.7s"/>' +
+        '<circle class="ripple" cx="28" cy="51" r="7" style="animation-delay:-2.2s"/><circle class="ripple" cx="54" cy="22" r="6" style="animation-delay:-3.1s"/>' +
+      '</g>' +
+      '<g fill="#e0f2fe"><ellipse class="glint" cx="42" cy="17" rx="5" ry="0.7" opacity="0.5"/><ellipse class="glint" cx="20" cy="40" rx="3.5" ry="0.6" opacity="0.4" style="animation-delay:-2.5s"/><ellipse class="glint" cx="52" cy="31" rx="3" ry="0.5" opacity="0.35" style="animation-delay:-1.2s"/></g>' +
+    '</g>' +
+    '<path d="' + LAKE_D + '" fill="none" stroke="rgba(224,242,254,0.35)" stroke-width="0.6"/>' +
+    '<g><circle cx="13" cy="45" r="2.5" fill="#3f8f4a"/><circle cx="16.8" cy="48.6" r="1.8" fill="#4ea85a"/><circle cx="12.4" cy="49.6" r="1.4" fill="#3f8f4a"/><circle cx="13.6" cy="44.4" r="0.8" fill="#f9a8d4"/><circle cx="57" cy="17" r="2" fill="#4ea85a"/><circle cx="59.6" cy="20.4" r="1.4" fill="#3f8f4a"/></g>' +
+    '<g stroke="#2f6b3a" stroke-width="0.7" stroke-linecap="round" fill="none"><path d="M8 27l-1.6-3.2M8.6 27.4l0.2-3.8M9.4 27.2l1.6-3"/><path d="M61 52l1.8-2.6M60.4 51.6l0.4-3.4M59.6 51.8l-1.4-2.8"/><path d="M34 63.5l-0.8 3M35 63.4l0.6 3.2"/></g>' +
+    '</svg>';
 
   // Campus layout: one entry per city block (column, row)
   var blocks = [
@@ -900,7 +932,7 @@
         });
         top = 22;
       } else if (K === "lake") {
-        lot(el, []); div("lake", "left:3px;top:4px;width:66px;height:62px", fl); div("bridge", "left:26px;top:31px;width:22px", fl);
+        lot(el, []); div("lake", "left:0;top:0;width:72px;height:72px", fl).innerHTML = LAKE_SVG; div("bridge", "left:26px;top:31px;width:22px", fl);
         [[6, 6], [66, 8], [5, 66], [66, 66], [66, 38]].forEach(function (p, i) { tree(el, p[0], p[1], 10 + (i % 3) * 2, i + 3); });
         [0, 1, 2].forEach(function (i) { ducks.push({ el: div("duck", "", fl), a: i * 2.1, r: 12 + i * 5 }); });
         top = 12;
@@ -1077,6 +1109,102 @@
     div("bb lamp", "left:" + lx + "px;top:" + ly + "px", world).innerHTML = "<i></i><b></b>";
     sv("circle", { cx: lx, cy: ly, r: 18, fill: "url(#lampglow)" }, glowsG);
   }); });
+
+  // ---------------- Chrome-safe ground (Android browsers other than Firefox) ----------------
+  // Paints all the still, flat ground (grass, lawns, roads, sidewalks, crosswalks, patios, courts, lots and
+  // streetlight glow) once into a single picture, so the phone never has to redraw it while the camera moves.
+  // The lake, ducks, route, hubs and everything 3D stay live on top.
+  // Add ?safe=1 or ?safe=0 to the address to force it on or off for testing.
+  var SAFE = (function () { var q = /[?&]safe=([01])/.exec(location.search); if (q) return q[1] === "1"; var ua = navigator.userAgent; return /Android/i.test(ua) && !/Firefox/i.test(ua); })(), safeDone = false;
+  function rr(c, x, y, w, h, r) { r = Math.max(0, Math.min(r, w / 2, h / 2)); c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+  function safeGround() {
+    if (!SAFE || safeDone) return;
+    var cv = $("gcan"), S = 2, c;
+    if (!$("flat").offsetWidth) return;
+    try { cv.width = 680 * S; cv.height = 800 * S; c = cv.getContext("2d"); } catch (err) { return; }
+    if (!c) return;
+    safeDone = true;
+    c.setTransform(S, 0, 0, S, 110 * S, 100 * S);
+    c.fillStyle = "#173424"; rr(c, -110, -100, 680, 800, 40); c.fill();
+    [].forEach.call(document.querySelectorAll("#flat .flatblk"), function (fb) {
+      var bx = fb.offsetLeft, by = fb.offsetTop, town = fb.classList.contains("townblk");
+      [].forEach.call(fb.children, function (el) {
+        var k = el.classList, x = bx + el.offsetLeft, y = by + el.offsetTop, w = el.offsetWidth, h = el.offsetHeight, g, i2, sx;
+        if (k.contains("lake") || k.contains("bridge") || k.contains("duck")) return;
+        c.save();
+        var rot = /rotate\((-?[\d.]+)deg\)/.exec(el.style.transform || "");
+        if (rot) { c.translate(x + w / 2, y + h / 2); c.rotate(+rot[1] * Math.PI / 180); x = -w / 2; y = -h / 2; }
+        if (k.contains("lawn")) {
+          g = c.createRadialGradient(x + w * 0.3, y + h * 0.25, 0, x + w * 0.3, y + h * 0.25, Math.hypot(w * 0.7, h * 0.75) * 0.75);
+          g.addColorStop(0, town ? "#1f5638" : "#2d7a4c"); g.addColorStop(1, town ? "#143b27" : "#1a5236");
+          c.fillStyle = g; rr(c, x, y, w, h, 7); c.fill();
+          if (!town) { c.strokeStyle = "rgba(134,239,172,0.16)"; c.lineWidth = 1.5; rr(c, x + 0.75, y + 0.75, w - 1.5, h - 1.5, 6.5); c.stroke(); }
+        } else if (k.contains("walkway")) {
+          c.globalAlpha = 0.55; c.fillStyle = "#8d97a8"; c.fillRect(x, y, w, h);
+        } else if (k.contains("path-x")) {
+          c.fillStyle = "rgba(226,232,240,0.18)"; c.fillRect(x, y, w, h);
+        } else if (k.contains("fountain")) {
+          var fx = x + w / 2, fy = y + h / 2;
+          c.shadowColor = "rgba(125,211,252,0.6)"; c.shadowBlur = 10 * S;
+          c.fillStyle = "#cbd5e1"; c.beginPath(); c.arc(fx, fy, w / 2, 0, 7); c.fill(); c.shadowBlur = 0;
+          c.fillStyle = "#38bdf8"; c.beginPath(); c.arc(fx, fy, w * 0.41, 0, 7); c.fill();
+          c.fillStyle = "#7dd3fc"; c.beginPath(); c.arc(fx, fy, w * 0.25, 0, 7); c.fill();
+        } else if (k.contains("bench")) {
+          c.fillStyle = "#a16207"; c.fillRect(x, y, w, h);
+        } else if (k.contains("patio")) {
+          c.globalAlpha = 0.75; c.fillStyle = "#a2aab5"; rr(c, x, y, w, h, 3); c.fill();
+          c.save(); rr(c, x, y, w, h, 3); c.clip(); c.globalAlpha = 0.35; c.strokeStyle = "#8b939e"; c.lineWidth = 0.6;
+          for (var d = -h; d < w; d += 4.2) { c.beginPath(); c.moveTo(x + d, y + h); c.lineTo(x + d + h, y); c.stroke(); }
+          c.restore();
+        } else if (k.contains("court")) {
+          c.fillStyle = "#b45309"; rr(c, x, y, w, h, 2); c.fill();
+          c.strokeStyle = "rgba(255,255,255,0.8)"; c.lineWidth = 1; c.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+          c.beginPath(); c.moveTo(x + w / 2, y); c.lineTo(x + w / 2, y + h); c.stroke();
+          c.beginPath(); c.arc(x + w / 2, y + h / 2, 4.5, 0, 7); c.stroke();
+        } else if (k.contains("pool")) {
+          c.shadowColor = "rgba(56,189,248,0.5)"; c.shadowBlur = 10 * S; c.fillStyle = "#38bdf8"; rr(c, x, y, w, h, 3); c.fill(); c.shadowBlur = 0;
+          c.fillStyle = "#0ea5e9"; for (var lx = x + 6; lx < x + w; lx += 7) c.fillRect(lx, y, 1, h);
+          c.strokeStyle = "#e2e8f0"; c.lineWidth = 2; rr(c, x + 1, y + 1, w - 2, h - 2, 2.5); c.stroke();
+        } else if (k.contains("lotpave")) {
+          c.fillStyle = "#2b3242"; rr(c, x, y, w, h, 3); c.fill();
+          c.strokeStyle = "rgba(255,255,255,0.12)"; c.lineWidth = 1; rr(c, x + 0.5, y + 0.5, w - 1, h - 1, 2.5); c.stroke();
+        } else if (k.contains("diamond")) {
+          var wedge = function () { c.beginPath(); c.moveTo(x + w, y); c.arc(x + w, y, w, Math.PI / 2, Math.PI); c.closePath(); };
+          wedge(); c.fillStyle = "#2f8f57"; c.fill();
+          c.save(); wedge(); c.clip(); c.fillStyle = "#b45309"; c.beginPath(); c.arc(x + w, y + h, Math.hypot(w, h) * 0.3, 0, 7); c.fill(); c.restore();
+          wedge(); c.strokeStyle = "rgba(255,255,255,0.6)"; c.lineWidth = 1.5; c.stroke();
+        } else if (k.contains("steps")) {
+          c.fillStyle = "#d7d2c5"; c.fillRect(x, y, w, h);
+        } else if (k.contains("stad-field")) {
+          for (sx = 0, i2 = 0; sx < w; sx += 9.2, i2++) { c.fillStyle = i2 % 2 ? "#16a34a" : "#15803d"; c.fillRect(x + sx, y, Math.min(9.2, w - sx), h); }
+          c.fillStyle = "rgba(255,255,255,0.6)"; for (sx = 0; sx < w; sx += 9.2) c.fillRect(x + sx, y, 1, h);
+          c.fillStyle = "#1d4ed8"; c.fillRect(x, y, w * 0.09, h); c.fillRect(x + w * 0.91, y, w * 0.09, h);
+          c.strokeStyle = "rgba(255,255,255,0.75)"; c.lineWidth = 1.5; c.strokeRect(x + 0.75, y + 0.75, w - 1.5, h - 1.5);
+          c.strokeStyle = "rgba(255,255,255,0.8)"; c.beginPath(); c.arc(x + w / 2, y + h / 2, 5.25, 0, 7); c.stroke();
+        } else if (k.contains("fieldlight")) {
+          c.translate(x + w / 2, y + h / 2); c.scale(1, h / w); g = c.createRadialGradient(0, 0, 0, 0, 0, w / 2);
+          g.addColorStop(0, "rgba(240,249,255,0.28)"); g.addColorStop(1, "rgba(240,249,255,0)"); c.fillStyle = g; c.fillRect(-w / 2, -w / 2, w, w);
+        } else {
+          var bg = getComputedStyle(el).backgroundColor;
+          if (bg && bg !== "rgba(0, 0, 0, 0)" && bg !== "transparent") { c.fillStyle = bg; rr(c, x, y, w, h, parseFloat(el.style.borderRadius) || 0); c.fill(); }
+        }
+        c.restore();
+      });
+    });
+    var LS = { sidewalk: ["#4a5568", 30, "square", null], road: ["#1b2436", 16, "round", null], "road-line": ["rgba(253,224,138,0.35)", 1.2, "butt", [7, 9]], xwalk: ["rgba(226,232,240,0.42)", 5, "butt", [1.6, 1.6]] };
+    [walksG, roadsG].forEach(function (grp) { [].forEach.call(grp.children, function (ln) {
+      var s = LS[ln.getAttribute("class")]; if (!s) return;
+      c.strokeStyle = s[0]; c.lineWidth = s[1]; c.lineCap = s[2]; c.setLineDash(s[3] || []);
+      c.beginPath(); c.moveTo(+ln.getAttribute("x1"), +ln.getAttribute("y1")); c.lineTo(+ln.getAttribute("x2"), +ln.getAttribute("y2")); c.stroke();
+    }); });
+    c.setLineDash([]);
+    [].forEach.call(glowsG.children, function (ci) {
+      var gx = +ci.getAttribute("cx"), gy = +ci.getAttribute("cy"), r = +ci.getAttribute("r"), lamp = /lampglow/.test(ci.getAttribute("fill")), gg = c.createRadialGradient(gx, gy, 0, gx, gy, r);
+      gg.addColorStop(0, lamp ? "rgba(253,230,138,0.45)" : "rgba(191,219,254,0.35)"); gg.addColorStop(1, lamp ? "rgba(253,230,138,0)" : "rgba(191,219,254,0)");
+      c.fillStyle = gg; c.beginPath(); c.arc(gx, gy, r, 0, 7); c.fill();
+    });
+    document.querySelector(".ground").classList.add("safe");
+  }
 
   // People walking on the sidewalks, and Scootz riders
   var SKIN = ["#f1c27d", "#e0ac69", "#c68642", "#8d5524", "#ffdbac"], SHIRT = ["#ef4444", "#3b82f6", "#f8fafc", "#a855f7", "#22c55e", "#f59e0b", "#ec4899", "#14b8a6"];
