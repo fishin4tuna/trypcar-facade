@@ -81,11 +81,15 @@
     .stage.grabbing { cursor: grabbing; }
     .world { position: absolute; left: 50%; top: 50%; width: 460px; height: 600px; margin: -300px 0 0 -230px; transform-style: preserve-3d; --tilt: 52deg; --rz: -14deg; --zoom: 1; transform: rotateX(var(--tilt)) rotateZ(var(--rz)) scale(var(--zoom)); transition: transform 0.9s cubic-bezier(.2,.7,.2,1); }
     .world.drag { transition: none; }
-    /* The road layer is drawn once and then moved, so the phone never skips parts of it while the camera moves */
-    .ground { position: absolute; inset: 0; transform: translateZ(0); will-change: transform; }
-    /* Layer heights keep flat surfaces from fighting: town ground lowest, then lawns, then roads and everything else */
-    .groundfill { position: absolute; left: -110px; top: -100px; width: 680px; height: 800px; background: #173424; border-radius: 40px; transform: translateZ(-5px); will-change: transform; }
-    .ground svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    /* Everything flat on the ground (town grass, lawns, lake, patios, courts, lots, roads) is painted together
+       in one flat layer, so the phone never has to decide whether grass or road is on top.
+       Buildings, trees, cars, people and labels stand on top of it in 3D. */
+    .ground { position: absolute; inset: 0; }
+    .groundfill { position: absolute; left: -110px; top: -100px; width: 680px; height: 800px; background: #173424; border-radius: 40px; }
+    #flat { position: absolute; inset: 0; }
+    .flatblk { position: absolute; }
+    .flatblk[data-place] { cursor: pointer; }
+    .ground svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; overflow: visible; }
     .road { stroke: #1b2436; stroke-width: 16; stroke-linecap: round; }
     .road-line { stroke: rgba(253,224,138,0.35); stroke-width: 1.2; stroke-dasharray: 7 9; }
     .curb { fill: #0a1630; }
@@ -103,7 +107,7 @@
     .box .ew { top: 0; height: 100%; width: var(--h); transform-origin: 0 0; transform: rotateY(-90deg); background: repeating-linear-gradient(90deg, var(--wall) 0 3px, transparent 3px 8px), repeating-linear-gradient(180deg, var(--wall) 0 3px, var(--win) 3px 6px), var(--wall); filter: brightness(0.78); }
     .box .n { top: 0; } .box .s { top: 100%; } .box .w { left: 0; } .box .e { left: 100%; }
     .bld { cursor: pointer; }
-    .lawn { position: absolute; border-radius: 7px; background: radial-gradient(circle at 30% 25%, #2d7a4c, #1a5236 75%); box-shadow: inset 0 0 0 1.5px rgba(134,239,172,0.16); transform: translateZ(-2px); }
+    .lawn { position: absolute; border-radius: 7px; background: radial-gradient(circle at 30% 25%, #2d7a4c, #1a5236 75%); box-shadow: inset 0 0 0 1.5px rgba(134,239,172,0.16); }
     .walkway { position: absolute; background: #8d97a8; opacity: 0.55; border-radius: 1px; }
     .path-x { position: absolute; background: rgba(203,213,225,0.38); }
     .fountain { position: absolute; width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle, #7dd3fc 0 35%, #38bdf8 36% 58%, #cbd5e1 60% 72%, #94a3b8 73%); transform: translateZ(1.5px); box-shadow: 0 0 10px rgba(125,211,252,0.6); }
@@ -158,7 +162,7 @@
     .box.goth.ivy .ew { background: radial-gradient(ellipse 70% 25% at 0% 30%, #2d6b3f 0 55%, transparent 58%), linear-gradient(270deg, #c9c1b2 0 1.4px, transparent 1.4px), repeating-linear-gradient(90deg, var(--wall) 0 4px, transparent 4px 12px), repeating-linear-gradient(180deg, var(--wall) 0 4.5px, var(--win) 4.5px 6.5px), var(--wall); filter: brightness(0.8); }
     .townblk .lawn { background: radial-gradient(circle at 30% 25%, #1f5638, #143b27 75%); box-shadow: none; }
     .bld.sel .rf { background: #2563eb !important; }
-    .bld.sel .lawn { box-shadow: inset 0 0 0 2px #93c5fd, 0 0 20px rgba(59,130,246,0.6); }
+    .flatblk.sel .lawn { box-shadow: inset 0 0 0 2px #93c5fd, 0 0 20px rgba(59,130,246,0.6); }
     .bld.sel .top { background: linear-gradient(135deg, #3b82f6, #1d4ed8); box-shadow: 0 0 0 2px #93c5fd, 0 0 28px rgba(59,130,246,0.9); }
     .bld.sel .ns, .bld.sel .ew { --wall: #1e40af; }
     .grass { position: absolute; border-radius: 6px; background: radial-gradient(circle at 30% 30%, #1f6f52, #0f3f30); box-shadow: inset 0 0 0 1px rgba(110,231,183,0.25); }
@@ -390,15 +394,18 @@
   <section class="screen fill" id="s-ride" aria-label="Ride">
     <div class="stage" id="stage">
       <div class="world" id="world">
-        <div class="groundfill"></div>
-        <div class="ground"><svg viewBox="0 0 460 600" aria-hidden="true">
-          <defs><radialGradient id="lampglow"><stop offset="0" stop-color="#fde68a" stop-opacity="0.45"/><stop offset="1" stop-color="#fde68a" stop-opacity="0"/></radialGradient>
-          <radialGradient id="stadglow"><stop offset="0" stop-color="#bfdbfe" stop-opacity="0.35"/><stop offset="1" stop-color="#bfdbfe" stop-opacity="0"/></radialGradient></defs>
-          <g id="walks"></g><g id="roads"></g><g id="glows"></g>
-          <path class="route-glow" id="rglow" d=""/><path class="route-line" id="rline" d=""/><path class="route-flow" id="rflow" d=""/>
-          <g id="hubs"></g>
-          <g id="mepin"><circle r="22" fill="#3b82f6" opacity="0.18"/><circle class="pulse" r="10" fill="none" stroke="#93c5fd" stroke-width="2"/><circle r="8.5" fill="#3b82f6" stroke="#fff" stroke-width="3"/></g>
-        </svg></div>
+        <div class="ground">
+          <div class="groundfill"></div>
+          <div id="flat"></div>
+          <svg viewBox="0 0 460 600" aria-hidden="true">
+            <defs><radialGradient id="lampglow"><stop offset="0" stop-color="#fde68a" stop-opacity="0.45"/><stop offset="1" stop-color="#fde68a" stop-opacity="0"/></radialGradient>
+            <radialGradient id="stadglow"><stop offset="0" stop-color="#bfdbfe" stop-opacity="0.35"/><stop offset="1" stop-color="#bfdbfe" stop-opacity="0"/></radialGradient></defs>
+            <g id="walks"></g><g id="roads"></g><g id="glows"></g>
+            <path class="route-glow" id="rglow" d=""/><path class="route-line" id="rline" d=""/><path class="route-flow" id="rflow" d=""/>
+            <g id="hubs"></g>
+            <g id="mepin"><circle r="22" fill="#3b82f6" opacity="0.18"/><circle class="pulse" r="10" fill="none" stroke="#93c5fd" stroke-width="2"/><circle r="8.5" fill="#3b82f6" stroke="#fff" stroke-width="3"/></g>
+          </svg>
+        </div>
         <div id="city" style="position:absolute;inset:0;transform-style:preserve-3d"></div>
         <div class="dpin" id="dpin"><b id="dpin-t">Drop-off</b><i></i><u></u></div>
       </div>
@@ -581,7 +588,8 @@
   var world = $("world"), city = $("city"), roadsG = $("roads");
   function sv(tag, attrs, parent) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
   function div(cls, css, parent) { var e = document.createElement("div"); if (cls) e.className = cls; if (css) e.style.cssText = css; (parent || city).appendChild(e); return e; }
-  var walksG = $("walks"), glowsG = $("glows");
+  // flatG holds every flat ground piece of every block, painted in one flat layer under the roads
+  var walksG = $("walks"), glowsG = $("glows"), flatG = $("flat");
   function colSegs(x) { return x === 230 ? [[-60, 18], [140, 640]] : [[-60, 640]]; }
   function rowSegs(y) { return y === 40 ? [[-70, 130], [330, 530]] : [[-70, 530]]; }
   cols.forEach(function (x) { colSegs(x).forEach(function (g) {
@@ -691,9 +699,10 @@
       tree(el, p[0], p[1], 9 + ((i * 7 + seed) % 5), i + seed); n++;
     });
   }
+  // Lawns and walkways go into the block's flat ground piece, not into the 3D building
   function lot(el, foot, path) {
-    div("lawn", "inset:0", el);
-    if (path) { var f0 = foot[0]; div("walkway", "left:" + (f0[0] + f0[2] / 2 - 2.5) + "px;top:" + (f0[1] + f0[3]) + "px;width:5px;height:" + (72 - f0[1] - f0[3]) + "px", el); }
+    div("lawn", "inset:0", el.flat);
+    if (path) { var f0 = foot[0]; div("walkway", "left:" + (f0[0] + f0[2] / 2 - 2.5) + "px;top:" + (f0[1] + f0[3]) + "px;width:5px;height:" + (72 - f0[1] - f0[3]) + "px", el.flat); }
   }
   function umbrella(parent, x, y, c) { div("umb", "left:" + (x - 5) + "px;top:" + (y - 5) + "px;background:conic-gradient(" + c + " 0 12.5%, #f8fafc 0 25%, " + c + " 0 37.5%, #f8fafc 0 50%, " + c + " 0 62.5%, #f8fafc 0 75%, " + c + " 0 87.5%, #f8fafc 0)", parent); }
   function court(parent, x, y, w, d, kind) { div("court " + kind, "left:" + x + "px;top:" + y + "px;width:" + w + "px;height:" + d + "px", parent); }
@@ -740,22 +749,23 @@
   }
   var ducks = [];
   blocks.forEach(function (k) {
-    var bx = bxOf(k.c), by = byOf(k.r), W = 72, top = 0, el, b2;
+    var bx = bxOf(k.c), by = byOf(k.r), W = 72, top = 0, el, b2, fl;
     if (k.kind === "stadium") {
       // Stadium spanning two blocks: an oval bowl of raised seating tiers around a striped
       // football field, a box office at the back center, and four light towers whose
       // light banks aim at the field.
       var SW = 172, SH = 72, CX = 86, CY = 38;
       el = div("box bld", "left:" + bx + "px;top:" + by + "px;width:" + SW + "px;height:" + SH + "px");
-      div("", "position:absolute;left:-4px;top:-10px;right:-4px;bottom:-4px;border-radius:16px;background:#3b4454;transform:translateZ(-1px)", el);
-      div("stad-field", "left:30px;top:18px;width:112px;height:40px", el);
-      div("fieldlight", "left:30px;top:18px;width:112px;height:40px", el);
+      fl = div("flatblk", "left:" + bx + "px;top:" + by + "px;width:" + SW + "px;height:" + SH + "px", flatG); el.flat = fl;
+      div("", "position:absolute;left:-4px;top:-10px;right:-4px;bottom:-4px;border-radius:16px;background:#3b4454", fl);
+      div("stad-field", "left:30px;top:18px;width:112px;height:40px", fl);
+      div("fieldlight", "left:30px;top:18px;width:112px;height:40px", fl);
       for (var t = 0; t < 5; t++) {
         var g = 25 - t * 6, L1 = 22 + t * 6;
         div("stad-ring", "left:" + g + "px;top:" + (g - 12) + "px;right:" + g + "px;bottom:" + (g - 12) + "px;transform:translateZ(" + (2 + t * 5) + "px);box-shadow:" + seatRows(L1), el);
       }
       // Box office at the back center, facing the street, with gates, sign, and flags
-      div("lotpave", "left:52px;top:-30px;width:68px;height:22px", el);
+      div("lotpave", "left:52px;top:-30px;width:68px;height:22px", fl);
       var bo = box(68, -26, 36, 11, 13, { parent: el, cls: "wb", wall: "#8a3b2c", win: "rgba(253,224,150,0.9)", roof: "#2f3540" }); hipped(bo, 36, 11, 13, 2, "#2f3540");
       [56, 108].forEach(function (x) { box(x, -18, 8, 3, 6, { parent: el, wall: "#475569", win: "#94a3b8", roof: "#64748b" }); });
       div("bb shopsign tix", "left:" + (bx + 86) + "px;top:" + (by - 26) + "px;--z:16px", world).innerHTML = "<b>TICKETS</b>";
@@ -772,6 +782,7 @@
       k.cxOverride = bx + SW / 2; top = 30;
     } else {
       el = div("box bld", "left:" + bx + "px;top:" + by + "px;width:72px;height:72px");
+      fl = div("flatblk", "left:" + bx + "px;top:" + by + "px;width:72px;height:72px", flatG); el.flat = fl;
       var K = k.kind;
       if (K === "dome") {
         lot(el, [[6, 6, 60, 60]]); bldg(el, 8, 8, 56, 56, 10, "stone"); dome(el, 36, 36, 27, 10, 22, 215, 30); autoTrees(el, [[8, 8, 56, 56]], 1); top = 34;
@@ -791,11 +802,11 @@
         div("bb clock", "left:" + (bx + 36) + "px;top:" + (by + 34) + "px;--z:40px", world);
         autoTrees(el, [[6, 12, 60, 46]], 4); top = 62;
       } else if (K === "park") {
-        lot(el, []); div("path-x", "left:0;right:0;top:34px;height:4px", el); div("path-x", "top:0;bottom:0;left:34px;width:4px", el);
-        div("path-x", "left:-8px;top:34px;width:88px;height:3px;transform:rotate(45deg)", el); div("path-x", "left:-8px;top:34px;width:88px;height:3px;transform:rotate(-45deg)", el);
-        div("fountain", "left:26px;top:26px", el); div("bb spray", "left:" + (bx + 36) + "px;top:" + (by + 36) + "px;--z:2px", world);
+        lot(el, []); div("path-x", "left:0;right:0;top:34px;height:4px", fl); div("path-x", "top:0;bottom:0;left:34px;width:4px", fl);
+        div("path-x", "left:-8px;top:34px;width:88px;height:3px;transform:rotate(45deg)", fl); div("path-x", "left:-8px;top:34px;width:88px;height:3px;transform:rotate(-45deg)", fl);
+        div("fountain", "left:26px;top:26px", fl); div("bb spray", "left:" + (bx + 36) + "px;top:" + (by + 36) + "px;--z:2px", world);
         [[12, 12], [60, 12], [12, 60], [60, 60], [24, 6], [48, 66], [6, 48], [66, 24]].forEach(function (p, i) { tree(el, p[0], p[1], 11 + (i % 3) * 2, i); });
-        [[22, 30], [50, 30], [22, 44], [50, 44]].forEach(function (p) { div("bench", "left:" + p[0] + "px;top:" + p[1] + "px", el); });
+        [[22, 30], [50, 30], [22, 44], [50, 44]].forEach(function (p) { div("bench", "left:" + p[0] + "px;top:" + p[1] + "px", fl); });
         top = 16;
       } else if (K === "arts") {
         f = [[8, 8, 34, 50], [40, 24, 26, 34]]; lot(el, f); bldg(el, 8, 8, 34, 50, 34, "violet"); bldg(el, 40, 24, 26, 34, 20, "glass"); autoTrees(el, f, 5); top = 36;
@@ -807,17 +818,17 @@
         f = [[6, 8, 60, 34]]; lot(el, f); b2 = geo(el, 6, 8, 60, 34, 16); gable(b2, 60, 34, 16, 12, GEO.roof, GEO.wall);
         [8, 22, 38, 52].forEach(function (x) { if (x !== 22 && x !== 38) dormer(b2, x - 3, 22, 19); });
         chimney(b2, 3, 15, 16, 14); chimney(b2, 54, 15, 16, 14); cupola(el, 32, 21, 27, 165, 34);
-        div("patio", "left:10px;top:46px;width:52px;height:20px", el);
+        div("patio", "left:10px;top:46px;width:52px;height:20px", fl);
         [[18, 52], [32, 58], [46, 52], [58, 60]].forEach(function (p, i) { umbrella(el, p[0], p[1], ["#2563eb", "#ef4444", "#2563eb", "#f59e0b"][i]); });
         autoTrees(el, [[6, 8, 60, 60]], 7); top = 28;
       } else if (K === "gym") {
         f = [[4, 4, 64, 34]]; lot(el, f); b2 = bldg(el, 4, 4, 64, 34, 12, "glass"); barrel(b2, 64, 34, 12, 12, "#64748b");
-        court(el, 6, 44, 30, 22, "hoops"); div("pool", "left:40px;top:44px;width:28px;height:22px", el);
+        court(fl, 6, 44, 30, 22, "hoops"); div("pool", "left:40px;top:44px;width:28px;height:22px", fl);
         top = 28;
       } else if (K === "coffee") {
         f = [[18, 14, 36, 26]]; lot(el, f); b2 = geo(el, 18, 14, 36, 26, 11); gable(b2, 36, 26, 11, 8, "#14532d", GEO.wall); chimney(b2, 28, 4, 11, 10);
         plane(b2, "left:3px;top:26px;width:30px;height:6px;transform:translateZ(8px) rotateX(-35deg)", "repeating-linear-gradient(90deg, #15803d 0 4px, #f8fafc 4px 8px)");
-        div("patio", "left:14px;top:46px;width:44px;height:18px", el);
+        div("patio", "left:14px;top:46px;width:44px;height:18px", fl);
         [[22, 55], [36, 55], [50, 55]].forEach(function (p) { div("ctable", "left:" + (p[0] - 3) + "px;top:" + (p[1] - 3) + "px", el); });
         div("strlights", "left:14px;top:45px;width:44px", el);
         autoTrees(el, [[14, 14, 44, 50]], 8); top = 22;
@@ -828,7 +839,7 @@
         b2 = box(6, 6, 40, 40, 28, { parent: el, cls: "wb", wall: "#c9a77c", win: "rgba(253,224,150,0.85)", roof: "#6b5a48" });
         plane(b2, "left:6px;top:6px;width:28px;height:28px;border-radius:3px;transform:translateZ(28.3px)", "radial-gradient(circle at 30% 30%, #2f8f57, #1d5a3a)");
         box(44, 16, 22, 30, 18, { parent: el, cls: "wb", wall: "#0f766e", win: "rgba(153,246,228,0.85)", roof: "#134e4a" });
-        div("patio", "left:8px;top:50px;width:56px;height:16px", el); umbrella(el, 18, 58, "#f97316"); umbrella(el, 34, 58, "#16a34a"); umbrella(el, 50, 58, "#f97316"); top = 30;
+        div("patio", "left:8px;top:50px;width:56px;height:16px", fl); umbrella(el, 18, 58, "#f97316"); umbrella(el, 34, 58, "#16a34a"); umbrella(el, 50, 58, "#f97316"); top = 30;
       } else if (K === "admin") {
         f = [[10, 10, 52, 40]]; lot(el, f, 1); b2 = bldg(el, 10, 10, 52, 40, 30, "stone"); hipped(b2, 52, 40, 30, 4, "#475569");
         div("bb flag", "left:" + (bx + 36) + "px;top:" + (by + 62) + "px", world).innerHTML = "<i></i><b></b>";
@@ -842,14 +853,14 @@
         // Neoclassical hall: columned portico with a triangular pediment and wide front steps
         f = [[8, 6, 56, 34]]; lot(el, f); b2 = geo(el, 8, 6, 56, 34, 26); hipped(b2, 56, 34, 26, 3, GEO.roof);
         chimney(b2, 4, 4, 28, 10); chimney(b2, 49, 4, 28, 10); cupola(el, 32, 19, 35, 165, 34);
-        div("steps", "left:14px;top:52px;width:44px;height:8px", el);
+        div("steps", "left:14px;top:52px;width:44px;height:8px", fl);
         [0, 1, 2, 3, 4, 5].forEach(function (i) { box(15 + i * 8, 44, 2.6, 2.6, 20, { parent: el, wall: "#f1ede4", win: "#f1ede4", roof: "#f1ede4" }); });
         var port = box(12, 40, 48, 10, 3, { parent: el, wall: "#e7e2d6", win: "#e7e2d6", roof: "#e7e2d6" }); port.style.transform = "translateZ(20px)";
         gable(port, 48, 10, 3, 5, "#d6d0c2", "#efeadf");
         autoTrees(el, [[8, 6, 56, 56]], 9); top = 40;
       } else if (K === "chapel") {
         // Old stone chapel: steep roof, bell tower with spire and cross, glowing stained glass
-        f = [[18, 22, 46, 26], [4, 26, 16, 18]]; lot(el, f); div("walkway", "left:0;top:33px;width:6px;height:5px", el);
+        f = [[18, 22, 46, 26], [4, 26, 16, 18]]; lot(el, f); div("walkway", "left:0;top:33px;width:6px;height:5px", fl);
         b2 = box(18, 22, 46, 26, 18, { parent: el, cls: "wb", wall: "#a89f8f", win: "rgba(251,146,60,0.9)", roof: "#3f3f46" }); gable(b2, 46, 26, 18, 14, "#3f3f46", "#a89f8f");
         var bell = box(4, 26, 16, 18, 34, { parent: el, cls: "wb", wall: "#b3aa99", win: "rgba(251,191,36,0.85)", roof: "#3f3f46" }); hipped(bell, 16, 18, 34, 6, "#334155");
         div("bb crossx", "left:" + (bx + 12) + "px;top:" + (by + 35) + "px;--z:56px", world);
@@ -859,21 +870,21 @@
         [[6, 8], [42, 8], [6, 42], [42, 42]].forEach(function (p, i) { if ((sd2 + i) % 4 === 3) { tree(el, p[0] + 12, p[1] + 10, 12, i, 1); return; } house(el, p[0], p[1], 24, 18, sd2 + i); });
         tree(el, 36, 36, 10, sd2, 1); top = 18;
       } else if (K === "townpark") {
-        lot(el, []); div("path-x", "left:0;right:0;top:34px;height:3px;transform:rotate(30deg)", el);
+        lot(el, []); div("path-x", "left:0;right:0;top:34px;height:3px;transform:rotate(30deg)", fl);
         [[10, 10], [30, 8], [56, 14], [12, 52], [40, 58], [60, 46], [26, 32], [50, 30]].forEach(function (p, i) { tree(el, p[0], p[1], 11 + (i % 3) * 2, i + k.c, 1); }); top = 16;
       } else if (K === "ballfield") {
-        lot(el, []); div("diamond", "left:12px;top:12px", el); tree(el, 64, 8, 10, 1); tree(el, 64, 64, 12, 2); top = 8;
+        lot(el, []); div("diamond", "left:12px;top:12px", fl); tree(el, 64, 8, 10, 1); tree(el, 64, 64, 12, 2); top = 8;
       } else if (K === "townapts") {
         f = [[8, 10, 56, 48]]; lot(el, f); b2 = box(8, 10, 56, 48, 30, { parent: el, cls: "wb", wall: "#d6c9a8", win: "rgba(253,224,150,0.8)", roof: "#57534e" }); autoTrees(el, f, 4); top = 34;
       } else if (K === "pizza") {
-        lot(el, []); div("lotpave", "left:4px;top:34px;width:64px;height:34px", el);
+        lot(el, []); div("lotpave", "left:4px;top:34px;width:64px;height:34px", fl);
         b2 = box(10, 8, 52, 24, 13, { parent: el, cls: "wb", wall: "#9a3412", win: "rgba(253,224,150,0.85)", roof: "#44403c" });
         plane(b2, "left:4px;top:24px;width:44px;height:7px;transform:translateZ(10px) rotateX(-35deg)", "repeating-linear-gradient(90deg, #dc2626 0 4px, #fef3c7 4px 8px)");
         div("bb shopsign", "left:" + (bx + 36) + "px;top:" + (by + 6) + "px;--z:13px", world).innerHTML = "<b>PIZZA</b>";
         [[14, 44], [30, 44], [46, 44]].forEach(function (p, i) { box(p[0], p[1], 10, 6, 4, { parent: el, wall: ["#ef4444", "#f8fafc", "#2563eb"][i], win: "#0f172a", roof: ["#ef4444", "#e2e8f0", "#1d4ed8"][i] }); });
         top = 26;
       } else if (K === "gas") {
-        lot(el, []); div("lotpave", "left:2px;top:2px;width:68px;height:68px", el);
+        lot(el, []); div("lotpave", "left:2px;top:2px;width:68px;height:68px", fl);
         box(44, 8, 22, 18, 10, { parent: el, cls: "wb", wall: "#e5e7eb", win: "rgba(56,189,248,0.7)", roof: "#cbd5e1" });
         [[10, 34], [34, 34], [10, 58], [34, 58]].forEach(function (p) { box(p[0], p[1], 2, 2, 14, { parent: el, wall: "#e2e8f0", win: "#e2e8f0", roof: "#e2e8f0" }); });
         [[12, 44], [30, 44]].forEach(function (p) { box(p[0], p[1], 6, 4, 5, { parent: el, wall: "#dc2626", win: "#fecaca", roof: "#f8fafc" }); });
@@ -882,16 +893,16 @@
         div("bb shopsign gas", "left:" + (bx + 62) + "px;top:" + (by + 66) + "px;--z:0px", world).innerHTML = "<b>GAS</b><i>3.19</i>";
         top = 22;
       } else if (K === "shops") {
-        lot(el, []); div("lotpave", "left:4px;top:40px;width:64px;height:28px", el);
+        lot(el, []); div("lotpave", "left:4px;top:40px;width:64px;height:28px", fl);
         [["#fde68a", "#b45309", 4], ["#bfdbfe", "#1d4ed8", 26], ["#fbcfe8", "#be185d", 48]].forEach(function (c2, i) {
           var sb = box(c2[2], 10, 20, 24, 12 + i * 2, { parent: el, cls: "wb", wall: c2[0], win: "rgba(253,224,150,0.85)", roof: "#57534e" });
           plane(sb, "left:2px;top:24px;width:16px;height:6px;transform:translateZ(9px) rotateX(-35deg)", "repeating-linear-gradient(90deg, " + c2[1] + " 0 3px, #f8fafc 3px 6px)");
         });
         top = 22;
       } else if (K === "lake") {
-        lot(el, []); div("lake", "left:3px;top:4px;width:66px;height:62px", el); div("bridge", "left:26px;top:31px;width:22px", el);
+        lot(el, []); div("lake", "left:3px;top:4px;width:66px;height:62px", fl); div("bridge", "left:26px;top:31px;width:22px", fl);
         [[6, 6], [66, 8], [5, 66], [66, 66], [66, 38]].forEach(function (p, i) { tree(el, p[0], p[1], 10 + (i % 3) * 2, i + 3); });
-        [0, 1, 2].forEach(function (i) { ducks.push({ el: div("duck", "", el), a: i * 2.1, r: 12 + i * 5 }); });
+        [0, 1, 2].forEach(function (i) { ducks.push({ el: div("duck", "", fl), a: i * 2.1, r: 12 + i * 5 }); });
         top = 12;
       } else if (K === "resB") {
         f = [[4, 6, 28, 50], [40, 14, 28, 50]]; lot(el, f);
@@ -912,7 +923,7 @@
     }
     k.el = el; k.top = top + 6; k.cx = k.cxOverride || bx + 36; k.cy = by + 36;
     if (k.lbl) k.lab = label(k.cx, k.cy, k.top, k.partner ? k.n + " · Partner" : k.n, k.i, k.hub ? "hub" : (k.partner ? "partner" : ""));
-    if (/^(houses|townpark|ballfield|townapts)$/.test(k.kind)) el.classList.add("townblk");
+    if (/^(houses|townpark|ballfield|townapts)$/.test(k.kind)) { el.classList.add("townblk"); fl.classList.add("townblk"); }
   });
   var hubs = [[230, 140], [130, 340], [330, 440]];
   hubs.forEach(function (h) { sv("circle", { cx: h[0], cy: h[1], r: 9, fill: "none", stroke: "#10b981", "stroke-width": 2, "class": "pulse" }, $("hubs")); sv("circle", { cx: h[0], cy: h[1], r: 7, fill: "#10b981", stroke: "#f8fafc", "stroke-width": 2.5 }, $("hubs")); });
@@ -939,7 +950,7 @@
   ];
   places.forEach(function (p, i) {
     var st = stop(p.b[0], p.b[1]); p.x = st.x; p.y = st.y;
-    blocks.forEach(function (k) { if (k.c === p.b[0] && k.r === p.b[1]) { p.block = k; k.place = i; k.el.setAttribute("data-place", i); } });
+    blocks.forEach(function (k) { if (k.c === p.b[0] && k.r === p.b[1]) { p.block = k; k.place = i; k.el.setAttribute("data-place", i); if (k.el.flat) k.el.flat.setAttribute("data-place", i); } });
   });
 
   function pathFrom(a, b) { return [a, { x: a.x, y: b.y }, b]; }
@@ -950,6 +961,7 @@
       var on = k === (p && p.block);
       if (!k.el) return;
       k.el.classList.toggle("sel", on);
+      if (k.el.flat) k.el.flat.classList.toggle("sel", on);
       if (k.lab) k.lab.classList.toggle("sel", on);
       // Buildings without a permanent label get one while they are the destination
       if (on && !k.lab && !k.tmp) { k.tmp = label(k.cx, k.cy, k.top, k.n, k.i, "sel"); }
