@@ -699,11 +699,40 @@
   [[-70, -60, -70, 640], [530, -60, 530, 640], [-70, -60, 530, -60], [-70, 640, 530, 640]].forEach(function (r) { SEGS.push(r); });
   SEGS.forEach(function (s) { strip(s[0], s[1], s[2], s[3], 30, 0.6, "#8a93a3", { r: 0.9 }); });
   SEGS.forEach(function (s) { strip(s[0], s[1], s[2], s[3], 16, 0.7, "#23272f", { r: 0.95 }); });
-  // Country roads: the street grid keeps going past the edge of town and fades into the haze
-  var REACH = 1350, EXT = [];
-  cols.concat([-70, 530]).forEach(function (x) { EXT.push([x, -60, x, -60 - REACH]); EXT.push([x, 640, x, 640 + REACH]); });
-  rowsY.concat([-60, 640]).forEach(function (y) { EXT.push([-70, y, -70 - REACH, y]); EXT.push([530, y, 530 + REACH, y]); });
-  EXT.forEach(function (s) { strip(s[0], s[1], s[2], s[3], 14, 0.7, "#262a31", { r: 0.95 }); });
+  // A flat ribbon that follows a winding line (country roads and the creek)
+  function ribbonMesh(P, width, y, material, wobble) {
+    var pos = [], uv = [], idx = [], acc = 0;
+    for (var i = 0; i < P.length; i++) {
+      var p = P[i], q = P[Math.min(i + 1, P.length - 1)], o = P[Math.max(i - 1, 0)], tx = q.x - o.x, tz = q.z - o.z, l = Math.hypot(tx, tz) || 1, nx = -tz / l, nz = tx / l;
+      if (i) acc += p.distanceTo(P[i - 1]);
+      var wd = wobble ? width * (0.85 + 0.15 * Math.sin(i * 0.37)) : width;
+      pos.push(p.x + nx * wd / 2, y, p.z + nz * wd / 2, p.x - nx * wd / 2, y, p.z - nz * wd / 2);
+      uv.push(0, acc / 40, 1, acc / 40);
+      if (i) { var a = (i - 1) * 2; idx.push(a, a + 2, a + 1, a + 1, a + 2, a + 3); }
+    }
+    var g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(idx); g.computeVertexNormals();
+    var m = new THREE.Mesh(g, material); m.receiveShadow = true; scene.add(m); return m;
+  }
+  // Country roads: past the edge of town the streets leave the grid and wind gently into the countryside
+  var REACH = 1350, EXT = [], CURVES = [];
+  (function () {
+    var seed = 911;
+    function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+    function add(x0, z0, dx, dz) {
+      var A = 18 + rnd() * 10, fr = 1 / (170 + rnd() * 110), ph = rnd() * 6.28, A2 = 4 + rnd() * 4, fr2 = 1 / (70 + rnd() * 40), pts = [];
+      for (var d = 9; d <= REACH; d += 12) {
+        var k = Math.min(1, Math.max(0, (d - 40) / 160)); k = k * k * (3 - 2 * k);
+        var off = k * (A * Math.sin(d * fr + ph) + A2 * Math.sin(d * fr2 + ph * 2));
+        pts.push(new THREE.Vector3(x0 - OX + dx * d - dz * off, 0, z0 - OZ + dz * d + dx * off));
+      }
+      CURVES.push({ pts: pts, dx: dx, dz: dz });
+    }
+    cols.concat([-70, 530]).forEach(function (x) { add(x, -60, 0, -1); add(x, 640, 0, 1); });
+    rowsY.concat([-60, 640]).forEach(function (y) { add(-70, y, -1, 0); add(530, y, 1, 0); });
+    var shoulder = mat("#5f6457", { r: 0.95 }), asphalt = mat("#262a31", { r: 0.95 });
+    CURVES.forEach(function (c) { ribbonMesh(c.pts, 22, 0.35, shoulder); ribbonMesh(c.pts, 14, 0.7, asphalt); });
+  })();
   // Lane dashes and crosswalks, drawn as many small pieces in one go
   var XS = [-70].concat(cols, [530]), YS = [-60].concat(rowsY, [640]);
   function nearCross(v, list) { for (var i = 0; i < list.length; i++) if (Math.abs(v - list[i]) < 14) return true; return false; }
@@ -719,8 +748,11 @@
     });
   }); });
   var dashGeo = new THREE.PlaneGeometry(1, 1); dashGeo.rotateX(-Math.PI / 2);
-  var dashMesh = new THREE.InstancedMesh(dashGeo, mat("#e8e2cf", { r: 0.7 }), dashes.length);
-  dashes.forEach(function (d, i) { dummy.position.set(d[0], 0.72, d[1]); dummy.scale.set(d[2], 1, d[3]); dummy.updateMatrix(); dashMesh.setMatrixAt(i, dummy.matrix); });
+  var dashMesh;
+  CURVES.forEach(function (c) { for (var i = 2; i < c.pts.length - 1; i += 2) { var p = c.pts[i], q = c.pts[i + 1]; dashes.push([p.x, p.z, 7, 1.2, Math.atan2(q.z - p.z, q.x - p.x)]); } });
+  dashMesh = new THREE.InstancedMesh(dashGeo, mat("#e8e2cf", { r: 0.7 }), dashes.length);
+  dashes.forEach(function (d, i) { dummy.position.set(d[0], 0.72, d[1]); dummy.rotation.set(0, -(d[4] || 0), 0); dummy.scale.set(d[2], 1, d[3]); dummy.updateMatrix(); dashMesh.setMatrixAt(i, dummy.matrix); });
+  dummy.rotation.set(0, 0, 0);
   dashMesh.receiveShadow = true; scene.add(dashMesh);
 
   // ---------------- Campus blocks ----------------
@@ -917,13 +949,13 @@
   (function () {
     var seed = 20261124;
     function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
-    var ALL = SEGS.concat(EXT);
     function nearRoad(x, z, m) {
-      for (var i = 0; i < ALL.length; i++) {
-        var s = ALL[i], wx1 = s[0] - OX, wz1 = s[1] - OZ, wx2 = s[2] - OX, wz2 = s[3] - OZ;
+      for (var i = 0; i < SEGS.length; i++) {
+        var s = SEGS[i], wx1 = s[0] - OX, wz1 = s[1] - OZ, wx2 = s[2] - OX, wz2 = s[3] - OZ;
         if (wz1 === wz2) { if (Math.abs(z - wz1) < m && x > Math.min(wx1, wx2) - m && x < Math.max(wx1, wx2) + m) return true; }
         else if (Math.abs(x - wx1) < m && z > Math.min(wz1, wz2) - m && z < Math.max(wz1, wz2) + m) return true;
       }
+      for (var c = 0; c < CURVES.length; c++) { var P = CURVES[c].pts; for (var j = 0; j < P.length; j++) { var dx = P[j].x - x, dz = P[j].z - z; if (dx * dx + dz * dz < m * m) return true; } }
       return false;
     }
     function inTown(x, z, pad) { return x > -305 - pad && x < 305 + pad && z > -365 - pad && z < 345 + pad; }
@@ -931,29 +963,17 @@
     var curve = new THREE.CatmullRomCurve3([[640, -1600], [560, -1000], [690, -520], [585, -60], [705, 420], [600, 900], [690, 1400], [620, 1900]].map(function (p) { return new THREE.Vector3(p[0], 0, p[1]); }));
     var CP = curve.getSpacedPoints(260);
     function nearCreek(x, z, m) { for (var i = 0; i < CP.length; i += 2) { var dx = CP[i].x - x, dz = CP[i].z - z; if (dx * dx + dz * dz < m * m) return true; } return false; }
-    function ribbon(width, y, material) {
-      var pos = [], uv = [], idx = [], acc = 0;
-      for (var i = 0; i < CP.length; i++) {
-        var p = CP[i], q = CP[Math.min(i + 1, CP.length - 1)], o = CP[Math.max(i - 1, 0)], tx = q.x - o.x, tz = q.z - o.z, l = Math.hypot(tx, tz) || 1, nx = -tz / l, nz = tx / l;
-        if (i) acc += p.distanceTo(CP[i - 1]);
-        var wob = width * (0.85 + 0.15 * Math.sin(i * 0.37));
-        pos.push(p.x + nx * wob / 2, y, p.z + nz * wob / 2, p.x - nx * wob / 2, y, p.z - nz * wob / 2);
-        uv.push(0, acc / 40, 1, acc / 40);
-        if (i) { var a = (i - 1) * 2; idx.push(a, a + 2, a + 1, a + 1, a + 2, a + 3); }
-      }
-      var g = new THREE.BufferGeometry();
-      g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(idx); g.computeVertexNormals();
-      var m = new THREE.Mesh(g, material); m.receiveShadow = true; scene.add(m); return m;
-    }
-    ribbon(54, 0.06, mat("#6b6a45", { r: 0.95 })); ribbon(42, 0.1, mat("#a8935f", { r: 0.95 })); ribbon(32, 0.16, waterMat);
-    // Stone bridges where the country roads cross the creek
-    EXT.forEach(function (s) {
-      if (s[1] !== s[3] || s[0] !== 530) return;
-      var z = s[1] - OZ, best = null, bd = 1e9;
-      CP.forEach(function (p) { var d = Math.abs(p.z - z); if (d < bd) { bd = d; best = p; } });
-      if (!best || bd > 8) return;
-      slab(scene, "#9aa3b0", best.x - 30, z - 10, 60, 20, 1.2, 0.2, { r: 0.8 });
-      slab(scene, "#7c8594", best.x - 30, z - 10.6, 60, 1, 2.4, 1.4); slab(scene, "#7c8594", best.x - 30, z + 9.6, 60, 1, 2.4, 1.4);
+    ribbonMesh(CP, 54, 0.06, mat("#6b6a45", { r: 0.95 }), true); ribbonMesh(CP, 42, 0.1, mat("#a8935f", { r: 0.95 }), true); ribbonMesh(CP, 32, 0.16, waterMat, true);
+    // Stone bridges where the country roads cross the creek, turned to follow each road
+    CURVES.forEach(function (c) {
+      if (c.dx !== 1) return;
+      var bi = -1, bd = 1e9;
+      c.pts.forEach(function (p, i) { for (var k = 0; k < CP.length; k += 2) { var dx = CP[k].x - p.x, dz = CP[k].z - p.z, d = dx * dx + dz * dz; if (d < bd) { bd = d; bi = i; } } });
+      if (bi < 1 || bd > 400) return;
+      var p = c.pts[bi], q = c.pts[Math.min(bi + 1, c.pts.length - 1)], ang = Math.atan2(q.z - p.z, q.x - p.x), br = new THREE.Group();
+      var deck = new THREE.Mesh(new THREE.BoxGeometry(60, 1.2, 20), mat("#9aa3b0", { r: 0.8 })); deck.position.y = 0.8; br.add(shade(deck));
+      [-10, 10].forEach(function (zz) { var rail = new THREE.Mesh(new THREE.BoxGeometry(60, 2.4, 1), mat("#7c8594", { r: 0.8 })); rail.position.set(0, 2.6, zz); br.add(shade(rail)); });
+      br.position.set(p.x, 0, p.z); br.rotation.y = -ang; scene.add(br);
     });
     // Meadows: soft patches of lighter and golden grass
     var MC = ["#3f7a45", "#4f8a43", "#6b8f4a", "#7d9450", "#356d40"];
@@ -977,15 +997,15 @@
     }
     // Homes along the country roads, facing the street, with lights in the windows at night
     var homes = [];
-    EXT.forEach(function (s) {
-      var horiz = s[1] === s[3], dir = horiz ? Math.sign(s[2] - s[0]) : Math.sign(s[3] - s[1]);
-      for (var d = 50; d < 720; d += 44) {
+    CURVES.forEach(function (c) {
+      for (var i = 4; i < c.pts.length - 1 && i < 60; i += 4) {
+        var p = c.pts[i], q = c.pts[i + 1], ang = Math.atan2(q.z - p.z, q.x - p.x), nx = -Math.sin(ang), nz = Math.cos(ang);
         [-1, 1].forEach(function (side) {
-          if (rnd() > 0.5 - d / 2400) return;
-          var off = 27 + rnd() * 6, x = horiz ? s[0] - OX + dir * d : s[0] - OX + side * off, z = horiz ? s[1] - OZ + side * off : s[1] - OZ + dir * d;
+          if (rnd() > 0.5 - i / 200) return;
+          var off = 27 + rnd() * 6, x = p.x + nx * side * off, z = p.z + nz * side * off;
           if (inTown(x, z, 30) || nearCreek(x, z, 40) || nearRoad(x, z, 20)) return;
-          homes.push([x, z, horiz ? 0 : Math.PI / 2, Math.floor(rnd() * 6), Math.floor(rnd() * 5)]);
-          if (rnd() < 0.7) TREES.push([x + (rnd() - 0.5) * 30, 0, z + (rnd() - 0.5) * 30, 9 + rnd() * 5, d]);
+          homes.push([x, z, -ang, Math.floor(rnd() * 6), Math.floor(rnd() * 5)]);
+          if (rnd() < 0.7) TREES.push([x + (rnd() - 0.5) * 30, 0, z + (rnd() - 0.5) * 30, 9 + rnd() * 5, i]);
         });
       }
     });
@@ -1077,16 +1097,56 @@
   var cars = loops.map(function (L, i) {
     var P = laneShift(L, 4), len = 0;
     for (var k = 0; k < P.length; k++) { var a = P[k], b = P[(k + 1) % P.length]; len += Math.hypot(b.x - a.x, b.y - a.y); }
-    return { P: P, len: len, off: i * 0.33, g: makeCar() };
+    return { P: P, len: len, d: i * 0.33 * len, v: 26, g: makeCar() };
   });
-  function moveCars(t) {
+
+  // ---------------- Traffic lights: north-south and east-west take turns, and the TrypCars stop on red ----------------
+  var SIG = {};
+  function signal(axis, t) { var c = t % 12; return axis === "ns" ? (c < 5 ? "g" : c < 6 ? "y" : "r") : (c < 6 ? "r" : c < 11 ? "g" : "y"); }
+  var lampMats = {};
+  (function () {
+    var spots = [];
+    cols.forEach(function (x) { rowsY.forEach(function (y) {
+      if ((x === 230 && (y === 40 || y === 140)) || (y === 40 && (x === 130 || x === 330))) return;
+      SIG[x + "," + y] = 1; spots.push([x - 12, y + 12, "ns"], [x + 12, y - 12, "ew"]);
+    }); });
+    var poleG = new THREE.CylinderGeometry(0.35, 0.45, 11, 8), headG = new THREE.BoxGeometry(1.4, 4.2, 1.4), lampG = new THREE.SphereGeometry(0.8, 10, 8);
+    var poles = new THREE.InstancedMesh(poleG, mat("#334155", { r: 0.5, m: 0.5 }), spots.length), heads = new THREE.InstancedMesh(headG, mat("#111827", { r: 0.6 }), spots.length);
+    dummy.rotation.set(0, 0, 0); dummy.scale.set(1, 1, 1);
+    spots.forEach(function (s, i) {
+      dummy.position.set(s[0] - OX, 5.5, s[1] - OZ); dummy.updateMatrix(); poles.setMatrixAt(i, dummy.matrix);
+      dummy.position.set(s[0] - OX, 12.2, s[1] - OZ); dummy.updateMatrix(); heads.setMatrixAt(i, dummy.matrix);
+    });
+    poles.castShadow = heads.castShadow = true; scene.add(poles, heads);
+    [["r", "#ef4444", 13.5], ["y", "#facc15", 12.2], ["g", "#22c55e", 10.9]].forEach(function (L) {
+      ["ns", "ew"].forEach(function (axis) {
+        var mm = new THREE.MeshStandardMaterial({ color: col("#1f2937"), emissive: col(L[1]), emissiveIntensity: 0, roughness: 0.3 });
+        var mesh = new THREE.InstancedMesh(lampG, mm, spots.length / 2), n = 0;
+        spots.forEach(function (s) { if (s[2] !== axis) return; dummy.position.set(s[0] - OX, L[2], s[1] - OZ); dummy.updateMatrix(); mesh.setMatrixAt(n++, dummy.matrix); });
+        scene.add(mesh); lampMats[axis + L[0]] = mm;
+      });
+    });
+  })();
+  function updateSignals(t) {
+    ["ns", "ew"].forEach(function (axis) { var s = signal(axis, t); ["r", "y", "g"].forEach(function (c) { lampMats[axis + c].emissiveIntensity = s === c ? 2.6 : 0.04; }); });
+  }
+  function nearest(list, v) { var b = list[0]; list.forEach(function (q) { if (Math.abs(q - v) < Math.abs(b - v)) b = q; }); return Math.abs(b - v) < 8 ? b : null; }
+  function moveCars(dt, t) {
     cars.forEach(function (c) {
-      var dist = (t * 26 + c.off * c.len) % c.len;
-      for (var i = 0; i < c.P.length; i++) {
-        var a = c.P[i], b = c.P[(i + 1) % c.P.length], seg = Math.hypot(b.x - a.x, b.y - a.y);
-        if (dist <= seg) { var f = dist / seg; c.g.position.set(a.x + (b.x - a.x) * f - OX, 0.7, a.y + (b.y - a.y) * f - OZ); c.g.rotation.y = -Math.atan2(b.y - a.y, b.x - a.x); return; }
-        dist -= seg;
+      var dist = c.d % c.len, i, a, b, seg = 0;
+      for (i = 0; i < c.P.length; i++) { a = c.P[i]; b = c.P[(i + 1) % c.P.length]; seg = Math.hypot(b.x - a.x, b.y - a.y); if (dist <= seg) break; dist -= seg; }
+      var f = seg ? dist / seg : 0, x = a.x + (b.x - a.x) * f, y = a.y + (b.y - a.y) * f;
+      var horiz = Math.abs(b.y - a.y) < 1, dir = horiz ? Math.sign(b.x - a.x) : Math.sign(b.y - a.y), road = horiz ? nearest(rowsY, y) : nearest(cols, x), target = 26;
+      if (road != null) {
+        var best = 1e9;
+        (horiz ? cols : rowsY).forEach(function (X) { var d = ((X) - (horiz ? x : y)) * dir; if (d > 0 && d < best && SIG[horiz ? X + "," + road : road + "," + X]) best = d; });
+        if (best < 70) {
+          var light = signal(horiz ? "ew" : "ns", t);
+          if (light === "r" || (light === "y" && best > 30)) { if (best >= 18) target = best > 22 ? Math.min(26, (best - 22) * 1.6) : 0; }
+        }
       }
+      c.v += (target - c.v) * Math.min(1, dt * 4); c.d += c.v * dt;
+      c.g.position.set(x - OX, 0.7, y - OZ); c.g.rotation.y = -Math.atan2(b.y - a.y, b.x - a.x);
     });
   }
 
@@ -1138,7 +1198,7 @@
     var target = useB ? cubeB : cubeA; useB = !useB;
     cubeCam.renderTarget = target; cubeCam.update(renderer, scene);
     ENVMATS.forEach(function (m) { m.envMap = target.texture; });
-  }
+   }
   // ---------------- Destinations ----------------
   var ME = { x: 130, y: 440 };
   function stop(c, r) { return r > 4 ? { x: cols[c + 1], y: 640 } : { x: cols[c + 1], y: rowsY[r + 1] }; }
@@ -1391,7 +1451,7 @@
     if (document.hidden || curTab !== "ride") return;
     T += dt;
     if (TOD[todI][0] == null && now - lastLive > 2000) { lastLive = now; applyTime(nowMins()); }
-    moveCars(T);
+    moveCars(dt, T); updateSignals(T);
     WAVES.offset.x += dt * 0.012; WAVES.offset.y += dt * 0.008;
     ducks.forEach(function (d) { d.a += dt * 0.22; d.g.position.set(37.5 + d.r * Math.cos(d.a), LAWN + 0.5, 36 + d.r * 0.75 * Math.sin(d.a)); d.g.rotation.y = -d.a - Math.PI / 2; });
     ripples.forEach(function (r) { var p = ((T + r.ph * 1.6) / 3.6) % 1, e = 1 - (1 - p) * (1 - p); r.m.scale.setScalar(1 + e * 8); r.m.material.opacity = 0.45 * (1 - e); });
@@ -1473,7 +1533,7 @@
     if (reloadOn && credit < 10) { credit += 50; addAct({ k: "topup", amt: 50, auto: 1 }); setTimeout(function () { toast("Parent plan added $50 of ride credit (demo)"); }, 1800); }
     setCredit();
     return used;
-                        }
+                          }
   // ---------- Ride sheet screens ----------
   function placeIndex(n) { for (var i = 0; i < places.length; i++) if (places[i].n === n) return i; return -1; }
   function quickPlaces() {
