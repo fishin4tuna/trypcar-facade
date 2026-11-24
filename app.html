@@ -971,52 +971,72 @@
   function showDest(p) { var d = $("dpin"); d.style.left = p.x + "px"; d.style.top = p.y + "px"; $("dpin-t").textContent = "Drop-off"; d.classList.add("on"); select(p); }
   function meVisible(v) { $("mepin").setAttribute("opacity", v ? "1" : "0"); }
 
-  // Vehicles: real 3D boxes
-  // TrypCar sedan: sleek white electric sedan in CSS 3D (body, glass cabin, wheels, lights, blue stripe)
+  // Vehicles: cars are scaled to fit one lane and drive on the right-hand side of the road
+  var CAR = 0.56, LANE = 4;
+  // Shifts a route to the right-hand side of the road, relative to the direction of travel
+  function laneShift(pts, closed, o) {
+    var P = pts.filter(function (p, i) { var q = pts[i - 1]; return !q || q.x !== p.x || q.y !== p.y; }), n = P.length, N = [];
+    if (n < 2) return P.slice();
+    for (var i = 0; i < (closed ? n : n - 1); i++) { var a = P[i], b = P[(i + 1) % n], L = Math.hypot(b.x - a.x, b.y - a.y) || 1; N.push({ x: -(b.y - a.y) / L * o, y: (b.x - a.x) / L * o }); }
+    return P.map(function (p, i) {
+      var u = closed ? N[(i - 1 + n) % n] : N[i - 1], v = N[i];
+      if (!u) u = v; if (!v) v = u;
+      var same = Math.abs(u.x - v.x) < 1e-6 && Math.abs(u.y - v.y) < 1e-6;
+      return { x: p.x + (same ? u.x : u.x + v.x), y: p.y + (same ? u.y : u.y + v.y) };
+    });
+  }
+  // TrypCar sedan: an original low, sleek electric fastback in CSS 3D
+  // (sculpted side profile, short hood, steep windshield, long glass roof, light strips, TrypCar blue stripe)
   function makeCar() {
     var w = div("", "position:absolute;left:0;top:0;transform-style:preserve-3d;", world);
     function f(css, bg) { var e = document.createElement("div"); e.style.cssText = "position:absolute;backface-visibility:visible;transform-origin:0 0;" + css + ";background:" + bg; w.appendChild(e); return e; }
+    // One panel across the car's full width, running from (x0, height z0) to (x1, height z1)
+    function slab(x0, z0, x1, z1, bg) {
+      var L = Math.hypot(x1 - x0, z1 - z0), a = Math.atan2(z0 - z1, x1 - x0) * 180 / Math.PI;
+      return f("left:" + x0 + "px;top:-7px;width:" + (L + 0.3).toFixed(2) + "px;height:14px;transform:translateZ(" + z0 + "px) rotateY(" + a.toFixed(2) + "deg)", bg);
+    }
     // soft ground shadow (lifted slightly so it never fights with the road)
     f("left:-17px;top:-9px;width:34px;height:18px;border-radius:50%;transform:translateZ(0.6px)", "radial-gradient(closest-side, rgba(0,0,0,0.55), rgba(0,0,0,0))");
-    // wheels
-    [[-9, -7.4], [9, -7.4], [-9, 7.4], [9, 7.4]].forEach(function (p) {
+    // wheels with silver rims
+    [[-9, -7.3], [9, -7.3], [-9, 7.3], [9, 7.3]].forEach(function (p) {
       var wh = document.createElement("div");
-      wh.style.cssText = "position:absolute;left:" + (p[0] - 3.6) + "px;top:" + (p[1] - 3.6) + "px;width:7.2px;height:7.2px;border-radius:50%;background:radial-gradient(circle, #94a3b8 0 28%, #0b1220 30%);transform-origin:50% 50%;transform:translateZ(3.6px) rotateX(90deg)";
+      wh.style.cssText = "position:absolute;left:" + (p[0] - 2.9) + "px;top:" + (p[1] - 2.9) + "px;width:5.8px;height:5.8px;border-radius:50%;background:radial-gradient(circle, #cbd5e1 0 22%, #475569 24% 34%, #0b1220 36%);transform-origin:50% 50%;transform:translateZ(2.9px) rotateX(90deg)";
       w.appendChild(wh);
     });
-    var side = "linear-gradient(180deg, #e2e8f0 0 20%, #2563eb 20% 34%, #f8fafc 34% 100%)";
-    // lower body: sides, nose, tail, hood/trunk top
-    f("left:-15px;top:7px;width:30px;height:5px;transform:translateZ(2px) rotateX(90deg)", side);
-    f("left:-15px;top:-7px;width:30px;height:5px;transform:translateZ(2px) rotateX(90deg)", side);
-    f("left:15px;top:-7px;width:5px;height:14px;transform:translateZ(2px) rotateY(-90deg)", "linear-gradient(90deg, #cbd5e1 0 55%, #eff6ff 55% 75%, #cbd5e1 75%)");
-    f("left:-15px;top:-7px;width:5px;height:14px;transform:translateZ(2px) rotateY(-90deg)", "linear-gradient(90deg, #cbd5e1 0 55%, #ef4444 55% 72%, #cbd5e1 72%)");
-    f("left:-15px;top:-7px;width:30px;height:14px;border-radius:5px 7px 7px 5px;transform:translateZ(7px)", "linear-gradient(90deg, #e9eef5, #ffffff 40%, #f1f5f9)");
-    // headlight glow
-    f("left:14px;top:-6px;width:3px;height:12px;border-radius:2px;transform:translateZ(6px)", "#dbeafe;box-shadow:0 0 10px 2px rgba(147,197,253,0.9)");
-    f("left:-15.5px;top:-6px;width:2px;height:12px;transform:translateZ(6px)", "#f87171;box-shadow:0 0 8px 1px rgba(248,113,113,0.8)");
-    // glass cabin: stacked layers give a curved, panoramic glass roof
-    var glass = "linear-gradient(180deg, #1e293b, #0b1220)";
-    f("left:-8px;top:6px;width:14px;height:2.5px;transform:translateZ(7px) rotateX(90deg)", glass);
-    f("left:-8px;top:-6px;width:14px;height:2.5px;transform:translateZ(7px) rotateX(90deg)", glass);
-    f("left:6px;top:-6px;width:2.5px;height:12px;transform:translateZ(7px) rotateY(-90deg)", "#334155");
-    f("left:-8px;top:-6px;width:2.5px;height:12px;transform:translateZ(7px) rotateY(-90deg)", "#0b1220");
-    f("left:-8px;top:-6px;width:14px;height:12px;border-radius:4px 6px 6px 4px;transform:translateZ(9.5px)", "#0b1220");
-    f("left:-6.5px;top:-5.2px;width:11px;height:10.4px;border-radius:4px 6px 6px 4px;transform:translateZ(10.8px)", "linear-gradient(120deg, #0b1220 0 38%, #475569 50%, #0b1220 64%)");
+    // sculpted sides: low nose, short hood, steep windshield, long glass roof flowing into a short fastback trunk
+    var SIDE = "polygon(1px 0, 29px 0, 30px 1.5px, 30px 3.2px, 28.5px 4.2px, 21px 5.2px, 15px 9.2px, 9px 9.3px, 3.5px 5.6px, 1px 5.2px, 0 3.5px, 0 1.2px)";
+    var sideBg = "linear-gradient(180deg, #94a3b8 0 12%, #f8fafc 12% 30%, #2563eb 30% 36%, #f8fafc 36% 56%, #111827 56% 100%)";
+    [7, -7].forEach(function (y) { f("left:-15px;top:" + y + "px;width:30px;height:10px;transform:translateZ(1.5px) rotateX(90deg);clip-path:" + SIDE, sideBg); });
+    // body top, from the tail to the nose
+    var paint = "linear-gradient(90deg, #e9eef5, #ffffff 45%, #f1f5f9)", glass = "linear-gradient(90deg, #0b1220, #334155 50%, #0b1220)";
+    slab(-15, 5.0, -14, 6.7, paint);
+    slab(-14, 6.7, -11.5, 7.1, paint);
+    slab(-11.5, 7.1, -6, 10.8, glass);
+    slab(-6, 10.8, 0, 10.7, "linear-gradient(90deg, #0b1220 0 38%, #475569 50%, #0b1220 64%)");
+    slab(0, 10.7, 6, 6.7, glass);
+    slab(6, 6.7, 13.5, 5.7, paint);
+    slab(13.5, 5.7, 15, 4.7, paint);
+    // nose and tail faces, with a red taillight band across the back
+    f("left:15px;top:-7px;width:3.2px;height:14px;transform:translateZ(1.5px) rotateY(-90deg)", "linear-gradient(90deg, #64748b 0 35%, #e2e8f0 35%)");
+    f("left:-15px;top:-7px;width:3.5px;height:14px;transform:translateZ(1.5px) rotateY(-90deg)", "linear-gradient(90deg, #64748b 0 30%, #e2e8f0 30% 62%, #ef4444 62% 84%, #e2e8f0 84%)");
+    // headlight strips and taillight glow
+    [-6.3, 2.7].forEach(function (y) { f("left:13.4px;top:" + y + "px;width:1.6px;height:3.6px;border-radius:1px;transform:translateZ(5.95px)", "#eff6ff;box-shadow:0 0 7px 2px rgba(147,197,253,0.9)"); });
+    f("left:-15.6px;top:-6.5px;width:0.8px;height:13px;transform:translateZ(4.2px)", "#f87171;box-shadow:0 0 8px 1px rgba(248,113,113,0.8)");
     // TrypCar blue roof badge
-    f("left:-2px;top:-1.5px;width:3px;height:3px;border-radius:50%;transform:translateZ(11px)", "#3b82f6;box-shadow:0 0 6px #60a5fa");
+    f("left:-4.5px;top:-1.5px;width:3px;height:3px;border-radius:50%;transform:translateZ(10.95px)", "#3b82f6;box-shadow:0 0 6px #60a5fa");
     return w;
   }
-  function place(el, x, y, ang) { el.style.transform = "translate3d(" + x + "px," + y + "px,0) rotateZ(" + ang + "deg)"; }
+  function place(el, x, y, ang) { el.style.transform = "translate3d(" + x + "px," + y + "px,0) rotateZ(" + ang + "deg) scale3d(" + CAR + "," + CAR + "," + CAR + ")"; }
   var myCar = makeCar(); myCar.style.display = "none";
 
-  // Ambient TrypCars looping around campus roads
+  // Ambient TrypCars looping around campus roads, in the right-hand lane
   var loops = [
     [{ x: 30, y: 140 }, { x: 430, y: 140 }, { x: 430, y: 240 }, { x: 30, y: 240 }],
     [{ x: 230, y: 140 }, { x: 230, y: 540 }, { x: 430, y: 540 }, { x: 430, y: 140 }],
     [{ x: 30, y: 340 }, { x: 330, y: 340 }, { x: 330, y: 540 }, { x: 30, y: 540 }],
     [{ x: -70, y: -60 }, { x: 530, y: -60 }, { x: 530, y: 640 }, { x: -70, y: 640 }]
   ];
-  var amb = loops.map(function (L, i) { return { L: L, el: makeCar(), off: i * 0.33, len: 0 }; });
+  var amb = loops.map(function (L, i) { return { L: laneShift(L, true, LANE), el: makeCar(), off: i * 0.33, len: 0 }; });
   amb.forEach(function (a2) { var t = 0; for (var i = 0; i < a2.L.length; i++) { var p = a2.L[i], q = a2.L[(i + 1) % a2.L.length]; t += Math.abs(q.x - p.x) + Math.abs(q.y - p.y); } a2.len = t; });
   function ambTick(now) {
     amb.forEach(function (a2) {
@@ -1032,6 +1052,7 @@
   requestAnimationFrame(ambTick);
 
   function moveCar(pts, ms, onT, done) {
+    pts = laneShift(pts, false, LANE);
     myCar.style.display = "";
     var segs = [], total = 0;
     for (var i = 0; i < pts.length - 1; i++) { var L = Math.hypot(pts[i + 1].x - pts[i].x, pts[i + 1].y - pts[i].y); segs.push(L); total += L; }
