@@ -1296,7 +1296,8 @@
     var seed = 20261124;
     function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
     var PAL = ["#f8fafc", "#cbd5e1", "#111827", "#6b7280", "#b91c1c", "#1d4ed8", "#14532d", "#92400e", "#e5e7eb", "#334155"];
-    var LAKE = { x: -820, z: -860, rx: 240, rz: 170 }, FARM = { x0: -1150, x1: -560, z0: 600, z1: 1060 }, PARK = { x0: 740, x1: 1110, z0: -930, z1: -600 };
+    // Willow Lake now sits well out in the countryside, far from the stadium, with woods in between
+    var LAKE = { x: -1250, z: -1050, rx: 240, rz: 170 }, FARM = { x0: -1150, x1: -560, z0: 600, z1: 1060 }, PARK = { x0: 740, x1: 1110, z0: -930, z1: -600 };
     var STAD = { x: -470.5, z: -530.5 };
     function stLocal(x, z) { var dx = x - STAD.x, dz = z - STAD.z; return [(dx - dz) * Math.SQRT1_2, (dx + dz) * Math.SQRT1_2]; }
     function stWorld(lx, lz) { return [STAD.x + (lx + lz) * Math.SQRT1_2, STAD.z + (lz - lx) * Math.SQRT1_2]; }
@@ -1328,13 +1329,30 @@
       }
       return false;
     }
+    // A real car shape for every car on the map: curved body with wheel arches, four wheels, tinted windows,
+    // bumpers and side mirrors. Two parts: the painted body, and the dark glass, tires and trim.
     var CARG = (function () {
-      var g = new THREE.BufferGeometry(), pos = [], nor = [], start = 0;
-      [[17, 2.4, 7.4, 0, 2.1, 0, 0], [9.2, 2.2, 6.6, -1, 4.4, 0, 1]].forEach(function (p) {
-        var b = new THREE.BoxGeometry(p[0], p[1], p[2]).toNonIndexed(); b.translate(p[3], p[4], p[5]);
-        var a = b.attributes.position.array, n = b.attributes.normal.array;
-        for (var i = 0; i < a.length; i++) { pos.push(a[i]); nor.push(n[i]); }
-        g.addGroup(start, a.length / 3, p[6]); start += a.length / 3;
+      var parts = [], pos = [], nor = [], start = 0, g = new THREE.BufferGeometry();
+      var body = new THREE.Shape();
+      body.moveTo(-8.3, 1.0); body.lineTo(-7.35, 1.0); body.absarc(-5.4, 1.5, 1.95, Math.PI + 0.26, -0.26, true); body.lineTo(3.45, 1.0);
+      body.absarc(5.4, 1.5, 1.95, Math.PI + 0.26, -0.26, true); body.lineTo(8.4, 1.0); body.lineTo(8.75, 1.9); body.lineTo(8.55, 2.6);
+      body.quadraticCurveTo(7.2, 3.25, 5.4, 3.45); body.lineTo(2.6, 3.75); body.lineTo(-5.8, 3.75); body.quadraticCurveTo(-7.6, 3.65, -8.65, 2.95); body.lineTo(-8.65, 1.6); body.lineTo(-8.3, 1.0);
+      var bg = new THREE.ExtrudeGeometry(body, { depth: 6.8, bevelEnabled: true, bevelThickness: 0.3, bevelSize: 0.3, bevelSegments: 1, curveSegments: 4 }); bg.translate(0, 0, -3.4);
+      var roof = new THREE.Shape(); roof.moveTo(-6.4, 3.6); roof.quadraticCurveTo(-4.8, 4.9, -2.7, 5.3); roof.quadraticCurveTo(-1, 5.55, 0.3, 5.3); roof.quadraticCurveTo(1.9, 4.9, 3.4, 3.6); roof.lineTo(-6.4, 3.6);
+      var rg = new THREE.ExtrudeGeometry(roof, { depth: 5.4, bevelEnabled: true, bevelThickness: 0.25, bevelSize: 0.25, bevelSegments: 1, curveSegments: 4 }); rg.translate(0, 0, -2.7);
+      parts.push([bg, 0], [rg, 1]);
+      [[5.4, 3.3], [5.4, -3.3], [-5.4, 3.3], [-5.4, -3.3]].forEach(function (w) { var t = new THREE.CylinderGeometry(1.42, 1.42, 1.0, 10); t.rotateX(Math.PI / 2); t.translate(w[0], 1.42, w[1]); parts.push([t, 1]); });
+      [8.55, -8.7].forEach(function (x) { var b = new THREE.BoxGeometry(0.5, 0.7, 7.0); b.translate(x, 1.45, 0); parts.push([b, 1]); });
+      [3.75, -3.75].forEach(function (z) { var m = new THREE.BoxGeometry(0.6, 0.4, 0.5); m.translate(2.9, 3.95, z + (z > 0 ? 0.25 : -0.25)); parts.push([m, 0]); });
+      [0, 1].forEach(function (gi) {
+        var cnt = 0;
+        parts.forEach(function (p) {
+          if (p[1] !== gi) return;
+          var b = p[0].index ? p[0].toNonIndexed() : p[0], a = b.attributes.position.array, n = b.attributes.normal.array;
+          for (var i = 0; i < a.length; i++) { pos.push(a[i]); nor.push(n[i]); }
+          cnt += a.length / 3;
+        });
+        g.addGroup(start, cnt, gi); start += cnt;
       });
       g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute("normal", new THREE.Float32BufferAttribute(nor, 3));
       return g;
@@ -1343,21 +1361,72 @@
     var carBody = new THREE.MeshStandardMaterial({ roughness: 0.35, metalness: 0.25 }), carGlass = mat("#0b1220", { r: 0.15, m: 0.6 });
     var resMat = mat("#30343b", { r: 0.95 });
     function placeAt(m, i, x, y, z, ry, sx, sy, sz) { dummy.position.set(x, y, z); dummy.rotation.set(0, ry || 0, 0); dummy.scale.set(sx || 1, sy || 1, sz || 1); dummy.updateMatrix(); m.setMatrixAt(i, dummy.matrix); }
-    // ----- Cedar Creek
+    // ----- Cedar Creek, with low stone crossings where the roads pass over it
     var curve = new THREE.CatmullRomCurve3([[640, -1600], [560, -1000], [690, -520], [585, -60], [705, 420], [600, 900], [690, 1400], [620, 1900]].map(function (p) { return new THREE.Vector3(p[0], 0, p[1]); }));
     var CP = curve.getSpacedPoints(260);
     function nearCreek(x, z, m) { for (var i = 0; i < CP.length; i += 2) { var dx = CP[i].x - x, dz = CP[i].z - z; if (dx * dx + dz * dz < m * m) return true; } return false; }
     ribbonMesh(CP, 54, 0.12, mat("#6b6a45", { r: 0.95 }), true); ribbonMesh(CP, 42, 0.26, mat("#a8935f", { r: 0.95 }), true); ribbonMesh(CP, 32, 0.42, waterMat, true);
     FARLABELS.push(["Cedar Creek", 600, 8, 60]);
+    var stoneM = (function () {
+      var S = 256, c = document.createElement("canvas"), h = document.createElement("canvas"); c.width = c.height = h.width = h.height = S;
+      var g = c.getContext("2d"), hg = h.getContext("2d"), sd = 91;
+      function rn() { sd = (sd * 16807) % 2147483647; return (sd - 1) / 2147483646; }
+      g.fillStyle = "#5e584e"; g.fillRect(0, 0, S, S); hg.fillStyle = "#202020"; hg.fillRect(0, 0, S, S);
+      for (var r = 0; r < 8; r++) {
+        var x = -(r % 2) * 20;
+        while (x < S) {
+          var w = 28 + rn() * 26, v = 120 + Math.floor(rn() * 50), t = Math.floor(rn() * 12);
+          [x, x - S, x + S].forEach(function (xx) {
+            g.fillStyle = "rgb(" + (v + t) + "," + (v + Math.floor(t / 2)) + "," + (v - 8) + ")"; g.fillRect(xx + 2, r * 32 + 2, w - 4, 28);
+            hg.fillStyle = "#cfcfcf"; hg.fillRect(xx + 3, r * 32 + 3, w - 6, 26);
+          });
+          x += w;
+        }
+      }
+      var map = new THREE.CanvasTexture(c); map.wrapS = map.wrapT = THREE.RepeatWrapping; map.encoding = THREE.sRGBEncoding; map.anisotropy = ANISO;
+      return new THREE.MeshStandardMaterial({ map: map, normalMap: heightToNormal(h, 4), normalScale: new THREE.Vector2(0.8, 0.8), roughness: 0.9 });
+    })();
+    function stoneBox(w, h, d) {
+      var gb = new THREE.BoxGeometry(w, h, d), uv = gb.attributes.uv, dims = [[d, h], [d, h], [w, d], [w, d], [w, h], [w, h]];
+      for (var f = 0; f < 6; f++) for (var k = 0; k < 4; k++) { var i = f * 4 + k; uv.setXY(i, uv.getX(i) * dims[f][0] / 10, uv.getY(i) * dims[f][1] / 10); }
+      return new THREE.Mesh(gb, stoneM);
+    }
+    var ROCKS = [];
     CURVES.forEach(function (c) {
-      var bi = -1, bd = 1e9;
-      c.pts.forEach(function (p, i) { for (var k = 0; k < CP.length; k += 2) { var dx = CP[k].x - p.x, dz = CP[k].z - p.z, d = dx * dx + dz * dz; if (d < bd) { bd = d; bi = i; } } });
+      var bi = -1, bd = 1e9, bk = 0;
+      c.pts.forEach(function (p, i) { for (var k = 0; k < CP.length; k += 2) { var dx = CP[k].x - p.x, dz = CP[k].z - p.z, d = dx * dx + dz * dz; if (d < bd) { bd = d; bi = i; bk = k; } } });
       if (bi < 1 || bd > 400) return;
-      var p = c.pts[bi], q = c.pts[Math.min(bi + 1, c.pts.length - 1)], ang = Math.atan2(q.z - p.z, q.x - p.x), br = new THREE.Group();
-      var deck = new THREE.Mesh(new THREE.BoxGeometry(60, 1.2, 20), mat("#9aa3b0", { r: 0.8 })); deck.position.y = 0.8; br.add(shade(deck));
-      [-10, 10].forEach(function (zz) { var rail = new THREE.Mesh(new THREE.BoxGeometry(60, 2.4, 1), mat("#7c8594", { r: 0.8 })); rail.position.set(0, 2.6, zz); br.add(shade(rail)); });
-      br.position.set(p.x, 0, p.z); br.rotation.y = -ang; scene.add(br);
+      var p = c.pts[bi], q = c.pts[Math.min(bi + 1, c.pts.length - 1)], ang = Math.atan2(q.z - p.z, q.x - p.x), ux = Math.cos(ang), uz = Math.sin(ang), nx = -uz, nz = ux;
+      var grp = new THREE.Group(); grp.position.set(p.x, 0, p.z); grp.rotation.y = -ang; scene.add(grp);
+      var deck = stoneBox(56, 1.16, 22); deck.position.set(0, 0.08, 0); deck.receiveShadow = true; grp.add(deck);
+      [-1, 1].forEach(function (s) {
+        var wall = stoneBox(56, 3.0, 1.2); wall.position.set(0, 1.16, s * 12); wall.castShadow = wall.receiveShadow = true; grp.add(wall);
+        var cap = new THREE.Mesh(new THREE.BoxGeometry(57, 0.3, 1.6), mat("#b5ad9c", { r: 0.8 })); cap.position.set(0, 2.81, s * 12); grp.add(cap);
+        [-14, 0, 14].forEach(function (x) { var op = new THREE.Mesh(new THREE.BoxGeometry(5, 1.0, 0.1), mat("#141414", { r: 1 })); op.position.set(x, 0.95, s * 12.65); grp.add(op); });
+      });
+      [[-30, -13.5], [30, 13.5]].forEach(function (o) { BLVDLAMPS.push([p.x + ux * o[0] + nx * o[1], 0.05, p.z + uz * o[0] + nz * o[1]]); });
+      for (var j = -10; j <= 10; j++) {
+        var kk = Math.max(1, Math.min(CP.length - 2, bk + j)), cp = CP[kk], cq = CP[kk + 1], ta = Math.atan2(cq.z - cp.z, cq.x - cp.x), cnx = -Math.sin(ta), cnz = Math.cos(ta);
+        [-1, 1].forEach(function (s) {
+          var off = 15.5 + rnd() * 4, x = cp.x + cnx * s * off, z = cp.z + cnz * s * off;
+          if (Math.abs((x - p.x) * nx + (z - p.z) * nz) < 16) return;
+          if (rnd() < 0.55) ROCKS.push([x, z, 1.1 + rnd() * 2.2, rnd() * 6]);
+          if (rnd() < 0.6) {
+            var rx2 = x + cnx * s * 3, rz2 = z + cnz * s * 3;
+            for (var r = 0; r < 4; r++) { var hx = rx2 + (rnd() - 0.5) * 3, hz = rz2 + (rnd() - 0.5) * 3, hh = 3 + rnd() * 2; cyl(hx, 0.3, hz, 0.1, hh, "#4d7c3a"); if (r < 2) cyl(hx, 0.3 + hh, hz, 0.26, 0.9, "#6b4423"); }
+          }
+        });
+      }
+      [-3, 3].forEach(function (j) {
+        var cp = CP[Math.max(0, Math.min(CP.length - 1, bk + j))], m = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false });
+        var r = new THREE.Mesh(new THREE.RingGeometry(0.85, 1, 40), m); r.rotation.x = -Math.PI / 2; r.position.set(cp.x, 0.5, cp.z); scene.add(r); ripples.push({ m: r, ph: j + 5 });
+      });
     });
+    if (ROCKS.length) {
+      var rk = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 0), new THREE.MeshStandardMaterial({ roughness: 0.95, flatShading: true }), ROCKS.length);
+      ROCKS.forEach(function (r, i) { placeAt(rk, i, r[0], 0.3, r[1], r[3], r[2], r[2] * 0.6, r[2] * 0.85); rk.setColorAt(i, col("#8a8478").multiplyScalar(0.75 + rnd() * 0.25)); });
+      rk.castShadow = rk.receiveShadow = true; scene.add(rk);
+    }
 
     // ----- The interstate along the southern horizon
     var HP = []; for (var hx = -2800; hx <= 2800; hx += 20) HP.push(new THREE.Vector3(hx, 0, hwZ(hx)));
@@ -2311,26 +2380,49 @@
       poseDiners(0);
     })();
 
+    // ----- People walking the sidewalks: real legs that step, arms that swing, shoes, hair and their own outfits
     var walkers = [], WSEG = SEGS.filter(function (s) { return s[0] !== -70 && s[0] !== 530 && s[1] !== -60 && s[1] !== 640; });
     var SHIRT = ["#4d1979", "#f8fafc", "#1e3a8a", "#b91c1c", "#6b7280", "#15803d", "#eab308", "#0f766e", "#db2777", "#111827"], SKIN = ["#f1c7a5", "#d9a47c", "#a56a43", "#7b4a2a", "#e8b896"];
-    var NW = 46, legs = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.42, 0.36, 1.7, 8).translate(0, 0.85, 0), mat("#1f2937", { r: 0.8 }), NW);
-    var torso = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.55, 0.6, 1.9, 8).translate(0, 2.6, 0), new THREE.MeshStandardMaterial({ roughness: 0.8 }), NW);
-    var heads = new THREE.InstancedMesh(new THREE.SphereGeometry(0.46, 10, 8).translate(0, 3.95, 0), new THREE.MeshStandardMaterial({ roughness: 0.7 }), NW);
+    var PANTS = ["#1e3a5f", "#1f2937", "#3b4a6b", "#a8926b", "#374151", "#0f172a", "#52525b"], HAIRC = ["#1c1917", "#3f2a1d", "#78350f", "#d6b370", "#0c0a09", "#7c2d12"], SHOE = ["#111827", "#f8fafc", "#7c2d12", "#1f2937"];
+    var NW = 46;
+    var wLegs = new THREE.InstancedMesh(new THREE.BoxGeometry(0.4, 1.75, 0.44).translate(0, -0.87, 0), new THREE.MeshStandardMaterial({ roughness: 0.85 }), NW * 2);
+    var wShoes = new THREE.InstancedMesh(new THREE.BoxGeometry(0.44, 0.26, 0.78).translate(0, -1.74, 0.14), new THREE.MeshStandardMaterial({ roughness: 0.6 }), NW * 2);
+    var wTorso = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.5, 0.56, 1.85, 10).translate(0, 2.75, 0), new THREE.MeshStandardMaterial({ roughness: 0.8 }), NW);
+    var wHead = new THREE.InstancedMesh(new THREE.SphereGeometry(0.44, 12, 10).translate(0, 4.12, 0.03), new THREE.MeshStandardMaterial({ roughness: 0.7 }), NW);
+    var wHair = new THREE.InstancedMesh(new THREE.SphereGeometry(0.47, 12, 8, 0, Math.PI * 2, 0, Math.PI * 0.55).translate(0, 4.17, -0.06), new THREE.MeshStandardMaterial({ roughness: 0.9 }), NW);
+    var wArms = new THREE.InstancedMesh(new THREE.BoxGeometry(0.24, 1.35, 0.24).translate(0, -0.66, 0), new THREE.MeshStandardMaterial({ roughness: 0.8 }), NW * 2);
+    var wHands = new THREE.InstancedMesh(new THREE.SphereGeometry(0.15, 8, 6).translate(0, -1.4, 0), new THREE.MeshStandardMaterial({ roughness: 0.7 }), NW * 2);
     for (var w = 0; w < NW; w++) {
       var sgI = Math.floor(rnd() * WSEG.length), sg = WSEG[sgI], horiz = sg[1] === sg[3];
       walkers.push({ s: sg, h: horiz, side: rnd() < 0.5 ? -1 : 1, lane: 10.2 + rnd() * 2.6, t: rnd(), dir: rnd() < 0.5 ? -1 : 1, v: 3.2 + rnd() * 2.4, ph: rnd() * 6 });
-      torso.setColorAt(w, col(SHIRT[w % SHIRT.length])); heads.setColorAt(w, col(SKIN[w % SKIN.length]));
+      wTorso.setColorAt(w, col(SHIRT[w % SHIRT.length])); wHead.setColorAt(w, col(SKIN[w % SKIN.length])); wHair.setColorAt(w, col(HAIRC[(w * 3) % HAIRC.length]));
+      for (var s2 = 0; s2 < 2; s2++) {
+        wLegs.setColorAt(w * 2 + s2, col(PANTS[(w * 5) % PANTS.length])); wShoes.setColorAt(w * 2 + s2, col(SHOE[(w * 7) % SHOE.length]));
+        wArms.setColorAt(w * 2 + s2, col(SHIRT[w % SHIRT.length])); wHands.setColorAt(w * 2 + s2, col(SKIN[w % SKIN.length]));
+      }
     }
-    scene.add(legs, torso, heads);
+    var WALK = [wLegs, wShoes, wTorso, wHead, wHair, wArms, wHands];
+    WALK.forEach(function (m) { scene.add(m); });
+    var WP = new THREE.Object3D(), WL = new THREE.Object3D(), WA = new THREE.Object3D(); WP.add(WL); WP.add(WA);
     function moveWalkers(dt, T) {
       walkers.forEach(function (p, i) {
         var a = p.h ? Math.min(p.s[0], p.s[2]) : Math.min(p.s[1], p.s[3]), b = p.h ? Math.max(p.s[0], p.s[2]) : Math.max(p.s[1], p.s[3]), L = b - a;
         p.t += p.dir * p.v * dt / L; if (p.t > 0.98) { p.t = 0.98; p.dir = -1; } if (p.t < 0.02) { p.t = 0.02; p.dir = 1; }
         var along = a + p.t * L, x = p.h ? along - OX : p.s[0] - OX + p.side * p.lane, z = p.h ? p.s[1] - OZ + p.side * p.lane : along - OZ;
-        var ry = p.h ? (p.dir > 0 ? 0 : Math.PI) : (p.dir > 0 ? -Math.PI / 2 : Math.PI / 2), bob = Math.abs(Math.sin(T * 7 + p.ph)) * 0.18;
-        put(legs, i, x, 0.6, z, ry, 0, 1, 1, 1); put(torso, i, x, 0.6 + bob, z, ry, 0, 1, 1, 1); put(heads, i, x, 0.6 + bob, z, ry, 0, 1, 1, 1);
+        var ry = p.h ? (p.dir > 0 ? Math.PI / 2 : -Math.PI / 2) : (p.dir > 0 ? 0 : Math.PI);
+        p.ph += dt * p.v * 1.35;
+        var sw = Math.sin(p.ph), bob = Math.abs(Math.cos(p.ph)) * 0.12;
+        WP.position.set(x, 0.6 + bob, z); WP.rotation.set(0, ry, 0); WP.updateMatrixWorld(true);
+        wTorso.setMatrixAt(i, WP.matrixWorld); wHead.setMatrixAt(i, WP.matrixWorld); wHair.setMatrixAt(i, WP.matrixWorld);
+        for (var k = 0; k < 2; k++) {
+          var sg2 = k ? 1 : -1;
+          WL.position.set(sg2 * 0.23, 1.85 - bob, 0); WL.rotation.set(sg2 * sw * 0.5, 0, 0); WL.updateMatrixWorld(true);
+          wLegs.setMatrixAt(i * 2 + k, WL.matrixWorld); wShoes.setMatrixAt(i * 2 + k, WL.matrixWorld);
+          WA.position.set(sg2 * 0.68, 3.5, 0); WA.rotation.set(-sg2 * sw * 0.42, 0, sg2 * 0.06); WA.updateMatrixWorld(true);
+          wArms.setMatrixAt(i * 2 + k, WA.matrixWorld); wHands.setMatrixAt(i * 2 + k, WA.matrixWorld);
+        }
       });
-      legs.instanceMatrix.needsUpdate = torso.instanceMatrix.needsUpdate = heads.instanceMatrix.needsUpdate = true;
+      WALK.forEach(function (m) { m.instanceMatrix.needsUpdate = true; });
     }
 
     var bg = new THREE.BufferGeometry();
@@ -2375,9 +2467,11 @@
     };
   })();
   // ---------------- Trees ----------------
+  // Around campus, some trees are dogwoods (low, wide, layered branches covered in white or soft pink blossoms)
+  // and some are Japanese maples (smaller, graceful, deep red and burgundy leaves).
   var TREEU = GTIME;
   (function () {
-    var LEAF = ["#1d7a4a", "#256b3d", "#1b6e55", "#3f7a2a", "#2f8a52"], BLOOM = ["#f9a8d4", "#fbcfe8", "#f5f3ff", "#e9d5ff", "#fda4af"];
+    var LEAF = ["#1d7a4a", "#256b3d", "#1b6e55", "#3f7a2a", "#2f8a52"], BLOOM = ["#f9a8d4", "#fbcfe8", "#f5f3ff", "#e9d5ff", "#fda4af"], MAPLE = ["#9b1c1c", "#b4232f", "#7f1d1d", "#a8321c"];
     var round = [], pines = [], fancy = [];
     TREES.forEach(function (t) {
       var near = t[1] > 0.5 || t[5], hsh = Math.abs(Math.sin(t[0] * 12.9898 + t[2] * 78.233) * 43758.5453) % 1;
@@ -2439,39 +2533,49 @@
       TIERS.forEach(function (T, j) { dummy.position.set(t[0], t[1] + th + s * T[0], t[2]); dummy.rotation.set(0, i + j, 0); dummy.scale.set(s * T[1], s * T[2], s * T[1]); dummy.updateMatrix(); cones.setMatrixAt(i * 3 + j, dummy.matrix); });
     });
     if (fancy.length) {
-      var NC = 7, CN = 22, ci = 0, ki = 0, bi = 0;
+      var NC = 7, CN = 22, ci = 0, ki = 0, bi = 0, BLS = [];
       var clumpM = new THREE.MeshStandardMaterial({ map: fmap, normalMap: fnorm, normalScale: new THREE.Vector2(0.9, 0.9), roughness: 0.82 }); sway(clumpM, "0.03");
       var cardM = new THREE.MeshStandardMaterial({ map: cmap, alphaTest: 0.45, side: THREE.DoubleSide, roughness: 0.75 }); sway(cardM, "0.08");
       var clumps = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 1), clumpM, fancy.length * NC);
       var cards = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1), cardM, fancy.length * CN);
       var branches = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.22, 0.38, 1, 5).translate(0, 0.5, 0), barkM, fancy.length * 3);
       fancy.forEach(function (t, i) {
-        var s = t[3], h = Math.abs(Math.sin(t[0] * 3.7 + t[2] * 1.3) * 1000) % 1, bloom = h < 0.16, elm = !bloom && h > 0.62;
-        var th = s * (elm ? 0.58 : 0.45), R = s * (elm ? 0.5 : 0.55), cy = t[1] + th + R * 0.62, k;
-        dummy.rotation.order = "XYZ"; dummy.position.set(t[0], t[1] + th / 2, t[2]); dummy.rotation.set(0, 0, 0); dummy.scale.set(1.15, th, 1.15); dummy.updateMatrix(); trunks.setMatrixAt(ti++, dummy.matrix);
+        var s = t[3], h = Math.abs(Math.sin(t[0] * 3.7 + t[2] * 1.3) * 1000) % 1, nearC = Math.hypot(t[0], t[2]) < 800;
+        var dog = nearC && h >= 0.16 && h < 0.29, maple = nearC && h >= 0.29 && h < 0.4, bloom = h < 0.08, elm = !dog && !maple && h > 0.62;
+        if (dog) s *= 0.8; if (maple) s *= 0.72;
+        var th = s * (elm ? 0.58 : dog ? 0.3 : maple ? 0.38 : 0.45), R = s * (elm ? 0.5 : dog ? 0.68 : maple ? 0.62 : 0.55), cy = t[1] + th + R * (dog ? 0.35 : maple ? 0.45 : 0.62), k;
+        var fy = elm ? 0.82 : dog ? 0.42 : maple ? 0.62 : 0.9, pink = Math.abs(Math.sin(t[0] * 1.9 + t[2] * 2.7) * 1000) % 1 > 0.6;
+        dummy.rotation.order = "XYZ"; dummy.position.set(t[0], t[1] + th / 2, t[2]); dummy.rotation.set(0, 0, 0); dummy.scale.set(maple ? 0.85 : 1.15, th, maple ? 0.85 : 1.15); dummy.updateMatrix(); trunks.setMatrixAt(ti++, dummy.matrix);
         dummy.rotation.order = "YXZ";
-        for (var b = 0; b < 3; b++) { dummy.position.set(t[0], t[1] + th * 0.82, t[2]); dummy.rotation.set(0.55, b * 2.09 + i, 0); dummy.scale.set(0.7, R * 1.1, 0.7); dummy.updateMatrix(); branches.setMatrixAt(bi++, dummy.matrix); }
+        for (var b = 0; b < 3; b++) { dummy.position.set(t[0], t[1] + th * 0.82, t[2]); dummy.rotation.set(dog ? 1.0 : maple ? 0.8 : 0.55, b * 2.09 + i, 0); dummy.scale.set(0.7, R * 1.1, 0.7); dummy.updateMatrix(); branches.setMatrixAt(bi++, dummy.matrix); }
         dummy.rotation.order = "XYZ";
-        var base = col(bloom ? BLOOM[i % BLOOM.length] : LEAF[Math.abs(t[4]) % LEAF.length]), cl = [];
+        var base = col(maple ? MAPLE[i % MAPLE.length] : bloom ? BLOOM[i % BLOOM.length] : LEAF[Math.abs(t[4]) % LEAF.length]), cl = [];
         for (k = 0; k < NC; k++) {
           var ox, oy, oz, szz;
-          if (!k) { ox = 0; oy = elm ? 0.28 : 0.1; oz = 0; szz = 0.95; }
-          else { var ang = k * 1.047 + rn() * 0.6, rad = (0.42 + rn() * 0.2) * (elm ? 0.9 : 1); ox = Math.cos(ang) * rad; oz = Math.sin(ang) * rad; oy = (rn() - 0.35) * 0.5 + (elm ? 0.12 : 0); szz = 0.6 + rn() * 0.18; }
+          if (dog) { var tier = k % 3, an = k * 2.1 + rn() * 0.5, rd = 0.6 - tier * 0.2; ox = Math.cos(an) * rd; oz = Math.sin(an) * rd; oy = -0.2 + tier * 0.32; szz = 0.66 - tier * 0.12; }
+          else if (!k) { ox = 0; oy = elm ? 0.28 : 0.1; oz = 0; szz = 0.95; }
+          else { var ang = k * 1.047 + rn() * 0.6, rad = (0.42 + rn() * 0.2) * (elm ? 0.9 : maple ? 1.1 : 1); ox = Math.cos(ang) * rad; oz = Math.sin(ang) * rad; oy = (rn() - 0.35) * (maple ? 0.3 : 0.5) + (elm ? 0.12 : 0); szz = 0.6 + rn() * 0.18; }
           var px = t[0] + ox * R, py = cy + oy * R, pz = t[2] + oz * R, rr = szz * R * 0.82;
-          dummy.position.set(px, py, pz); dummy.rotation.set(rn() * 3, rn() * 3, 0); dummy.scale.set(rr, rr * (elm ? 0.82 : 0.9), rr); dummy.updateMatrix(); clumps.setMatrixAt(ci, dummy.matrix);
+          dummy.position.set(px, py, pz); dummy.rotation.set(rn() * 3, rn() * 3, 0); dummy.scale.set(rr, rr * fy, rr); dummy.updateMatrix(); clumps.setMatrixAt(ci, dummy.matrix);
           var hn = Math.min(1, Math.max(0, (oy + 0.25) / 0.6));
           tmpC.copy(base).multiplyScalar(0.68 + 0.5 * hn); clumps.setColorAt(ci++, tmpC);
-          cl.push([px, py, pz, rr]);
+          cl.push([px, py, pz, rr, fy]);
+          if (dog) for (var b2 = 0; b2 < 6; b2++) { var ba = rn() * 6.283, br = Math.sqrt(rn()) * 0.85; BLS.push([px + Math.cos(ba) * br * rr, py + Math.sqrt(1 - br * br) * rr * fy * 0.95, pz + Math.sin(ba) * br * rr, pink && b2 % 2 ? 1 : 0, rn() * 3]); }
         }
         for (k = 0; k < CN; k++) {
           var c = cl[k % NC], u = rn() * 2 - 1, a2 = rn() * 6.283, sq = Math.sqrt(1 - u * u), dx = sq * Math.cos(a2), dy = u * 0.85 + 0.15, dz = sq * Math.sin(a2), cs = R * (0.42 + rn() * 0.18);
-          dummy.position.set(c[0] + dx * c[3] * 0.95, c[1] + dy * c[3] * 0.95, c[2] + dz * c[3] * 0.95);
+          dummy.position.set(c[0] + dx * c[3] * 0.95, c[1] + dy * c[3] * 0.95 * c[4], c[2] + dz * c[3] * 0.95);
           dummy.rotation.set(rn() * 3.14, rn() * 3.14, rn() * 3.14); dummy.scale.set(cs, cs, cs); dummy.updateMatrix(); cards.setMatrixAt(ki, dummy.matrix);
           tmpC.copy(base).multiplyScalar(0.85 + 0.45 * (dy * 0.5 + 0.5)); cards.setColorAt(ki++, tmpC);
         }
       });
       dummy.rotation.order = "XYZ";
       clumps.castShadow = branches.castShadow = true; clumps.receiveShadow = cards.receiveShadow = true; scene.add(clumps, cards, branches);
+      if (BLS.length) {
+        var blossom = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(0.42, 0), new THREE.MeshStandardMaterial({ roughness: 0.6, flatShading: true }), BLS.length);
+        BLS.forEach(function (b, i) { dummy.position.set(b[0], b[1], b[2]); dummy.rotation.set(0, b[4], 0); dummy.scale.set(1, 0.45, 1); dummy.updateMatrix(); blossom.setMatrixAt(i, dummy.matrix); blossom.setColorAt(i, col(b[3] ? "#f6b8c8" : "#fbf8f1")); });
+        scene.add(blossom);
+      }
     }
     dummy.rotation.set(0, 0, 0); dummy.scale.set(1, 1, 1);
     trunks.castShadow = true; leaves.castShadow = false; cones.castShadow = false; leaves.receiveShadow = cones.receiveShadow = true; scene.add(trunks, leaves, cones);
@@ -2878,7 +2982,7 @@
       L.el.style.opacity = keep ? "1" : String(clamp(edge / 36, 0.35, 1).toFixed(2));
       L.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) translate(-50%,-100%)";
     });
-                                             }
+      }
   // ---------------- Destination highlight, drop-off pin and route ----------------
   var hl = { g: null, mats: [] };
   function hiMat(m) { var c = m.clone(); c.emissive = col("#2563eb"); c.emissiveMap = null; c.emissiveIntensity = 0.55; hl.mats.push(c); return c; }
