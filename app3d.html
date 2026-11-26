@@ -765,12 +765,13 @@
   }
 
   // ---------------- Ground, sidewalks and roads ----------------
+  // The campus loop road runs straight along each side of town and curves around all four corners
   var cols = [30, 130, 230, 330, 430], rowsY = [40, 140, 240, 340, 440, 540];
   var ground = new THREE.Mesh(new THREE.PlaneGeometry(9000, 9000), mat("#2a5a37", { r: 0.95 }));
   ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
-  function strip(x1, z1, x2, z2, wid, h, hex, o) {
-    var horiz = z1 === z2, len = Math.abs(horiz ? x2 - x1 : z2 - z1);
-    var m = new THREE.Mesh(new THREE.BoxGeometry(horiz ? len + wid : wid, h, horiz ? wid : len + wid), mat(hex, o));
+  function strip(x1, z1, x2, z2, wid, h, hex, o, ext) {
+    var horiz = z1 === z2, len = Math.abs(horiz ? x2 - x1 : z2 - z1), e = ext == null ? wid : ext;
+    var m = new THREE.Mesh(new THREE.BoxGeometry(horiz ? len + e : wid, h, horiz ? wid : len + e), mat(hex, o));
     m.position.set((x1 + x2) / 2 - OX, h / 2, (z1 + z2) / 2 - OZ); m.receiveShadow = true; scene.add(m); return m;
   }
   function colSegs(x) { return x === 230 ? [[-60, 18], [140, 640]] : [[-60, 640]]; }
@@ -778,9 +779,9 @@
   var SEGS = [];
   cols.forEach(function (x) { colSegs(x).forEach(function (g) { SEGS.push([x, g[0], x, g[1]]); }); });
   rowsY.forEach(function (y) { rowSegs(y).forEach(function (g) { SEGS.push([g[0], y, g[1], y]); }); });
-  [[-70, -60, -70, 640], [530, -60, 530, 640], [-70, -60, 530, -60], [-70, 640, 530, 640]].forEach(function (r) { SEGS.push(r); });
-  SEGS.forEach(function (s) { strip(s[0], s[1], s[2], s[3], 30, 0.6, "#8a93a3", { r: 0.9 }); });
-  SEGS.forEach(function (s) { strip(s[0], s[1], s[2], s[3], 16, 0.7, "#23272f", { r: 0.95 }); });
+  [[-70, 10, -70, 570], [530, 10, 530, 570], [0, -60, 460, -60], [0, 640, 460, 640]].forEach(function (r) { SEGS.push(r.concat([1])); });
+  SEGS.forEach(function (s) { strip(s[0], s[1], s[2], s[3], 30, 0.6, "#8a93a3", { r: 0.9 }, s[4] ? 0 : null); });
+  SEGS.forEach(function (s) { strip(s[0], s[1], s[2], s[3], 16, 0.7, "#23272f", { r: 0.95 }, s[4] ? 0 : null); });
   // A flat ribbon that follows a winding line (country roads and the creek)
   function ribbonMesh(P, width, y, material, wobble) { return ribbonBatch([P], width, y, material, wobble); }
   // Several winding ribbons drawn together in one go (all the neighborhood streets share one batch)
@@ -825,6 +826,14 @@
     var shoulder = mat("#5f6457", { r: 0.95 }), asphalt = mat("#262a31", { r: 0.95 });
     CURVES.forEach(function (c) { ribbonMesh(c.pts, 22, 0.35, shoulder); ribbonMesh(c.pts, 14, 0.7, asphalt); });
   })();
+  // The four curved corners of the campus loop road
+  var RINGARCS = [], RINGC = [];
+  [[0, 10, Math.PI], [460, 10, 1.5 * Math.PI], [460, 570, 0], [0, 570, 0.5 * Math.PI]].forEach(function (a) {
+    var pts = [];
+    for (var k = 0; k <= 20; k++) { var t = a[2] + k / 20 * Math.PI / 2; pts.push(new THREE.Vector3(a[0] + 70 * Math.cos(t) - OX, 0, a[1] + 70 * Math.sin(t) - OZ)); }
+    ribbonMesh(pts, 30, 0.6, mat("#8a93a3", { r: 0.9 })); ribbonMesh(pts, 16, 0.7, mat("#23272f", { r: 0.95 }));
+    RINGARCS.push(pts); RINGC.push([a[0] - OX, a[1] - OZ]);
+  });
   // Lane dashes and crosswalks, drawn as many small pieces in one go
   var XS = [-70].concat(cols, [530]), YS = [-60].concat(rowsY, [640]);
   function nearCross(v, list) { for (var i = 0; i < list.length; i++) if (Math.abs(v - list[i]) < 14) return true; return false; }
@@ -842,6 +851,7 @@
   var dashGeo = new THREE.PlaneGeometry(1, 1); dashGeo.rotateX(-Math.PI / 2);
   var dashMesh;
   CURVES.forEach(function (c) { for (var i = 2; i < c.pts.length - 1; i += 2) { var p = c.pts[i], q = c.pts[i + 1]; dashes.push([p.x, p.z, 7, 1.2, Math.atan2(q.z - p.z, q.x - p.x)]); } });
+  RINGARCS.forEach(function (P) { for (var i = 1; i < P.length - 1; i += 3) { var p = P[i], q = P[i + 1]; dashes.push([p.x, p.z, 7, 1.2, Math.atan2(q.z - p.z, q.x - p.x)]); } });
   dashMesh = new THREE.InstancedMesh(dashGeo, mat("#e8e2cf", { r: 0.7 }), dashes.length);
   dashes.forEach(function (d, i) { dummy.position.set(d[0], 0.72, d[1]); dummy.rotation.set(0, -(d[4] || 0), 0); dummy.scale.set(d[2], 1, d[3]); dummy.updateMatrix(); dashMesh.setMatrixAt(i, dummy.matrix); });
   dummy.rotation.set(0, 0, 0);
@@ -851,10 +861,31 @@
   function bxOf(c) { return c < 0 ? -56 : c > 3 ? 444 : cols[c] + 14; }
   function byOf(r) { return r < 0 ? -46 : r > 4 ? 554 : rowsY[r] + 14; }
   var BLOCKS = {};
-  function block(c, r, town, w) {
+  // A block of lawn. Corner blocks (rc = center of the curved road) get a rounded corner that follows the curve.
+  function block(c, r, town, w, rc) {
     var G = new THREE.Group(); G.position.set(bxOf(c) - OX, 0, byOf(r) - OZ); scene.add(G);
     G.userData.w = w || 72; BLOCKS[c + "," + r] = G;
-    var lawn = slab(G, town ? "#2f6b45" : "#3d8a52", 0, 0, w || 72, 72, LAWN, 0, { r: 0.95 }); lawn.castShadow = false; lawn.userData.lawn = true;
+    G.userData.inside = function (x, z, m) {
+      if (!rc) return true;
+      var dx = x - rc[0], dz = z - rc[1];
+      if (dx * (rc[0] > 36 ? -1 : 1) <= 0 || dz * (rc[1] > 36 ? -1 : 1) <= 0) return true;
+      return Math.hypot(dx, dz) < 54 - (m || 0);
+    };
+    var lawn;
+    if (rc) {
+      var pts = [], sq = [[0, 0], [72, 0], [72, 72], [0, 72]];
+      for (var e = 0; e < 4; e++) {
+        var a = sq[e], b = sq[(e + 1) % 4];
+        for (var k = 0; k < 72; k++) {
+          var px = a[0] + (b[0] - a[0]) * k / 72, pz = a[1] + (b[1] - a[1]) * k / 72;
+          if (!G.userData.inside(px, pz, 0)) { var ddx = px - rc[0], ddz = pz - rc[1], dd = Math.hypot(ddx, ddz); px = rc[0] + ddx / dd * 54; pz = rc[1] + ddz / dd * 54; }
+          pts.push(new THREE.Vector2(px, -pz));
+        }
+      }
+      var lgeo = new THREE.ExtrudeGeometry(new THREE.Shape(pts), { depth: LAWN, bevelEnabled: false, curveSegments: 1 }); lgeo.rotateX(-Math.PI / 2);
+      lawn = new THREE.Mesh(lgeo, mat(town ? "#2f6b45" : "#3d8a52", { r: 0.95 })); lawn.receiveShadow = true; G.add(lawn);
+    } else { lawn = slab(G, town ? "#2f6b45" : "#3d8a52", 0, 0, w || 72, 72, LAWN, 0, { r: 0.95 }); lawn.castShadow = false; }
+    lawn.userData.lawn = true;
     return G;
   }
   // Arena
@@ -907,11 +938,9 @@
     function tr(x, y, z, sx, sy, sz, hex, ry, rx) { trim(gx + x, y, gz + z, sx, sy, sz, hex, ry, rx); }
     function cy(x, y, z, r, h, hex) { cyl(gx + x, y, gz + z, r, h, hex); }
     function li(x, y, z, sx, sy, sz, green) { lite(gx + x, y, gz + z, sx, sy, sz, green); }
-    // Main hall with its curved roof
     bldg(G, "glass", 4, 4, 64, 20, 12);
     var geo = new THREE.CylinderGeometry(10, 10, 64, 28, 1, false, 0, Math.PI); geo.rotateZ(Math.PI / 2);
     var rf = new THREE.Mesh(geo, mat("#64748b", { r: 0.4, m: 0.5, env: 0.6 })); rf.scale.y = 0.7; rf.position.set(36, LAWN + 12, 14); G.add(shade(rf));
-    // Glass-front atrium
     slab(G, "#d6d3d1", 8, 23.9, 56, 6.1, 0.3, LAWN, { r: 0.4 });
     slab(G, "#cbd5e1", 7.5, 23.8, 57, 6.6, 0.5, LAWN + 10, { r: 0.6 });
     var glassM = new THREE.MeshStandardMaterial({ color: col("#bfe3ff"), transparent: true, opacity: 0.2, roughness: 0.05, metalness: 0.3, envMap: cubeA.texture, envMapIntensity: 1.2, depthWrite: false, side: THREE.DoubleSide }); ENVMATS.push(glassM);
@@ -937,7 +966,6 @@
       [-1.9, 1.9].forEach(function (o) { tr(rx + o, LAWN + 4.2, 27.6, 0.3, 1.5, 1.5, "#7f1d1d"); });
       tr(rx, LAWN + 0.9, 26.2, 1.0, 0.45, 2.2, "#334155");
     }
-    // A lit "REC CENTER" sign on the atrium roof
     var scv = document.createElement("canvas"); scv.width = 512; scv.height = 64; var sgc = scv.getContext("2d");
     sgc.fillStyle = "#0b1a3a"; sgc.fillRect(0, 0, 512, 64); sgc.fillStyle = "#34d399"; sgc.fillRect(0, 58, 512, 6);
     sgc.fillStyle = "#ffffff"; sgc.font = "800 42px 'Plus Jakarta Sans', Arial, sans-serif"; sgc.textAlign = "center"; sgc.textBaseline = "middle"; sgc.fillText("REC CENTER", 256, 31);
@@ -945,10 +973,8 @@
     var smt = new THREE.MeshStandardMaterial({ map: stx, emissive: new THREE.Color(1, 1, 1), emissiveMap: stx, emissiveIntensity: 0, roughness: 0.5 }); smt.userData.base = 0.9; smt.userData.day = 0.15; GLOW.push(smt);
     var sp = new THREE.Mesh(new THREE.PlaneGeometry(20, 2.5), smt); sp.position.set(36, LAWN + 11.8, 30.45); G.add(sp);
     tr(36, LAWN + 11.8, 30.3, 20.4, 2.7, 0.2, "#0b1a3a");
-    // Walk from the doors to both gates
     flat(G, "#c9ced6", 14, 30, 34, 2.2);
-
-    // ----- Tennis courts: blue playing surfaces with white lines on a green surround
+    // Tennis courts
     var cc = document.createElement("canvas"); cc.width = 340; cc.height = 375; var g = cc.getContext("2d");
     g.fillStyle = "#2f7d52"; g.fillRect(0, 0, 340, 375);
     [10.5, 27.5].forEach(function (mx) {
@@ -964,7 +990,6 @@
     var ct = new THREE.CanvasTexture(cc); ct.encoding = THREE.sRGBEncoding; ct.anisotropy = ANISO;
     var cs = new THREE.Mesh(new THREE.PlaneGeometry(34, 37.5), new THREE.MeshStandardMaterial({ map: ct, roughness: 0.75 }));
     cs.rotation.x = -Math.PI / 2; cs.position.set(19, LAWN + 0.08, 50.75); cs.receiveShadow = true; G.add(cs);
-    // Nets with posts, a white top band and a center strap
     var nc = document.createElement("canvas"); nc.width = nc.height = 32; var ng = nc.getContext("2d"); ng.fillStyle = "#0f172a"; ng.fillRect(0, 0, 32, 3); ng.fillRect(0, 0, 3, 32);
     var nt = new THREE.CanvasTexture(nc); nt.wrapS = nt.wrapT = THREE.RepeatWrapping; nt.repeat.set(25, 4);
     var netMat = new THREE.MeshStandardMaterial({ map: nt, alphaTest: 0.35, side: THREE.DoubleSide, roughness: 0.9 });
@@ -974,7 +999,6 @@
       tr(mx, LAWN + 2.25, 50.75, 12.6, 0.22, 0.1, "#f8fafc"); tr(mx, LAWN + 1.2, 50.75, 0.12, 2.1, 0.12, "#f8fafc");
     });
     [44.5, 57].forEach(function (z) { tr(19, LAWN + 1.05, z, 1.3, 0.25, 4.5, "#e2e8f0"); tr(19, LAWN + 0.5, z - 1.6, 1.1, 1, 0.25, "#475569"); tr(19, LAWN + 0.5, z + 1.6, 1.1, 1, 0.25, "#475569"); });
-    // The 10-foot chain-link fence with green windscreen; the gate faces the gym, away from the road
     var lc = document.createElement("canvas"); lc.width = lc.height = 64; var lg2 = lc.getContext("2d");
     lg2.strokeStyle = "#aab2bd"; lg2.lineWidth = 3; lg2.beginPath();
     for (k = -64; k <= 64; k += 32) { lg2.moveTo(k, 0); lg2.lineTo(k + 64, 64); lg2.moveTo(k + 64, 0); lg2.lineTo(k, 64); }
@@ -992,20 +1016,17 @@
     }
     fence(2, 32, 17, 32); fence(21, 32, 36, 32); fence(36, 32, 36, 69.5); fence(36, 69.5, 2, 69.5); fence(2, 69.5, 2, 32);
     cy(17, LAWN, 32, 0.22, 9, "#374151"); cy(21, LAWN, 32, 0.22, 9, "#374151"); tr(19, LAWN + 8.9, 32, 4.2, 0.2, 0.2, "#374151");
-    // Court lights
     [[1, 31], [37.4, 31], [1, 70.6], [37.4, 70.6]].forEach(function (p) {
       cy(p[0], LAWN, p[1], 0.3, 15, "#64748b"); tr(p[0], LAWN + 15.2, p[1], 2.6, 0.6, 1.2, "#e2e8f0");
       glowSprite(G, p[0], LAWN + 15, p[1], 12, "#f8fafc", 0.8);
     });
     glowPool(G, 19, LAWN + 0.2, 50.75, 40, 44, "#f1f5f9", 0.32);
-
-    // ----- Outdoor lap pool on a raised stone deck
+    // Outdoor lap pool on a raised stone deck
     var DY = LAWN + 1, wx0 = 44, wx1 = 64, wz0 = 39, wz1 = 62.5;
     slab(G, "#e7e2d8", 39, 32, 30, wz0 - 32, 1, LAWN, { r: 0.8 });
     slab(G, "#e7e2d8", 39, wz1, 30, 69.5 - wz1, 1, LAWN, { r: 0.8 });
     slab(G, "#e7e2d8", 39, wz0, wx0 - 39, wz1 - wz0, 1, LAWN, { r: 0.8 });
     slab(G, "#e7e2d8", wx1, wz0, 69 - wx1, wz1 - wz0, 1, LAWN, { r: 0.8 });
-    // Tiled pool floor with lane lines; it glows turquoise at night from the underwater lights
     var pc = document.createElement("canvas"); pc.width = 200; pc.height = 235; var pgc = pc.getContext("2d");
     pgc.fillStyle = "#53c1ea"; pgc.fillRect(0, 0, 200, 235); pgc.fillStyle = "rgba(255,255,255,0.16)";
     for (k = 0; k < 200; k += 10) pgc.fillRect(k, 0, 1, 235);
@@ -1019,18 +1040,15 @@
     tr(wx0 + 0.08, LAWN + 0.55, 50.75, 0.16, 0.9, 23.5, "#7dd3fc"); tr(wx1 - 0.08, LAWN + 0.55, 50.75, 0.16, 0.9, 23.5, "#7dd3fc");
     var pw = new THREE.Mesh(new THREE.PlaneGeometry(wx1 - wx0, wz1 - wz0), poolMat); pw.rotation.x = -Math.PI / 2; pw.position.set(54, LAWN + 0.82, 50.75); G.add(pw);
     glowPool(G, 54, LAWN + 0.2, 50.75, 24, 28, "#22d3ee", 0.55);
-    // White coping, lane ropes, starting blocks, ladders
     tr(54, DY + 0.07, wz0 - 0.3, 21.2, 0.14, 0.6, "#f8fafc"); tr(54, DY + 0.07, wz1 + 0.3, 21.2, 0.14, 0.6, "#f8fafc");
     tr(wx0 - 0.3, DY + 0.07, 50.75, 0.6, 0.14, 24.7, "#f8fafc"); tr(wx1 + 0.3, DY + 0.07, 50.75, 0.6, 0.14, 24.7, "#f8fafc");
     var RL = (wz1 - wz0 - 1.2) / 18;
     for (k = 1; k <= 3; k++) for (i = 0; i < 18; i++) tr(wx0 + k * 5, LAWN + 0.86, wz0 + 0.6 + i * RL + RL / 2, 0.32, 0.32, RL - 0.08, i % 2 ? "#f8fafc" : (i % 4 === 0 ? "#dc2626" : "#1d4ed8"));
     [46.5, 51.5, 56.5, 61.5].forEach(function (x) { tr(x, DY + 0.5, wz0 - 1.1, 1.4, 1.0, 1.2, "#f8fafc"); tr(x, DY + 1.05, wz0 - 1.0, 1.4, 0.12, 1.3, "#1d4ed8", 0, 0.25); });
     [[wx1 - 0.6, 44], [wx1 - 0.6, 45.4], [wx0 + 0.6, 57], [wx0 + 0.6, 58.4]].forEach(function (p) { cy(p[0], LAWN + 0.2, p[1], 0.08, 2.0, "#e5e7eb"); });
-    // Lifeguard chair on the east deck, facing the pool
     [[65.6, 49.85], [67.4, 49.85], [65.6, 51.65], [67.4, 51.65]].forEach(function (p) { cy(p[0], DY, p[1], 0.1, 5, "#f8fafc"); });
     tr(66.5, DY + 5, 50.75, 2, 0.25, 2, "#f8fafc"); tr(67.45, DY + 6, 50.75, 0.2, 2, 2, "#f8fafc");
     tr(66.5, DY + 2.5, 49.85, 1.8, 0.15, 0.15, "#f8fafc"); tr(66.5, DY + 2.5, 51.65, 1.8, 0.15, 0.15, "#f8fafc");
-    // Loungers along the south deck, with an umbrella in the middle
     [42, 45.5, 49, 56.5, 60, 63.5].forEach(function (x) {
       tr(x, DY + 0.75, 65.5, 1.5, 0.3, 4.2, "#f8fafc"); tr(x, DY + 1.5, 67.4, 1.5, 0.22, 1.6, "#f8fafc", 0, -0.75);
       tr(x, DY + 0.92, 65.0, 1.3, 0.05, 2.0, "#38bdf8");
@@ -1042,7 +1060,6 @@
     }
     umbrella(52.75, 66, "#0d9488", 2.8, 5.2);
     umbrella(66.5, 50.75, "#dc2626", 1.6, 8.2);
-    // Black iron fencing with finials, and a gated entry from the gym
     function iron(x1, z1, x2, z2) {
       var len = Math.hypot(x2 - x1, z2 - z1), n = Math.max(1, Math.round(len / 0.9)), np = Math.max(1, Math.round(len / 3.5)), j, t;
       for (j = 0; j <= n; j++) { t = j / n; var px = x1 + (x2 - x1) * t, pz = z1 + (z2 - z1) * t; cy(px, DY, pz, 0.05, 4.6, "#111827"); FINS.push([gx + px, DY + 4.7, gz + pz, 0.1]); }
@@ -1054,7 +1071,6 @@
     cy(41, DY, 32, 0.28, 6, "#0b0f14"); cy(44.5, DY, 32, 0.28, 6, "#0b0f14"); FINS.push([gx + 41, DY + 6.2, gz + 32, 0.32]); FINS.push([gx + 44.5, DY + 6.2, gz + 32, 0.32]);
     tr(42.75, DY + 5.8, 32, 3.8, 0.2, 0.2, "#111827");
     slab(G, "#e7e2d8", 40.5, 30.6, 4.5, 1.4, 0.55, LAWN, { r: 0.8 });
-    // Hedges along the road sides
     tr(70.15, LAWN + 1.6, 50.75, 1.5, 3.2, 37.5, "#2f6b33"); tr(54.95, LAWN + 1.6, 70.25, 31.9, 3.2, 1.4, "#2f6b33");
     for (k = 0; k < 29; k++) LEAVES.push([gx + 70.15, LAWN + 3.25, gz + 33 + k * 1.3, 0.95]);
     for (k = 0; k < 25; k++) LEAVES.push([gx + 39.6 + k * 1.28, LAWN + 3.25, gz + 70.25, 0.95]);
@@ -1075,9 +1091,10 @@
     slab(G, "#e7e2d6", 12, 40, 48, 10, 3, LAWN + 20); gable(G, "#d6d0c2", 12, 40, 48, 10, 23, 5);
     grandSteps(G, 12, 50, 48, 4, 2.4, 1.3); autoTrees(G, [[8, 6, 56, 56]], 9);
   })();
-  // Student Union: the rooftop bar is added with the finishing touches; the teal wing sits just inside the main hall's back wall
+  // Student Union: rooftop garden, a modern glass wing (set just inside the main hall's back wall), grand steps and a plaza
   (function () {
-    var G = block(1, 3); bldg(G, "sand", 6, 6, 40, 40, 28);
+    var G = block(1, 3); bldg(G, "sand", 6, 6, 40, 40, 28); slab(G, "#2f8f57", 12, 12, 28, 28, 0.5, LAWN + 28, { r: 0.95 });
+    tree(G, 18, 18, 7, 1, LAWN + 28.5); tree(G, 32, 30, 7, 2, LAWN + 28.5);
     bldg(G, "teal", 44, 16, 22, 29.4, 18); flat(G, "#b6bcc6", 8, 50, 56, 16); grandSteps(G, 10, 46, 32, 3, 2, 1.3);
   })();
   // Campus Lake: reflective rippling water, a sandy bank, a cobblestone strolling path with stone curbs,
@@ -1097,7 +1114,6 @@
     function ringShape(o, inner) { var s = lakeShape(o); s.holes.push(lakeShape(inner)); return s; }
     function lay(shape, y, m) { var geo = new THREE.ShapeGeometry(shape, 24); geo.rotateX(-Math.PI / 2); var me = new THREE.Mesh(geo, m); me.position.set(36, y, 35); me.receiveShadow = true; G.add(me); return me; }
     lay(lakeShape(0.7), LAWN + 0.04, mat("#6f5f41", { r: 0.95 })); lay(lakeShape(0.665), LAWN + 0.08, mat("#c9b07e", { r: 0.95 })); lay(lakeShape(0.62), LAWN + 0.14, waterMat);
-    // Cobblestones: rows of rounded stones in warm grays, with a relief map so each stone catches the light
     var cobble = (function () {
       var S = 256, c = document.createElement("canvas"), hc = document.createElement("canvas"); c.width = c.height = hc.width = hc.height = S;
       var g = c.getContext("2d"), h = hc.getContext("2d"), sd = 77, rows = 8, rh = S / rows;
@@ -1122,7 +1138,6 @@
     lay(ringShape(0.95, 0.77), LAWN + 0.07, cobble);
     var curb = mat("#8f8a80", { r: 0.8 });
     lay(ringShape(0.968, 0.95), LAWN + 0.11, curb); lay(ringShape(0.77, 0.752), LAWN + 0.11, curb);
-    // Footbridge with stone abutments and wooden railings
     slab(G, "#8b5a2b", 12, 31.2, 48, 4.8, 0.5, LAWN + 0.75, { r: 0.8 });
     slab(G, "#9c9486", 10.5, 30.6, 2.5, 6, 0.8, LAWN, { r: 0.9 }); slab(G, "#9c9486", 59, 30.6, 2.5, 6, 0.8, LAWN, { r: 0.9 });
     for (i = 0; i <= 12; i++) [31.4, 35.8].forEach(function (z) { cyl(G.position.x + 12 + i * 4, LAWN + 1.25, G.position.z + z, 0.14, 1.9, "#3b2a1a"); });
@@ -1130,7 +1145,6 @@
     [[25, 44, 2.2], [27.8, 47, 1.6], [23.2, 47.6, 1.2], [47.5, 24.5, 1.8], [50, 27, 1.2]].forEach(function (p) { var pad = new THREE.Mesh(new THREE.CylinderGeometry(p[2], p[2], 0.1, 14), mat("#3f8f4a", { r: 0.6 })); pad.position.set(p[0], LAWN + 0.24, p[1]); G.add(pad); });
     FLOWERS.push([G.position.x + 25.5, LAWN + 0.45, G.position.z + 44.3, 6]); FLOWERS.push([G.position.x + 47.8, LAWN + 0.45, G.position.z + 24.2, 3]);
     [[6, 6], [66, 8], [5, 66], [66, 66]].forEach(function (p, k) { tree(G, p[0], p[1], 10 + (k % 3) * 2, k + 3); });
-    // Two graceful white swans: S-curved neck, folded layered wings, orange beak with a black knob, raised tail
     function swan() {
       var g = new THREE.Group(), W = mat("#fbfbf7", { r: 0.5 }), W2 = mat("#eceee9", { r: 0.6 }), OR = mat("#f97316", { r: 0.4 }), BK = mat("#0b0b0b", { r: 0.35 });
       var sph = new THREE.SphereGeometry(1, 22, 14), half = new THREE.SphereGeometry(1, 18, 10, 0, Math.PI * 2, 0, Math.PI / 2);
@@ -1185,19 +1199,28 @@
     bldg(G, "geo", 40, 14, 28, 50, 26); gable(G, "#3d4350", 40, 14, 28, 50, 26, 14, true); bldg(G, "geo", 31, 4, 10, 10, 42); cupola(G, 36, 9, LAWN + 42);
     tree(G, 36, 62, 12, 2); tree(G, 20, 64, 10, 1);
   })();
-  // Apartments: white tower with a rooftop garden
-  (function () { var G = block(2, 4); bldg(G, "white", 10, 8, 52, 52, 58); slab(G, "#2f8f57", 16, 14, 40, 40, 0.5, LAWN + 58, { r: 0.95 }); [[26, 24], [42, 34], [32, 44]].forEach(function (p, i) { tree(G, p[0], p[1], 7, i, LAWN + 58.5); }); autoTrees(G, [[10, 8, 52, 52]], 12); })();
+  // Apartments: white tower; its rooftop restaurant overlooking the lake is added with the finishing touches
+  (function () { var G = block(2, 4); bldg(G, "white", 10, 8, 52, 52, 58); autoTrees(G, [[10, 8, 52, 52]], 12); })();
   // Parking garage with a striped rooftop lot
   (function () { var G = block(3, 4); bldg(G, "concrete", 6, 6, 60, 60, 16); slab(G, "#6b7280", 5, 5, 62, 1.2, 2.2, LAWN + 16); slab(G, "#6b7280", 5, 65.8, 62, 1.2, 2.2, LAWN + 16); })();
   // Surrounding town: houses, parks, a ball field, apartments and Founding Partner businesses
-  function houses(c, r) {
-    var G = block(c, r, true), sd = c * 7 + r * 3 + 20;
-    [[6, 8], [42, 8], [6, 42], [42, 42]].forEach(function (p, i) { if ((sd + i) % 4 === 3) { tree(G, p[0] + 12, p[1] + 10, 12, i); return; } house(G, p[0], p[1], 24, 18, sd + i); });
+  function houses(c, r, rc) {
+    var G = block(c, r, true, null, rc), IN = G.userData.inside, sd = c * 7 + r * 3 + 20;
+    [[6, 8], [42, 8], [6, 42], [42, 42]].forEach(function (p, i) {
+      var ok = IN(p[0], p[1], 2) && IN(p[0] + 24, p[1], 2) && IN(p[0], p[1] + 18, 2) && IN(p[0] + 24, p[1] + 18, 2);
+      if (!ok || (sd + i) % 4 === 3) { if (IN(p[0] + 12, p[1] + 10, 8)) tree(G, p[0] + 12, p[1] + 10, 12, i); return; }
+      house(G, p[0], p[1], 24, 18, sd + i);
+    });
     tree(G, 36, 36, 10, sd);
   }
-  function townpark(c, r) { var G = block(c, r, true), p = flat(G, "#c9ced6", 0, 34, 72, 3); p.rotation.y = 0.5; p.position.set(36, LAWN + 0.08, 36); [[10, 10], [30, 8], [56, 14], [12, 52], [40, 58], [60, 46], [26, 32], [50, 30]].forEach(function (q, i) { tree(G, q[0], q[1], 11 + (i % 3) * 2, i + c); }); }
-  townpark(-1, -1); townpark(4, -1);
-  [[0, -1], [1, -1], [2, -1], [3, -1], [-1, 0], [-1, 3], [-1, 4], [4, 0], [4, 1], [4, 3], [4, 4], [-1, 5], [4, 5]].forEach(function (b) { houses(b[0], b[1]); });
+  function townpark(c, r, rc) {
+    var G = block(c, r, true, null, rc), IN = G.userData.inside, p = flat(G, "#c9ced6", 11, 34, 50, 3); p.rotation.y = 0.5; p.position.set(36, LAWN + 0.08, 36);
+    [[10, 10], [30, 8], [56, 14], [12, 52], [40, 58], [60, 46], [26, 32], [50, 30]].forEach(function (q, i) { if (IN(q[0], q[1], 7)) tree(G, q[0], q[1], 11 + (i % 3) * 2, i + c); });
+  }
+  townpark(-1, -1, [56, 56]); townpark(4, -1, [16, 56]);
+  [[0, -1], [1, -1], [2, -1], [3, -1], [-1, 0], [-1, 3], [-1, 4], [4, 0], [4, 1], [4, 3], [4, 4], [-1, 5], [4, 5]].forEach(function (b) {
+    houses(b[0], b[1], b[0] === -1 && b[1] === 5 ? [56, 16] : (b[0] === 4 && b[1] === 5 ? [16, 16] : null));
+  });
   block(-1, 1, true); block(0, 5, true);   // Staff Parking and Visitor Parking (the lots are drawn with the region below)
   (function () {
     var G = block(-1, 2, true), sh = new THREE.Shape(); sh.moveTo(0, 0); sh.absarc(0, 0, 48, 0, Math.PI / 2, false); sh.lineTo(0, 0);
@@ -1224,17 +1247,17 @@
     });
   })();
   // ---------------- The region around campus ----------------
-  // Winding main roads with neighborhood streets and cul-de-sacs branching off them, Willow Lake with
-  // lakeside homes, Harvest Farm, Riverside Business Park with its parking lot, Cedar Creek, an interstate
-  // with traffic, the Stadium out in the northwest corner, a city skyline on the horizon and distant mountains.
+  // Winding main roads with neighborhood streets and cul-de-sacs branching off them, groves of trees along the outside of
+  // the campus loop, Willow Lake with lakeside homes, Harvest Farm, Riverside Business Park, Cedar Creek, an interstate with
+  // traffic, the Stadium at the end of a tree-lined boulevard, a city skyline with office lights, and distant mountains.
   // Everything far away is drawn in large batches so the phone can keep up.
-  var FARLABELS = [], BLINK = [], HWY = null, CARGEO = null, STADPICK = [], STADBLUE = null;
+  var FARLABELS = [], BLINK = [], HWY = null, CARGEO = null, STADPICK = [], STADBLUE = null, BLVDLAMPS = [], CITYTICK = null;
   (function () {
     var seed = 20261124;
     function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
     var PAL = ["#f8fafc", "#cbd5e1", "#111827", "#6b7280", "#b91c1c", "#1d4ed8", "#14532d", "#92400e", "#e5e7eb", "#334155"];
     var LAKE = { x: -820, z: -860, rx: 240, rz: 170 }, FARM = { x0: -1150, x1: -560, z0: 600, z1: 1060 }, PARK = { x0: 740, x1: 1110, z0: -930, z1: -600 };
-    // The Stadium grounds: centered out past the northwest corner of town and turned 45 degrees to face campus
+    // The Stadium grounds: out past the northwest curve of the campus loop and turned 45 degrees to face campus
     var STAD = { x: -470.5, z: -530.5 };
     function stLocal(x, z) { var dx = x - STAD.x, dz = z - STAD.z; return [(dx - dz) * Math.SQRT1_2, (dx + dz) * Math.SQRT1_2]; }
     function stWorld(lx, lz) { return [STAD.x + (lx + lz) * Math.SQRT1_2, STAD.z + (lz - lx) * Math.SQRT1_2]; }
@@ -1251,6 +1274,7 @@
       return Math.abs(z - hwZ(x)) < 30 + pad;
     }
     var BR = [];
+    RINGARCS.forEach(function (a) { BR.push(a); });
     function nearRoad(x, z, m, skip) {
       for (var i = 0; i < SEGS.length; i++) {
         var s = SEGS[i], wx1 = s[0] - OX, wz1 = s[1] - OZ, wx2 = s[2] - OX, wz2 = s[3] - OZ;
@@ -1287,7 +1311,6 @@
     function nearCreek(x, z, m) { for (var i = 0; i < CP.length; i += 2) { var dx = CP[i].x - x, dz = CP[i].z - z; if (dx * dx + dz * dz < m * m) return true; } return false; }
     ribbonMesh(CP, 54, 0.06, mat("#6b6a45", { r: 0.95 }), true); ribbonMesh(CP, 42, 0.1, mat("#a8935f", { r: 0.95 }), true); ribbonMesh(CP, 32, 0.16, waterMat, true);
     FARLABELS.push(["Cedar Creek", 600, 8, 60]);
-    // Stone bridges where the main roads cross the creek, turned to follow each road
     CURVES.forEach(function (c) {
       var bi = -1, bd = 1e9;
       c.pts.forEach(function (p, i) { for (var k = 0; k < CP.length; k += 2) { var dx = CP[k].x - p.x, dz = CP[k].z - p.z, d = dx * dx + dz * dz; if (d < bd) { bd = d; bi = i; } } });
@@ -1332,7 +1355,6 @@
 
     // ----- Parking lots with yellow stall lines and parked cars
     var PLINES = [], PCARS = [];
-    // Accessible stalls (blue with the wheelchair symbol and a striped access aisle), EV charging stalls, and a lot sign
     function paintTex(kind) {
       var c = document.createElement("canvas"); c.width = 128; c.height = 256; var g = c.getContext("2d");
       if (kind === "acc") {
@@ -1387,15 +1409,14 @@
       }
       if (opts.sign) lotSign(opts.sign, W(-w / 2 + 7, -d / 2 - 0.5), ang, y);
     }
-    lot(150, 190, 56, 60, 0, LAWN + 16, 0.65, false, 16);   // Parking Garage rooftop
-    lot(-50, 305, 64, 34, 0, LAWN + 0.15, 0.75, false);     // Pizza Place
-    lot(150, 308, 64, 28, 0, LAWN + 0.15, 0.6, false);      // Main St Shops
-    lot(-250, -110, 60, 62, 0, LAWN + 0.08, 0.7, true, 22, { acc: 2, ev: 2, sign: "STAFF PARKING" });     // Staff Parking
-    lot(-150, 290, 60, 62, 0, LAWN + 0.08, 0.55, true, 22, { acc: 2, ev: 2, sign: "VISITOR PARKING" });  // Visitor Parking
+    lot(150, 190, 56, 60, 0, LAWN + 16, 0.65, false, 16);
+    lot(-50, 305, 64, 34, 0, LAWN + 0.15, 0.75, false);
+    lot(150, 308, 64, 28, 0, LAWN + 0.15, 0.6, false);
+    lot(-250, -110, 60, 62, 0, LAWN + 0.08, 0.7, true, 22, { acc: 2, ev: 2, sign: "STAFF PARKING" });
+    lot(-150, 290, 60, 62, 0, LAWN + 0.08, 0.55, true, 22, { acc: 2, ev: 2, sign: "VISITOR PARKING" });
 
-    // ----- The Stadium: purple-and-white stands around a striped field, a rolling lawn with shade trees, purple-and-white
-    // banners along the entry plaza and around the stands, a box office with a lit sign, light towers, a big lit parking
-    // lot with a TrypCar pickup lane, and a driveway in from the corner of the ring road
+    // ----- The Stadium: purple-and-white stands, a rolling lawn with shade trees, purple-and-white banners, a box office,
+    // light towers, a big lit parking lot with a TrypCar pickup lane, and a tree-lined boulevard in from the campus loop
     (function () {
       var SG = new THREE.Group(), i, t;
       SG.position.set(STAD.x, 0, STAD.z); SG.rotation.y = Math.PI / 4; scene.add(SG); SG.updateMatrixWorld(true);
@@ -1411,13 +1432,11 @@
         return 0.05 + (y - 0.05) * sm(0, 50, edge);
       }
       function star(g, cx, cy, r, fill) { g.beginPath(); for (var k = 0; k < 10; k++) { var a = -Math.PI / 2 + k * Math.PI / 5, rr = k % 2 ? r * 0.42 : r; g.lineTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr); } g.closePath(); g.fillStyle = fill; g.fill(); }
-      // Rolling lawn
       var lg = new THREE.PlaneGeometry(320, 220, 80, 55); lg.rotateX(-Math.PI / 2); lg.translate(0, 0, -30);
       var lp = lg.attributes.position;
       for (i = 0; i < lp.count; i++) lp.setY(i, lawnH(lp.getX(i), lp.getZ(i)));
       lg.computeVertexNormals();
       var lawn = new THREE.Mesh(lg, mat("#3d8a52", { r: 0.95 })); lawn.receiveShadow = true; lawn.userData.lawn = true; SG.add(lawn);
-      // Field: mowing stripes, purple end zones with white stars, and a purple midfield circle
       var fc = document.createElement("canvas"); fc.width = 512; fc.height = 192; var f = fc.getContext("2d");
       for (i = 0; i < 12; i++) { f.fillStyle = i % 2 ? "#1f9a4f" : "#178544"; f.fillRect(i * 512 / 12, 0, 512 / 12 + 1, 192); }
       f.fillStyle = "#4d1979"; f.fillRect(0, 0, 46, 192); f.fillRect(466, 0, 46, 192);
@@ -1429,7 +1448,6 @@
       var ft = new THREE.CanvasTexture(fc); ft.encoding = THREE.sRGBEncoding; ft.anisotropy = ANISO;
       var field = new THREE.Mesh(new THREE.PlaneGeometry(112, 40), new THREE.MeshStandardMaterial({ map: ft, roughness: 0.9 }));
       field.rotation.x = -Math.PI / 2; field.position.set(0, LAWN + 0.32, 0); field.receiveShadow = true; SG.add(field);
-      // Tiered stands in alternating purple and white
       var TIER = ["#4d1979", "#eef0f5", "#5b2a8c", "#f8fafc"];
       for (t = 0; t < 4; t++) {
         var rx = 60 + t * 6, rz = 22 + t * 4.5, sh = new THREE.Shape(), hole = new THREE.Path();
@@ -1438,9 +1456,7 @@
         var geo = new THREE.ExtrudeGeometry(sh, { depth: 3 + t * 5, bevelEnabled: false, curveSegments: 48 }); geo.rotateX(-Math.PI / 2);
         var st = new THREE.Mesh(geo, mat(TIER[t], { r: 0.7 })); st.position.set(0, LAWN, 0); SG.add(shade(st));
       }
-      // Goal posts
       [-56, 56].forEach(function (x) { slab(SG, "#facc15", x - 0.4, -3, 0.8, 0.8, 9, LAWN + 0.3); slab(SG, "#facc15", x - 0.4, 3, 0.8, 0.8, 9, LAWN + 0.3); slab(SG, "#facc15", x - 0.4, -3, 0.8, 6.8, 0.6, LAWN + 4); });
-      // Four light towers aimed at the field
       var tgt = SG.localToWorld(new THREE.Vector3(0, LAWN, 0));
       [[-89, -42], [89, -42], [-89, 42], [89, 42]].forEach(function (p) {
         var pole = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 1.3, 56, 8), mat("#94a3b8", { r: 0.5, m: 0.6 })); pole.position.set(p[0], LAWN + 28, p[1]); SG.add(shade(pole));
@@ -1449,7 +1465,6 @@
         glowSprite(SG, p[0], LAWN + 58, p[1], 46, "#e0f2fe", 0.9);
       });
       glowPool(SG, 0, LAWN + 0.45, 0, 150, 70, "#dbeafe", 0.35);
-      // Entry plaza, steps down to the lot, and the box office with a lit sign
       slab(SG, "#cfd4dc", -46, 40, 92, 36, 0.3, LAWN, { r: 0.85 });
       [[1.05, 76], [0.7, 77.4], [0.35, 78.8]].forEach(function (s) { slab(SG, "#d6d3d1", -40, s[1], 80, 1.4, s[0], 0.25, { r: 0.85 }); });
       bldg(SG, "stone", -18, 46, 36, 11, 13, true); hip(SG, "#2f3540", -18, 46, 36, 11, 13, 5);
@@ -1459,7 +1474,6 @@
       var stx = new THREE.CanvasTexture(scv); stx.encoding = THREE.sRGBEncoding; stx.anisotropy = ANISO;
       var smt = new THREE.MeshStandardMaterial({ map: stx, emissive: new THREE.Color(1, 1, 1), emissiveMap: stx, emissiveIntensity: 0, roughness: 0.5 }); smt.userData.base = 0.8; smt.userData.day = 0.12; GLOW.push(smt);
       var spl = new THREE.Mesh(new THREE.PlaneGeometry(14, 3.06), smt); spl.position.set(0, LAWN + 10.2, 57.08); SG.add(spl);
-      // Purple-and-white banners with a swallowtail bottom
       function banTex(kind) {
         var c = document.createElement("canvas"); c.width = 128; c.height = 320; var g = c.getContext("2d");
         var main = kind ? "#f8fafc" : "#4d1979", acc = kind ? "#4d1979" : "#f8fafc";
@@ -1484,11 +1498,9 @@
         if (sa > 0.75) continue;
         var wbm = new THREE.Mesh(wb, BAN[i % 2]); wbm.position.set(84.35 * ca, LAWN + 9.8, 40.35 * sa); wbm.rotation.y = Math.atan2(ca / 84, sa / 40); SG.add(wbm);
       }
-      // Shade trees on the rolling lawn and beside the plaza
       [[-130, -100], [-95, -118], [-40, -122], [10, -124], [60, -120], [110, -110], [138, -80], [140, -20], [135, 30], [-140, -40], [-138, 20], [-130, 58], [128, 62], [-70, 70], [70, 68], [-100, -70], [100, -72], [-120, -10], [118, 0], [-52, 50], [52, 50], [-52, 66], [52, 66]].forEach(function (p, k) {
         var w = stWorld(p[0], p[1]); TREES.push([w[0], lawnH(p[0], p[1]), w[1], 10 + (k % 4) * 1.6, k, 1]);
       });
-      // The parking lot, with accessible and EV stalls and a pickup lane at the foot of the plaza steps
       var lc = stWorld(0, 150);
       lot(lc[0], lc[1], 170, 140, -Math.PI / 4, 0.25, 0.75, true, 22, { acc: 4, ev: 3, sign: "STADIUM PARKING", lead: 18 });
       var pc = document.createElement("canvas"); pc.width = 512; pc.height = 80; var pgc = pc.getContext("2d");
@@ -1499,16 +1511,19 @@
       var pmesh = new THREE.Mesh(pgeo, new THREE.MeshStandardMaterial({ map: ptx, roughness: 0.8, polygonOffset: true, polygonOffsetFactor: -1 })), pw = stWorld(0, 91);
       pmesh.position.set(pw[0], 0.31, pw[1]); pmesh.rotation.y = Math.PI / 4; pmesh.receiveShadow = true; scene.add(pmesh);
       STADPICK.push(stWorld(-11, 91), stWorld(11, 91));
-      // Lot lights down the middle of each aisle
       [[-55, 129], [0, 129], [55, 129], [-55, 187], [0, 187], [55, 187]].forEach(function (p) {
         var w = stWorld(p[0], p[1]);
         cyl(w[0], 0.25, w[1], 0.35, 20, "#94a3b8"); trim(w[0], 20.4, w[1], 3.4, 0.6, 3.4, "#475569"); lite(w[0], 20.0, w[1], 2.6, 0.2, 2.6);
         glowSprite(scene, w[0], 19.6, w[1], 18, "#fde68a", 0.8); glowPool(scene, w[0], 0.42, w[1], 46, 46, "#fde68a", 0.45);
       });
-      // Driveway from the ring road corner into the lot
-      var near = stWorld(0, 221), dv = [];
-      for (i = 0; i <= 6; i++) dv.push(new THREE.Vector3(-300 + (near[0] + 300) * i / 6, 0, -360 + (near[1] + 360) * i / 6));
-      ribbonMesh(dv, 16, 0.6, resMat); BR.push(dv);
+      // The boulevard: two lanes with a planted median, shade trees and lampposts, from the curve of the campus loop to the lot
+      var A = [-279.5, -339.5], Bp = stWorld(0, 221), bdx = Bp[0] - A[0], bdz = Bp[1] - A[1], BL = Math.hypot(bdx, bdz), ux = bdx / BL, uz = bdz / BL, nx = -uz, nz = ux;
+      function bline(off, t0, t1) { var pts = []; for (var k = 0; k <= 8; k++) { var tt = t0 + (t1 - t0) * k / 8; pts.push(new THREE.Vector3(A[0] + ux * tt + nx * off, 0, A[1] + uz * tt + nz * off)); } return pts; }
+      ribbonMesh(bline(-5.5, 0, BL + 4), 7, 0.66, resMat); ribbonMesh(bline(5.5, 0, BL + 4), 7, 0.66, resMat);
+      ribbonMesh(bline(0, 17, BL - 2), 4, 0.82, mat("#3d8a52", { r: 0.95 }));
+      BR.push(bline(0, 0, BL));
+      for (t = 20; t < BL; t += 10) [-12, 0, 12].forEach(function (off) { TREES.push([A[0] + ux * t + nx * off, off ? 0.05 : 0.82, A[1] + uz * t + nz * off, off ? 10 : 8, t, 1]); });
+      [25, 45].forEach(function (tt) { [-9, 9].forEach(function (off) { BLVDLAMPS.push([A[0] + ux * tt + nx * off, 0.05, A[1] + uz * tt + nz * off]); }); });
       STADBLUE = stWorld(48, 84);
     })();
 
@@ -1625,6 +1640,22 @@
         });
       }
     });
+    // ----- Groves of leafy trees along the outside of the campus loop and in its curved corners,
+    // so campus fades naturally into the countryside instead of stopping at a hard edge
+    (function () {
+      function ringD(x, z) { var mx = x + OX, my = z + OZ, cx = Math.max(0, Math.min(460, mx)), cy = Math.max(10, Math.min(570, my)); return Math.hypot(mx - cx, my - cy) - 70; }
+      var placed = 0;
+      for (var k = 0; k < 4000 && placed < 140; k++) {
+        var x = -420 + rnd() * 840, z = -480 + rnd() * 920, d = ringD(x, z);
+        if (d < 26 || d > 85) continue;
+        if (Math.sin(x / 37) + Math.cos(z / 29) + Math.sin((x + z) / 53) < 0.35) continue;
+        if (reserved(x, z, 4) || nearRoad(x, z, 18)) continue;
+        var clash = false;
+        for (var h = 0; h < homes.length; h++) { if (Math.abs(homes[h][0] - x) < 16 && Math.abs(homes[h][1] - z) < 16) { clash = true; break; } }
+        if (clash) continue;
+        TREES.push([x, 0.02, z, 9 + rnd() * 6, k, 1]); placed++;
+      }
+    })();
 
     // ----- Meadows and woods fill the open land
     var MC = ["#3f7a45", "#4f8a43", "#6b8f4a", "#7d9450", "#356d40"];
@@ -1678,24 +1709,49 @@
       if (Math.abs(((ha + Math.PI * 2) % (Math.PI * 2)) - 5.5) < 0.35) continue;
       hill.scale.set(w, 60 + rnd() * 100, w * (0.6 + rnd() * 0.5)); hill.position.set(Math.cos(ha) * hr, -20, Math.sin(ha) * hr); hill.rotation.y = rnd() * 3; scene.add(hill);
     }
+    // Downtown: towers in three window patterns (warm, cool and soft white office light), brighter after dark,
+    // with offices and whole floors that switch on and off over time, like people working late and heading home
     (function () {
-      if (!STY.city) STY.city = { wall: "#1c2a44", glass: "#86a9d6", lit: "#ffe2a8", roof: "#1f2937", kind: "glass", r: 0.3, m: 0.4 };
-      var base = wallMat("city"), cm2 = base.clone();
-      cm2.map = base.map.clone(); cm2.map.repeat.set(2, 9); cm2.map.needsUpdate = true;
-      cm2.emissiveMap = base.emissiveMap.clone(); cm2.emissiveMap.repeat.set(2, 9); cm2.emissiveMap.needsUpdate = true;
-      cm2.userData.base = 1.8; cm2.userData.day = 0; GLOW.push(cm2);
+      var MATS = ["#ffe2a8", "#dbeafe", "#fff1c9"].map(function (lt, k) {
+        var key = "city" + k; if (!STY[key]) STY[key] = { wall: "#1c2a44", glass: "#86a9d6", lit: lt, roof: "#1f2937", kind: "glass", r: 0.3, m: 0.4 };
+        var base = wallMat(key), cm2 = base.clone();
+        cm2.map = base.map.clone(); cm2.map.repeat.set(2, 9); cm2.map.needsUpdate = true;
+        cm2.emissiveMap = base.emissiveMap.clone(); cm2.emissiveMap.repeat.set(2, 9); cm2.emissiveMap.needsUpdate = true;
+        cm2.userData.base = 3.2; cm2.userData.day = 0; GLOW.push(cm2);
+        return [cm2, cm2, mat("#1f2937"), mat("#1f2937"), cm2, cm2];
+      });
       var g = new THREE.BoxGeometry(1, 1, 1); g.translate(0, 0.5, 0);
-      var n = 90, towers = new THREE.InstancedMesh(g, [cm2, cm2, mat("#1f2937"), mat("#1f2937"), cm2, cm2], n), tall = [];
+      var n = 90, meshes = MATS.map(function (m) { return new THREE.InstancedMesh(g, m, n / 3); }), cnt = [0, 0, 0], tall = [];
       for (var i = 0; i < n; i++) {
         var a = rnd() * Math.PI * 2, r = Math.sqrt(rnd()), x = 2080 + Math.cos(a) * r * 430, z = -2160 + Math.sin(a) * r * 240;
-        var hgt = 70 + (1 - r) * (120 + rnd() * 260) + rnd() * 40, w = 34 + rnd() * 40;
-        placeAt(towers, i, x, 0, z, -0.6, w, hgt, w * (0.7 + rnd() * 0.5)); tall.push([hgt, x, z]);
+        var hgt = 70 + (1 - r) * (120 + rnd() * 260) + rnd() * 40, w = 34 + rnd() * 40, dep = w * (0.7 + rnd() * 0.5), k = i % 3;
+        placeAt(meshes[k], cnt[k]++, x, 0, z, -0.6, w, hgt, dep); tall.push([hgt, x, z, w, dep]);
       }
-      scene.add(towers);
-      tall.sort(function (a, b) { return b[0] - a[0]; }).slice(0, 7).forEach(function (t, i) {
+      meshes.forEach(function (m) { scene.add(m); });
+      tall.sort(function (a, b) { return b[0] - a[0]; });
+      tall.slice(0, 7).forEach(function (t, i) {
         var m = new THREE.SpriteMaterial({ map: GLOWT, color: col("#ef4444"), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, opacity: 0 });
         var s = new THREE.Sprite(m); s.position.set(t[1], t[0] + 6, t[2]); s.scale.set(26, 26, 1); s.userData.p = i * 0.9; scene.add(s); BLINK.push(s);
       });
+      var WN = [], cr = Math.cos(-0.6), sr = Math.sin(-0.6);
+      tall.slice(0, 40).forEach(function (t) {
+        for (var q = 0; q < 5; q++) {
+          var face = Math.floor(rnd() * 4), hy = t[0] * (0.12 + rnd() * 0.8), u = (rnd() - 0.5) * 0.7, floor = rnd() < 0.5, lx, lz, sx, sz, len;
+          if (face < 2) { len = floor ? t[3] * 0.8 : 9; lx = floor ? 0 : u * t[3]; lz = (face ? 1 : -1) * (t[4] / 2 + 0.4); sx = len; sz = 0.6; }
+          else { len = floor ? t[4] * 0.8 : 9; lz = floor ? 0 : u * t[4]; lx = (face === 3 ? 1 : -1) * (t[3] / 2 + 0.4); sx = 0.6; sz = len; }
+          WN.push({ x: t[1] + lx * cr + lz * sr, y: hy, z: t[2] - lx * sr + lz * cr, sx: sx, sz: sz, h: floor ? 5 : 6, on: rnd() < 0.6, next: 3 + rnd() * 40, warm: rnd() < 0.7 });
+        }
+      });
+      var wm2 = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, fog: false }), wins = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), wm2, WN.length);
+      function setWin(i) { var w = WN[i]; placeAt(wins, i, w.x, w.y, w.z, -0.6, w.on ? w.sx : 0.001, w.on ? w.h : 0.001, w.on ? w.sz : 0.001); }
+      WN.forEach(function (w, i) { wins.setColorAt(i, col(w.warm ? "#ffd59a" : "#e0ecff")); setWin(i); });
+      wins.frustumCulled = false; scene.add(wins);
+      CITYTICK = function (T) {
+        var ch = false;
+        for (var i = 0; i < WN.length; i++) { if (T > WN[i].next) { WN[i].on = !WN[i].on; WN[i].next = T + 8 + rnd() * 45; setWin(i); ch = true; } }
+        if (ch) wins.instanceMatrix.needsUpdate = true;
+        wm2.opacity = 0.95 * NIGHT;
+      };
       FARLABELS.push(["Downtown", 2080, 200, -2160]);
     })();
     var mtn = new THREE.MeshStandardMaterial({ color: col("#4a6a80"), roughness: 1, flatShading: true });
@@ -1706,8 +1762,8 @@
   })();
   // ---------------- The finishing touches ----------------
   // Doors and entry lights, flower beds and hedges, rooftop units, benches, Victorian lampposts, emergency blue lights,
-  // hydrants, street signs, manholes and sidewalk joints, a waving flag, four Scootz Hubs, the Student Union rooftop bar
-  // with diners, students walking between classes, birds overhead, and clouds on the horizon
+  // hydrants, street signs, manholes and sidewalk joints, a waving flag, four Scootz Hubs, the rooftop restaurant on the
+  // Apartments tower with diners, students walking between classes, birds overhead, and clouds on the horizon
   var DETAIL = { tick: null, clouds: [], cshadow: null };
   (function () {
     var seed = 4242;
@@ -1715,7 +1771,6 @@
     function B(c, r) { return BLOCKS[c + "," + r]; }
     function W(G, x, z) { return [G.position.x + x, G.position.z + z]; }
     var FC = ["#ef4444", "#f59e0b", "#facc15", "#ec4899", "#a855f7", "#f8fafc", "#fb7185", "#f97316"];
-    // A mulched flower bed with a mix of colorful blooms on small green plants
     function bed(G, x, z, w, d, n) {
       var p = W(G, x, z), y = G.position.y + LAWN;
       trim(p[0] + w / 2, y + 0.18, p[1] + d / 2, w, 0.36, d, "#5b3a22");
@@ -1726,7 +1781,6 @@
       }
     }
     function hedge(G, x, z, w, d) { var p = W(G, x, z); trim(p[0] + w / 2, G.position.y + LAWN + 0.9, p[1] + d / 2, w, 1.8, d, "#2f6b33"); }
-    // A front entrance: a paneled door in a light frame, a glowing transom, wall lights, and flowers or hedges on each side
     function entry(G, cx, face, bottom, opts) {
       opts = opts || {};
       var p = W(G, cx, face), y = G.position.y + LAWN + bottom, dw = opts.w || 6, dh = opts.h || 7.5;
@@ -1741,7 +1795,6 @@
       }
       if (opts.hedge) { hedge(G, cx - opts.hedge - 4, face + 3.6, opts.hedge - 6, 1.4); hedge(G, cx + 10, face + 3.6, opts.hedge - 6, 1.4); }
     }
-    // Rooftop equipment on flat roofs: a parapet, air-conditioning units, vents and skylights
     function roofKit(G, x, z, w, d, h) {
       var p = W(G, x, z), y = G.position.y + LAWN + h, cx = p[0] + w / 2, cz = p[1] + d / 2;
       trim(cx, y + 0.7, p[1] + 0.3, w, 1.4, 0.6, "#9aa3ae"); trim(cx, y + 0.7, p[1] + d - 0.3, w, 1.4, 0.6, "#9aa3ae");
@@ -1762,7 +1815,7 @@
       [-1.6, 1.6].forEach(function (o) { var l = rot(x, z, ry, o, 0); trim(l[0], y + 0.6, l[1], 0.2, 1.2, 1.2, "#1f2937", ry); });
     }
     function trash(x, y, z) { cyl(x, y, z, 0.7, 2.2, "#14532d"); cyl(x, y + 2.2, z, 0.78, 0.25, "#0f3d22"); }
-    // A black Victorian lamppost: an iron base, a slim post with collars, a glass lantern with a peaked cap and finial
+    function lantern(x, y, z) { cyl(x, y, z, 0.18, 6, "#111827"); lite(x, y + 6.5, z, 0.9, 1.1, 0.9); trim(x, y + 7.15, z, 1.2, 0.2, 1.2, "#111827"); }
     function victorian(x, y, z) {
       cyl(x, y, z, 0.62, 0.55, "#0b0f14"); cyl(x, y + 0.55, z, 0.42, 1.1, "#111827"); cyl(x, y + 1.65, z, 0.2, 6.3, "#111827");
       cyl(x, y + 4.2, z, 0.28, 0.25, "#111827"); cyl(x, y + 7.95, z, 0.36, 0.3, "#111827");
@@ -1773,7 +1826,6 @@
       glowSprite(scene, x, y + 9.05, z, 9, "#fde68a", 0.85);
       glowPool(scene, x, y + 0.22, z, 15, 15, "#fde68a", 0.42);
     }
-    // A campus emergency blue-light phone: a slim post with a call box, and a blue light that pulses softly at night
     var BLUES = [];
     function bluePole(x, y, z) {
       cyl(x, y, z, 0.45, 0.4, "#374151"); cyl(x, y + 0.4, z, 0.3, 9.2, "#e5e7eb");
@@ -1785,39 +1837,37 @@
     }
 
     // ----- Entrances, flower beds and hedges on the main campus buildings
-    entry(B(0, 1), 36, 48, 3.9, { spread: 17 });                   // Science Hall
-    entry(B(1, 1), 36, 52, 0, { w: 7, h: 10, beds: false });     // Library, behind the columns
-    entry(B(1, 2), 36, 42, 4.8, { spread: 26 });                   // Dining Hall
-    entry(B(0, 3), 36, 40, 0, { w: 7, h: 11, beds: false });       // Founders Hall, under the portico
-    entry(B(1, 3), 26, 46, 3.9, { spread: 18 });                   // Student Union
-    entry(B(3, 0), 36, 50, 0, { door: "#1e3a5f", hedge: 22 });     // Health Center
-    entry(B(0, 2), 36, 48, 0, { door: "#7c2d12" });                // Bookstore
-    entry(B(3, 2), 36, 40, 0, { door: "#14532d", beds: false });   // Coffee House
-    entry(B(3, 1), 25, 58, 0, { door: "#312e81", hedge: 14 });     // Arts Center
-    entry(B(0, 4), 41, 48, 0, { w: 7, h: 9, door: "#5b3a1a" });    // Chapel
-    entry(B(3, 3), 19, 66, 0, { beds: false });                    // Residence Hall
-    entry(B(1, 4), 27, 56, 0, { beds: false });                    // Residences
-    entry(B(2, 4), 36, 60, 0, { door: "#334155" });                // Apartments
+    entry(B(0, 1), 36, 48, 3.9, { spread: 17 });
+    entry(B(1, 1), 36, 52, 0, { w: 7, h: 10, beds: false });
+    entry(B(1, 2), 36, 42, 4.8, { spread: 26 });
+    entry(B(0, 3), 36, 40, 0, { w: 7, h: 11, beds: false });
+    entry(B(1, 3), 26, 46, 3.9, { spread: 18 });
+    entry(B(3, 0), 36, 50, 0, { door: "#1e3a5f", hedge: 22 });
+    entry(B(0, 2), 36, 48, 0, { door: "#7c2d12" });
+    entry(B(3, 2), 36, 40, 0, { door: "#14532d", beds: false });
+    entry(B(3, 1), 25, 58, 0, { door: "#312e81", hedge: 14 });
+    entry(B(0, 4), 41, 48, 0, { w: 7, h: 9, door: "#5b3a1a" });
+    entry(B(3, 3), 19, 66, 0, { beds: false });
+    entry(B(1, 4), 27, 56, 0, { beds: false });
+    entry(B(2, 4), 36, 60, 0, { door: "#334155" });
     bed(B(0, 3), 14, 61, 10, 3, 18); bed(B(0, 3), 44, 61, 10, 3, 18);
-    // Flowers around the Quad fountain
     (function () {
       var G = B(2, 1), p = W(G, 36, 36), y = LAWN;
       for (var i = 0; i < 60; i++) { var a = i / 60 * Math.PI * 2, r = 11.6 + (i % 2) * 0.9; LEAVES.push([p[0] + Math.cos(a) * r, y + 0.5, p[1] + Math.sin(a) * r, 0.75]); FLOWERS.push([p[0] + Math.cos(a) * r, y + 1.0, p[1] + Math.sin(a) * r, i % FC.length]); }
       var ring = new THREE.Mesh(new THREE.RingGeometry(10.8, 13, 48), mat("#5b3a22", { r: 0.95 })); ring.rotation.x = -Math.PI / 2; ring.position.set(p[0], y + 0.17, p[1]); ring.receiveShadow = true; scene.add(ring);
     })();
-    // ----- Rooftop equipment on the flat-roofed buildings
     roofKit(B(3, 0), 10, 10, 52, 40, 22); roofKit(B(3, 1), 8, 8, 34, 50, 34); roofKit(B(3, 1), 40, 24, 26, 33.4, 20);
     roofKit(B(1, 3), 44, 16, 22, 29.4, 18); roofKit(B(4, 2), 8, 10, 56, 48, 31); roofKit(B(1, 5), 10, 8, 52, 24, 13);
     roofKit(B(2, 5), 44, 8, 22, 18, 10); roofKit(B(3, 5), 4, 10, 20, 24, 12); roofKit(B(3, 5), 26, 10, 20, 24, 14); roofKit(B(3, 5), 48, 10, 20, 24, 16);
     (function () { var G = { position: new THREE.Vector3(740, -LAWN, -930) }; roofKit(G, 20, 8, 110, 60, 48); roofKit(G, 160, 14, 76, 52, 34); roofKit(G, 262, 20, 90, 46, 26); })();
 
-    // ----- Benches, trash cans and Victorian lampposts: along the Quad paths, around the lake walk, and on the Great Lawn
+    // ----- Benches, trash cans and Victorian lampposts: the Quad, the lake walk, the Great Lawn, the curves of the
+    // campus loop and the Stadium boulevard
     (function () {
       var Q = B(2, 1), L = B(2, 3), GL = B(1, 0), i, k;
       [[12, 31, 0], [60, 31, 0], [12, 41, Math.PI], [60, 41, Math.PI]].forEach(function (b) { var p = W(Q, b[0], b[1]); bench(p[0], LAWN, p[1], b[2]); });
       [[20, 31], [52, 41]].forEach(function (b) { var p = W(Q, b[0], b[1]); trash(p[0], LAWN, p[1]); });
       [[10, 33], [26, 33], [46, 33], [62, 33], [33, 10], [33, 26], [39, 46], [39, 62]].forEach(function (b) { var p = W(Q, b[0], b[1]); victorian(p[0], LAWN, p[1]); });
-      // Benches sit just off the outer edge of the cobblestone walk, facing the water (none at the bridge ends)
       var lc = W(L, 36, 35), cand = [];
       for (i = 0; i < 12; i++) {
         var p = LAKEPT((i + 0.5) / 12, 1.02), lx = p[0] - L.position.x, lz = p[1] - L.position.z;
@@ -1826,7 +1876,6 @@
       }
       for (k = 0; k < 6 && k < cand.length; k++) { var q = cand[Math.floor(k * cand.length / 6)]; bench(q[0], LAWN, q[1], Math.atan2(lc[0] - q[0], lc[1] - q[1])); }
       for (k = 0; k < 6; k++) { var lp = LAKEPT(k / 6, 0.995); victorian(lp[0], LAWN, lp[1]); }
-      // Great Lawn: benches facing the flower circle, lampposts behind them, and a sundial in the middle
       var gc = W(GL, 86, 36);
       [45, 135, 225, 315].forEach(function (deg) {
         var a = deg * Math.PI / 180, bx = gc[0] + Math.cos(a) * 18.5, bz = gc[1] + Math.sin(a) * 18.5;
@@ -1835,6 +1884,14 @@
       });
       for (i = 0; i < 44; i++) { var fa = i / 44 * Math.PI * 2, fr = 9.6 + (i % 2) * 0.9; LEAVES.push([gc[0] + Math.cos(fa) * fr, LAWN + 0.62, gc[1] + Math.sin(fa) * fr, 0.75]); FLOWERS.push([gc[0] + Math.cos(fa) * fr, LAWN + 1.12, gc[1] + Math.sin(fa) * fr, (i * 3) % FC.length]); }
       cyl(gc[0], LAWN + 0.17, gc[1], 1.3, 2.6, "#d6d0c2"); trim(gc[0], LAWN + 2.9, gc[1], 2.6, 0.3, 2.6, "#cbbf9f"); trim(gc[0], LAWN + 3.45, gc[1], 0.12, 0.9, 1.3, "#a16207", 0, 0.6);
+      RINGARCS.forEach(function (P, ai) {
+        [5, 10, 15].forEach(function (kk) {
+          if (ai === 0 && kk === 10) return;
+          var c = RINGC[ai], pt = P[kk], f = 82 / 70;
+          victorian(c[0] + (pt.x - c[0]) * f, 0.6, c[1] + (pt.z - c[1]) * f);
+        });
+      });
+      BLVDLAMPS.forEach(function (p) { victorian(p[0], p[1], p[2]); });
     })();
 
     // ----- Fire hydrants, street-name signs, manholes and sidewalk joints
@@ -1917,38 +1974,47 @@
     [W(B(2, 1), 70, 47), W(B(1, 1), 68, 66), W(B(1, 3), 69, 58), W(B(2, 3), 1.6, 39), W(B(2, 2), 70, 28)].forEach(function (p) { bluePole(p[0], LAWN, p[1]); });
     if (STADBLUE) bluePole(STADBLUE[0], 0.25, STADBLUE[1]);
 
-    // ----- Student Union rooftop bar and restaurant: a wood deck with a glass railing, a bar with a glowing back bar,
-    // stools, tables with plates and drinks, umbrellas, corner planters, bistro string lights, and students dining
+    // ----- Rooftop restaurant on the Apartments tower, overlooking Campus Lake: a wood deck behind a glass railing with a
+    // soft warm glow along its base, tables along the lake side, a dark wood pergola with warm recessed lights over the
+    // center tables, a bar with a softly lit back bar, candlelit tables, corner planters with small trees and lanterns
     var DINERS = [];
     (function () {
-      var G = B(1, 3), ox = G.position.x, oz = G.position.z, R = LAWN + 28.3, i, umbrellas = [];
+      var G = B(2, 4), ox = G.position.x, oz = G.position.z, R = LAWN + 58.3, i;
       var dc = document.createElement("canvas"); dc.width = dc.height = 256; var g = dc.getContext("2d");
       for (i = 0; i < 16; i++) { var v = 140 + Math.floor(rnd() * 40); g.fillStyle = "rgb(" + v + "," + Math.floor(v * 0.72) + "," + Math.floor(v * 0.5) + ")"; g.fillRect(0, i * 16, 256, 15); g.fillStyle = "rgba(0,0,0,0.35)"; g.fillRect(0, i * 16 + 15, 256, 1); g.fillRect(Math.floor(rnd() * 256), i * 16, 1, 15); }
-      var dtx = new THREE.CanvasTexture(dc); dtx.wrapS = dtx.wrapT = THREE.RepeatWrapping; dtx.encoding = THREE.sRGBEncoding; dtx.anisotropy = ANISO; dtx.repeat.set(3, 3);
-      var deck = new THREE.Mesh(new THREE.BoxGeometry(38.8, 0.3, 38.8), new THREE.MeshStandardMaterial({ map: dtx, roughness: 0.75 })); deck.position.set(ox + 26, R - 0.15, oz + 26); deck.receiveShadow = true; scene.add(deck);
-      // Glass railing with a steel top rail and posts
+      var dtx = new THREE.CanvasTexture(dc); dtx.wrapS = dtx.wrapT = THREE.RepeatWrapping; dtx.encoding = THREE.sRGBEncoding; dtx.anisotropy = ANISO; dtx.repeat.set(4, 4);
+      var deck = new THREE.Mesh(new THREE.BoxGeometry(50.8, 0.3, 50.8), new THREE.MeshStandardMaterial({ map: dtx, roughness: 0.75 })); deck.position.set(ox + 36, R - 0.15, oz + 34); deck.receiveShadow = true; scene.add(deck);
+      // Glass railing with a steel top rail, posts, and a thin warm light along its base
       var gm = new THREE.MeshStandardMaterial({ color: col("#cfe8ff"), transparent: true, opacity: 0.22, roughness: 0.05, metalness: 0.3, envMap: cubeA.texture, envMapIntensity: 1, depthWrite: false, side: THREE.DoubleSide }); ENVMATS.push(gm);
-      [[26, 6.4, 0], [26, 45.6, 0], [6.4, 26, 1], [45.6, 26, 1]].forEach(function (s) {
-        var pl = new THREE.Mesh(new THREE.PlaneGeometry(39.2, 3), gm); pl.position.set(ox + s[0], R + 1.5, oz + s[1]); if (s[2]) pl.rotation.y = Math.PI / 2; scene.add(pl);
-        trim(ox + s[0], R + 3.05, oz + s[1], s[2] ? 0.22 : 39.4, 0.16, s[2] ? 39.4 : 0.22, "#cbd5e1");
-        for (var k = 0; k <= 8; k++) { var a = 6.4 + k * 4.9; trim(ox + (s[2] ? s[0] : a), R + 1.5, oz + (s[2] ? a : s[1]), 0.14, 3, 0.14, "#94a3b8"); }
+      [[36, 8.4, 0], [36, 59.6, 0], [10.4, 34, 1], [61.6, 34, 1]].forEach(function (s) {
+        var pl = new THREE.Mesh(new THREE.PlaneGeometry(51.2, 3), gm); pl.position.set(ox + s[0], R + 1.5, oz + s[1]); if (s[2]) pl.rotation.y = Math.PI / 2; scene.add(pl);
+        trim(ox + s[0], R + 3.05, oz + s[1], s[2] ? 0.22 : 51.4, 0.16, s[2] ? 51.4 : 0.22, "#cbd5e1");
+        for (var k = 0; k <= 10; k++) { var a = k * 5.12; trim(ox + (s[2] ? s[0] : 10.4 + a), R + 1.5, oz + (s[2] ? 8.4 + a : s[1]), 0.14, 3, 0.14, "#94a3b8"); }
+        var ix = s[2] ? (s[0] < 36 ? 0.4 : -0.4) : 0, iz = s[2] ? 0 : (s[1] < 34 ? 0.4 : -0.4);
+        lite(ox + s[0] + ix, R + 0.08, oz + s[1] + iz, s[2] ? 0.14 : 50.2, 0.08, s[2] ? 50.2 : 0.14);
       });
-      // The bar
-      trim(ox + 23, R + 1.7, oz + 11.8, 20, 3.4, 1.6, "#3b2a1f"); trim(ox + 23, R + 3.52, oz + 11.8, 20.8, 0.24, 2.1, "#e7e5e4");
-      lite(ox + 23, R + 3.25, oz + 12.75, 19.6, 0.12, 0.12);
-      trim(ox + 23, R + 1.3, oz + 8.1, 20, 2.6, 1.4, "#2a1d14"); lite(ox + 23, R + 2.7, oz + 7.6, 19.6, 0.16, 0.3);
+      // The bar along the south side, facing the lake
+      trim(ox + 36, R + 1.7, oz + 52.2, 24, 3.4, 1.6, "#3b2a1f"); trim(ox + 36, R + 3.52, oz + 52.2, 24.8, 0.24, 2.1, "#e7e5e4");
+      lite(ox + 36, R + 3.25, oz + 51.25, 23.6, 0.12, 0.12);
+      trim(ox + 36, R + 1.3, oz + 55.9, 24, 2.6, 1.4, "#2a1d14"); lite(ox + 36, R + 2.7, oz + 56.4, 23.6, 0.16, 0.3);
       var BOT = ["#065f46", "#7c2d12", "#b45309", "#e5e7eb", "#1e3a8a", "#7f1d1d", "#a16207"];
-      for (i = 0; i < 18; i++) cyl(ox + 14 + i * 1.06, R + 2.6, oz + 8.1 + (i % 2) * 0.4, 0.17, 0.75 + (i % 3) * 0.18, BOT[i % BOT.length]);
-      [14.5, 17.5, 20.5, 26.5, 29.5, 32.5].forEach(function (x) { cyl(ox + x, R, oz + 13.9, 0.12, 2.2, "#1f2937"); cyl(ox + x, R + 2.2, oz + 13.9, 0.55, 0.25, "#8b5a2b"); });
-      // Tables, chairs, plates, food and drinks, with students seated around them
-      var TB = [[41, 18.5, "e"], [41, 27.5, "e"], [41, 36.5, "e"], [32, 41, "s"], [21, 41, "s"], [11, 35, "w"], [11, 25, "w"], [19, 24, ""], [33, 24, ""]];
-      var who = [3, 2, 3, 2, 2, 3, 2, 2, 2], pi = 0;
+      for (i = 0; i < 22; i++) cyl(ox + 25.5 + i * 1.0, R + 2.6, oz + 55.9 - (i % 2) * 0.4, 0.17, 0.75 + (i % 3) * 0.18, BOT[i % BOT.length]);
+      [26, 29, 32, 40, 43, 46].forEach(function (x) { cyl(ox + x, R, oz + 50.1, 0.12, 2.2, "#1f2937"); cyl(ox + x, R + 2.2, oz + 50.1, 0.55, 0.25, "#8b5a2b"); });
+      // Dark wood pergola over the center tables, with warm lights tucked into the beams
+      [[22, 21], [50, 21], [22, 35], [50, 35]].forEach(function (p) { trim(ox + p[0], R + 3.6, oz + p[1], 0.5, 7.2, 0.5, "#3b2a1f"); });
+      [21, 35].forEach(function (z) { trim(ox + 36, R + 7.3, oz + z, 29, 0.5, 0.45, "#3b2a1f"); for (var k = 0; k < 6; k++) lite(ox + 24.5 + k * 4.6, R + 7.02, oz + z, 0.6, 0.06, 0.3); });
+      for (i = 0; i <= 12; i++) trim(ox + 22.5 + i * 2.25, R + 7.7, oz + 28, 0.3, 0.3, 15.6, "#4a3423");
+      for (i = 0; i < 4; i++) lite(ox + 26 + i * 6.7, R + 7.52, oz + 28, 0.5, 0.06, 0.5);
+      glowPool(scene, ox + 36, R + 0.08, oz + 28, 34, 20, "#ffd38a", 0.3);
+      // Candlelit tables: a row along the lake side, two on each side, and two under the pergola
+      var TB = [[18, 14.5, "n"], [27, 14.5, "n"], [36, 14.5, "n"], [45, 14.5, "n"], [54, 14.5, "n"], [56.5, 24, "e"], [56.5, 34, "e"], [15.5, 24, "w"], [15.5, 34, "w"], [29, 28, ""], [43, 28, ""]];
+      var who = [3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 3], pi = 0;
       var SH = ["#4d1979", "#f8fafc", "#1e3a8a", "#b91c1c", "#0f766e", "#eab308", "#db2777", "#111827", "#6b7280", "#15803d"], SK = ["#f1c7a5", "#d9a47c", "#a56a43", "#7b4a2a", "#e8b896"], HR = ["#1c1917", "#3f2a1d", "#78350f", "#d6b370", "#0c0a09", "#7c2d12"], FOOD = ["#ca8a04", "#16a34a", "#b91c1c", "#ea580c"];
       TB.forEach(function (tb, ti) {
         var tx = ox + tb[0], tz = oz + tb[1];
         cyl(tx, R, tz, 0.7, 0.1, "#111827"); cyl(tx, R, tz, 0.2, 2.4, "#111827"); cyl(tx, R + 2.4, tz, 1.5, 0.14, "#f5f5f4");
-        if (tb[2]) lite(tx, R + 2.7, tz, 0.22, 0.3, 0.22); else { cyl(tx, R + 2.54, tz, 0.07, 4.2, "#e5e7eb"); umbrellas.push([tx, R + 7.1, tz]); }
-        var dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]].filter(function (d) { return !((tb[2] === "e" && d[0] === 1) || (tb[2] === "w" && d[0] === -1) || (tb[2] === "s" && d[1] === 1)); });
+        lite(tx, R + 2.7, tz, 0.2, 0.3, 0.2); glowSprite(scene, tx, R + 2.75, tz, 1.6, "#ffcf8a", 0.7);
+        var dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]].filter(function (d) { return !((tb[2] === "e" && d[0] === 1) || (tb[2] === "w" && d[0] === -1) || (tb[2] === "n" && d[1] === -1)); });
         dirs.forEach(function (d, k) {
           var cx = tx + d[0] * 2.3, cz = tz + d[1] * 2.3, ry = Math.atan2(-d[0], -d[1]), bk = rot(cx, cz, ry, 0, -0.55);
           trim(cx, R + 1.55, cz, 1.15, 0.16, 1.15, "#1f2937", ry); trim(bk[0], R + 2.35, bk[1], 1.15, 1.5, 0.14, "#1f2937", ry);
@@ -1961,32 +2027,19 @@
           pi++;
         });
       });
-      umbrellas.forEach(function (u) { var m = new THREE.Mesh(new THREE.ConeGeometry(3.1, 1.2, 10), mat("#f5efe0", { r: 0.7 })); m.position.set(u[0], u[1], u[2]); m.castShadow = true; scene.add(m); });
-      // Two guests standing at the bar and the bartender behind it
-      [[23.0, 13.85, Math.PI, true], [24.4, 13.85, Math.PI, false], [20, 9.9, 0, false]].forEach(function (s, k) {
+      // Two guests at the bar and the bartender behind it
+      [[35.3, 50.15, 0, true], [36.7, 50.15, 0, false], [31, 54.1, Math.PI, false]].forEach(function (s, k) {
         DINERS.push({ x: ox + s[0], y: R + 1.63, z: oz + s[1], ry: s[2], sh: SH[(k * 4 + 2) % SH.length], sk: SK[(k + 2) % SK.length], hr: HR[(k * 2 + 1) % HR.length], drink: s[3], ph: 3 + k * 2.2, stand: true });
       });
-      // Corner planters with small trees and flowers; the string-light posts rise out of them
-      [[9.6, 9.6, 8.2, 8.2], [42.4, 9.6, 43.8, 8.2], [42.4, 42.4, 43.8, 43.8], [9.6, 42.4, 8.2, 43.8]].forEach(function (p, k) {
+      // Corner planters with small trees, flowers and a slim black lantern
+      [[13.6, 11.6], [58.4, 11.6], [58.4, 56.4], [13.6, 56.4]].forEach(function (p, k) {
+        var sx = p[0] < 36 ? -1 : 1, sz = p[1] < 34 ? -1 : 1;
         trim(ox + p[0], R + 0.8, oz + p[1], 3.6, 1.6, 3.6, "#57534e");
-        TREES.push([ox + p[0] + (p[0] < 26 ? 0.8 : -0.8), R + 1.6, oz + p[1] + (p[1] < 26 ? 0.8 : -0.8), 4.2, k + 5]);
+        TREES.push([ox + p[0] - sx * 0.6, R + 1.6, oz + p[1] - sz * 0.6, 4.2, k + 5]);
         for (var f = 0; f < 6; f++) FLOWERS.push([ox + p[0] + (rnd() - 0.5) * 2.6, R + 1.75, oz + p[1] + (rnd() - 0.5) * 2.6, f % 8]);
-        cyl(ox + p[2], R + 1.6, oz + p[3], 0.16, 7.7, "#111827");
+        lantern(ox + p[0] + sx * 1.3, R + 1.6, oz + p[1] + sz * 1.3);
+        glowSprite(scene, ox + p[0] + sx * 1.3, R + 8.1, oz + p[1] + sz * 1.3, 4, "#ffd38a", 0.6);
       });
-      // Bistro string lights that sag gently between the posts, around the edges and across the middle
-      var posts = [[8.2, 8.2], [43.8, 8.2], [43.8, 43.8], [8.2, 43.8]], TOP = R + 9.2;
-      function strand(a, b, sag) {
-        var ax = ox + a[0], az = oz + a[1], bx = ox + b[0], bz = oz + b[1], L = Math.hypot(bx - ax, bz - az), n = Math.max(4, Math.round(L / 1.7)), prev = null;
-        for (var k = 0; k <= n; k++) {
-          var t = k / n, x = ax + (bx - ax) * t, z = az + (bz - az) * t, y = TOP - sag * 4 * t * (1 - t);
-          if (prev) { var dx = x - prev[0], dy = y - prev[1], dz = z - prev[2], h = Math.hypot(dx, dz), l = Math.hypot(h, dy); trim((x + prev[0]) / 2, (y + prev[1]) / 2, (z + prev[2]) / 2, 0.05, 0.05, l, "#1f2937", Math.atan2(dx, dz), Math.atan2(-dy, h)); }
-          if (k > 0 && k < n) { lite(x, y - 0.32, z, 0.34, 0.42, 0.34); if (k % 3 === 0) glowSprite(scene, x, y - 0.32, z, 3.4, "#ffd38a", 0.9); }
-          prev = [x, y, z];
-        }
-      }
-      for (i = 0; i < 4; i++) strand(posts[i], posts[(i + 1) % 4], 1.2);
-      strand(posts[0], posts[2], 1.7); strand(posts[1], posts[3], 1.7);
-      glowPool(scene, ox + 26, R + 0.08, oz + 26, 40, 40, "#ffd38a", 0.32);
     })();
 
     // Keep trees out of the hubs and parking lots
@@ -2030,7 +2083,6 @@
       var scm = new THREE.InstancedMesh(sgeo, [mat("#f8fafc", { r: 0.35, m: 0.1 }), mat("#111827", { r: 0.6 }), mat("#10b981", { r: 0.4 })], SCOOTS.length);
       SCOOTS.forEach(function (q, i) { put(scm, i, q[0], q[1], q[2], q[3], 0, 1, 1, 1); }); scm.castShadow = true; scene.add(scm);
     }
-    // Lamppost caps, finials on lampposts and iron fences, and the blue emergency lights
     if (VCAPS.length) {
       var vgeo = new THREE.ConeGeometry(0.95, 0.75, 4); vgeo.rotateY(Math.PI / 4);
       var vm = new THREE.InstancedMesh(vgeo, mat("#111827", { r: 0.5, m: 0.3 }), VCAPS.length);
@@ -2126,7 +2178,7 @@
       birds.instanceMatrix.needsUpdate = true;
     }
 
-    // ----- Clouds along the horizon, and soft cloud shadows drifting across campus
+    // ----- Clouds along the horizon
     var cc = document.createElement("canvas"); cc.width = 256; cc.height = 128; var cgx = cc.getContext("2d");
     [[70, 80, 46], [120, 62, 56], [176, 78, 44], [100, 92, 40], [150, 96, 38], [206, 92, 30], [46, 96, 30]].forEach(function (b) {
       var gr = cgx.createRadialGradient(b[0], b[1], 0, b[0], b[1], b[2]); gr.addColorStop(0, "rgba(255,255,255,0.95)"); gr.addColorStop(0.65, "rgba(255,255,255,0.7)"); gr.addColorStop(1, "rgba(255,255,255,0)");
@@ -2150,9 +2202,8 @@
     };
   })();
   // ---------------- Trees (all drawn together for speed) ----------------
-  // Out in the countryside: leafy shade trees and pines. On campus and around town: detailed trees with lumpy crowns
-  // of textured leaf clusters, individual leaf sprigs around the edges, and branches fanning up into the crown.
-  // Three kinds on campus: round oaks, taller elms, and flowering trees.
+  // Out in the countryside: leafy shade trees and pines. On campus, around town and along the campus loop: detailed trees
+  // with lumpy crowns of textured leaf clusters, individual leaf sprigs around the edges, and branches fanning into the crown.
   (function () {
     var LEAF = ["#1d7a4a", "#256b3d", "#1b6e55", "#3f7a2a", "#2f8a52"], BLOOM = ["#f9a8d4", "#fbcfe8", "#f5f3ff", "#e9d5ff", "#fda4af"];
     var round = [], pines = [], fancy = [];
@@ -2179,13 +2230,11 @@
     if (fancy.length) {
       var sd = 7;
       function rn() { sd = (sd * 16807) % 2147483647; return (sd - 1) / 2147483646; }
-      // A canopy texture packed with small leaves, plus a relief map so the clusters catch the light
       var fc = document.createElement("canvas"); fc.width = fc.height = 256; var fg = fc.getContext("2d");
       fg.fillStyle = "#c8c8c8"; fg.fillRect(0, 0, 256, 256);
       for (var q = 0; q < 1400; q++) { var v = 150 + Math.floor(rn() * 105); fg.save(); fg.translate(rn() * 256, rn() * 256); fg.rotate(rn() * 6.283); fg.fillStyle = "rgb(" + v + "," + v + "," + v + ")"; fg.beginPath(); fg.ellipse(0, 0, 5 + rn() * 3, 2.4 + rn() * 1.2, 0, 0, 6.283); fg.fill(); fg.restore(); }
       var fmap = new THREE.CanvasTexture(fc); fmap.wrapS = fmap.wrapT = THREE.RepeatWrapping; fmap.repeat.set(2, 2); fmap.anisotropy = ANISO;
       var fnorm = heightToNormal(fc, 2.5); fnorm.repeat.set(2, 2);
-      // Leaf sprigs: a cluster of individual pointed leaves with midribs, cut out so the crown edges look leafy
       var sc = document.createElement("canvas"); sc.width = sc.height = 256; var sg = sc.getContext("2d");
       sg.strokeStyle = "rgb(120,120,120)"; sg.lineWidth = 3; sg.beginPath(); sg.moveTo(128, 250); sg.quadraticCurveTo(120, 160, 128, 60); sg.stroke();
       for (q = 0; q < 46; q++) {
@@ -2258,6 +2307,14 @@
     for (var i = 0; i < n; i++) { var a = pts[i], b = pts[(i + 1) % n], L = Math.hypot(b.x - a.x, b.y - a.y) || 1; N.push({ x: -(b.y - a.y) / L * o, y: (b.x - a.x) / L * o }); }
     return pts.map(function (p, i) { var u = N[(i - 1 + n) % n], v = N[i]; return { x: p.x + u.x + v.x, y: p.y + u.y + v.y }; });
   }
+  // The right-hand lane of the campus loop, following its curved corners
+  var RING_LANE = (function () {
+    var P = [];
+    [[460, 10, 1.5 * Math.PI], [460, 570, 0], [0, 570, 0.5 * Math.PI], [0, 10, Math.PI]].forEach(function (a) {
+      for (var k = 0; k <= 6; k++) { var t = a[2] + k / 6 * Math.PI / 2; P.push({ x: a[0] + 66 * Math.cos(t), y: a[1] + 66 * Math.sin(t) }); }
+    });
+    return P;
+  })();
   // The TrypCar: a sleek white electric sedan like the one on the website, with a dark glass roof,
   // a light bar across the back, and the TrypCar logo on both rear doors
   var CARKIT = null;
@@ -2280,7 +2337,6 @@
     var tireG = new THREE.CylinderGeometry(1.5, 1.5, 1.1, 20); tireG.rotateX(Math.PI / 2);
     var rimG = new THREE.CylinderGeometry(1.0, 1.0, 0.12, 18); rimG.rotateX(Math.PI / 2);
     var hubG = new THREE.CylinderGeometry(0.28, 0.28, 0.16, 10); hubG.rotateX(Math.PI / 2);
-    // Door decal: the TrypCar logo with the tagline underneath, drawn once and shared by every TrypCar
     var dc = document.createElement("canvas"); dc.width = 1024; dc.height = 256;
     var dx = dc.getContext("2d");
     var decal = new THREE.CanvasTexture(dc); decal.encoding = THREE.sRGBEncoding; decal.anisotropy = ANISO;
@@ -2325,17 +2381,15 @@
     [{ x: 30, y: 140 }, { x: 430, y: 140 }, { x: 430, y: 240 }, { x: 30, y: 240 }],
     [{ x: 230, y: 140 }, { x: 230, y: 540 }, { x: 430, y: 540 }, { x: 430, y: 140 }],
     [{ x: 30, y: 340 }, { x: 330, y: 340 }, { x: 330, y: 540 }, { x: 30, y: 540 }],
-    [{ x: -70, y: -60 }, { x: 530, y: -60 }, { x: 530, y: 640 }, { x: -70, y: 640 }]
+    null
   ];
   var cars = loops.map(function (L, i) {
-    var P = laneShift(L, 4), len = 0;
+    var P = L ? laneShift(L, 4) : RING_LANE, len = 0;
     for (var k = 0; k < P.length; k++) { var a = P[k], b = P[(k + 1) % P.length]; len += Math.hypot(b.x - a.x, b.y - a.y); }
     return { P: P, len: len, d: i * 0.33 * len, v: 26, g: makeCar() };
   });
 
   // ---------------- Traffic on the roads leaving town ----------------
-  // Cars head out of town and fade off toward the horizon while others come in, with headlights and taillights that
-  // glow after dark. Two TrypCars ride along with the traffic, and two wait in the Stadium pickup lane.
   var TRAFFIC = null;
   (function () {
     if (!CARGEO) return;
@@ -2490,10 +2544,10 @@
   var places = [
     { n: "Library", s: "Study floors open late", b: [1, 1], t: 4, h: 86, main: 1 },
     { n: "Rec Center", s: "Gym, pool, and tennis courts", b: [2, 2], t: 5, h: 30 },
-    { n: "Stadium", s: "Game day drop-off at Stadium Parking", b: [1, 0], gk: "stadium", stop: { x: -70, y: -60 }, t: 8, h: 40, main: 1 },
+    { n: "Stadium", s: "Game day drop-off at Stadium Parking", b: [1, 0], gk: "stadium", stop: { x: 0, y: -60 }, t: 8, h: 40, main: 1 },
     { n: "Coffee House", s: "Coffee and study tables", b: [3, 2], t: 6, h: 26 },
     { n: "Arena", s: "Basketball and concerts", b: [0, 0], t: 8, h: 42 },
-    { n: "Student Union", s: "Food court, events, and rooftop dining", b: [1, 3], t: 3, h: 46, main: 1 },
+    { n: "Student Union", s: "Food court and events", b: [1, 3], t: 3, h: 46, main: 1 },
     { n: "Dining Hall", s: "All-you-care-to-eat dining", b: [1, 2], t: 3, h: 38 },
     { n: "Health Center", s: "Campus clinic", b: [3, 0], t: 7, h: 30 },
     { n: "Bookstore", s: "Books, gear, and supplies", b: [0, 2], t: 4, h: 30 },
@@ -2507,7 +2561,7 @@
     { n: "Arts Center", s: "Theater, galleries, and studios", b: [3, 1], t: 6, h: 42 },
     { n: "Residence Hall", s: "First-year housing", b: [3, 3], t: 4, h: 58 },
     { n: "Residences", s: "Upper-class dorms", b: [1, 4], t: 2, h: 52 },
-    { n: "Apartments", s: "Graduate and family housing", b: [2, 4], t: 3, h: 66 },
+    { n: "Apartments", s: "Graduate housing · rooftop restaurant", b: [2, 4], t: 3, h: 70 },
     { n: "Parking Garage", s: "Visitor and commuter parking", b: [3, 4], t: 4, h: 24 },
     { n: "Main St Shops", s: "Shops and services off campus", b: [3, 5], t: 7, h: 24 },
     { n: "Ball Field", s: "Intramural softball", b: [-1, 2], t: 6, h: 12 },
@@ -2533,8 +2587,6 @@
   FARLABELS.forEach(function (l) { var L = addLabel(l[0], l[1], l[2], l[3], "", 0); L.far = true; });
   HUBLABELS.forEach(function (l) { addLabel(l[0], l[1], l[2], l[3], "hub", 0); });
   var v3 = new THREE.Vector3();
-  // Name tags stay clear of the top bar and the map buttons, never pile on top of each other,
-  // fade near the edges, and your destination's tag is always kept on screen
   function updateLabels() {
     var w = canvas.clientWidth, h = canvas.clientHeight, TOP = 118, placed = [];
     LB.forEach(function (L) { L.sel = L.must || L.el.classList.contains("sel"); L.pr = L.must ? 0 : L.sel ? 1 : L.main ? 2 : 3; });
@@ -2555,9 +2607,8 @@
       L.el.style.opacity = keep ? "1" : String(clamp(edge / 36, 0.35, 1).toFixed(2));
       L.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) translate(-50%,-100%)";
     });
-                                                                                             }
+                                                         }
   // ---------------- Destination highlight, drop-off pin and route ----------------
-  // The building you choose lights up in TrypCar blue
   var hl = { g: null, mats: [] };
   function hiMat(m) { var c = m.clone(); c.emissive = col("#2563eb"); c.emissiveMap = null; c.emissiveIntensity = 0.55; hl.mats.push(c); return c; }
   function highlight(G) {
@@ -2654,13 +2705,14 @@
   }
 
   // ---------------- Camera: drag to look around, pinch to zoom, follows your car during a ride ----------------
-  var DEF = { az: -0.45, pol: 0.92 }, orb = { az: DEF.az, pol: DEF.pol }, userDist = 700, camDist = 700, camT = { x: 0, z: 20 }, follow = false;
+  // The slow automatic spin circles a point between campus and the Stadium, so both come into view as it turns
+  var DEF = { az: -0.45, pol: 0.92 }, orb = { az: DEF.az, pol: DEF.pol }, userDist = 760, camDist = 760, camT = { x: -60, z: -40 }, follow = false;
   var lastInput = performance.now(), ptrs = {}, pinch = null, tapStart = null;
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   function wake() { lastInput = performance.now(); }
   function updateCamera(dt) {
     var k = 1 - Math.exp(-dt * 2.6), on = follow && myCar.visible;
-    var tx = on ? myCar.position.x : 0, tz = on ? myCar.position.z : 20, td = on ? Math.min(userDist, 300) : userDist;
+    var tx = on ? myCar.position.x : -60, tz = on ? myCar.position.z : -40, td = on ? Math.min(userDist, 300) : userDist;
     camT.x += (tx - camT.x) * k; camT.z += (tz - camT.z) * k; camDist += (td - camDist) * k;
     var s = Math.sin(orb.pol);
     camera.position.set(camT.x + camDist * s * Math.sin(orb.az), camDist * Math.cos(orb.pol), camT.z + camDist * s * Math.cos(orb.az));
@@ -2697,7 +2749,6 @@
   }
   canvas.addEventListener("pointerup", up); canvas.addEventListener("pointercancel", up);
   canvas.addEventListener("wheel", function (e) { e.preventDefault(); userDist = clamp(userDist * (1 + e.deltaY * 0.001), 140, 1400); wake(); }, { passive: false });
-  // Tapping a building chooses it as your destination
   var ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
   var tapFx = new THREE.Mesh(new THREE.RingGeometry(0.8, 1, 40), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }));
   tapFx.rotation.x = -Math.PI / 2; tapFx.userData.t = -9; scene.add(tapFx);
@@ -2724,11 +2775,10 @@
   if (window.ResizeObserver) new ResizeObserver(resize).observe($("stage"));
 
   // ---------------- Map buttons ----------------
-  $("recenter").addEventListener("click", function () { wake(); orb.az = DEF.az; orb.pol = DEF.pol; userDist = 700; });
+  $("recenter").addEventListener("click", function () { wake(); orb.az = DEF.az; orb.pol = DEF.pol; userDist = 760; });
   $("legbtn").addEventListener("click", function () { wake(); var o = $("legend").classList.toggle("open"); this.setAttribute("aria-expanded", o); });
   $("explore").addEventListener("click", function () { sheet.classList.toggle("min"); refit(); });
   $("nearby").addEventListener("click", function () { toast("8 TrypCars nearby · the closest is about 2 minutes away (demo)"); });
-  // Day and night: the sky follows the real clock, and this button previews midday, sunset or night
   var TOD = [[null, "Live time: the sky follows your clock"], [750, "Preview: midday"], [1125, "Preview: sunset"], [1320, "Preview: night"]], todI = 0;
   function nowMins() { var d = new Date(); return d.getHours() * 60 + d.getMinutes() + d.getSeconds() / 60; }
   $("todbtn").addEventListener("click", function () { todI = (todI + 1) % TOD.length; applyTime(TOD[todI][0] == null ? nowMins() : TOD[todI][0], true); toast(TOD[todI][1]); });
@@ -2741,7 +2791,7 @@
     if (document.hidden || curTab !== "ride") return;
     T += dt;
     if (TOD[todI][0] == null && now - lastLive > 2000) { lastLive = now; applyTime(nowMins()); }
-    moveCars(dt, T); updateSignals(T); if (HWY) HWY(dt); if (TRAFFIC) TRAFFIC(dt); if (DETAIL.tick) DETAIL.tick(dt, T);
+    moveCars(dt, T); updateSignals(T); if (HWY) HWY(dt); if (TRAFFIC) TRAFFIC(dt); if (CITYTICK) CITYTICK(T); if (DETAIL.tick) DETAIL.tick(dt, T);
     BLINK.forEach(function (b) { b.material.opacity = (Math.sin(T * 2.2 + b.userData.p) > 0.55 ? 1 : 0.12) * (0.35 + 0.65 * NIGHT); });
     WAVES.offset.x += dt * 0.012; WAVES.offset.y += dt * 0.008;
     swans.forEach(function (s) {
@@ -2766,7 +2816,6 @@
     if (envDirty || now - lastEnv > 5000) { envDirty = false; lastEnv = now; updateEnv(); }
     renderer.render(scene, camera);
     updateLabels();
-    // If this phone is struggling, lower the resolution a little so motion stays smooth
     if (!perf.done && T > 2) { perf.n++; perf.sum += dt; if (perf.n >= 90) { perf.done = true; if (perf.sum / perf.n > 0.04 && PR > 1) { PR = 1; renderer.setPixelRatio(1); resize(); } } }
   }
 
@@ -2827,7 +2876,6 @@
     sched.splice(+b.dataset.unsched, 1); save(); renderSched(); toast("Scheduled ride canceled");
     if (curSheet === "home") home();
   });
-  // Uses ride credit first; with auto-reload on, a parent plan tops it up when it drops below $10
   function chargeRide(amt) {
     var used = Math.min(credit, amt);
     credit = Math.round((credit - used) * 100) / 100;
@@ -2949,14 +2997,12 @@
       toast("Scheduled: " + s.p + ", " + schedText(s) + " (demo)");
     };
   }
-  // Opens the phone's own share menu, or copies the trip details if sharing isn't available
   function shareTrip() {
     var p = trip.place, txt = "I'm taking a TrypCar demo ride" + (p ? " to " + p.n : "") + " with Alex M. (white TrypCar, plate TRP 204).", url = location.href.split("?")[0].split("#")[0];
     if (navigator.share) { navigator.share({ title: "My TrypCar trip", text: txt, url: url }).catch(function () {}); return; }
     if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(txt + " " + url).then(function () { toast("Trip details copied. Paste them into a text to share."); }, function () { toast("Sharing isn't available on this device."); }); return; }
     toast("Sharing isn't available on this device.");
   }
-  // Demo chat with the driver, with quick replies and automatic answers
   function openChat() {
     if (!chat.length) chat.push({ me: 0, t: "Hi " + (user.name || "there") + ", this is Alex with TrypCar. I'll meet you at the pickup point." });
     modal('<div class="chathead"><div class="ava sm">AM</div><div><strong>Alex M.</strong><span>TrypCar driver · demo chat</span></div></div><div class="chat" id="chat"></div>' +
@@ -3016,7 +3062,6 @@
     else if (act === "acct") goTab("account");
   });
 
-  // The phone's back button
   window.addEventListener("popstate", function () {
     if (skipPop) { skipPop = false; return; }
     if ($("modal").classList.contains("open")) { modalPushed = false; $("modal").classList.remove("open"); return; }
@@ -3097,7 +3142,6 @@
       .catch(function () { stBox.textContent = "Your sign-up could not be sent. Please email info@trypcar.com."; stBox.className = "status err"; })
       .finally(function () { btn.disabled = false; btn.textContent = lab; });
   });
-  // Restart the demo: clears everything saved on this device and starts over at the welcome screen
   $("restart").onclick = function () {
     clearAll(); clearInterval(scz.iv); scz.active = false;
     try { localStorage.removeItem(STORE); } catch (e) {}
@@ -3108,7 +3152,6 @@
   };
 
   // ---------------- Start-up ----------------
-  // The splash stays up while the campus is built; returning members land straight on the map.
   (function boot() {
     var st = load();
     if (st && st.user && st.user.ok) {
