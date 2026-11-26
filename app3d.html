@@ -815,6 +815,7 @@
 
   // ---------------- Ground, sidewalks and roads ----------------
   var cols = [30, 130, 230, 330, 430], rowsY = [40, 140, 240, 340, 440, 540];
+  var WALK_Y = 0.95; // top of the raised sidewalks: people, lampposts and street furniture stand at this height
   var ground = new THREE.Mesh(grassUV(new THREE.PlaneGeometry(9000, 9000), [900, 900]), grassMat("#3c7448", "wild"));
   ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
   function strip(x1, z1, x2, z2, wid, h, hex, o, ext) {
@@ -828,7 +829,6 @@
   cols.forEach(function (x) { colSegs(x).forEach(function (g) { SEGS.push([x, g[0], x, g[1]]); }); });
   rowsY.forEach(function (y) { rowSegs(y).forEach(function (g) { SEGS.push([g[0], y, g[1], y]); }); });
   [[-70, 10, -70, 570], [530, 10, 530, 570], [0, -60, 460, -60], [0, 640, 460, 640]].forEach(function (r) { SEGS.push(r.concat([1])); });
-  SEGS.forEach(function (s) { strip(s[0], s[1], s[2], s[3], 30, 0.6, "#8a93a3", { r: 0.9 }, s[4] ? 0 : null); });
   SEGS.forEach(function (s) { strip(s[0], s[1], s[2], s[3], 16, 0.7, "#23272f", { r: 0.95 }, s[4] ? 0 : null); });
   function ribbonMesh(P, width, y, material, wobble) { return ribbonBatch([P], width, y, material, wobble); }
   function ribbonBatch(lists, width, y, material, wobble) {
@@ -875,9 +875,64 @@
   [[0, 10, Math.PI], [460, 10, 1.5 * Math.PI], [460, 570, 0], [0, 570, 0.5 * Math.PI]].forEach(function (a) {
     var pts = [];
     for (var k = 0; k <= 20; k++) { var t = a[2] + k / 20 * Math.PI / 2; pts.push(new THREE.Vector3(a[0] + 70 * Math.cos(t) - OX, 0, a[1] + 70 * Math.sin(t) - OZ)); }
-    ribbonMesh(pts, 30, 0.6, mat("#8a93a3", { r: 0.9 })); ribbonMesh(pts, 16, 0.7, mat("#23272f", { r: 0.95 }));
+    ribbonMesh(pts, 16, 0.7, mat("#23272f", { r: 0.95 }));
     RINGARCS.push(pts); RINGC.push([a[0] - OX, a[1] - OZ]);
   });
+
+  // ---------------- Raised sidewalks and concrete curbs along every campus street ----------------
+  // The street surface stays where it was; the sidewalks rise above it with a lighter concrete curb at the edge.
+  // Sidewalks run around the corners and stop where another street crosses, and yellow warning pads mark each crosswalk.
+  (function () {
+    var EXITS = [[30, -60, -1, "h"], [230, -60, -1, "h"], [430, -60, -1, "h"], [30, 640, 1, "h"], [230, 640, 1, "h"], [430, 640, 1, "h"], [40, -70, -1, "v"], [240, -70, -1, "v"], [440, -70, -1, "v"], [40, 530, 1, "v"], [240, 530, 1, "v"], [440, 530, 1, "v"]];
+    var SW = [], CB = [];
+    function stops(s, side) {
+      var horiz = s[1] === s[3], c = horiz ? s[1] : s[0], a = Math.min(horiz ? s[0] : s[1], horiz ? s[2] : s[3]), b = Math.max(horiz ? s[0] : s[1], horiz ? s[2] : s[3]), out = [];
+      SEGS.forEach(function (t) {
+        var th = t[1] === t[3]; if (th === horiz) return;
+        var tc = th ? t[1] : t[0], ta = Math.min(th ? t[0] : t[1], th ? t[2] : t[3]), tb = Math.max(th ? t[0] : t[1], th ? t[2] : t[3]), pr = c + side * 15;
+        if (tc >= a - 1 && tc <= b + 1 && pr >= ta - 0.5 && pr <= tb + 0.5) out.push(tc);
+      });
+      EXITS.forEach(function (e) { if ((e[3] === "h") === horiz && e[1] === c && e[2] === side && e[0] >= a && e[0] <= b) out.push(e[0]); });
+      return { a: a, b: b, c: c, horiz: horiz, x: out.sort(function (p, q) { return p - q; }) };
+    }
+    function pieces(s, side) {
+      var S = stops(s, side), list = [S.a].concat(S.x, [S.b]), sw = S.horiz ? 8.5 : 15, cb = S.horiz ? 8.5 : 8;
+      function isX(v) { return S.x.indexOf(v) >= 0; }
+      for (var i = 0; i < list.length - 1; i++) {
+        var p = list[i], q = list[i + 1]; if (q - p < 0.01) continue;
+        var p1 = p + (isX(p) ? sw : 0), q1 = q - (isX(q) ? sw : 0), p2 = p + (isX(p) ? cb : 0), q2 = q - (isX(q) ? cb : 0);
+        if (q1 > p1 + 0.2) SW.push(S.horiz ? [(p1 + q1) / 2, S.c + side * 11.75, q1 - p1, 6.5] : [S.c + side * 11.75, (p1 + q1) / 2, 6.5, q1 - p1]);
+        if (q2 > p2 + 0.2) CB.push(S.horiz ? [(p2 + q2) / 2, S.c + side * 8.25, q2 - p2, 0.5] : [S.c + side * 8.25, (p2 + q2) / 2, 0.5, q2 - p2]);
+      }
+    }
+    SEGS.forEach(function (s) { pieces(s, -1); pieces(s, 1); });
+    var swMat = mat("#9aa1ad", { r: 0.9 }), cbMat = mat("#cfd3d8", { r: 0.8 });
+    var ub = new THREE.BoxGeometry(1, 1, 1); ub.translate(0, 0.5, 0);
+    var swM = new THREE.InstancedMesh(ub, swMat, SW.length), cbM = new THREE.InstancedMesh(ub, cbMat, CB.length), o = new THREE.Object3D();
+    SW.forEach(function (p, i) { o.position.set(p[0] - OX, 0, p[1] - OZ); o.scale.set(p[2], WALK_Y, p[3]); o.updateMatrix(); swM.setMatrixAt(i, o.matrix); });
+    CB.forEach(function (p, i) { o.position.set(p[0] - OX, 0, p[1] - OZ); o.scale.set(p[2], WALK_Y + 0.07, p[3]); o.updateMatrix(); cbM.setMatrixAt(i, o.matrix); });
+    swM.receiveShadow = cbM.receiveShadow = true; cbM.castShadow = true; scene.add(swM, cbM);
+    function sector(cx, cz, r1, r2, a0, a1, h, m) {
+      var sh = new THREE.Shape(), n = 24, k, t;
+      for (k = 0; k <= n; k++) { t = a0 + (a1 - a0) * k / n; var x = cx + r2 * Math.cos(t), z = cz + r2 * Math.sin(t); if (k) sh.lineTo(x, -z); else sh.moveTo(x, -z); }
+      for (k = n; k >= 0; k--) { t = a0 + (a1 - a0) * k / n; sh.lineTo(cx + r1 * Math.cos(t), -(cz + r1 * Math.sin(t))); }
+      var g = new THREE.ExtrudeGeometry(sh, { depth: h, bevelEnabled: false }); g.rotateX(-Math.PI / 2);
+      var me = new THREE.Mesh(g, m); me.receiveShadow = true; scene.add(me);
+    }
+    var BLV = 1.25 * Math.PI, GAP = 0.14;
+    [[0, 10, Math.PI], [460, 10, 1.5 * Math.PI], [460, 570, 0], [0, 570, 0.5 * Math.PI]].forEach(function (a, ai) {
+      var cx = a[0] - OX, cz = a[1] - OZ, a0 = a[2], a1 = a[2] + Math.PI / 2;
+      sector(cx, cz, 70 - 15, 70 - 8.5, a0, a1, WALK_Y, swMat); sector(cx, cz, 70 - 8.5, 70 - 8, a0, a1, WALK_Y + 0.07, cbMat);
+      (ai === 0 ? [[a0, BLV - GAP], [BLV + GAP, a1]] : [[a0, a1]]).forEach(function (r) { sector(cx, cz, 70 + 8.5, 70 + 15, r[0], r[1], WALK_Y, swMat); sector(cx, cz, 70 + 8, 70 + 8.5, r[0], r[1], WALK_Y + 0.07, cbMat); });
+    });
+    cols.forEach(function (x) { rowsY.forEach(function (y) {
+      if ((x === 230 && (y === 40 || y === 140)) || (y === 40 && (x === 130 || x === 330))) return;
+      [-1, 1].forEach(function (sx) { [-1, 1].forEach(function (sz) {
+        trim(x + sx * 9.6 - OX, WALK_Y + 0.03, y + sz * 13 - OZ, 2.2, 0.06, 4, "#e3b505");
+        trim(x + sx * 13 - OX, WALK_Y + 0.03, y + sz * 9.6 - OZ, 4, 0.06, 2.2, "#e3b505");
+      }); });
+    }); });
+  })();
   var XS = [-70].concat(cols, [530]), YS = [-60].concat(rowsY, [640]);
   function nearCross(v, list) { for (var i = 0; i < list.length; i++) if (Math.abs(v - list[i]) < 14) return true; return false; }
   var dashes = [], dummy = new THREE.Object3D();
@@ -1244,8 +1299,38 @@
   })();
   // Apartments
   (function () { var G = block(2, 4); bldg(G, "white", 10, 8, 52, 52, 58); autoTrees(G, [[10, 8, 52, 52]], 12); })();
-  // Parking garage
-  (function () { var G = block(3, 4); bldg(G, "concrete", 6, 6, 60, 60, 16); slab(G, "#6b7280", 5, 5, 62, 1.2, 2.2, LAWN + 16); slab(G, "#6b7280", 5, 65.8, 62, 1.2, 2.2, LAWN + 16); })();
+  // Parking Garage: an open three-level concrete deck with cars on every level, columns, railings, a ramp up the side,
+  // a lit entrance with a gate arm, a glowing PARKING sign and lights under each level at night
+  (function () {
+    var G = block(3, 4), gx = G.position.x, gz = G.position.z, k;
+    flat(G, "#3a404b", 6, 6, 60, 60);
+    for (k = 1; k <= 3; k++) {
+      var y = LAWN + 7 * k;
+      slab(G, "#a6acb6", 6, 6, 60, 60, 0.6, y, { r: 0.9 });
+      [[6, 6, 60, 0.5], [6, 65.5, 60, 0.5], [6, 6.5, 0.5, 59], [65.5, 6.5, 0.5, 59]].forEach(function (w) { slab(G, "#b9bec6", w[0], w[1], w[2], w[3], 1.3, y + 0.6, { r: 0.85 }); });
+      [18, 36, 54].forEach(function (x) { lite(gx + x, y - 0.08, gz + 36, 0.6, 0.12, 40); });
+      glowPool(G, 36, (k === 1 ? LAWN + 0.2 : LAWN + 7 * (k - 1) + 0.65), 36, 56, 56, "#fef3c7", 0.25);
+    }
+    [7.4, 21.6, 36, 50.4, 64.6].forEach(function (p) {
+      [7.4, 64.6].forEach(function (q) { slab(G, "#b9bec6", p - 0.6, q - 0.6, 1.2, 1.2, 21, LAWN, { r: 0.85 }); if (p !== 7.4 && p !== 64.6) slab(G, "#b9bec6", q - 0.6, p - 0.6, 1.2, 1.2, 21, LAWN, { r: 0.85 }); });
+    });
+    var rs = Math.atan2(7.6, 50);
+    trim(gx + 37, LAWN + 3.85, gz + 3.1, 5, 0.5, 50.6, "#a6acb6", Math.PI / 2, -rs);
+    trim(gx + 37, LAWN + 4.65, gz + 0.75, 0.3, 1.1, 50.6, "#b9bec6", Math.PI / 2, -rs);
+    flat(G, "#3a404b", 28, 66, 16, 6);
+    cyl(gx + 30, LAWN, gz + 68.5, 0.35, 1.4, "#facc15");
+    for (k = 0; k < 6; k++) trim(gx + 31.2 + k * 1.1, LAWN + 1.25, gz + 68.5, 1.1, 0.22, 0.22, k % 2 ? "#f8fafc" : "#dc2626");
+    trim(gx + 41.5, LAWN + 1.5, gz + 68.5, 2.4, 3, 2.2, "#475569"); lite(gx + 41.5, LAWN + 2.2, gz + 69.65, 1.6, 0.9, 0.06);
+    var c = document.createElement("canvas"); c.width = 512; c.height = 96; var g = c.getContext("2d");
+    g.fillStyle = "#1e3a8a"; g.fillRect(0, 0, 512, 96); g.strokeStyle = "#ffffff"; g.lineWidth = 5; g.strokeRect(6, 6, 500, 84);
+    g.fillStyle = "#ffffff"; g.beginPath(); g.arc(64, 48, 30, 0, 7); g.fill();
+    g.fillStyle = "#1e3a8a"; g.font = "800 44px Arial, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText("P", 64, 50);
+    g.fillStyle = "#ffffff"; g.font = "800 50px 'Plus Jakarta Sans', Arial, sans-serif"; g.fillText("PARKING", 290, 50);
+    var t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; t.anisotropy = ANISO;
+    var sm = new THREE.MeshStandardMaterial({ map: t, emissive: new THREE.Color(1, 1, 1), emissiveMap: t, emissiveIntensity: 0, roughness: 0.5 }); sm.userData.base = 1.0; sm.userData.day = 0.15; GLOW.push(sm);
+    var sp = new THREE.Mesh(new THREE.PlaneGeometry(16, 3), sm); sp.position.set(36, LAWN + 8, 66.14); G.add(sp);
+    glowSprite(G, 36, LAWN + 8, 67, 18, "#93c5fd", 0.5); glowPool(G, 36, LAWN + 0.3, 68, 24, 10, "#fde68a", 0.4);
+  })();
   // Surrounding town
   function houses(c, r, rc) {
     var G = block(c, r, true, null, rc), IN = G.userData.inside, sd = c * 7 + r * 3 + 20;
@@ -1272,8 +1357,21 @@
     tree(G, 64, 8, 10, 1); tree(G, 8, 64, 12, 2);
   })();
   (function () { var G = block(4, 2, true); bldg(G, "town", 8, 10, 56, 48, 30); slab(G, "#57534e", 8, 10, 56, 48, 1, LAWN + 30); autoTrees(G, [[8, 10, 56, 48]], 4); })();
+  // Ed's Original Italian Restaurant, with a lit sign in dark wood and gold above the front
   (function () {
     var G = block(1, 5, true); flat(G, "#2b3242", 4, 34, 64, 34); bldg(G, "pizza", 10, 8, 52, 24, 13); var aw = slab(G, "#dc2626", 14, 32, 44, 5, 0.4, LAWN + 9); aw.rotation.x = 0.5;
+    var c = document.createElement("canvas"); c.width = 1024; c.height = 160; var g = c.getContext("2d");
+    g.fillStyle = "#1c1410"; g.fillRect(0, 0, 1024, 160);
+    ["#15803d", "#f8fafc", "#b91c1c"].forEach(function (k, i) { g.fillStyle = k; g.fillRect(i * 1024 / 3, 146, 1024 / 3 + 1, 14); });
+    g.strokeStyle = "#d4a017"; g.lineWidth = 5; g.strokeRect(8, 8, 1008, 132);
+    g.fillStyle = "#fde68a"; g.textAlign = "center"; g.textBaseline = "middle";
+    g.font = "italic 700 64px Georgia, 'Times New Roman', serif"; g.fillText("Ed's Original", 512, 56);
+    g.font = "700 38px Georgia, 'Times New Roman', serif"; g.fillText("ITALIAN RESTAURANT", 512, 112);
+    var t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; t.anisotropy = ANISO;
+    var m = new THREE.MeshStandardMaterial({ map: t, emissive: new THREE.Color(1, 1, 1), emissiveMap: t, emissiveIntensity: 0, roughness: 0.5 }); m.userData.base = 1.1; m.userData.day = 0.25; GLOW.push(m);
+    var sp = new THREE.Mesh(new THREE.PlaneGeometry(30, 4.7), m); sp.position.set(36, LAWN + 13.4, 32.9); G.add(sp);
+    trim(G.position.x + 36, LAWN + 13.4, G.position.z + 32.78, 30.6, 5.2, 0.16, "#1c1410");
+    glowSprite(G, 36, LAWN + 13.4, 34, 26, "#fde68a", 0.35);
   })();
   (function () {
     var G = block(2, 5, true); flat(G, "#2b3242", 2, 2, 68, 68); bldg(G, "white", 44, 8, 22, 18, 10);
@@ -1516,7 +1614,8 @@
       }
       if (opts.sign) lotSign(opts.sign, W(-w / 2 + 7, -d / 2 - 0.5), ang, y);
     }
-    lot(150, 190, 56, 60, 0, LAWN + 16, 0.65, false, 16);
+    // The Parking Garage: cars parked on every level of the open deck, plus the roof
+    [LAWN + 0.15, LAWN + 7.6, LAWN + 14.6, LAWN + 21.6].forEach(function (y, k) { lot(150, 190, 56, 60, 0, y, k === 3 ? 0.5 : 0.7, false, 16); });
     lot(-50, 305, 64, 34, 0, LAWN + 0.15, 0.75, false);
     lot(150, 308, 64, 28, 0, LAWN + 0.15, 0.6, false);
     lot(-250, -110, 60, 62, 0, LAWN + 0.08, 0.7, true, 22, { acc: 2, ev: 2, sign: "STAFF PARKING" });
@@ -2071,7 +2170,7 @@
         [5, 10, 15].forEach(function (kk) {
           if (ai === 0 && kk === 10) return;
           var c = RINGC[ai], pt = P[kk], f = 82 / 70;
-          victorian(c[0] + (pt.x - c[0]) * f, 0.6, c[1] + (pt.z - c[1]) * f);
+          victorian(c[0] + (pt.x - c[0]) * f, WALK_Y, c[1] + (pt.z - c[1]) * f);
         });
       });
       BLVDLAMPS.forEach(function (p) { victorian(p[0], p[1], p[2]); });
@@ -2082,17 +2181,17 @@
         if ((x === 230 && (y === 40 || y === 140)) || (y === 40 && (x === 130 || x === 330))) return;
         if ((ci + j) % 2) {
           var sx = x + 14 - OX, sz = y + 14 - OZ;
-          cyl(sx, 0.6, sz, 0.15, 10, "#64748b"); trim(sx + 1.4, 10.2, sz, 3.2, 0.7, 0.1, "#15803d"); trim(sx, 9.4, sz + 1.4, 0.1, 0.7, 3.2, "#15803d");
+          cyl(sx, WALK_Y, sz, 0.15, 10, "#64748b"); trim(sx + 1.4, WALK_Y + 9.6, sz, 3.2, 0.7, 0.1, "#15803d"); trim(sx, WALK_Y + 8.8, sz + 1.4, 0.1, 0.7, 3.2, "#15803d");
         }
-        if ((ci + j) % 3 === 0) { var hx = x - 13.5 - OX, hz = y - 13.5 - OZ; cyl(hx, 0.6, hz, 0.42, 1.7, "#dc2626"); cyl(hx, 2.3, hz, 0.5, 0.3, "#b91c1c"); }
+        if ((ci + j) % 3 === 0) { var hx = x - 13.5 - OX, hz = y - 13.5 - OZ; cyl(hx, WALK_Y, hz, 0.42, 1.7, "#dc2626"); cyl(hx, WALK_Y + 1.7, hz, 0.5, 0.3, "#b91c1c"); }
       }); });
       SEGS.forEach(function (s) {
         var horiz = s[1] === s[3], a = Math.min(horiz ? s[0] : s[1], horiz ? s[2] : s[3]), b = Math.max(horiz ? s[0] : s[1], horiz ? s[2] : s[3]);
         for (var v = a + 18; v < b - 12; v += 10) {
           var near = false; (horiz ? cols.concat([-70, 530]) : rowsY.concat([-60, 640])).forEach(function (q) { if (Math.abs(v - q) < 16) near = true; });
           if (near) continue;
-          [-11.5, 11.5].forEach(function (o) {
-            if (horiz) trim(v - OX, 0.65, s[1] + o - OZ, 0.22, 0.1, 7, "#6b7280"); else trim(s[0] + o - OX, 0.65, v - OZ, 7, 0.1, 0.22, "#6b7280");
+          [-11.75, 11.75].forEach(function (o) {
+            if (horiz) trim(v - OX, WALK_Y + 0.01, s[1] + o - OZ, 0.22, 0.06, 6.5, "#6b7280"); else trim(s[0] + o - OX, WALK_Y + 0.01, v - OZ, 6.5, 0.06, 0.22, "#6b7280");
           });
         }
         for (var m = a + 50; m < b - 30; m += 100) { if (horiz) cyl(m - OX, 0.7, s[1] + 4 - OZ, 1.3, 0.12, "#1f2937"); else cyl(s[0] + 4 - OX, 0.7, m - OZ, 1.3, 0.12, "#1f2937"); }
@@ -2154,7 +2253,7 @@
     if (STADBLUE) bluePole(STADBLUE[0], 0.25, STADBLUE[1]);
 
     // ----- Rooftop restaurant on the Apartments tower, overlooking Campus Lake, with a sushi bar on the east side
-    var DINERS = [], BULBS = [], sushiTick = null;
+    var DINERS = [], BULBS = [], GUESTS = [], sushiTick = null;
     (function () {
       var G = B(2, 4), ox = G.position.x, oz = G.position.z, R = LAWN + 58.3, i;
       var dc = document.createElement("canvas"); dc.width = dc.height = 256; var g = dc.getContext("2d");
@@ -2210,6 +2309,65 @@
         DINERS.push({ x: ox + s[0], y: R + 1.63, z: oz + s[1], ry: s[2], sh: SH[(k * 4 + 2) % SH.length], sk: SK[(k + 2) % SK.length], hr: HR[(k * 2 + 1) % HR.length], drink: s[3], ph: 3 + k * 2.2, stand: true });
       });
 
+      // ----- Ed and Kat on a date night at the sushi bar. Ed: tall and broad-shouldered, short blond hair, blue eyes,
+      //       navy button-down and khakis, with a beer. Kat: petite, shoulder-length curly black hair, an olive green
+      //       dress with a subtle pattern and a gold necklace, with a glass of red wine. They glance at each other now and then.
+      var dressM = (function () {
+        var c = document.createElement("canvas"); c.width = c.height = 64; var g2 = c.getContext("2d"), x, y;
+        g2.fillStyle = "#556b2f"; g2.fillRect(0, 0, 64, 64);
+        for (x = 0; x < 64; x += 16) for (y = 0; y < 64; y += 16) {
+          g2.fillStyle = "#46592a"; g2.beginPath(); g2.moveTo(x + 8, y + 2); g2.lineTo(x + 14, y + 8); g2.lineTo(x + 8, y + 14); g2.lineTo(x + 2, y + 8); g2.closePath(); g2.fill();
+          g2.fillStyle = "#6f8442"; g2.beginPath(); g2.arc(x + 8, y + 8, 1.6, 0, 7); g2.fill();
+        }
+        var t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(3, 2); t.encoding = THREE.sRGBEncoding; t.anisotropy = ANISO;
+        return new THREE.MeshStandardMaterial({ map: t, roughness: 0.8 });
+      })();
+      function guest(o, x, y, z) {
+        var g = new THREE.Group(), wf = o.wf, head = new THREE.Group();
+        function part(geo, hex, px, py, pz, par, m) { var me = new THREE.Mesh(geo, m || mat(hex, { r: 0.75 })); me.position.set(px, py, pz); me.castShadow = true; (par || g).add(me); return me; }
+        [-1, 1].forEach(function (sd) {
+          part(new THREE.BoxGeometry(0.42 * wf, 0.42, 1.3), o.thigh, sd * 0.24 * wf, 0.21, 0.5, null, o.thighM);
+          part(new THREE.BoxGeometry(0.36 * wf, 1.6, 0.4), o.shin, sd * 0.24 * wf, -0.62, 1.05);
+          part(new THREE.BoxGeometry(0.42 * wf, 0.24, 0.75), o.shoe, sd * 0.24 * wf, -1.45, 1.2);
+        });
+        part(new THREE.CylinderGeometry(0.5 * wf, 0.5 * wf * 0.92, 1.75, 16), o.top, 0, 1.3, 0, null, o.topM);
+        part(new THREE.CylinderGeometry(0.17, 0.19, 0.3, 10), o.skin, 0, 2.28, 0.02);
+        if (o.dress) {
+          part(new THREE.CylinderGeometry(0.56, 0.86, 0.95, 18), "", 0, 0.38, 0.32, null, dressM);
+          part(new THREE.TorusGeometry(0.22, 0.025, 6, 20), "#d4a017", 0, 2.17, 0.05).rotation.x = Math.PI / 2;
+        } else {
+          part(new THREE.CylinderGeometry(0.3, 0.36, 0.22, 12), "#26385f", 0, 2.22, 0.02);
+          part(new THREE.BoxGeometry(0.06, 1.25, 0.04), "#e5e7eb", 0, 1.45, 0.62);
+          part(new THREE.CylinderGeometry(0.62, 0.62, 0.16, 16), "#5b3a1a", 0, 0.5, 0);
+        }
+        head.position.set(0, 2.62, 0.03); g.add(head);
+        part(new THREE.SphereGeometry(0.44, 16, 12), o.skin, 0, 0, 0, head);
+        [-0.15, 0.15].forEach(function (ex) { part(new THREE.SphereGeometry(0.05, 8, 6), o.eyes, ex, 0.06, 0.41, head); });
+        if (o.dress) {
+          part(new THREE.BoxGeometry(0.16, 0.05, 0.04), "#b4535f", 0, -0.2, 0.42, head);
+          var cg = new THREE.SphereGeometry(0.17, 8, 6), hm = mat("#0d0d0d", { r: 0.85 });
+          [[0.3, 0.36, 9, 1], [0.05, 0.46, 12, 0.55], [-0.25, 0.5, 12, 0.5], [-0.5, 0.52, 11, 0.45]].forEach(function (L) {
+            for (var c = 0; c < L[2]; c++) {
+              var a = c / L[2] * Math.PI * 2 + L[0], cz = Math.cos(a);
+              if (L[3] < 1 && cz > L[3]) continue;
+              var cm = part(cg, "", Math.sin(a) * L[1], L[0], cz * L[1] - 0.04, head, hm); cm.scale.setScalar(0.9 + ((c * 7) % 5) * 0.08);
+            }
+          });
+        } else {
+          part(new THREE.SphereGeometry(0.47, 16, 8, 0, Math.PI * 2, 0, Math.PI * 0.42), o.hair, 0, 0.06, -0.03, head);
+        }
+        var arms = [-1, 1].map(function (sd) {
+          var pv = new THREE.Group(); pv.position.set(sd * (0.5 * wf + 0.14), 2.02, 0.05); g.add(pv);
+          part(new THREE.BoxGeometry(0.26, 1.45, 0.26).translate(0, -0.72, 0), o.sleeve, 0, 0, 0, pv);
+          part(new THREE.SphereGeometry(0.16, 8, 6), o.skin, 0, -1.5, 0, pv);
+          return pv;
+        });
+        if (o.dress) { part(new THREE.SphereGeometry(0.15, 10, 8), "#7f1d1d", 0, -1.45, 0.18, arms[1]); part(new THREE.CylinderGeometry(0.03, 0.03, 0.3, 6), "#e5e7eb", 0, -1.7, 0.18, arms[1]); }
+        else { part(new THREE.CylinderGeometry(0.16, 0.13, 0.55, 10), "#d97706", 0, -1.55, 0.16, arms[1]); part(new THREE.CylinderGeometry(0.165, 0.165, 0.1, 10), "#fef3c7", 0, -1.25, 0.16, arms[1]); part(new THREE.BoxGeometry(0.2, 0.1, 0.22), "#d4d4d8", 0, -1.3, 0, arms[0]); }
+        g.scale.setScalar(o.s); g.position.set(x, y, z); g.rotation.y = Math.PI / 2; scene.add(g);
+        GUESTS.push({ arms: arms, head: head, look: o.look, ph: o.ph });
+      }
+
       // ----- Sushi bar: a wood counter with a lit fish case, a chef at work, and three guests on stools
       var chef = new THREE.Group(), neck = new THREE.Group(), plate = new THREE.Group(), arms, knife, SZ = [41.5, 44, 46.5];
       trim(ox + 52.6, R + 1.775, oz + 44, 1.6, 3.55, 8.4, "#5b3a22");
@@ -2235,7 +2393,9 @@
         BULBS.push([ox + 53.4, R + 6.14, oz + z, 0.18]);
         glowSprite(scene, ox + 53.4, R + 6.05, oz + z, 2.4, "#ffe4b5", 0.7);
         cyl(ox + 50, R, oz + z, 0.55, 0.1, "#111827"); cyl(ox + 50, R + 0.1, oz + z, 0.1, 2.15, "#111827"); cyl(ox + 50, R + 2.25, oz + z, 0.62, 0.2, "#3b2a1f");
-        DINERS.push({ x: ox + 50, y: R + 2.45, z: oz + z, ry: Math.PI / 2, sh: SH[(k * 3 + 5) % SH.length], sk: SK[(k + 3) % SK.length], hr: HR[(k * 3 + 2) % HR.length], drink: k === 1, ph: 6 + k * 1.9, stand: false });
+        if (k === 0) guest({ s: 1.12, wf: 1.3, skin: "#f0c8a8", eyes: "#3b82f6", hair: "#e3c16f", top: "#1e3a5f", sleeve: "#1e3a5f", thigh: "#c8b48a", shin: "#c8b48a", shoe: "#5b3a1a", look: -0.55, ph: 0 }, ox + 50, R + 2.45, oz + z);
+        else if (k === 1) guest({ s: 0.88, wf: 1, dress: true, skin: "#e2b48e", eyes: "#3b2314", top: "", topM: dressM, thighM: dressM, sleeve: "#e2b48e", shin: "#e2b48e", shoe: "#1f2937", look: 0.55, ph: 4.5 }, ox + 50, R + 2.45, oz + z);
+        else DINERS.push({ x: ox + 50, y: R + 2.45, z: oz + z, ry: Math.PI / 2, sh: SH[(k * 3 + 5) % SH.length], sk: SK[(k + 3) % SK.length], hr: HR[(k * 3 + 2) % HR.length], drink: false, ph: 6 + k * 1.9, stand: false });
       });
       chef.position.set(ox + 55.8, R, oz + 44); chef.rotation.y = -Math.PI / 2; scene.add(chef);
       function cp(geo, hex, x, y, z, par) { var m = new THREE.Mesh(geo, mat(hex, { r: 0.75 })); m.position.set(x, y, z); (par || chef).add(m); return m; }
@@ -2272,6 +2432,11 @@
         if (c < 7) { plate.position.set(bx, by, oz + 44); plate.scale.setScalar(Math.max(0.001, Math.min(1, c / 0.4))); }
         else if (c < 8.5) { u = (c - 7) / 1.5; u = u * u * (3 - 2 * u); plate.scale.setScalar(1); plate.position.set(bx + (tx - bx) * u, by + (ty - by) * u + Math.sin(u * Math.PI) * 1.9, oz + 44 + (gz - oz - 44) * u); }
         else { plate.position.set(tx, ty, gz); plate.scale.setScalar(c > 11.6 ? Math.max(0.001, (12 - c) / 0.4) : 1); }
+        GUESTS.forEach(function (q) {
+          var cyc = ((T + q.ph) % 10) / 10, lift = Math.sin(Math.min(1, cyc / 0.2) * Math.PI);
+          q.arms[1].rotation.x = -1.05 - lift * 1.0; q.arms[0].rotation.x = -1.05;
+          q.head.rotation.y = q.look * (0.5 + 0.5 * Math.sin(T * 0.35 + q.ph));
+        });
       };
       sushiTick(0);
 
@@ -2380,7 +2545,7 @@
       poseDiners(0);
     })();
 
-    // ----- People walking the sidewalks: real legs that step, arms that swing, shoes, hair and their own outfits
+    // ----- People walking the raised sidewalks: real legs that step, arms that swing, shoes, hair and their own outfits
     var walkers = [], WSEG = SEGS.filter(function (s) { return s[0] !== -70 && s[0] !== 530 && s[1] !== -60 && s[1] !== 640; });
     var SHIRT = ["#4d1979", "#f8fafc", "#1e3a8a", "#b91c1c", "#6b7280", "#15803d", "#eab308", "#0f766e", "#db2777", "#111827"], SKIN = ["#f1c7a5", "#d9a47c", "#a56a43", "#7b4a2a", "#e8b896"];
     var PANTS = ["#1e3a5f", "#1f2937", "#3b4a6b", "#a8926b", "#374151", "#0f172a", "#52525b"], HAIRC = ["#1c1917", "#3f2a1d", "#78350f", "#d6b370", "#0c0a09", "#7c2d12"], SHOE = ["#111827", "#f8fafc", "#7c2d12", "#1f2937"];
@@ -2412,7 +2577,7 @@
         var ry = p.h ? (p.dir > 0 ? Math.PI / 2 : -Math.PI / 2) : (p.dir > 0 ? 0 : Math.PI);
         p.ph += dt * p.v * 1.35;
         var sw = Math.sin(p.ph), bob = Math.abs(Math.cos(p.ph)) * 0.12;
-        WP.position.set(x, 0.6 + bob, z); WP.rotation.set(0, ry, 0); WP.updateMatrixWorld(true);
+        WP.position.set(x, WALK_Y + bob, z); WP.rotation.set(0, ry, 0); WP.updateMatrixWorld(true);
         wTorso.setMatrixAt(i, WP.matrixWorld); wHead.setMatrixAt(i, WP.matrixWorld); wHair.setMatrixAt(i, WP.matrixWorld);
         for (var k = 0; k < 2; k++) {
           var sg2 = k ? 1 : -1;
@@ -2906,12 +3071,18 @@
     NIGHTFX.forEach(function (p) { p[0].opacity = NIGHT * p[1]; });
     if (force || Math.abs(st.key - lastShadowMin) >= 2) { lastShadowMin = st.key; renderer.shadowMap.needsUpdate = true; envDirty = true; }
   }
-  var useB = true;
-  function updateEnv() {
-    var target = useB ? cubeB : cubeA; useB = !useB;
-    cubeCam.renderTarget = target; cubeCam.update(renderer, scene);
-    ENVMATS.forEach(function (m) { m.envMap = target.texture; });
+  // Reflections for the water and glass are refreshed one face at a time across six frames, instead of all at once,
+  // so the flyover camera never hitches. Two copies are kept so the old reflection stays on screen until the new one is done.
+  var useB = true, envT = null, envFace = 6;
+  function envStep(start) {
+    if (envFace >= 6) { if (!start) return; envT = useB ? cubeB : cubeA; useB = !useB; envFace = 0; }
+    var cams = cubeCam.children, cur = renderer.getRenderTarget();
+    envT.texture.generateMipmaps = envFace === 5;
+    renderer.setRenderTarget(envT, envFace); renderer.render(scene, cams[envFace]); renderer.setRenderTarget(cur);
+    envFace++;
+    if (envFace === 6) ENVMATS.forEach(function (m) { m.envMap = envT.texture; });
   }
+  function updateEnv() { envFace = 6; envStep(true); while (envFace < 6) envStep(false); }
 
   // ---------------- Destinations ----------------
   var ME = { x: 130, y: 440 };
@@ -2930,14 +3101,14 @@
     { n: "Campus Quad Hub", s: "TrypCar Hub, well lit", b: [2, 1], t: 6, h: 24, main: 1, cls: "hub" },
     { n: "Campus Lake", s: "Cobblestone lakeside walk and footbridge", b: [2, 3], t: 4, h: 16, main: 1 },
     { n: "Chapel", s: "Historic stone chapel", b: [0, 4], t: 2, h: 64 },
-    { n: "Pizza Place", s: "Founding Partner · student deals", b: [1, 5], t: 5, h: 22, main: 1, cls: "partner", tag: " · Partner" },
+    { n: "Ed's Original Italian Restaurant", s: "Founding Partner · Italian dining", b: [1, 5], t: 5, h: 22, main: 1, cls: "partner", tag: " · Partner" },
     { n: "Gas & Go", s: "Founding Partner · snacks and fuel", b: [2, 5], t: 6, h: 24, main: 1, cls: "partner", tag: " · Partner" },
     { n: "Founders Hall", s: "Admissions and the president's office", b: [0, 3], t: 3, h: 48 },
     { n: "Arts Center", s: "Theater, galleries, and studios", b: [3, 1], t: 6, h: 42 },
     { n: "Residence Hall", s: "First-year housing", b: [3, 3], t: 4, h: 58 },
     { n: "Residences", s: "Upper-class dorms", b: [1, 4], t: 2, h: 52 },
     { n: "Apartments", s: "Graduate housing · rooftop restaurant and sushi bar", b: [2, 4], t: 3, h: 70 },
-    { n: "Parking Garage", s: "Visitor and commuter parking", b: [3, 4], t: 4, h: 24 },
+    { n: "Parking Garage", s: "Three levels plus the roof deck", b: [3, 4], t: 4, h: 30 },
     { n: "Main St Shops", s: "Shops and services off campus", b: [3, 5], t: 7, h: 24 },
     { n: "Ball Field", s: "Intramural softball", b: [-1, 2], t: 6, h: 12 },
     { n: "Staff Parking", s: "Faculty and staff lot · accessible and EV spaces", b: [-1, 1], t: 5, h: 10 },
@@ -2982,7 +3153,7 @@
       L.el.style.opacity = keep ? "1" : String(clamp(edge / 36, 0.35, 1).toFixed(2));
       L.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) translate(-50%,-100%)";
     });
-      }
+    }
   // ---------------- Destination highlight, drop-off pin and route ----------------
   var hl = { g: null, mats: [] };
   function hiMat(m) { var c = m.clone(); c.emissive = col("#2563eb"); c.emissiveMap = null; c.emissiveIntensity = 0.55; hl.mats.push(c); return c; }
@@ -3188,7 +3359,9 @@
     if (!follow && now - lastInput > 7000) { orb.az += dt * 0.035; orb.pol += (1.16 - orb.pol) * Math.min(1, dt * 0.25); }
     updateCamera(dt);
     if (BLADES) BLADES.visible = camDist < 440;
-    if (envDirty || now - lastEnv > 5000) { envDirty = false; lastEnv = now; updateEnv(); }
+    // reflections refresh one face per frame (six frames per refresh) so the flyover never hitches
+    if (envFace < 6) envStep(false);
+    else if (envDirty || now - lastEnv > 8000) { envDirty = false; lastEnv = now; envStep(true); }
     renderer.render(scene, camera);
     updateLabels();
     if (!perf.done && T > 2) { perf.n++; perf.sum += dt; if (perf.n >= 90) { perf.done = true; if (perf.sum / perf.n > 0.04 && PR > 1) { PR = 1; renderer.setPixelRatio(1); resize(); } } }
@@ -3536,7 +3709,7 @@
     if (user.ok) { applyUser(); show("ride"); home(); } else obWelcome();
     scene.traverse(function (o) { if (o.isInstancedMesh) o.frustumCulled = false; });
     resize(); updateCamera(1);
-    try { renderer.render(scene, camera); } catch (e) {}
+    try { updateEnv(); envDirty = false; lastEnv = performance.now(); renderer.render(scene, camera); } catch (e) {}
     frame();
     setTimeout(function () {
       $("splash").classList.add("gone");
