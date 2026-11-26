@@ -838,7 +838,6 @@
     var shoulder = mat("#5f6457", { r: 0.95 }), asphalt = mat("#262a31", { r: 0.95 });
     CURVES.forEach(function (c) { ribbonMesh(c.pts, 22, 0.35, shoulder); ribbonMesh(c.pts, 14, 0.7, asphalt); });
   })();
-  // The four curved corners of the campus loop road
   var RINGARCS = [], RINGC = [];
   [[0, 10, Math.PI], [460, 10, 1.5 * Math.PI], [460, 570, 0], [0, 570, 0.5 * Math.PI]].forEach(function (a) {
     var pts = [];
@@ -872,7 +871,6 @@
   function bxOf(c) { return c < 0 ? -56 : c > 3 ? 444 : cols[c] + 14; }
   function byOf(r) { return r < 0 ? -46 : r > 4 ? 554 : rowsY[r] + 14; }
   var BLOCKS = {};
-  // A block of grass. Corner blocks (rc = center of the curved road) get a rounded corner that follows the curve.
   function block(c, r, town, w, rc) {
     var G = new THREE.Group(); G.position.set(bxOf(c) - OX, 0, byOf(r) - OZ); scene.add(G);
     G.userData.w = w || 72; BLOCKS[c + "," + r] = G;
@@ -904,7 +902,7 @@
   }
   // Arena
   (function () { var G = block(0, 0); bldg(G, "stone", 8, 8, 56, 56, 10); dome(G, 36, 36, LAWN + 10, 27, 0.82, "#3e7f8a"); autoTrees(G, [[8, 8, 56, 56]], 1); })();
-  // Great Lawn: crossing walks, a stone circle with flowers, and rows of shade trees
+  // Great Lawn
   (function () {
     var G = block(1, 0, false, 172), i;
     flat(G, "#c9ced6", 0, 34, 172, 4); flat(G, "#c9ced6", 84, 0, 4, 72);
@@ -945,15 +943,12 @@
     chimney(G, 9, 23.5, LAWN + 16, 14); chimney(G, 60, 23.5, LAWN + 16, 14); cupola(G, 36, 25, LAWN + 27);
     flat(G, "#b6bcc6", 10, 46, 52, 20); grandSteps(G, 14, 42, 44, 4, 2.2, 1.2); autoTrees(G, [[6, 8, 60, 60]], 7);
   })();
-  // Rec Center: an ultra-modern two-story building. Its street sides are solid dark panels with slim light strips, with
-  // the upper floor cantilevered over the entrance. The side facing the tennis courts is a full two-story glass wall:
-  // the indoor lap pool glows on the ground floor and the gym is lit upstairs. Two fenced tennis courts sit alongside.
+  // Rec Center: an ultra-modern two-story building with a glass wall facing the tennis courts
   (function () {
     var G = block(2, 2), gx = G.position.x, gz = G.position.z, i, k, DK = "#262d39", PM = { r: 0.5, m: 0.3 }, F2 = LAWN + 10.6, TOPY = LAWN + 19;
     function tr(x, y, z, sx, sy, sz, hex, ry, rx) { trim(gx + x, y, gz + z, sx, sy, sz, hex, ry, rx); }
     function cy(x, y, z, r, h, hex) { cyl(gx + x, y, gz + z, r, h, hex); }
     function li(x, y, z, sx, sy, sz, green) { lite(gx + x, y, gz + z, sx, sy, sz, green); }
-    // The shell (walls are placed so no two surfaces ever share the same plane)
     slab(G, "#d6d3d1", 40.6, 6.6, 27.8, 61.8, 0.3, LAWN, { r: 0.4 });
     slab(G, DK, 68.4, 6, 0.6, 63, 10, LAWN, PM);
     slab(G, DK, 40, 68.4, 28.4, 0.6, 10, LAWN, PM);
@@ -965,16 +960,13 @@
     slab(G, DK, 40, 2, 28.4, 0.6, 8.4, F2, PM);
     slab(G, DK, 40, 2.6, 0.6, 27.4, 8.4, F2, PM);
     slab(G, DK, 39.6, 1.6, 29.8, 67.8, 0.8, TOPY, { r: 0.6, m: 0.2 });
-    // The two-story glass wall facing the tennis courts
     var gm = new THREE.MeshStandardMaterial({ color: col("#cfe8ff"), transparent: true, opacity: 0.18, roughness: 0.05, metalness: 0.3, envMap: cubeA.texture, envMapIntensity: 1.2, depthWrite: false, side: THREE.DoubleSide }); ENVMATS.push(gm);
     [[LAWN + 5, 10], [F2 + 4.2, 8.4]].forEach(function (p) { var pl = new THREE.Mesh(new THREE.PlaneGeometry(38.4, p[1]), gm); pl.rotation.y = Math.PI / 2; pl.position.set(40.3, p[0], 49.2); G.add(pl); });
     for (i = 0; i <= 10; i++) tr(40.25, LAWN + 9.5, 30 + i * 3.84, 0.18, 19, 0.18, "#111827");
     tr(40.1, LAWN + 10.3, 49.2, 0.3, 0.8, 38.4, "#cbd5e1");
-    // Interior partitions and pale inner wall finishes
     slab(G, "#cbd5e1", 40.6, 30, 27.8, 0.6, 9.7, LAWN + 0.3); slab(G, "#cbd5e1", 40.6, 30, 27.8, 0.6, 8.4, F2);
     tr(68.33, LAWN + 5.65, 49.5, 0.12, 8.7, 37.8, "#dbeafe"); tr(54.45, LAWN + 5.65, 68.33, 27.7, 8.7, 0.12, "#dbeafe");
     tr(68.33, F2 + 4.2, 49.5, 0.12, 8.4, 37.8, "#f1f5f9"); tr(54.45, F2 + 4.2, 68.33, 27.7, 8.4, 0.12, "#f1f5f9");
-    // Indoor lap pool on a raised deck
     var DY = LAWN + 1.3, wx0 = 45, wx1 = 63, wz0 = 35, wz1 = 65;
     slab(G, "#e7e2d8", 40.6, 30.6, 27.7, wz0 - 30.6, 1, LAWN + 0.3, { r: 0.8 });
     slab(G, "#e7e2d8", 40.6, wz1, 27.7, 68.3 - wz1, 1, LAWN + 0.3, { r: 0.8 });
@@ -1001,7 +993,6 @@
     [[42, 49.1], [43.6, 49.1], [42, 50.9], [43.6, 50.9]].forEach(function (p) { cy(p[0], DY, p[1], 0.08, 4, "#f8fafc"); });
     tr(42.8, DY + 4, 50, 1.9, 0.22, 1.9, "#f8fafc"); tr(41.9, DY + 4.9, 50, 0.18, 1.8, 1.9, "#f8fafc");
     [47, 54, 61].forEach(function (x) { li(x, LAWN + 9.75, 49.5, 0.6, 0.12, 34); });
-    // Upstairs gym: treadmills facing the glass, and weight racks
     for (i = 0; i < 10; i++) {
       var z = 32.5 + i * 3.5;
       tr(43, F2 + 0.18, z, 2.8, 0.35, 1.2, "#1f2937");
@@ -1016,18 +1007,15 @@
     });
     [46, 54, 62].forEach(function (x) { li(x, F2 + 8.1, 49.5, 0.6, 0.12, 34); });
     glowPool(G, 54, F2 + 0.1, 49.5, 26, 36, "#fde68a", 0.3);
-    // Entrance and lobby on the north side, under the cantilevered upper floor
     var eg = new THREE.Mesh(new THREE.PlaneGeometry(8, 7), gm); eg.position.set(54, LAWN + 3.5, 6.35); G.add(eg);
     tr(50.1, LAWN + 3.5, 6.3, 0.2, 7, 0.3, "#94a3b8"); tr(57.9, LAWN + 3.5, 6.3, 0.2, 7, 0.3, "#94a3b8"); tr(54, LAWN + 3.5, 6.3, 0.15, 7, 0.3, "#94a3b8");
     tr(54, LAWN + 1.2, 12, 8, 1.8, 1.4, "#e5e7eb");
     li(54, LAWN + 9.7, 14, 20, 0.12, 0.6); glowPool(G, 54, LAWN + 0.4, 10, 20, 12, "#fde68a", 0.35);
     li(54.2, LAWN + 9.9, 4, 27, 0.08, 0.3);
     flat(G, "#d6d3d1", 40, 0, 29, 6);
-    // Slim green light strips on the street sides
     [12, 27, 42, 57].forEach(function (z) { li(69.06, LAWN + 9.5, z, 0.1, 18, 0.25, true); });
     [47, 61].forEach(function (x) { li(x, LAWN + 9.5, 69.06, 0.25, 18, 0.1, true); });
     [44, 64].forEach(function (x) { li(x, F2 + 4.2, 1.94, 0.25, 8, 0.1, true); });
-    // A lit "REC CENTER" sign on the upper floor facing the street
     var scv = document.createElement("canvas"); scv.width = 512; scv.height = 80; var sgc = scv.getContext("2d");
     sgc.fillStyle = "#0b1a3a"; sgc.fillRect(0, 0, 512, 80); sgc.fillStyle = "#34d399"; sgc.fillRect(0, 74, 512, 6);
     sgc.fillStyle = "#ffffff"; sgc.font = "800 46px 'Plus Jakarta Sans', Arial, sans-serif"; sgc.textAlign = "center"; sgc.textBaseline = "middle"; sgc.fillText("REC CENTER", 256, 39);
@@ -1035,10 +1023,8 @@
     var smt = new THREE.MeshStandardMaterial({ map: stx, emissive: new THREE.Color(1, 1, 1), emissiveMap: stx, emissiveIntensity: 0, roughness: 0.5 }); smt.userData.base = 0.9; smt.userData.day = 0.15; GLOW.push(smt);
     var sp = new THREE.Mesh(new THREE.PlaneGeometry(14, 2.2), smt); sp.rotation.y = Math.PI; sp.position.set(54, F2 + 6.6, 1.68); G.add(sp);
     tr(54, F2 + 6.6, 1.82, 14.4, 2.5, 0.18, "#0b1a3a");
-    // Walks, a plaza by the courts, and shade trees
     flat(G, "#c9ced6", 36.6, 30, 2.8, 40); flat(G, "#c9ced6", 4, 24, 32.6, 8);
     tree(G, 8, 8, 11, 1); tree(G, 22, 6, 12, 2); tree(G, 33, 12, 10, 3); tree(G, 12, 19, 10, 4);
-    // Tennis courts
     var cc = document.createElement("canvas"); cc.width = 340; cc.height = 375; var g = cc.getContext("2d");
     g.fillStyle = "#2f7d52"; g.fillRect(0, 0, 340, 375);
     [10.5, 27.5].forEach(function (mx) {
@@ -1209,7 +1195,7 @@
     bldg(G, "geo", 40, 14, 28, 50, 26); gable(G, "#3d4350", 40, 14, 28, 50, 26, 14, true); bldg(G, "geo", 31, 4, 10, 10, 42); cupola(G, 36, 9, LAWN + 42);
     tree(G, 36, 62, 12, 2); tree(G, 20, 64, 10, 1);
   })();
-  // Apartments (the rooftop restaurant is added with the finishing touches)
+  // Apartments
   (function () { var G = block(2, 4); bldg(G, "white", 10, 8, 52, 52, 58); autoTrees(G, [[10, 8, 52, 52]], 12); })();
   // Parking garage
   (function () { var G = block(3, 4); bldg(G, "concrete", 6, 6, 60, 60, 16); slab(G, "#6b7280", 5, 5, 62, 1.2, 2.2, LAWN + 16); slab(G, "#6b7280", 5, 65.8, 62, 1.2, 2.2, LAWN + 16); })();
@@ -1257,6 +1243,7 @@
     });
   })();
   // ---------------- The region around campus ----------------
+  // Faraway flat layers (lakes, creek, meadows, road junctions) are spaced well apart so they never shimmer at a distance
   var FARLABELS = [], BLINK = [], HWY = null, CARGEO = null, STADPICK = [], STADBLUE = null, BLVDLAMPS = [], CITYTICK = null;
   (function () {
     var seed = 20261124;
@@ -1313,7 +1300,7 @@
     var curve = new THREE.CatmullRomCurve3([[640, -1600], [560, -1000], [690, -520], [585, -60], [705, 420], [600, 900], [690, 1400], [620, 1900]].map(function (p) { return new THREE.Vector3(p[0], 0, p[1]); }));
     var CP = curve.getSpacedPoints(260);
     function nearCreek(x, z, m) { for (var i = 0; i < CP.length; i += 2) { var dx = CP[i].x - x, dz = CP[i].z - z; if (dx * dx + dz * dz < m * m) return true; } return false; }
-    ribbonMesh(CP, 54, 0.06, mat("#6b6a45", { r: 0.95 }), true); ribbonMesh(CP, 42, 0.1, mat("#a8935f", { r: 0.95 }), true); ribbonMesh(CP, 32, 0.16, waterMat, true);
+    ribbonMesh(CP, 54, 0.12, mat("#6b6a45", { r: 0.95 }), true); ribbonMesh(CP, 42, 0.26, mat("#a8935f", { r: 0.95 }), true); ribbonMesh(CP, 32, 0.42, waterMat, true);
     FARLABELS.push(["Cedar Creek", 600, 8, 60]);
     CURVES.forEach(function (c) {
       var bi = -1, bd = 1e9;
@@ -1327,13 +1314,13 @@
 
     // ----- The interstate along the southern horizon
     var HP = []; for (var hx = -2800; hx <= 2800; hx += 20) HP.push(new THREE.Vector3(hx, 0, hwZ(hx)));
-    ribbonMesh(HP, 42, 0.3, mat("#5f6457", { r: 0.95 })); ribbonMesh(HP, 34, 0.62, mat("#2a2e35", { r: 0.9 })); ribbonMesh(HP, 0.9, 0.64, mat("#e7c66a", { r: 0.6 }));
+    ribbonMesh(HP, 42, 0.3, mat("#5f6457", { r: 0.95 })); ribbonMesh(HP, 34, 0.62, mat("#2a2e35", { r: 0.9 })); ribbonMesh(HP, 0.9, 0.72, mat("#e7c66a", { r: 0.6 }));
     (function () {
       var hd = [];
       for (var x = -2790; x < 2790; x += 26) { var a = Math.atan2(60 / 700 * Math.cos(x / 700), 1); [-8, 8].forEach(function (o) { hd.push([x - Math.sin(a) * o, hwZ(x) + Math.cos(a) * o, a]); }); }
       var lg = new THREE.PlaneGeometry(1, 1); lg.rotateX(-Math.PI / 2);
       var dm = new THREE.InstancedMesh(lg, mat("#e8e2cf", { r: 0.7 }), hd.length);
-      hd.forEach(function (d, i) { placeAt(dm, i, d[0], 0.66, d[1], -d[2], 8, 1, 0.9); }); scene.add(dm);
+      hd.forEach(function (d, i) { placeAt(dm, i, d[0], 0.72, d[1], -d[2], 8, 1, 0.9); }); scene.add(dm);
       var ci = 0, cbd = 1e9; CP.forEach(function (p, i) { var d = Math.abs(p.z - hwZ(p.x)); if (d < cbd) { cbd = d; ci = i; } });
       var cx = CP[ci].x, ca = Math.atan2(60 / 700 * Math.cos(cx / 700), 1);
       [-18, 18].forEach(function (o) { var rail = new THREE.Mesh(new THREE.BoxGeometry(90, 2.6, 1.2), mat("#94a3b8", { r: 0.6 })); rail.position.set(cx - Math.sin(ca) * o, 1.6, hwZ(cx) + Math.cos(ca) * o); rail.rotation.y = -ca; scene.add(rail); });
@@ -1539,11 +1526,11 @@
       var ra = CURVES[9].pts, best = ra[0];
       ra.forEach(function (p) { if (Math.abs(p.x - 925) < Math.abs(best.x - 925)) best = p; });
       var drive = []; for (var z = best.z; z > -626; z -= 10) drive.push(new THREE.Vector3(925, 0, z));
-      if (drive.length > 1) { BR.push(drive); ribbonMesh(drive, 12, 0.68, resMat); }
+      if (drive.length > 1) { BR.push(drive); ribbonMesh(drive, 12, 0.56, resMat); }
       FARLABELS.push(["Riverside Business Park", 925, 60, -800]);
     })();
 
-    // ----- Willow Lake
+    // ----- Willow Lake: shoreline, sand and water are stacked with plenty of space between them so they never flicker
     var homes = [];
     (function () {
       function shoreR(t) { return 1 + 0.12 * Math.sin(3 * t + 1) + 0.07 * Math.sin(5 * t + 2.4); }
@@ -1552,18 +1539,18 @@
         for (var i = 0; i <= 72; i++) { var t = i / 72 * Math.PI * 2, r = shoreR(t) * sc, x = Math.cos(t) * LAKE.rx * r, z = Math.sin(t) * LAKE.rz * r; if (i) s.lineTo(x, -z); else s.moveTo(x, -z); }
         return s;
       }
-      [[1.06, 0.05, "#6f5f41"], [1.03, 0.08, "#c9b07e"]].forEach(function (L) { var g = new THREE.ShapeGeometry(lakeShape(L[0]), 4); g.rotateX(-Math.PI / 2); var m = new THREE.Mesh(g, mat(L[2], { r: 0.95 })); m.position.set(LAKE.x, L[1], LAKE.z); m.receiveShadow = true; scene.add(m); });
+      [[1.06, 0.25, "#6f5f41"], [1.03, 0.5, "#c9b07e"]].forEach(function (L) { var g = new THREE.ShapeGeometry(lakeShape(L[0]), 4); g.rotateX(-Math.PI / 2); var m = new THREE.Mesh(g, mat(L[2], { r: 0.95 })); m.position.set(LAKE.x, L[1], LAKE.z); m.receiveShadow = true; scene.add(m); });
       var wg = new THREE.ShapeGeometry(lakeShape(1), 4); wg.rotateX(-Math.PI / 2);
       var uvA = wg.attributes.uv; for (var u = 0; u < uvA.count; u++) uvA.setXY(u, uvA.getX(u) / 60, uvA.getY(u) / 60);
-      var water = new THREE.Mesh(wg, waterMat); water.position.set(LAKE.x, 0.12, LAKE.z); scene.add(water);
+      var water = new THREE.Mesh(wg, waterMat); water.position.set(LAKE.x, 0.75, LAKE.z); scene.add(water);
       var ring = [];
       for (var i = 0; i <= 90; i++) { var t = i / 90 * Math.PI * 2, r = shoreR(t) * 1.2; ring.push(new THREE.Vector3(LAKE.x + Math.cos(t) * LAKE.rx * r, 0, LAKE.z + Math.sin(t) * LAKE.rz * r)); }
-      BR.push(ring); ribbonMesh(ring, 11, 0.68, resMat);
+      BR.push(ring); ribbonMesh(ring, 11, 0.56, resMat);
       var art = CURVES[6].pts, near = art[0], nd = 1e9;
       art.forEach(function (p) { var d = Math.hypot(p.x - LAKE.x, p.z - LAKE.z); if (d < nd) { nd = d; near = p; } });
       var ta = Math.atan2((near.z - LAKE.z) / LAKE.rz, (near.x - LAKE.x) / LAKE.rx), rp = ring[Math.round((ta < 0 ? ta + Math.PI * 2 : ta) / (Math.PI * 2) * 90) % 90], conn = [];
       for (var k = 0; k <= 20; k++) conn.push(new THREE.Vector3(near.x + (rp.x - near.x) * k / 20, 0, near.z + (rp.z - near.z) * k / 20));
-      BR.push(conn); ribbonMesh(conn, 11, 0.68, resMat);
+      BR.push(conn); ribbonMesh(conn, 11, 0.63, resMat);
       for (var j = 0; j < 30; j++) {
         var t2 = j / 30 * Math.PI * 2 + 0.05, r2 = shoreR(t2) * 1.42, hx = LAKE.x + Math.cos(t2) * LAKE.rx * r2, hz = LAKE.z + Math.sin(t2) * LAKE.rz * r2;
         if (rnd() < 0.18 || nearRoad(hx, hz, 16)) continue;
@@ -1571,11 +1558,11 @@
         TREES.push([hx + Math.cos(t2) * 22, 0, hz + Math.sin(t2) * 22, 10 + rnd() * 5, j]);
       }
       var td = 0.9, sx = LAKE.x + Math.cos(td) * LAKE.rx * shoreR(td), sz = LAKE.z + Math.sin(td) * LAKE.rz * shoreR(td);
-      var dock = new THREE.Mesh(new THREE.BoxGeometry(46, 0.8, 6), mat("#8b5a2b", { r: 0.8 })); dock.position.set(sx - Math.cos(td) * 20, 0.7, sz - Math.sin(td) * 20); dock.rotation.y = -td; scene.add(shade(dock));
+      var dock = new THREE.Mesh(new THREE.BoxGeometry(46, 0.8, 6), mat("#8b5a2b", { r: 0.8 })); dock.position.set(sx - Math.cos(td) * 20, 1.15, sz - Math.sin(td) * 20); dock.rotation.y = -td; scene.add(shade(dock));
       [[-30, 6, "#f8fafc"], [-38, -10, "#dc2626"], [-60, 14, "#f8fafc"]].forEach(function (b, i) {
         var boat = new THREE.Group(), hull = new THREE.Mesh(new THREE.BoxGeometry(12, 1.6, 4.6), mat(b[2], { r: 0.4 })), cab = new THREE.Mesh(new THREE.BoxGeometry(4, 1.6, 3.4), mat("#e2e8f0", { r: 0.4 }));
         hull.position.y = 0.6; cab.position.set(-1, 1.9, 0); boat.add(hull, cab);
-        boat.position.set(sx + Math.cos(td) * b[0] - Math.sin(td) * b[1], 0, sz + Math.sin(td) * b[0] + Math.cos(td) * b[1]); boat.rotation.y = i * 1.3; scene.add(boat);
+        boat.position.set(sx + Math.cos(td) * b[0] - Math.sin(td) * b[1], 0.5, sz + Math.sin(td) * b[0] + Math.cos(td) * b[1]); boat.rotation.y = i * 1.3; scene.add(boat);
       });
       FARLABELS.push(["Willow Lake", LAKE.x, 12, LAKE.z]);
     })();
@@ -1603,7 +1590,7 @@
       FARLABELS.push(["Harvest Farm", FARM.x0 + 295, 30, FARM.z0 + 230]);
     })();
 
-    // ----- Neighborhood streets and cul-de-sacs
+    // ----- Neighborhood streets and cul-de-sacs (set a little below the main roads so the junctions stay clean)
     var culs = [], STREETS = [];
     function tryBranch(c, ci, i) {
       var side = rnd() < 0.5 ? -1 : 1, p = c.pts[i], q = c.pts[i + 1], h = Math.atan2(q.z - p.z, q.x - p.x) + side * Math.PI / 2;
@@ -1624,7 +1611,7 @@
       for (var t = -2; t <= 2; t++) { var aa = h + t * 0.78, cx = e.x + Math.cos(aa) * 36, cz = e.z + Math.sin(aa) * 36; if (nearRoad(cx, cz, 15)) continue; homes.push([cx, cz, -(aa + Math.PI / 2), Math.floor(rnd() * 6), Math.floor(rnd() * 5)]); TREES.push([e.x + Math.cos(aa) * 58, 0, e.z + Math.sin(aa) * 58, 10 + rnd() * 5, t + 9]); }
     }
     CURVES.forEach(function (c, ci) { for (var i = 8 + Math.floor(rnd() * 4); i < c.pts.length - 6; i += 8 + Math.floor(rnd() * 7)) tryBranch(c, ci, i); });
-    if (STREETS.length) ribbonBatch(STREETS, 11, 0.68, resMat);
+    if (STREETS.length) ribbonBatch(STREETS, 11, 0.56, resMat);
     if (culs.length) {
       var cg = new THREE.CircleGeometry(16, 24); cg.rotateX(-Math.PI / 2);
       var cm = new THREE.InstancedMesh(cg, resMat, culs.length); culs.forEach(function (e, i) { placeAt(cm, i, e.x, 0.74, e.z); }); cm.receiveShadow = true; scene.add(cm);
@@ -1657,16 +1644,17 @@
       }
     })();
 
-    // ----- Meadows and woods
+    // ----- Meadows: drawn flat on the ground after it, so overlapping meadows never fight each other or the ground
     var MC = ["#4f8a56", "#5c9a50", "#7aa058", "#8aa25c", "#47804e"];
     var mg = new THREE.CircleGeometry(1, 28); mg.rotateX(-Math.PI / 2); grassUV(mg, [18, 18]);
-    var meads = new THREE.InstancedMesh(mg, new THREE.MeshStandardMaterial({ map: GRASS.wild.map, normalMap: GRASS.wild.normal, normalScale: new THREE.Vector2(0.6, 0.6), roughness: 0.95 }), 40), mi = 0;
+    var meadM = new THREE.MeshStandardMaterial({ map: GRASS.wild.map, normalMap: GRASS.wild.normal, normalScale: new THREE.Vector2(0.6, 0.6), roughness: 0.95, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 });
+    var meads = new THREE.InstancedMesh(mg, meadM, 40), mi = 0;
     for (var k = 0; k < 500 && mi < 40; k++) {
       var ang = rnd() * Math.PI * 2, rad = 420 + rnd() * 1500, x = Math.cos(ang) * rad, z = Math.sin(ang) * rad * 1.1;
       if (inTown(x, z, 60) || reserved(x, z, 40)) continue;
-      placeAt(meads, mi, x, 0.12 + mi * 0.004, z, rnd() * 3, 70 + rnd() * 150, 1, 40 + rnd() * 90); meads.setColorAt(mi, col(MC[mi % MC.length])); mi++;
+      placeAt(meads, mi, x, 0.12, z, rnd() * 3, 70 + rnd() * 150, 1, 40 + rnd() * 90); meads.setColorAt(mi, col(MC[mi % MC.length])); mi++;
     }
-    meads.count = mi; meads.receiveShadow = true; scene.add(meads);
+    meads.count = mi; meads.receiveShadow = true; meads.renderOrder = 1; scene.add(meads);
     for (var c = 0; c < 90; c++) {
       var ca = rnd() * Math.PI * 2, cr = 380 + rnd() * 1500, cx = Math.cos(ca) * cr, cz = Math.sin(ca) * cr * 1.1, spread = 35 + rnd() * 100, n = 8 + Math.floor(rnd() * 26);
       for (var t = 0; t < n; t++) {
@@ -1676,7 +1664,7 @@
       }
     }
 
-    // ----- All the homes, drawn together
+    // ----- All the homes
     if (!STY.home) STY.home = { wall: "#f4f1ea", glass: "#2b3448", lit: "#ffd38a", roof: "#3d3a37" };
     var bg = new THREE.BoxGeometry(22, 11, 16), uv = bg.attributes.uv;
     for (var f = 0; f < 6; f++) { if (f === 2 || f === 3) continue; var fw = f < 2 ? 16 : 22; for (var q = 0; q < 4; q++) { var ii = f * 4 + q; uv.setXY(ii, uv.getX(ii) * fw / 32, uv.getY(ii) * 11 / 36); } }
@@ -1709,8 +1697,6 @@
       if (Math.abs(((ha + Math.PI * 2) % (Math.PI * 2)) - 5.5) < 0.35) continue;
       hill.scale.set(w, 60 + rnd() * 100, w * (0.6 + rnd() * 0.5)); hill.position.set(Math.cos(ha) * hr, -20, Math.sin(ha) * hr); hill.rotation.y = rnd() * 3; scene.add(hill);
     }
-    // Downtown: spread wide across the horizon and set well back in the haze, so it adds atmosphere without
-    // competing with campus. After dark, offices and whole floors switch on and off like people working late.
     (function () {
       var MATS = ["#ffe2a8", "#dbeafe", "#fff1c9"].map(function (lt, k) {
         var key = "city" + k; if (!STY[key]) STY[key] = { wall: "#1c2a44", glass: "#86a9d6", lit: lt, roof: "#1f2937", kind: "glass", r: 0.3, m: 0.4 };
@@ -2182,9 +2168,6 @@
     };
   })();
   // ---------------- Trees ----------------
-  // Campus and town trees: irregular crowns of leafy clusters, darker underneath and lighter where the sun hits, with leaf
-  // sprigs around the edges, bark-textured trunks and branches. Countryside trees get a two-part leafy crown, pines three
-  // tiers. Every tree sways gently in the breeze.
   var TREEU = { value: 0 };
   (function () {
     var LEAF = ["#1d7a4a", "#256b3d", "#1b6e55", "#3f7a2a", "#2f8a52"], BLOOM = ["#f9a8d4", "#fbcfe8", "#f5f3ff", "#e9d5ff", "#fda4af"];
@@ -2204,13 +2187,11 @@
           "transformed.z += cos(uTime * 1.1 + swPh) * " + amt + " * 0.6 * (position.y + 1.0);\n#endif");
       };
     }
-    // Leafy canopy texture and relief
     var fc = document.createElement("canvas"); fc.width = fc.height = 256; var fg = fc.getContext("2d"), q;
     fg.fillStyle = "#c8c8c8"; fg.fillRect(0, 0, 256, 256);
     for (q = 0; q < 1400; q++) { var v = 150 + Math.floor(rn() * 105); fg.save(); fg.translate(rn() * 256, rn() * 256); fg.rotate(rn() * 6.283); fg.fillStyle = "rgb(" + v + "," + v + "," + v + ")"; fg.beginPath(); fg.ellipse(0, 0, 5 + rn() * 3, 2.4 + rn() * 1.2, 0, 0, 6.283); fg.fill(); fg.restore(); }
     var fmap = new THREE.CanvasTexture(fc); fmap.wrapS = fmap.wrapT = THREE.RepeatWrapping; fmap.repeat.set(2, 2); fmap.anisotropy = ANISO;
     var fnorm = heightToNormal(fc, 2.5); fnorm.repeat.set(2, 2);
-    // Leaf sprigs: individual pointed leaves with midribs
     var sc = document.createElement("canvas"); sc.width = sc.height = 256; var sg = sc.getContext("2d");
     sg.strokeStyle = "rgb(120,120,120)"; sg.lineWidth = 3; sg.beginPath(); sg.moveTo(128, 250); sg.quadraticCurveTo(120, 160, 128, 60); sg.stroke();
     for (q = 0; q < 46; q++) {
@@ -2220,7 +2201,6 @@
       sg.strokeStyle = "rgba(60,60,60,0.6)"; sg.lineWidth = 1.2; sg.beginPath(); sg.moveTo(-14, 0); sg.lineTo(14, 0); sg.stroke(); sg.restore();
     }
     var cmap = new THREE.CanvasTexture(sc); cmap.anisotropy = ANISO;
-    // Bark
     var bc = document.createElement("canvas"); bc.width = bc.height = 128; var bgc = bc.getContext("2d");
     bgc.fillStyle = "#8a8a8a"; bgc.fillRect(0, 0, 128, 128);
     for (q = 0; q < 160; q++) { var bl = 70 + Math.floor(rn() * 120); bgc.fillStyle = "rgb(" + bl + "," + bl + "," + bl + ")"; bgc.fillRect(rn() * 128, 0, 1 + rn() * 3, 128); }
@@ -2615,7 +2595,7 @@
       L.el.style.opacity = keep ? "1" : String(clamp(edge / 36, 0.35, 1).toFixed(2));
       L.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) translate(-50%,-100%)";
     });
-  }
+        }
   // ---------------- Destination highlight, drop-off pin and route ----------------
   var hl = { g: null, mats: [] };
   function hiMat(m) { var c = m.clone(); c.emissive = col("#2563eb"); c.emissiveMap = null; c.emissiveIntensity = 0.55; hl.mats.push(c); return c; }
