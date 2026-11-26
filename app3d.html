@@ -866,7 +866,8 @@
     var m = new THREE.Mesh(new THREE.BoxGeometry(horiz ? len + e : wid, h, horiz ? wid : len + e), mat(hex, o));
     m.position.set((x1 + x2) / 2 - OX, h / 2, (z1 + z2) / 2 - OZ); m.receiveShadow = true; scene.add(m); return m;
   }
-  function colSegs(x) { return x === 230 ? [[-60, 18], [140, 640]] : [[-60, 640]]; }
+  // The street that runs south toward the Great Lawn now continues a little farther and ends in a proper turnaround
+  function colSegs(x) { return x === 230 ? [[-60, 24], [140, 640]] : [[-60, 640]]; }
   function rowSegs(y) { return y === 40 ? [[-70, 130], [330, 530]] : [[-70, 530]]; }
   var SEGS = [];
   cols.forEach(function (x) { colSegs(x).forEach(function (g) { SEGS.push([x, g[0], x, g[1]]); }); });
@@ -891,7 +892,7 @@
     g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(idx); g.computeVertexNormals();
     var m = new THREE.Mesh(g, material); m.receiveShadow = true; scene.add(m); return m;
                                                            }
-  // The country roads now start right at the edge of the campus loop road, so they join it with no gap
+  // The country roads start right at the edge of the campus loop road, so they join it with no gap
   var REACH = 1450, EXT = [], CURVES = [];
   (function () {
     var seed = 911;
@@ -976,6 +977,18 @@
         trim(x + sx * 13 - OX, WALK_Y + 0.03, y + sz * 9.6 - OZ, 4, 0.06, 2.2, "#e3b505");
       }); });
     }); });
+    // The turnaround where that street meets the Great Lawn: a circular drop-off with a curb and sidewalk, a planted
+    // center island with a tree and flowers, and white bollards where the walk leads straight onto the lawn's main path
+    (function () {
+      var cx = 230 - OX, cz = 36 - OZ, A0 = -Math.PI / 2 + 0.55, A1 = A0 + Math.PI * 2 - 1.1, k;
+      var disk = new THREE.Mesh(new THREE.CylinderGeometry(14.2, 14.2, 0.7, 40), mat("#23272f", { r: 0.95 })); disk.position.set(cx, 0.35, cz); disk.receiveShadow = true; scene.add(disk);
+      sector(cx, cz, 14.5, 20.5, A0, A1, WALK_Y + 0.04, swMat); sector(cx, cz, 14, 14.5, A0, A1, WALK_Y + 0.11, cbMat);
+      cyl(cx, 0, cz, 5.6, WALK_Y + 0.1, "#cfd3d8");
+      var isl = new THREE.Mesh(grassUV(new THREE.CircleGeometry(5.1, 28), [1, 1]), grassMat("#4fa565", "lawn")); isl.rotation.x = -Math.PI / 2; isl.position.set(cx, WALK_Y + 0.13, cz); isl.receiveShadow = true; scene.add(isl);
+      TREES.push([cx, WALK_Y + 0.13, cz, 8, 3, 1]);
+      for (k = 0; k < 14; k++) { var a = k / 14 * Math.PI * 2; FLOWERS.push([cx + Math.cos(a) * 4.2, WALK_Y + 0.5, cz + Math.sin(a) * 4.2, k % 8]); }
+      for (k = 0; k < 7; k++) { var b = Math.PI / 2 + (k - 3) * 0.22; cyl(cx + Math.cos(b) * 19.8, WALK_Y + 0.04, cz + Math.sin(b) * 19.8, 0.35, 1.6, "#f1f5f9"); }
+    })();
   })();
   var XS = [-70].concat(cols, [530]), YS = [-60].concat(rowsY, [640]);
   function nearCross(v, list) { for (var i = 0; i < list.length; i++) if (Math.abs(v - list[i]) < 14) return true; return false; }
@@ -2768,8 +2781,8 @@
     var PANTS = ["#1e3a5f", "#1f2937", "#3b4a6b", "#a8926b", "#374151", "#0f172a", "#52525b"], HAIRC = ["#1c1917", "#3f2a1d", "#78350f", "#d6b370", "#0c0a09", "#7c2d12"], SHOE = ["#111827", "#f8fafc", "#7c2d12", "#1f2937"];
     var PACK = ["#1e3a8a", "#b91c1c", "#111827", "#4d1979", "#065f46", "#ea580c", "#6b7280"];
     function mkW(kind, v, lane, b) { var sg = b ? b.s : WSEG[Math.floor(rnd() * WSEG.length)]; return { kind: kind, s: sg, h: sg[1] === sg[3], side: b ? b.side : (rnd() < 0.5 ? -1 : 1), t: b ? b.t : 0.05 + rnd() * 0.9, dir: b ? b.dir : (rnd() < 0.5 ? -1 : 1), v: v, lane: lane, ph: rnd() * 6 }; }
-    var kq, jq;
-    for (kq = 0; kq < 4; kq++) { var lead = mkW("girl", 3.4 + rnd(), 9.8); walkers.push(lead); [11.7, 13.6].forEach(function (ln) { var f2 = mkW("girl", lead.v, ln, lead); walkers.push(f2); }); }
+    var kq;
+    for (kq = 0; kq < 4; kq++) { var lead = mkW("girl", 3.4 + rnd(), 9.8); walkers.push(lead); [11.7, 13.6].forEach(function (ln) { walkers.push(mkW("girl", lead.v, ln, lead)); }); }
     for (kq = 0; kq < 26; kq++) walkers.push(mkW("student", 3.4 + rnd() * 2.2, 10.2 + rnd() * 2.6));
     for (kq = 0; kq < 8; kq++) walkers.push(mkW("scoot", 10 + rnd() * 4, 9.6));
     for (kq = 0; kq < 14; kq++) walkers.push(mkW("adult", 2.8 + rnd() * 1.6, 10.2 + rnd() * 2.6));
@@ -3422,7 +3435,7 @@
       L.el.style.opacity = keep ? "1" : String(clamp(edge / 36, 0.35, 1).toFixed(2));
       L.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) translate(-50%,-100%)";
     });
-                  }
+   }
   // ---------------- Destination highlight, drop-off pin and route ----------------
   var hl = { g: null, mats: [] };
   function hiMat(m) { var c = m.clone(); c.emissive = col("#2563eb"); c.emissiveMap = null; c.emissiveIntensity = 0.55; hl.mats.push(c); return c; }
