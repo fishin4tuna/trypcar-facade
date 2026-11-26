@@ -371,7 +371,7 @@
       <div class="card"><h3 style="margin-bottom:6px">Scheduled rides</h3><div id="schedlist"></div></div>
       <div class="card"><h3 style="margin-bottom:6px">Ride history</h3><div id="hist"></div></div>
       <div class="card"><div class="switch-row"><div><h3>Share trips with a parent</h3><p>Sends pickup and drop-off texts to a contact you choose (at launch).</p></div><button class="switch" type="button" role="switch" aria-checked="true" aria-label="Share trips with a parent" id="share"></button></div></div>
-      <div class="card"><div class="switch-row"><div><h3>High-quality 3D map</h3><p>Real shadows and sharper detail. Turn off for smoother motion and longer battery on older phones.</p></div><button class="switch" type="button" role="switch" aria-checked="true" aria-label="High-quality 3D map" id="gfx"></button></div></div>
+      <div class="card"><div class="switch-row"><div><h3>High-quality 3D map</h3><p>Real shadows, 3D grass, and sharper detail. Turn off for smoother motion and longer battery on older phones.</p></div><button class="switch" type="button" role="switch" aria-checked="true" aria-label="High-quality 3D map" id="gfx"></button></div></div>
       <div class="card">
         <h3>Join the member waitlist</h3>
         <!-- REAL SIGN-UP: delivered by Web3Forms with the same access_key as the website forms. -->
@@ -658,11 +658,44 @@
     }
     return { lawn: make(true), wild: make(false) };
   })();
+  // Every grass surface also gets large natural color patches (yellow-green in the sun, deeper green elsewhere) and soft
+  // waves of light that roll across like a breeze. The finest detail fades out with distance so faraway fields stay calm.
+  var GTIME = { value: 0 }, WORN = [];
+  var GNOISE = "float gH(vec2 p) { vec3 q = fract(vec3(p.xyx) * 0.1031); q += dot(q, q.yzx + 33.33); return fract((q.x + q.y) * q.z); }\n" +
+    "float gN(vec2 p) { vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(gH(i), gH(i + vec2(1.0, 0.0)), f.x), mix(gH(i + vec2(0.0, 1.0)), gH(i + vec2(1.0, 1.0)), f.x), f.y); }\n";
+  var GFRAG = "float gD = distance(cameraPosition, vGW);\n" +
+    "float gA = gN(vGW.xz * 0.012);\n" +
+    "float gB = mix(0.5, gN(vGW.xz * 0.045 + 7.3), 1.0 - smoothstep(600.0, 1800.0, gD));\n" +
+    "float gC = mix(0.5, gN(vGW.xz * 0.17 + 3.1), 1.0 - smoothstep(150.0, 500.0, gD));\n" +
+    "float gM = gA * 0.55 + gB * 0.3 + gC * 0.15;\n" +
+    "diffuseColor.rgb *= mix(vec3(0.8, 0.9, 0.76), vec3(1.14, 1.1, 0.82), smoothstep(0.25, 0.8, gM));\n" +
+    "float gW = sin(dot(vGW.xz, vec2(0.03, 0.018)) - uGT * 1.3 + gA * 5.0);\n" +
+    "diffuseColor.rgb *= 1.0 + 0.08 * smoothstep(0.55, 1.0, gW);\n";
+  var BLADEV = "#include <begin_vertex>\n#ifdef USE_INSTANCING\n" +
+    "vec3 bwp = (modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;\n" +
+    "float bfd = 1.0 - smoothstep(170.0, 260.0, distance(cameraPosition, bwp));\n" +
+    "float bh = position.y;\n" +
+    "transformed.y *= bfd;\n" +
+    "float bph = bwp.x * 0.11 + bwp.z * 0.07;\n" +
+    "transformed.x += (sin(uGT * 1.7 + bph) * 0.6 + 0.4 * sin(dot(bwp.xz, vec2(0.03, 0.018)) - uGT * 1.3)) * 0.16 * bh * bfd;\n" +
+    "transformed.z += cos(uGT * 1.3 + bph) * 0.07 * bh * bfd;\n#endif";
+  function grassFx(m, blade) {
+    m.onBeforeCompile = function (sh) {
+      sh.uniforms.uGT = GTIME;
+      var v = sh.vertexShader;
+      if (blade) v = v.replace("#include <begin_vertex>", BLADEV);
+      v = v.replace("#include <project_vertex>", "#include <project_vertex>\nvec4 gwp = vec4(transformed, 1.0);\n#ifdef USE_INSTANCING\ngwp = instanceMatrix * gwp;\n#endif\nvGW = (modelMatrix * gwp).xyz;");
+      sh.vertexShader = "uniform float uGT;\nvarying vec3 vGW;\n" + v;
+      sh.fragmentShader = "uniform float uGT;\nvarying vec3 vGW;\n" + GNOISE + sh.fragmentShader.replace("#include <color_fragment>", "#include <color_fragment>\n" + GFRAG);
+    };
+    m.customProgramCacheKey = function () { return blade ? "grass-blade" : "grass-fx"; };
+    return m;
+  }
   var gcache = {};
   function grassMat(hex, kind) {
     var key = hex + kind; if (gcache[key]) return gcache[key];
     var T = GRASS[kind];
-    return (gcache[key] = new THREE.MeshStandardMaterial({ color: col(hex), map: T.map, normalMap: T.normal, normalScale: new THREE.Vector2(0.7, 0.7), roughness: 0.95 }));
+    return (gcache[key] = grassFx(new THREE.MeshStandardMaterial({ color: col(hex), map: T.map, normalMap: T.normal, normalScale: new THREE.Vector2(0.7, 0.7), roughness: 0.95 })));
   }
   function grassUV(geo, s) { var uv = geo.attributes.uv; for (var i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) * s[0], uv.getY(i) * s[1]); return geo; }
 
@@ -902,13 +935,27 @@
   }
   // Arena
   (function () { var G = block(0, 0); bldg(G, "stone", 8, 8, 56, 56, 10); dome(G, 36, 36, LAWN + 10, 27, 0.82, "#3e7f8a"); autoTrees(G, [[8, 8, 56, 56]], 1); })();
-  // Great Lawn
+  // Great Lawn, with two faint worn footpaths where students cut across
   (function () {
     var G = block(1, 0, false, 172), i;
     flat(G, "#c9ced6", 0, 34, 172, 4); flat(G, "#c9ced6", 84, 0, 4, 72);
     var ring = new THREE.Mesh(new THREE.RingGeometry(12, 16, 56), mat("#c9ced6", { r: 0.9 })); ring.rotation.x = -Math.PI / 2; ring.position.set(86, LAWN + 0.1, 36); ring.receiveShadow = true; G.add(ring);
     var inner = new THREE.Mesh(grassUV(new THREE.CircleGeometry(12, 48), [2.4, 2.4]), grassMat("#52a868", "lawn")); inner.rotation.x = -Math.PI / 2; inner.position.set(86, LAWN + 0.17, 36); inner.receiveShadow = true; G.add(inner);
     for (i = 0; i < 9; i++) { var x = 8 + i * 19.5; if (Math.abs(x - 86) < 10) continue; tree(G, x, 8, 11 + (i % 3) * 2, i); tree(G, x, 64, 11 + ((i + 1) % 3) * 2, i + 4); }
+    var wc = document.createElement("canvas"); wc.width = 64; wc.height = 256;
+    var wg = wc.getContext("2d"), wi = wg.createImageData(64, 256), wd = wi.data, ws = 5, yy, xx;
+    for (yy = 0; yy < 256; yy++) for (xx = 0; xx < 64; xx++) {
+      ws = (ws * 16807) % 2147483647;
+      var ac = Math.max(0, 1 - Math.abs(xx - 31.5) / 32), ef = Math.min(1, yy / 48, (255 - yy) / 48), al = Math.pow(ac, 1.5) * ef * (0.5 + 0.5 * ws / 2147483647), o = (yy * 64 + xx) * 4;
+      wd[o] = wd[o + 1] = wd[o + 2] = 255; wd[o + 3] = Math.floor(al * 255);
+    }
+    wg.putImageData(wi, 0, 0);
+    var wmat = new THREE.MeshStandardMaterial({ color: col("#9c8b5e"), map: new THREE.CanvasTexture(wc), transparent: true, opacity: 0.6, depthWrite: false, roughness: 1, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 });
+    [[4, 52, 66, 40.5], [168, 20, 106, 31.5]].forEach(function (s) {
+      var L = Math.hypot(s[2] - s[0], s[3] - s[1]), g = new THREE.PlaneGeometry(2.4, L); g.rotateX(-Math.PI / 2);
+      var m = new THREE.Mesh(g, wmat); m.position.set((s[0] + s[2]) / 2, LAWN + 0.06, (s[1] + s[3]) / 2); m.rotation.y = Math.atan2(s[2] - s[0], s[3] - s[1]); m.receiveShadow = true; m.renderOrder = 2; G.add(m);
+      WORN.push([G.position.x + s[0], G.position.z + s[1], G.position.x + s[2], G.position.z + s[3]]);
+    });
   })();
   // Health Center
   (function () { var G = block(3, 0); bldg(G, "white", 10, 10, 52, 40, 22); slab(G, "#ef4444", 22.5, 25, 7, 2.4, 0.3, LAWN + 22); slab(G, "#ef4444", 24.8, 22.7, 2.4, 7, 0.3, LAWN + 22); flat(G, "#c9ced6", 33.5, 50, 5, 22); autoTrees(G, [[10, 10, 52, 40]], 2, 1); })();
@@ -1243,7 +1290,7 @@
     });
   })();
   // ---------------- The region around campus ----------------
-  // Faraway flat layers (lakes, creek, meadows, road junctions) are spaced well apart so they never shimmer at a distance
+  // Faraway flat layers (lakes, creek, road junctions) are spaced well apart so they never shimmer at a distance
   var FARLABELS = [], BLINK = [], HWY = null, CARGEO = null, STADPICK = [], STADBLUE = null, BLVDLAMPS = [], CITYTICK = null;
   (function () {
     var seed = 20261124;
@@ -1489,7 +1536,7 @@
         var wbm = new THREE.Mesh(wb, BAN[i % 2]); wbm.position.set(84.35 * ca, LAWN + 9.8, 40.35 * sa); wbm.rotation.y = Math.atan2(ca / 84, sa / 40); SG.add(wbm);
       }
       [[-130, -100], [-95, -118], [-40, -122], [10, -124], [60, -120], [110, -110], [138, -80], [140, -20], [135, 30], [-140, -40], [-138, 20], [-130, 58], [128, 62], [-70, 70], [70, 68], [-100, -70], [100, -72], [-120, -10], [118, 0], [-52, 50], [52, 50], [-52, 66], [52, 66]].forEach(function (p, k) {
-        var w = stWorld(p[0], p[1]); TREES.push([w[0], lawnH(p[0], p[1]), w[1], 10 + (k % 4) * 1.6, k, 1]);
+        var w = stWorld(p[0], p[1]); TREES.push([w[0], lawnH(p[0], p[1]), w[1], 10 + (k % 4) * 1.6, k, 2]);
       });
       var lc = stWorld(0, 150);
       lot(lc[0], lc[1], 170, 140, -Math.PI / 4, 0.25, 0.75, true, 22, { acc: 4, ev: 3, sign: "STADIUM PARKING", lead: 18 });
@@ -1644,17 +1691,7 @@
       }
     })();
 
-    // ----- Meadows: drawn flat on the ground after it, so overlapping meadows never fight each other or the ground
-    var MC = ["#4f8a56", "#5c9a50", "#7aa058", "#8aa25c", "#47804e"];
-    var mg = new THREE.CircleGeometry(1, 28); mg.rotateX(-Math.PI / 2); grassUV(mg, [18, 18]);
-    var meadM = new THREE.MeshStandardMaterial({ map: GRASS.wild.map, normalMap: GRASS.wild.normal, normalScale: new THREE.Vector2(0.6, 0.6), roughness: 0.95, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 });
-    var meads = new THREE.InstancedMesh(mg, meadM, 40), mi = 0;
-    for (var k = 0; k < 500 && mi < 40; k++) {
-      var ang = rnd() * Math.PI * 2, rad = 420 + rnd() * 1500, x = Math.cos(ang) * rad, z = Math.sin(ang) * rad * 1.1;
-      if (inTown(x, z, 60) || reserved(x, z, 40)) continue;
-      placeAt(meads, mi, x, 0.12, z, rnd() * 3, 70 + rnd() * 150, 1, 40 + rnd() * 90); meads.setColorAt(mi, col(MC[mi % MC.length])); mi++;
-    }
-    meads.count = mi; meads.receiveShadow = true; meads.renderOrder = 1; scene.add(meads);
+    // ----- Clusters of trees across the countryside (the ground's own soft color patches replace the old flat meadow ovals)
     for (var c = 0; c < 90; c++) {
       var ca = rnd() * Math.PI * 2, cr = 380 + rnd() * 1500, cx = Math.cos(ca) * cr, cz = Math.sin(ca) * cr * 1.1, spread = 35 + rnd() * 100, n = 8 + Math.floor(rnd() * 26);
       for (var t = 0; t < n; t++) {
@@ -1954,8 +1991,8 @@
     [W(B(2, 1), 70, 47), W(B(1, 1), 68, 66), W(B(1, 3), 69, 58), W(B(2, 3), 1.6, 39), W(B(2, 2), 38.2, 26)].forEach(function (p) { bluePole(p[0], LAWN, p[1]); });
     if (STADBLUE) bluePole(STADBLUE[0], 0.25, STADBLUE[1]);
 
-    // ----- Rooftop restaurant on the Apartments tower, overlooking Campus Lake
-    var DINERS = [];
+    // ----- Rooftop restaurant on the Apartments tower, overlooking Campus Lake, with a sushi bar on the east side
+    var DINERS = [], BULBS = [], sushiTick = null;
     (function () {
       var G = B(2, 4), ox = G.position.x, oz = G.position.z, R = LAWN + 58.3, i;
       var dc = document.createElement("canvas"); dc.width = dc.height = 256; var g = dc.getContext("2d");
@@ -1981,6 +2018,12 @@
       for (i = 0; i <= 12; i++) trim(ox + 22.5 + i * 2.25, R + 7.7, oz + 28, 0.3, 0.3, 15.6, "#4a3423");
       for (i = 0; i < 4; i++) lite(ox + 26 + i * 6.7, R + 7.52, oz + 28, 0.5, 0.06, 0.5);
       glowPool(scene, ox + 36, R + 0.08, oz + 28, 34, 20, "#ffd38a", 0.3);
+      // tiny white bulbs on fine black cords, hanging in three neat rows under the pergola slats
+      [24, 28, 32].forEach(function (z) { [24.75, 29.25, 33.75, 38.25, 42.75, 47.25].forEach(function (x) {
+        trim(ox + x, R + 7.12, oz + z, 0.035, 0.86, 0.035, "#111827");
+        BULBS.push([ox + x, R + 6.58, oz + z, 0.15]);
+        glowSprite(scene, ox + x, R + 6.58, oz + z, 2.2, "#fff4e0", 0.7);
+      }); });
       var TB = [[18, 14.5, "n"], [27, 14.5, "n"], [36, 14.5, "n"], [45, 14.5, "n"], [54, 14.5, "n"], [56.5, 24, "e"], [56.5, 34, "e"], [15.5, 24, "w"], [15.5, 34, "w"], [29, 28, ""], [43, 28, ""]];
       var who = [3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 3], pi = 0;
       var SH = ["#4d1979", "#f8fafc", "#1e3a8a", "#b91c1c", "#0f766e", "#eab308", "#db2777", "#111827", "#6b7280", "#15803d"], SK = ["#f1c7a5", "#d9a47c", "#a56a43", "#7b4a2a", "#e8b896"], HR = ["#1c1917", "#3f2a1d", "#78350f", "#d6b370", "#0c0a09", "#7c2d12"], FOOD = ["#ca8a04", "#16a34a", "#b91c1c", "#ea580c"];
@@ -2004,6 +2047,72 @@
       [[35.3, 50.15, 0, true], [36.7, 50.15, 0, false], [31, 54.1, Math.PI, false]].forEach(function (s, k) {
         DINERS.push({ x: ox + s[0], y: R + 1.63, z: oz + s[1], ry: s[2], sh: SH[(k * 4 + 2) % SH.length], sk: SK[(k + 2) % SK.length], hr: HR[(k * 2 + 1) % HR.length], drink: s[3], ph: 3 + k * 2.2, stand: true });
       });
+
+      // ----- Sushi bar: a wood counter with a lit fish case, a chef at work, and three guests on stools
+      var chef = new THREE.Group(), neck = new THREE.Group(), plate = new THREE.Group(), arms, knife, SZ = [41.5, 44, 46.5];
+      trim(ox + 52.6, R + 1.775, oz + 44, 1.6, 3.55, 8.4, "#5b3a22");
+      trim(ox + 52.2, R + 3.65, oz + 44, 2.6, 0.2, 8.8, "#c8a27a");
+      trim(ox + 51.75, R + 0.9, oz + 44, 0.12, 0.12, 8.2, "#b8860b");
+      var caseM = new THREE.MeshStandardMaterial({ color: col("#e0f2fe"), transparent: true, opacity: 0.25, roughness: 0.05, metalness: 0.2, envMap: cubeA.texture, envMapIntensity: 1, depthWrite: false }); ENVMATS.push(caseM);
+      var fcase = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.85, 7), caseM); fcase.position.set(ox + 52.95, R + 4.175, oz + 44); scene.add(fcase);
+      trim(ox + 52.95, R + 3.79, oz + 44, 0.8, 0.08, 7, "#e5e7eb");
+      ["#fb923c", "#be123c", "#f5f5f4", "#fb923c", "#be123c", "#fde68a", "#f5f5f4"].forEach(function (c, k) { trim(ox + 52.95, R + 3.95, oz + 41 + k, 0.5, 0.22, 0.7, c); });
+      lite(ox + 52.95, R + 4.57, oz + 44, 0.6, 0.05, 6.6);
+      trim(ox + 54.3, R + 1.35, oz + 44, 1.6, 2.7, 8.4, "#e7e5e4");
+      trim(ox + 54.3, R + 2.74, oz + 44, 1.7, 0.08, 8.6, "#d6d3d1");
+      trim(ox + 54.15, R + 2.83, oz + 44, 1.1, 0.1, 2.4, "#d4b48c");
+      trim(ox + 54.4, R + 2.94, oz + 42.95, 0.5, 0.12, 0.5, "#fb923c");
+      cyl(ox + 54.2, R + 2.78, oz + 46.2, 0.45, 0.35, "#a16207"); cyl(ox + 54.2, R + 3.15, oz + 46.2, 0.38, 0.04, "#f8fafc");
+      trim(ox + 57.6, R + 1.6, oz + 44, 0.9, 3.2, 7, "#3b2a1f"); trim(ox + 57.6, R + 3.25, oz + 44, 1.0, 0.1, 7.2, "#e7e5e4");
+      for (i = 0; i < 6; i++) cyl(ox + 57.6, R + 3.3, oz + 41.2 + i * 1.1, 0.22, 0.4 + (i % 2) * 0.25, ["#f5f5f4", "#1e3a8a", "#7f1d1d"][i % 3]);
+      [39.2, 48.8].forEach(function (z) { trim(ox + 53.4, R + 3.62, oz + z, 0.3, 7.24, 0.3, "#3b2a1f"); });
+      trim(ox + 53.4, R + 7.42, oz + 44, 0.36, 0.36, 9.9, "#3b2a1f");
+      SZ.forEach(function (z, k) {
+        trim(ox + 53.4, R + 6.87, oz + z, 0.035, 0.74, 0.035, "#111827");
+        cyl(ox + 53.4, R + 6.2, oz + z, 0.32, 0.3, "#111827");
+        BULBS.push([ox + 53.4, R + 6.14, oz + z, 0.18]);
+        glowSprite(scene, ox + 53.4, R + 6.05, oz + z, 2.4, "#ffe4b5", 0.7);
+        cyl(ox + 50, R, oz + z, 0.55, 0.1, "#111827"); cyl(ox + 50, R + 0.1, oz + z, 0.1, 2.15, "#111827"); cyl(ox + 50, R + 2.25, oz + z, 0.62, 0.2, "#3b2a1f");
+        DINERS.push({ x: ox + 50, y: R + 2.45, z: oz + z, ry: Math.PI / 2, sh: SH[(k * 3 + 5) % SH.length], sk: SK[(k + 3) % SK.length], hr: HR[(k * 3 + 2) % HR.length], drink: k === 1, ph: 6 + k * 1.9, stand: false });
+      });
+      chef.position.set(ox + 55.8, R, oz + 44); chef.rotation.y = -Math.PI / 2; scene.add(chef);
+      function cp(geo, hex, x, y, z, par) { var m = new THREE.Mesh(geo, mat(hex, { r: 0.75 })); m.position.set(x, y, z); (par || chef).add(m); return m; }
+      [-0.26, 0.26].forEach(function (x) { cp(new THREE.BoxGeometry(0.4, 1.62, 0.46), "#1f2937", x, 0.81, 0); });
+      cp(new THREE.CylinderGeometry(0.54, 0.62, 1.75, 12), "#f8fafc", 0, 2.92, 0);
+      cp(new THREE.BoxGeometry(0.92, 1.6, 0.06), "#1e3a5f", 0, 2.25, 0.66);
+      neck.position.set(0, 3.85, 0); chef.add(neck);
+      cp(new THREE.SphereGeometry(0.44, 14, 10), "#d9a47c", 0, 0.4, 0.03, neck);
+      cp(new THREE.SphereGeometry(0.47, 14, 8, 0, Math.PI * 2, 0, Math.PI * 0.5), "#111827", 0, 0.44, -0.04, neck);
+      cp(new THREE.TorusGeometry(0.46, 0.07, 6, 20), "#1e3a5f", 0, 0.52, 0, neck).rotation.x = Math.PI / 2;
+      arms = [-1, 1].map(function (s) {
+        var piv = new THREE.Group(); piv.position.set(s * 0.66, 3.65, 0.05); chef.add(piv);
+        cp(new THREE.BoxGeometry(0.28, 1.45, 0.28).translate(0, -0.72, 0), "#f8fafc", 0, 0, 0, piv);
+        cp(new THREE.SphereGeometry(0.17, 8, 6), "#d9a47c", 0, -1.5, 0, piv);
+        return piv;
+      });
+      knife = cp(new THREE.BoxGeometry(0.05, 0.1, 0.8), "#e5e7eb", 0, -1.55, 0.35, arms[1]);
+      var pm0 = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.08, 1.3), mat("#1f2937", { r: 0.4 })); pm0.position.y = 0.04; plate.add(pm0);
+      ["#fb923c", "#be123c", "#fb923c"].forEach(function (c, k) {
+        var rice = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.16, 0.3), mat("#f8fafc", { r: 0.8 })); rice.position.set(0, 0.16, -0.38 + k * 0.38); plate.add(rice);
+        var fish = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.06, 0.34), mat(c, { r: 0.4 })); fish.position.set(0, 0.27, -0.38 + k * 0.38); plate.add(fish);
+      });
+      scene.add(plate);
+      sushiTick = function (T) {
+        var c = T % 12, n = Math.floor(T / 12) % 3, ra, la = -1.05, ry = 0, hy = 0, u;
+        if (c < 4) { ra = -1.12 + 0.12 * Math.sin(T * 7); ry = 0.12 * Math.sin(T * 7); }
+        else if (c < 7) { u = 0.12 * Math.sin(T * 3.2); ra = -1.12 + u; la = -1.12 + u; }
+        else if (c < 8.5) { u = Math.sin((c - 7) / 1.5 * Math.PI); ra = -1.1 - 0.45 * u; hy = (n - 1) * 0.35 * u; }
+        else { ra = -1.0; la = -0.95; hy = 0.3 * Math.sin((c - 8.5) / 3.5 * Math.PI); }
+        arms[1].rotation.set(ra, ry, 0); arms[0].rotation.set(la, 0, 0);
+        neck.rotation.set(c < 7 ? 0.28 : 0.1, hy, 0);
+        knife.visible = c < 4 || c >= 8.5;
+        var bx = ox + 54.15, by = R + 2.88, tx = ox + 51.55, ty = R + 3.75, gz = oz + SZ[n];
+        if (c < 7) { plate.position.set(bx, by, oz + 44); plate.scale.setScalar(Math.max(0.001, Math.min(1, c / 0.4))); }
+        else if (c < 8.5) { u = (c - 7) / 1.5; u = u * u * (3 - 2 * u); plate.scale.setScalar(1); plate.position.set(bx + (tx - bx) * u, by + (ty - by) * u + Math.sin(u * Math.PI) * 1.9, oz + 44 + (gz - oz - 44) * u); }
+        else { plate.position.set(tx, ty, gz); plate.scale.setScalar(c > 11.6 ? Math.max(0.001, (12 - c) / 0.4) : 1); }
+      };
+      sushiTick(0);
+
       [[13.6, 11.6], [58.4, 11.6], [58.4, 56.4], [13.6, 56.4]].forEach(function (p, k) {
         var sx = p[0] < 36 ? -1 : 1, sz = p[1] < 34 ? -1 : 1;
         trim(ox + p[0], R + 0.8, oz + p[1], 3.6, 1.6, 3.6, "#57534e");
@@ -2065,6 +2174,10 @@
     if (BLUEB.length) {
       var bbm = new THREE.InstancedMesh(new THREE.SphereGeometry(0.62, 16, 10), mat("#93c5fd", { r: 0.2, e: "#3b82f6", ei: 2.4, day: 0.55 }), BLUEB.length);
       BLUEB.forEach(function (b, i) { put(bbm, i, b[0], b[1], b[2], 0, 0, 1, 1.15, 1); }); scene.add(bbm);
+    }
+    if (BULBS.length) {
+      var blm = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 10, 8), mat("#ffffff", { r: 0.2, e: "#fff4e0", ei: 2.4, day: 0.25 }), BULBS.length);
+      BULBS.forEach(function (b, i) { put(blm, i, b[0], b[1], b[2], 0, 0, b[3], b[3], b[3]); }); scene.add(blm);
     }
     var poseDiners = null;
     if (DINERS.length) (function () {
@@ -2159,6 +2272,7 @@
     DETAIL.tick = function (dt, T) {
       moveWalkers(dt, T); moveBirds(dt, T);
       if (poseDiners) poseDiners(T);
+      if (sushiTick) sushiTick(T);
       BLUES.forEach(function (s, i) { s.material.opacity = (0.3 + 0.7 * NIGHT) * (0.62 + 0.38 * Math.sin(T * 2.2 + i * 0.9)); });
       if (flag) {
         var pa = flag.geometry.attributes.position, base = flag.userData.base;
@@ -2168,7 +2282,7 @@
     };
   })();
   // ---------------- Trees ----------------
-  var TREEU = { value: 0 };
+  var TREEU = GTIME;
   (function () {
     var LEAF = ["#1d7a4a", "#256b3d", "#1b6e55", "#3f7a2a", "#2f8a52"], BLOOM = ["#f9a8d4", "#fbcfe8", "#f5f3ff", "#e9d5ff", "#fda4af"];
     var round = [], pines = [], fancy = [];
@@ -2268,6 +2382,59 @@
     }
     dummy.rotation.set(0, 0, 0); dummy.scale.set(1, 1, 1);
     trunks.castShadow = true; leaves.castShadow = false; cones.castShadow = false; leaves.receiveShadow = cones.receiveShadow = true; scene.add(trunks, leaves, cones);
+    // Darker, richer grass in the shade under each tree near campus
+    var shd = TREES.filter(function (t) { return t[5] !== 2 && t[3] > 5 && Math.hypot(t[0], t[2]) < 700; });
+    if (shd.length) {
+      var sgeo = new THREE.PlaneGeometry(1, 1); sgeo.rotateX(-Math.PI / 2);
+      var shm = new THREE.InstancedMesh(sgeo, new THREE.MeshBasicMaterial({ map: GLOWT, color: col("#07160b"), transparent: true, opacity: 0.3, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 }), shd.length);
+      shd.forEach(function (t, i) { var r = t[3] * 1.5; dummy.position.set(t[0], t[1] + 0.08, t[2]); dummy.rotation.set(0, 0, 0); dummy.scale.set(r, 1, r); dummy.updateMatrix(); shm.setMatrixAt(i, dummy.matrix); });
+      shm.renderOrder = 2; scene.add(shm);
+      dummy.scale.set(1, 1, 1);
+    }
+  })();
+
+  // ---------------- Real 3D grass on the Quad and the Great Lawn (High-quality map only) ----------------
+  // Thousands of small tufts that sway in the breeze. They fade in only when you zoom in close, so nothing shimmers from far away.
+  var BLADES = null;
+  (function () {
+    if (LITE) return;
+    var GLW = BLOCKS["1,0"], QD = BLOCKS["2,1"];
+    if (!GLW || !QD) return;
+    var sd = 4711, pos = [], nor = [], vc = [], P = [], k;
+    function rn() { sd = (sd * 16807) % 2147483647; return (sd - 1) / 2147483646; }
+    for (k = 0; k < 6; k++) {
+      var a = k / 6 * 6.283 + rn() * 0.7, r = 0.1 + rn() * 0.3, bx = Math.cos(a) * r, bz = Math.sin(a) * r, w = 0.08 + rn() * 0.05, h = 0.5 + rn() * 0.5, lean = 0.12 + rn() * 0.28;
+      var px = -Math.sin(a) * w, pz = Math.cos(a) * w, A = [bx - px, 0, bz - pz], B2 = [bx + px, 0, bz + pz], C = [bx + Math.cos(a) * lean, h, bz + Math.sin(a) * lean];
+      [[A, B2, C], [B2, A, C]].forEach(function (tri) { tri.forEach(function (v, j) { pos.push(v[0], v[1], v[2]); nor.push(0, 1, 0); var f = j < 2 ? 0.52 : 0.98; vc.push(f, f, f * 0.92); }); });
+    }
+    var geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); geo.setAttribute("normal", new THREE.Float32BufferAttribute(nor, 3)); geo.setAttribute("color", new THREE.Float32BufferAttribute(vc, 3));
+    function nearWorn(x, z) {
+      for (var i = 0; i < WORN.length; i++) {
+        var s = WORN[i], dx = s[2] - s[0], dz = s[3] - s[1], L2 = dx * dx + dz * dz, t = Math.max(0, Math.min(1, ((x - s[0]) * dx + (z - s[1]) * dz) / L2)), ex = s[0] + dx * t - x, ez = s[1] + dz * t - z;
+        if (ex * ex + ez * ez < 1.6) return true;
+      }
+      return false;
+    }
+    function add(G, w, d, skip, x, z, s) {
+      if (x < 0.35 || z < 0.35 || x > w - 0.35 || z > d - 0.35 || skip(x, z)) return;
+      var wx = G.position.x + x, wz = G.position.z + z;
+      if (nearWorn(wx, wz)) return;
+      P.push([wx, wz, rn() * 6.283, s, 0.86 + rn() * 0.26]);
+    }
+    function fill(G, w, d, skip) {
+      var x, z;
+      for (x = 0.8; x < w; x += 1.6) for (z = 0.8; z < d; z += 1.6) add(G, w, d, skip, x + (rn() - 0.5) * 1.3, z + (rn() - 0.5) * 1.3, 0.85 + rn() * 0.4);
+      for (x = 0.4; x < w; x += 0.9) { add(G, w, d, skip, x, 0.45, 1.1 + rn() * 0.3); add(G, w, d, skip, x, d - 0.45, 1.1 + rn() * 0.3); }
+      for (z = 0.4; z < d; z += 0.9) { add(G, w, d, skip, 0.45, z, 1.1 + rn() * 0.3); add(G, w, d, skip, w - 0.45, z, 1.1 + rn() * 0.3); }
+    }
+    fill(GLW, 172, 72, function (x, z) { var r = Math.hypot(x - 86, z - 36); return Math.abs(z - 36) < 2.6 || Math.abs(x - 86) < 2.6 || (r > 11 && r < 17) || r < 2.4; });
+    fill(QD, 72, 72, function (x, z) { return Math.abs(z - 36) < 2.6 || Math.abs(x - 36) < 2.6 || Math.abs(x - z) < 3 || Math.abs(x + z - 72) < 3 || Math.hypot(x - 36, z - 36) < 13.6 || (x < 23 && z < 15); });
+    if (!P.length) return;
+    var bm = grassFx(new THREE.MeshStandardMaterial({ color: col("#4fa565"), vertexColors: true, roughness: 0.9 }), true);
+    var mesh = new THREE.InstancedMesh(geo, bm, P.length), o = new THREE.Object3D(), c = new THREE.Color();
+    P.forEach(function (p, i) { o.position.set(p[0], LAWN - 0.06, p[1]); o.rotation.set(0, p[2], 0); o.scale.set(p[3], p[3], p[3]); o.updateMatrix(); mesh.setMatrixAt(i, o.matrix); c.setRGB(p[4] * 0.97, p[4], p[4] * 0.9); mesh.setColorAt(i, c); });
+    mesh.receiveShadow = true; mesh.visible = false; scene.add(mesh); BLADES = mesh;
   })();
 
   // ---------------- Streetlights, hubs and your location ----------------
@@ -2549,7 +2716,7 @@
     { n: "Arts Center", s: "Theater, galleries, and studios", b: [3, 1], t: 6, h: 42 },
     { n: "Residence Hall", s: "First-year housing", b: [3, 3], t: 4, h: 58 },
     { n: "Residences", s: "Upper-class dorms", b: [1, 4], t: 2, h: 52 },
-    { n: "Apartments", s: "Graduate housing · rooftop restaurant", b: [2, 4], t: 3, h: 70 },
+    { n: "Apartments", s: "Graduate housing · rooftop restaurant and sushi bar", b: [2, 4], t: 3, h: 70 },
     { n: "Parking Garage", s: "Visitor and commuter parking", b: [3, 4], t: 4, h: 24 },
     { n: "Main St Shops", s: "Shops and services off campus", b: [3, 5], t: 7, h: 24 },
     { n: "Ball Field", s: "Intramural softball", b: [-1, 2], t: 6, h: 12 },
@@ -2595,7 +2762,7 @@
       L.el.style.opacity = keep ? "1" : String(clamp(edge / 36, 0.35, 1).toFixed(2));
       L.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) translate(-50%,-100%)";
     });
-        }
+         }
   // ---------------- Destination highlight, drop-off pin and route ----------------
   var hl = { g: null, mats: [] };
   function hiMat(m) { var c = m.clone(); c.emissive = col("#2563eb"); c.emissiveMap = null; c.emissiveIntensity = 0.55; hl.mats.push(c); return c; }
@@ -2800,6 +2967,7 @@
     var ft = T - tapFx.userData.t; if (ft >= 0 && ft < 0.6) { tapFx.scale.setScalar(3 + ft * 40); tapFx.material.opacity = 0.9 * (1 - ft / 0.6); } else tapFx.material.opacity = 0;
     if (!follow && now - lastInput > 7000) orb.az += dt * 0.035;
     updateCamera(dt);
+    if (BLADES) BLADES.visible = camDist < 440;
     if (envDirty || now - lastEnv > 5000) { envDirty = false; lastEnv = now; updateEnv(); }
     renderer.render(scene, camera);
     updateLabels();
