@@ -882,9 +882,12 @@
     var m = new THREE.Mesh(new THREE.BoxGeometry(horiz ? len + e : wid, h, horiz ? wid : len + e), mat(hex, o));
     m.position.set((x1 + x2) / 2 - OX, h / 2, (z1 + z2) / 2 - OZ); m.receiveShadow = true; scene.add(m); return m;
   }
-  // The street that runs south toward the Great Lawn continues a little farther and ends in a proper turnaround
+  // The street that runs south toward the Great Lawn ends in a proper turnaround. On the west edge of town, the two short
+  // street stubs west of the first avenue are gone, so the Campus Ballpark and the Soccer Field have room.
   function colSegs(x) { return x === 230 ? [[-60, 24], [140, 640]] : [[-60, 640]]; }
-  function rowSegs(y) { return y === 40 ? [[-70, 130], [330, 530]] : [[-70, 530]]; }
+  function rowSegs(y) { return y === 40 ? [[-70, 130], [330, 530]] : (y === 240 || y === 340) ? [[30, 530]] : [[-70, 530]]; }
+  // intersections that aren't full four-way crossings get no crosswalks, warning pads, signs or traffic lights
+  function noX(x, y) { return (x === 230 && (y === 40 || y === 140)) || (y === 40 && (x === 130 || x === 330)) || (x === 30 && (y === 240 || y === 340)); }
   var SEGS = [];
   cols.forEach(function (x) { colSegs(x).forEach(function (g) { SEGS.push([x, g[0], x, g[1]]); }); });
   rowsY.forEach(function (y) { rowSegs(y).forEach(function (g) { SEGS.push([g[0], y, g[1], y]); }); });
@@ -987,7 +990,7 @@
       (ai === 0 ? [[a0, BLV - GAP], [BLV + GAP, a1]] : [[a0, a1]]).forEach(function (r) { sector(cx, cz, 70 + 8.5, 70 + 15, r[0], r[1], WALK_Y, swMat); sector(cx, cz, 70 + 8, 70 + 8.5, r[0], r[1], WALK_Y + 0.07, cbMat); });
     });
     cols.forEach(function (x) { rowsY.forEach(function (y) {
-      if ((x === 230 && (y === 40 || y === 140)) || (y === 40 && (x === 130 || x === 330))) return;
+      if (noX(x, y)) return;
       [-1, 1].forEach(function (sx) { [-1, 1].forEach(function (sz) {
         trim(x + sx * 9.6 - OX, WALK_Y + 0.03, y + sz * 13 - OZ, 2.2, 0.06, 4, "#e3b505");
         trim(x + sx * 13 - OX, WALK_Y + 0.03, y + sz * 9.6 - OZ, 4, 0.06, 2.2, "#e3b505");
@@ -1014,7 +1017,7 @@
     for (var v = a + 4; v < b - 4; v += 16) { if (nearCross(v + 3.5, horiz ? XS : YS)) continue; dashes.push(horiz ? [v + 3.5 - OX, s[1] - OZ, 7, 1.2] : [s[0] - OX, v + 3.5 - OZ, 1.2, 7]); }
   });
   cols.forEach(function (x) { rowsY.forEach(function (y) {
-    if ((x === 230 && (y === 40 || y === 140)) || (y === 40 && (x === 130 || x === 330))) return;
+    if (noX(x, y)) return;
     [-1, 1].forEach(function (sg) {
       for (var k = -6.4; k <= 6.4; k += 3.2) { dashes.push([x + k - OX, y + sg * 13 - OZ, 1.6, 5]); dashes.push([x + sg * 13 - OX, y + k - OZ, 5, 1.6]); }
     });
@@ -1461,7 +1464,7 @@
     [[10, 10], [30, 8], [56, 14], [12, 52], [40, 58], [60, 46], [26, 32], [50, 30]].forEach(function (q, i) { if (IN(q[0], q[1], 7)) tree(G, q[0], q[1], 11 + (i % 3) * 2, i + c); });
   }
   townpark(-1, -1, [56, 56]); townpark(4, -1, [16, 56]);
-  [[0, -1], [1, -1], [2, -1], [3, -1], [-1, 3], [-1, 4], [4, 1], [4, 3], [4, 4], [-1, 5], [4, 5]].forEach(function (b) {
+  [[0, -1], [1, -1], [2, -1], [3, -1], [-1, 4], [4, 3], [-1, 5], [4, 5]].forEach(function (b) {
     houses(b[0], b[1], b[0] === -1 && b[1] === 5 ? [56, 16] : (b[0] === 4 && b[1] === 5 ? [16, 16] : null));
   });
   // Fire Station No. 1: red brick with three bay doors and a hose tower. One engine pulls halfway out of the open middle bay
@@ -1527,13 +1530,238 @@
     glowPool(G, 30, LAWN + 0.3, 58, 34, 18, "#f8fafc", 0.4);
     autoTrees(G, [[10, 4, 52, 66]], 3);
   })();
-  block(-1, 1, true); block(0, 5, true);
+  // ---------------- Campus Ballpark and Soccer Field ----------------
+  // A neighborhood college ballpark and a lit soccer pitch on the west edge of town, sized to fit right in with campus.
   (function () {
-    var G = block(-1, 2, true), sh = new THREE.Shape(); sh.moveTo(0, 0); sh.absarc(0, 0, 48, 0, Math.PI / 2, false); sh.lineTo(0, 0);
-    var geo = new THREE.ShapeGeometry(sh, 24); geo.rotateX(-Math.PI / 2); var fm = new THREE.Mesh(grassUV(geo, [0.1, 0.1]), grassMat("#3fa86a", "lawn")); fm.rotation.y = Math.PI / 2; fm.position.set(60, LAWN + 0.06, 60); fm.receiveShadow = true; G.add(fm);
-    var dg = new THREE.CircleGeometry(15, 24, 0, Math.PI / 2); dg.rotateX(-Math.PI / 2); var dirt = new THREE.Mesh(dg, mat("#b45309", { r: 0.95 })); dirt.rotation.y = Math.PI / 2; dirt.position.set(60, LAWN + 0.1, 60); G.add(dirt);
-    tree(G, 64, 8, 10, 1); tree(G, 8, 64, 12, 2);
+    var x0 = bxOf(-1) - OX, z0 = byOf(1) - OZ, sd = 99, k;
+    function rn() { sd = (sd * 16807) % 2147483647; return (sd - 1) / 2147483646; }
+    function zone(key, zoff, len, cxo, czo) {
+      var G = new THREE.Group(); G.position.set(x0, 0, z0 + zoff); scene.add(G);
+      G.userData.w = 72; G.userData.cx = x0 + cxo; G.userData.cz = z0 + zoff + czo; BLOCKS[key] = G;
+      var lawn = new THREE.Mesh(grassUV(new THREE.BoxGeometry(72, LAWN, len), [7.2, len / 10]), grassMat("#4fa565", "lawn")); lawn.position.set(36, LAWN / 2, len / 2); lawn.receiveShadow = true; lawn.userData.lawn = true; G.add(lawn);
+      return G;
+    }
+    var nc = document.createElement("canvas"); nc.width = nc.height = 32; var ng = nc.getContext("2d"); ng.strokeStyle = "#1f2937"; ng.lineWidth = 2; ng.strokeRect(1, 1, 30, 30);
+    var nt = new THREE.CanvasTexture(nc); nt.wrapS = nt.wrapT = THREE.RepeatWrapping;
+    var netM = new THREE.MeshStandardMaterial({ map: nt, alphaTest: 0.4, side: THREE.DoubleSide, roughness: 0.9 });
+    function net(G, x1, z1, x2, z2, y0, h) {
+      var L = Math.hypot(x2 - x1, z2 - z1), g = new THREE.PlaneGeometry(L, h), uv = g.attributes.uv, a = Math.atan2(z2 - z1, x2 - x1);
+      for (var u = 0; u < uv.count; u++) uv.setXY(u, uv.getX(u) * L / 1.4, uv.getY(u) * h / 1.4);
+      var m = new THREE.Mesh(g, netM); m.position.set((x1 + x2) / 2, y0 + h / 2, (z1 + z2) / 2); m.rotation.y = -a; G.add(m);
+      trim(G.position.x + (x1 + x2) / 2, y0 + h, G.position.z + (z1 + z2) / 2, L, 0.14, 0.14, "#374151", -a);
+      cyl(G.position.x + x1, y0, G.position.z + z1, 0.18, h + 0.2, "#4b5563"); cyl(G.position.x + x2, y0, G.position.z + z2, 0.18, h + 0.2, "#4b5563");
+    }
+    function paintPlane(G, w, d, cx, cz, draw) {
+      var c = document.createElement("canvas"); c.width = w * 8; c.height = d * 8; var g = c.getContext("2d"); draw(g);
+      var t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; t.anisotropy = ANISO;
+      var m = new THREE.Mesh(new THREE.PlaneGeometry(w, d), new THREE.MeshStandardMaterial({ map: t, roughness: 0.9, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 }));
+      m.rotation.x = -Math.PI / 2; m.position.set(cx, LAWN + 0.04, cz); m.receiveShadow = true; G.add(m);
+    }
+    function signMat(w, h, draw, base) {
+      var c = document.createElement("canvas"); c.width = w; c.height = h; draw(c.getContext("2d"));
+      var t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; t.anisotropy = ANISO;
+      var m = new THREE.MeshStandardMaterial({ map: t, emissive: new THREE.Color(1, 1, 1), emissiveMap: t, emissiveIntensity: 0, roughness: 0.5, side: THREE.DoubleSide }); m.userData.base = base || 1; m.userData.day = 0.3; GLOW.push(m);
+      return m;
+    }
+    var SKN = ["#f1c7a5", "#d9a47c", "#a56a43", "#7b4a2a", "#e8b896"];
+    function pl(G, x, z, shirt, pants, cap, low) {
+      var X = G.position.x + x, Z = G.position.z + z, lg = low ? 0.9 : 1.8, sk = SKN[Math.floor(rn() * SKN.length)];
+      cyl(X - 0.22, LAWN, Z, 0.2, lg, pants); cyl(X + 0.22, LAWN, Z, 0.2, lg, pants);
+      cyl(X, LAWN + lg, Z, 0.48, 1.9, shirt); cyl(X, LAWN + lg + 1.9, Z, 0.38, 0.75, sk);
+      if (cap) cyl(X, LAWN + lg + 2.62, Z, 0.42, 0.22, cap);
+    }
+    function tower(G, x, z, face) {
+      var X = G.position.x + x, Z = G.position.z + z;
+      cyl(X, LAWN, Z, 0.5, 30, "#94a3b8"); trim(X, LAWN + 30.5, Z, 6, 2.4, 1, "#e5e7eb"); lite(X, LAWN + 30.5, Z + face * 0.55, 5.4, 1.8, 0.06);
+      glowSprite(G, x, LAWN + 30.5, z, 22, "#f8fafc", 0.9);
+    }
+    var FANS = ["#4d1979", "#f8fafc", "#1e3a8a", "#b91c1c", "#facc15", "#111827", "#6b7280", "#a78bfa", "#0f766e"];
+
+    // ----- the ballpark
+    var GB = zone("ballpark", 0, 156, 36, 96), gx = GB.position.x, gz = GB.position.z;
+    var H = [36, 124], B1 = [52.97, 107.03], B2 = [36, 90.06], B3 = [19.03, 107.03], MD = [36, 108], FC = [36, 105.3], FR = 37.3, A0 = 3.565, A1 = 5.86;
+    paintPlane(GB, 72, 72, 36, 96, function (g) {
+      function P(x, z) { return [x * 8, (z - 60) * 8]; }
+      var i, p, a, b;
+      for (i = 0; i < 12; i++) { g.fillStyle = i % 2 ? "#3f8f4a" : "#48a055"; g.fillRect(i * 48, 0, 48, 576); }
+      p = P(FC[0], FC[1]); g.strokeStyle = "#b8865b"; g.lineWidth = 24; g.beginPath(); g.arc(p[0], p[1], (FR - 1.5) * 8, A0, A1); g.stroke();
+      g.save(); g.beginPath(); p = P(H[0], H[1]); a = P(H[0] - 60, H[1] - 60); b = P(H[0] + 60, H[1] - 60); g.moveTo(p[0], p[1]); g.lineTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.closePath(); g.clip();
+      g.fillStyle = "#b8865b"; p = P(MD[0], MD[1]); g.beginPath(); g.arc(p[0], p[1], 25 * 8, 0, 7); g.fill(); g.restore();
+      g.fillStyle = "#b8865b"; p = P(H[0], H[1]); g.beginPath(); g.arc(p[0], p[1], 6 * 8, 0, 7); g.fill();
+      g.fillStyle = "#4fa75b"; g.beginPath();
+      [H, B1, B2, B3].forEach(function (q, j) { var r = P(36 + (q[0] - 36) * 0.8, 107.03 + (q[1] - 107.03) * 0.8); if (j) g.lineTo(r[0], r[1]); else g.moveTo(r[0], r[1]); });
+      g.closePath(); g.fill();
+      g.fillStyle = "#c4936a"; p = P(MD[0], MD[1]); g.beginPath(); g.arc(p[0], p[1], 3 * 8, 0, 7); g.fill();
+      g.fillStyle = "#b8865b"; [B1, B2, B3].forEach(function (q) { var r = P(q[0], q[1]); g.beginPath(); g.arc(r[0], r[1], 2.4 * 8, 0, 7); g.fill(); });
+      g.strokeStyle = "#ffffff"; g.lineWidth = 3;
+      [[2.06, 90.06], [69.94, 90.06]].forEach(function (q) { var s = P(H[0], H[1]), e = P(q[0], q[1]); g.beginPath(); g.moveTo(s[0], s[1]); g.lineTo(e[0], e[1]); g.stroke(); });
+      p = P(H[0], H[1]); g.strokeRect(p[0] - 30, p[1] - 14, 18, 30); g.strokeRect(p[0] + 12, p[1] - 14, 18, 30);
+      g.beginPath(); g.arc(p[0], p[1], 3.2 * 8, 0, 7); g.stroke();
+      g.fillStyle = "#ffffff"; g.beginPath(); g.moveTo(p[0] - 5, p[1] - 5); g.lineTo(p[0] + 5, p[1] - 5); g.lineTo(p[0] + 5, p[1] + 2); g.lineTo(p[0], p[1] + 6); g.lineTo(p[0] - 5, p[1] + 2); g.closePath(); g.fill();
+    });
+    [B1, B2, B3].forEach(function (q) { trim(gx + q[0], LAWN + 0.15, gz + q[1], 1.3, 0.25, 1.3, "#f8fafc", Math.PI / 4); });
+    cyl(gx + MD[0], LAWN, gz + MD[1], 2.4, 0.3, "#c4936a"); trim(gx + MD[0], LAWN + 0.36, gz + MD[1], 1.4, 0.1, 0.35, "#f8fafc");
+    // the outfield wall with a yellow top line, and the foul poles
+    for (k = 0; k < 18; k++) {
+      var a0 = A0 + (A1 - A0) * k / 18, a1 = A0 + (A1 - A0) * (k + 1) / 18;
+      var p0 = [FC[0] + Math.cos(a0) * FR, FC[1] + Math.sin(a0) * FR], p1 = [FC[0] + Math.cos(a1) * FR, FC[1] + Math.sin(a1) * FR];
+      var L = Math.hypot(p1[0] - p0[0], p1[1] - p0[1]), ry = -Math.atan2(p1[1] - p0[1], p1[0] - p0[0]), mx = gx + (p0[0] + p1[0]) / 2, mz = gz + (p0[1] + p1[1]) / 2;
+      trim(mx, LAWN + 2.2, mz, L + 0.1, 4.4, 0.6, "#14532d", ry); trim(mx, LAWN + 4.5, mz, L + 0.1, 0.3, 0.7, "#facc15", ry);
+    }
+    cyl(gx + 2.06, LAWN, gz + 90.06, 0.3, 16, "#facc15"); cyl(gx + 69.94, LAWN, gz + 90.06, 0.3, 16, "#facc15");
+    // the scoreboard beyond center field: a game in the 7th inning
+    cyl(gx + 28, LAWN, gz + 61.2, 0.4, 9.5, "#374151"); cyl(gx + 44, LAWN, gz + 61.2, 0.4, 9.5, "#374151");
+    trim(gx + 36, LAWN + 13.4, gz + 61.2, 20.4, 8.4, 0.8, "#0f172a");
+    var sbm = signMat(512, 210, function (g) {
+      g.fillStyle = "#0b1220"; g.fillRect(0, 0, 512, 210);
+      g.fillStyle = "#4d1979"; g.fillRect(0, 0, 512, 42); g.fillStyle = "#ffffff"; g.font = "800 28px 'Plus Jakarta Sans', Arial, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText("CAMPUS BALLPARK", 256, 23);
+      g.font = "700 18px Arial, sans-serif"; g.fillStyle = "#cbd5e1";
+      for (var i = 0; i < 9; i++) g.fillText(String(i + 1), 160 + i * 26, 64);
+      ["R", "H", "E"].forEach(function (s, i) { g.fillText(s, 420 + i * 30, 64); });
+      [["GUEST", "010020", [3, 7, 1]], ["HOME", "100201", [4, 8, 0]]].forEach(function (row, r) {
+        var y = 102 + r * 40; g.textAlign = "left"; g.fillStyle = "#f8fafc"; g.font = "800 22px Arial, sans-serif"; g.fillText(row[0], 18, y);
+        g.textAlign = "center"; g.fillStyle = "#fbbf24"; g.font = "800 24px 'Courier New', monospace";
+        for (var j = 0; j < row[1].length; j++) g.fillText(row[1][j], 160 + j * 26, y);
+        row[2].forEach(function (v, j) { g.fillText(String(v), 420 + j * 30, y); });
+      });
+      g.fillStyle = "#4ade80"; g.font = "800 18px Arial, sans-serif"; g.textAlign = "center"; g.fillText("BALL 2   STRIKE 1   OUT 1", 256, 188);
+    }, 1.1);
+    var sb = new THREE.Mesh(new THREE.PlaneGeometry(19.6, 7.8), sbm); sb.position.set(36, LAWN + 13.4, 61.65); GB.add(sb);
+    // the backstop net behind home plate and the safety netting out to both dugouts
+    var bs = [];
+    for (k = 0; k <= 6; k++) { var ba = 0.2 * Math.PI + 0.6 * Math.PI * k / 6; bs.push([H[0] + Math.cos(ba) * 8.5, H[1] + Math.sin(ba) * 8.5]); }
+    for (k = 0; k < 6; k++) net(GB, bs[k][0], bs[k][1], bs[k + 1][0], bs[k + 1][1], LAWN, 14);
+    net(GB, bs[0][0], bs[0][1], 55, 118.5, LAWN, 9); net(GB, bs[6][0], bs[6][1], 17, 118.5, LAWN, 9);
+    // dugouts
+    [[54, 113], [9, 113]].forEach(function (d) {
+      slab(GB, "#2b2f36", d[0], d[1], 9, 5, 3, LAWN, { r: 0.8 }); slab(GB, "#e5e7eb", d[0] - 0.4, d[1] - 0.4, 9.8, 5.8, 0.4, LAWN + 3, { r: 0.5 });
+      trim(gx + d[0] + 4.5, LAWN + 1.3, gz + d[1] - 0.05, 9, 0.12, 0.12, "#9ca3af");
+    });
+    // the covered grandstand behind home plate, full of fans, with a press box
+    for (k = 0; k < 6; k++) {
+      slab(GB, k % 2 ? "#9ca3af" : "#4d1979", 12, 134 + k * 2.6, 48, 2.6, 1.1 * (k + 1), LAWN, { r: 0.7 });
+      for (var f = 0; f < 15; f++) {
+        if (rn() < 0.22) continue;
+        var fx = gx + 13.6 + f * 3.15 + (rn() - 0.5) * 0.6, fy = LAWN + 1.1 * (k + 1), fz = gz + 134 + k * 2.6 + 1.3;
+        cyl(fx, fy, fz, 0.45, 1.5, FANS[Math.floor(rn() * FANS.length)]); cyl(fx, fy + 1.5, fz, 0.34, 0.62, SKN[Math.floor(rn() * SKN.length)]);
+      }
+    }
+    trim(gx + 36, LAWN + 1.6, gz + 133.8, 48, 0.12, 0.12, "#9ca3af");
+    slab(GB, "#e7e2d8", 26, 146.5, 20, 5.5, 5.6, LAWN + 6.6, { r: 0.7 }); lite(gx + 36, LAWN + 10, gz + 146.42, 18, 1.6, 0.06);
+    slab(GB, "#e5e7eb", 10, 138, 52, 15, 0.6, LAWN + 15, { r: 0.5 });
+    [12, 36, 60].forEach(function (x) { cyl(gx + x, LAWN, gz + 152.4, 0.35, 15, "#94a3b8"); });
+    // players: the home team in the field, a batter at the plate, the catcher and the umpire
+    pl(GB, 36, 108, "#4d1979", "#f8fafc", "#4d1979");
+    [[50, 103], [44, 93], [27, 94], [21, 103], [14, 80], [36, 73], [58, 80]].forEach(function (q) { pl(GB, q[0], q[1], "#4d1979", "#f8fafc", "#4d1979"); });
+    pl(GB, 36, 127, "#4d1979", "#f8fafc", "#111827", true);
+    pl(GB, 38.6, 124, "#9ca3af", "#d1d5db", "#b91c1c"); trim(gx + 39.8, LAWN + 4.4, gz + 124, 0.18, 2.6, 0.18, "#a16207", 0, 0.6);
+    pl(GB, 36, 129.6, "#111827", "#374151", "#111827");
+    // light towers, a ticket booth, a walkway and a sign by the street
+    tower(GB, 3, 64, 1); tower(GB, 69, 64, 1); tower(GB, 3, 153, -1); tower(GB, 69, 153, -1);
+    glowPool(GB, 36, LAWN + 0.2, 100, 76, 84, "#f1f5f9", 0.45);
+    flat(GB, "#c9ced6", 63, 100, 7, 56);
+    slab(GB, "#8a3b2c", 62, 127, 8, 8, 6, LAWN); trim(gx + 66, LAWN + 6.3, gz + 131, 9, 0.5, 9, "#4d1979"); lite(gx + 70.05, LAWN + 3.2, gz + 131, 0.06, 2, 5);
+    cyl(gx + 70.4, LAWN, gz + 141.5, 0.25, 9, "#374151"); cyl(gx + 70.4, LAWN, gz + 150.5, 0.25, 9, "#374151");
+    var bpm = signMat(512, 150, function (g) {
+      g.fillStyle = "#4d1979"; g.fillRect(0, 0, 512, 150); g.strokeStyle = "#ffffff"; g.lineWidth = 6; g.strokeRect(8, 8, 496, 134);
+      g.fillStyle = "#ffffff"; g.beginPath(); g.arc(70, 75, 38, 0, 7); g.fill(); g.strokeStyle = "#dc2626"; g.lineWidth = 3;
+      g.beginPath(); g.arc(44, 75, 30, -0.9, 0.9); g.stroke(); g.beginPath(); g.arc(96, 75, 30, Math.PI - 0.9, Math.PI + 0.9); g.stroke();
+      g.fillStyle = "#ffffff"; g.font = "800 44px 'Plus Jakarta Sans', Arial, sans-serif"; g.textAlign = "left"; g.textBaseline = "middle"; g.fillText("CAMPUS", 128, 54); g.fillText("BALLPARK", 128, 104);
+    }, 0.9);
+    var bpsign = new THREE.Mesh(new THREE.PlaneGeometry(9, 2.64), bpm); bpsign.position.set(70.7, LAWN + 7, 146); bpsign.rotation.y = Math.PI / 2; GB.add(bpsign);
+    [[6, 40], [18, 30], [30, 44], [42, 32], [54, 44], [66, 30], [4, 56], [68, 56], [10, 8], [36, 12], [62, 8]].forEach(function (q, i) { tree(GB, q[0], q[1], 10 + (i % 3) * 2, i + 2); });
+
+    // ----- the soccer field
+    var GS = zone("soccer", 156, 116, 32, 58), sx = GS.position.x, sz = GS.position.z;
+    paintPlane(GS, 60, 100, 32, 58, function (g) {
+      function P(x, z) { return [(x - 2) * 8, (z - 8) * 8]; }
+      var i; for (i = 0; i < 12; i++) { g.fillStyle = i % 2 ? "#3f9450" : "#48a35a"; g.fillRect(0, i * 800 / 12, 480, 800 / 12 + 1); }
+      g.strokeStyle = "#ffffff"; g.fillStyle = "#ffffff"; g.lineWidth = 3;
+      var a = P(4, 12), b = P(60, 104); g.strokeRect(a[0], a[1], b[0] - a[0], b[1] - a[1]);
+      var m1 = P(4, 58), m2 = P(60, 58); g.beginPath(); g.moveTo(m1[0], m1[1]); g.lineTo(m2[0], m2[1]); g.stroke();
+      var c = P(32, 58); g.beginPath(); g.arc(c[0], c[1], 7.5 * 8, 0, 7); g.stroke(); g.beginPath(); g.arc(c[0], c[1], 4, 0, 7); g.fill();
+      [[12, 1], [104, -1]].forEach(function (e) {
+        var gl = e[0], d = e[1], pa = P(15.5, gl), pb = P(48.5, gl + d * 13), ga = P(24.5, gl), gb = P(39.5, gl + d * 5), ps = P(32, gl + d * 9), edge = P(0, gl + d * 13);
+        g.strokeRect(Math.min(pa[0], pb[0]), Math.min(pa[1], pb[1]), Math.abs(pb[0] - pa[0]), Math.abs(pb[1] - pa[1]));
+        g.strokeRect(Math.min(ga[0], gb[0]), Math.min(ga[1], gb[1]), Math.abs(gb[0] - ga[0]), Math.abs(gb[1] - ga[1]));
+        g.beginPath(); g.arc(ps[0], ps[1], 3, 0, 7); g.fill();
+        g.save(); g.beginPath(); g.rect(0, d > 0 ? edge[1] : 0, 480, d > 0 ? 800 - edge[1] : edge[1]); g.clip();
+        g.beginPath(); g.arc(ps[0], ps[1], 7.5 * 8, 0, 7); g.stroke(); g.restore();
+      });
+      g.save(); g.beginPath(); g.rect(a[0], a[1], b[0] - a[0], b[1] - a[1]); g.clip();
+      [[4, 12], [60, 12], [4, 104], [60, 104]].forEach(function (q) { var p = P(q[0], q[1]); g.beginPath(); g.arc(p[0], p[1], 8, 0, 7); g.stroke(); });
+      g.restore();
+    });
+    function goal(gl, d) {
+      [25, 39].forEach(function (x) { cyl(sx + x, LAWN, sz + gl, 0.22, 5, "#f8fafc"); cyl(sx + x, LAWN, sz + gl + d * 3, 0.12, 5, "#e5e7eb"); });
+      trim(sx + 32, LAWN + 5, sz + gl, 14.4, 0.4, 0.4, "#f8fafc");
+      net(GS, 25, gl + d * 3, 39, gl + d * 3, LAWN, 5); net(GS, 25, gl, 25, gl + d * 3, LAWN, 5); net(GS, 39, gl, 39, gl + d * 3, LAWN, 5);
+      var top = new THREE.Mesh(new THREE.PlaneGeometry(14, 3), netM); top.rotation.x = -Math.PI / 2; top.position.set(32, LAWN + 5, gl + d * 1.5); GS.add(top);
+      net(GS, 17, gl + d * 6, 47, gl + d * 6, LAWN, 11);
+    }
+    goal(12, -1); goal(104, 1);
+    for (k = 0; k < 4; k++) {
+      slab(GS, "#cbd5e1", 62 + k * 2, 34, 2, 48, 0.9 * (k + 1), LAWN, { r: 0.4, m: 0.5 });
+      for (var q = 0; q < 8; q++) {
+        if (rn() < 0.35) continue;
+        var bx = sx + 63 + k * 2, by = LAWN + 0.9 * (k + 1), bz = sz + 36 + q * 5.6 + rn() * 2;
+        cyl(bx, by, bz, 0.45, 1.5, FANS[Math.floor(rn() * FANS.length)]); cyl(bx, by + 1.5, bz, 0.34, 0.62, SKN[Math.floor(rn() * SKN.length)]);
+      }
+    }
+    [[32, 16, "#facc15"], [20, 30, "#1d4ed8"], [44, 30, "#1d4ed8"], [26, 48, "#1d4ed8"], [40, 52, "#1d4ed8"], [32, 66, "#1d4ed8"]].forEach(function (q) { pl(GS, q[0], q[1], q[2], "#f8fafc"); });
+    [[32, 100, "#16a34a"], [22, 84, "#f8fafc"], [42, 86, "#f8fafc"], [30, 70, "#f8fafc"], [46, 64, "#f8fafc"]].forEach(function (q) { pl(GS, q[0], q[1], q[2], "#b91c1c"); });
+    pl(GS, 38, 58, "#111827", "#111827");
+    cyl(sx + 33, LAWN, sz + 62, 0.5, 0.9, "#f8fafc");
+    tower(GS, 2, 6, 1); tower(GS, 62, 6, 1); tower(GS, 2, 110, -1); tower(GS, 62, 110, -1);
+    glowPool(GS, 32, LAWN + 0.2, 58, 64, 100, "#f1f5f9", 0.45);
   })();
+  // Heritage National Bank: cream stone with six tall columns, a triangular front with a clock, the name across the front,
+  // bronze doors and grand steps, plus a drive-thru with an ATM, lampposts and landscaping
+  (function () {
+    var G = block(4, 1, true), gx = G.position.x, gz = G.position.z, k;
+    if (!STY.bank) STY.bank = { wall: "#e8dcc4", glass: "#2b3448", lit: "#ffd38a", roof: "#57534e" };
+    flat(G, "#2b3242", 60, 2, 12, 68);
+    bldg(G, "bank", 12, 8, 48, 32, 20);
+    slab(G, "#d8ccb2", 10, 40, 52, 10, 3, LAWN, { r: 0.8 });
+    grandSteps(G, 14, 50, 44, 3, 2, 1.0);
+    for (k = 0; k < 6; k++) { var cx = gx + 16 + k * 8; cyl(cx, LAWN + 3, gz + 46, 1.6, 0.8, "#efe6d2"); cyl(cx, LAWN + 3.8, gz + 46, 1.15, 13.6, "#f4efe4"); trim(cx, LAWN + 17.8, gz + 46, 2.8, 0.8, 2.8, "#efe6d2"); }
+    slab(G, "#e8dcc4", 11, 40, 50, 10, 2.6, LAWN + 18.2, { r: 0.7 });
+    gable(G, "#e8dcc4", 11, 40, 50, 10, 20.8, 7, true);
+    var nm = new THREE.Mesh(new THREE.PlaneGeometry(34, 1.8), (function () {
+      var c = document.createElement("canvas"); c.width = 1024; c.height = 56; var g = c.getContext("2d");
+      g.fillStyle = "#e8dcc4"; g.fillRect(0, 0, 1024, 56); g.fillStyle = "#8a6a2a"; g.font = "700 40px Georgia, 'Times New Roman', serif"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText("HERITAGE  NATIONAL  BANK", 512, 30);
+      var t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding; t.anisotropy = ANISO;
+      var m = new THREE.MeshStandardMaterial({ map: t, emissive: new THREE.Color(1, 1, 1), emissiveMap: t, emissiveIntensity: 0, roughness: 0.6 }); m.userData.base = 0.5; m.userData.day = 0; GLOW.push(m); return m;
+    })());
+    nm.position.set(36, LAWN + 19.5, 50.08); G.add(nm);
+    var ck = new THREE.Mesh(new THREE.CircleGeometry(2.2, 32), (function () {
+      var c = document.createElement("canvas"); c.width = c.height = 128; var g = c.getContext("2d"), i;
+      g.fillStyle = "#b08d57"; g.beginPath(); g.arc(64, 64, 64, 0, 7); g.fill(); g.fillStyle = "#fbf7ee"; g.beginPath(); g.arc(64, 64, 56, 0, 7); g.fill();
+      g.strokeStyle = "#1f2937"; g.lineWidth = 4; for (i = 0; i < 12; i++) { var a = i / 12 * Math.PI * 2; g.beginPath(); g.moveTo(64 + Math.cos(a) * 46, 64 + Math.sin(a) * 46); g.lineTo(64 + Math.cos(a) * 54, 64 + Math.sin(a) * 54); g.stroke(); }
+      g.lineWidth = 5; g.beginPath(); g.moveTo(64, 64); g.lineTo(64 + Math.cos(-2.6) * 30, 64 + Math.sin(-2.6) * 30); g.stroke();
+      g.lineWidth = 3; g.beginPath(); g.moveTo(64, 64); g.lineTo(64 + Math.cos(-0.55) * 44, 64 + Math.sin(-0.55) * 44); g.stroke();
+      var t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding;
+      var m = new THREE.MeshStandardMaterial({ map: t, emissive: new THREE.Color(1, 1, 1), emissiveMap: t, emissiveIntensity: 0, roughness: 0.5 }); m.userData.base = 0.7; m.userData.day = 0; GLOW.push(m); return m;
+    })());
+    ck.position.set(36, LAWN + 23.3, 50.9); G.add(ck);
+    trim(gx + 36, LAWN + 7.5, gz + 40.25, 6.4, 9, 0.5, "#8a6a3a"); lite(gx + 36, LAWN + 7.5, gz + 40.53, 5.4, 8, 0.06);
+    trim(gx + 36, LAWN + 7.5, gz + 40.6, 0.12, 8, 0.06, "#8a6a3a");
+    [24, 48].forEach(function (x) { trim(gx + x, LAWN + 10, gz + 40.25, 4.6, 10.6, 0.4, "#c9b892"); lite(gx + x, LAWN + 10, gz + 40.48, 4, 10, 0.06); });
+    slab(G, "#e5e7eb", 60, 12, 11, 20, 0.6, LAWN + 8, { r: 0.5 });
+    [13, 31].forEach(function (z) { cyl(gx + 71, LAWN, gz + z, 0.4, 8, "#d8ccb2"); });
+    trim(gx + 60.3, LAWN + 3, gz + 22, 0.6, 3.4, 2.2, "#374151"); lite(gx + 60.64, LAWN + 3.6, gz + 22, 0.06, 1, 1.4, true);
+    lite(gx + 65.5, LAWN + 7.92, gz + 22, 8, 0.1, 14);
+    [[8, 60], [64, 60]].forEach(function (p) {
+      cyl(gx + p[0], LAWN, gz + p[1], 0.22, 8, "#111827"); lite(gx + p[0], LAWN + 8.6, gz + p[1], 0.9, 1.2, 0.9); trim(gx + p[0], LAWN + 9.3, gz + p[1], 1.2, 0.2, 1.2, "#111827");
+      glowSprite(G, p[0], LAWN + 8.6, p[1], 9, "#fde68a", 0.85); glowPool(G, p[0], LAWN + 0.2, p[1], 16, 16, "#fde68a", 0.42);
+    });
+    trim(gx + 9, LAWN + 0.9, gz + 57, 8, 1.8, 1.4, "#2f6b33"); trim(gx + 63, LAWN + 0.9, gz + 57, 6, 1.8, 1.4, "#2f6b33");
+    for (k = 0; k < 18; k++) FLOWERS.push([gx + 5 + rnd2() * 8, LAWN + 0.5, gz + 53 + rnd2() * 3, k % 8]);
+    function rnd2() { return (Math.sin(k * 12.9898 + 4.1) * 43758.5453) % 1 * 0.5 + 0.5; }
+    glowPool(G, 36, LAWN + 0.3, 52, 50, 20, "#fde68a", 0.4);
+    autoTrees(G, [[8, 6, 64, 58]], 5);
+  })();
+  block(0, 5, true); block(4, 4, true);
   (function () { var G = block(4, 2, true); bldg(G, "town", 8, 10, 56, 48, 30); slab(G, "#57534e", 8, 10, 56, 48, 1, LAWN + 30); autoTrees(G, [[8, 10, 56, 48]], 4); })();
   // Ed's Original Italian Restaurant, with a lit sign in dark wood and gold above the front, and a kitchen chimney puffing smoke
   (function () {
@@ -1879,10 +2107,15 @@
     [LAWN + 0.15, LAWN + 7.6, LAWN + 14.6, LAWN + 21.6].forEach(function (y, k) { lot(150, 190, 56, 60, 0, y, k === 3 ? 0.5 : 0.7, false, 16); });
     lot(-50, 305, 64, 34, 0, LAWN + 0.15, 0.75, false);
     lot(150, 308, 64, 28, 0, LAWN + 0.15, 0.6, false);
-    lot(-250, -110, 60, 62, 0, LAWN + 0.08, 0.7, true, 22, { acc: 2, ev: 2, sign: "STAFF PARKING" });
+    // Staff Parking now sits right beside the Parking Garage
+    lot(250, 190, 60, 62, 0, LAWN + 0.08, 0.7, true, 22, { acc: 2, ev: 2, sign: "STAFF PARKING" });
     lot(-150, 290, 60, 62, 0, LAWN + 0.08, 0.55, true, 22, { acc: 2, ev: 2, sign: "VISITOR PARKING" });
-    // Gas & Go: a red car fueling at the first island, a blue car at the second, and a white car parked at the Market
-    (function () { var g = BLOCKS["2,5"].position; PCARS.push([[g.x + 22, g.z + 46], Math.PI / 2, LAWN + 0.21, 4]); PCARS.push([[g.x + 38.5, g.z + 45], Math.PI / 2, LAWN + 0.21, 5]); PCARS.push([[g.x + 50, g.z + 36], 0, LAWN + 0.21, 0]); })();
+    // Gas & Go: a red car fueling at the first island, a blue car at the second, and a white car parked at the Market.
+    // Heritage National Bank: a car waiting at the drive-thru window.
+    (function () {
+      var g = BLOCKS["2,5"].position; PCARS.push([[g.x + 22, g.z + 46], Math.PI / 2, LAWN + 0.21, 4]); PCARS.push([[g.x + 38.5, g.z + 45], Math.PI / 2, LAWN + 0.21, 5]); PCARS.push([[g.x + 50, g.z + 36], 0, LAWN + 0.21, 0]);
+      var b = BLOCKS["4,1"].position; PCARS.push([[b.x + 65.5, b.z + 24], -Math.PI / 2, LAWN + 0.15, 7]);
+    })();
 
     // ----- The Stadium: a grand arched stadium in purple and white, with a columned entrance, a fountain plaza,
     //       a road looping around it, tailgate lawns, light towers and a big lot out front
@@ -2507,7 +2740,7 @@
 
     (function () {
       cols.forEach(function (x, ci) { rowsY.forEach(function (y, j) {
-        if ((x === 230 && (y === 40 || y === 140)) || (y === 40 && (x === 130 || x === 330))) return;
+        if (noX(x, y)) return;
         if ((ci + j) % 2) {
           var sx = x + 14 - OX, sz = y + 14 - OZ;
           cyl(sx, WALK_Y, sz, 0.15, 10, "#64748b"); trim(sx + 1.4, WALK_Y + 9.6, sz, 3.2, 0.7, 0.1, "#15803d"); trim(sx, WALK_Y + 8.8, sz + 1.4, 0.1, 0.7, 3.2, "#15803d");
@@ -3340,7 +3573,7 @@
   (function () {
     var spots = [];
     cols.forEach(function (x) { rowsY.forEach(function (y) {
-      if ((x === 230 && (y === 40 || y === 140)) || (y === 40 && (x === 130 || x === 330))) return;
+      if (noX(x, y)) return;
       SIG[x + "," + y] = 1; spots.push([x - 12, y + 12, "ns"], [x + 12, y - 12, "ew"]);
     }); });
     var poleG = new THREE.CylinderGeometry(0.35, 0.45, 11, 8), headG = new THREE.BoxGeometry(1.4, 4.2, 1.4), lampG = new THREE.SphereGeometry(0.8, 10, 8);
@@ -3492,8 +3725,10 @@
     { n: "Apartments", s: "Graduate housing · rooftop restaurant and sushi bar", b: [2, 4], t: 3, h: 70 },
     { n: "Parking Garage", s: "Three levels plus the roof deck", b: [3, 4], t: 4, h: 30 },
     { n: "Main St Shops", s: "Shops and services off campus", b: [3, 5], t: 7, h: 24 },
-    { n: "Ball Field", s: "Intramural softball", b: [-1, 2], t: 6, h: 12 },
-    { n: "Staff Parking", s: "Faculty and staff lot · accessible and EV spaces", b: [-1, 1], t: 5, h: 10 },
+    { n: "Campus Ballpark", s: "College baseball under the lights · grandstand seating", b: [-1, 1], gk: "ballpark", stop: { x: 30, y: 240 }, t: 5, h: 34, main: 1 },
+    { n: "Soccer Field", s: "Lit pitch with bleachers", b: [-1, 3], gk: "soccer", stop: { x: 30, y: 340 }, t: 6, h: 18 },
+    { n: "Heritage National Bank", s: "Full-service bank with a drive-thru ATM", b: [4, 1], stop: { x: 530, y: 240 }, t: 6, h: 36 },
+    { n: "Staff Parking", s: "Faculty and staff lot beside the Parking Garage · accessible and EV spaces", b: [4, 4], stop: { x: 530, y: 440 }, t: 4, h: 10 },
     { n: "Visitor Parking", s: "Visitor lot · accessible and EV spaces", b: [0, 5], t: 4, h: 10 }
   ];
   var pickables = Object.keys(BLOCKS).map(function (k) { return BLOCKS[k]; });
@@ -3535,7 +3770,7 @@
       L.el.style.opacity = keep ? "1" : String(clamp(edge / 36, 0.35, 1).toFixed(2));
       L.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) translate(-50%,-100%)";
     });
-                                                                    }
+        }
   // ---------------- Destination highlight, drop-off pin and route ----------------
   var hl = { g: null, mats: [] };
   function hiMat(m) { var c = m.clone(); c.emissive = col("#2563eb"); c.emissiveMap = null; c.emissiveIntensity = 0.55; hl.mats.push(c); return c; }
